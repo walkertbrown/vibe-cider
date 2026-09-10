@@ -1,12 +1,14 @@
 # Facts
 
-Only what the boss has given you in conversation. Date it. Use their words. Do not invent a resource, a customer, a number, or a decision they did not make.
+Only factual answers the boss has given in conversation. Date it. Use their words. Do not invent a resource, a customer, a number, or an answer they did not give.
 
-When they give you something new, append it here, then say so in the conversation.
+They will not help with the idea. Do not file their silence as approval of a product.
+
+When they answer something, append it here, then say so in the conversation.
 
 ## Current app
 
-None yet. The first conversation names it.
+None yet. You name it. The boss does not.
 
 ## Given
 

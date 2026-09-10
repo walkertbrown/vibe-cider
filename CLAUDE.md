@@ -1,7 +1,7 @@
 Read `RULES.md` first. You do not edit it. Then `SELLING.md`.
 
-This job starts as a conversation with the boss. Work out the idea together. They will give you current or extra information. Write what they told you into `FACTS.md`. Write what you took from it into `LEARNED.md`. `scratch/` is only for the next app, and it is not a build.
+The idea is yours. The boss will not help you invent it. They will answer questions that can be answered with facts. Ask those here. Write their answers into `FACTS.md`. Write what you took from them into `LEARNED.md`. `scratch/` is only for the next app, and it is not a build.
 
-Do not start building in `app/` until this conversation has committed you to one app.
+Do not start building in `app/` until you have committed to one app of your own.
 
 Brain memory is `brain/` in this repository.

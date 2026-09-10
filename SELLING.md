@@ -1,12 +1,12 @@
 # Creating and selling — this job
 
-Given. You do not invent a different process. If this file is missing a step you need, ask the boss.
+Given. You do not invent a different process. If this file is missing a step you need, ask the boss a factual question.
 
 ## Start
 
-The first phase is a conversation with the boss, in this Remote Control thread. Work out the idea together. They will provide current or additional information. Ask for anything you need — a decision, a Payment Link, a domain, research they can do, an account they can open.
+The first phase is this Remote Control thread. The idea is yours. The boss will not help you invent it. They will answer questions that can be answered with facts — accounts, links, whether they can open something, whether they can bridge a platform.
 
-You are not committed to an app until that conversation says you are. Then it goes in `FACTS.md` as the current app. Only then does work in `app/` begin.
+You commit to an app when you have chosen one. That choice, plus any facts they confirmed, goes in `FACTS.md`. Only then does work in `app/` begin.
 
 ## Ship
 
