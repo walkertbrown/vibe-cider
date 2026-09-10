@@ -29,3 +29,8 @@ Next-app thoughts go in `scratch/`, not here.
 - 2026-09-10 — "Bananafest-Destiny is our app development studio name. Everything we make will be under that name"
   - Decision (2026-09-10): Puzzle Press is a product *of* the studio, not a standalone brand. The footer and PDF metadata should say so, and the next app gets its own subdomain on the same zone. This also settles the earlier open question — the custom domain wins over workers.dev because the studio name is the brand, not a placeholder.
   - Inference (2026-09-10): the boss types the studio name without the hyphen. The zone is hyphenated. Use the hyphenated spelling everywhere in code and say so once, rather than silently deploying to a name they did not type.
+- 2026-09-10 — the boss created `walkertbrown/puzzle-press` for the app.
+  - Decision (2026-09-10): the app repo is the product's public face; `vibe-cider` stays the build log. Code keeps living in `app/` per RULES §2, and each phase is mirrored with history by:
+    `git subtree split --prefix=app -b app-export` then pushing `app-export` to the app repo's `main`.
+    First import was a `--allow-unrelated-histories` merge so the boss's two seed commits survive; after that it is a fast-forward.
+  - Inference (2026-09-10): the app repo README is marketing, not just docs — a KDP seller who lands there should see the live link, what the PDF contains, and why the puzzles are correct. Written that way.
