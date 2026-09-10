@@ -6,3 +6,9 @@ node_modules/
 !.env.example
 .open-next/
 .next/
+
+# bot runtime — never commit
+.gitconfig
+.git-credentials
+.npm-cache/
+.memory/
