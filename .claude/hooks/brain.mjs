@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Point brain at this repo's memory and put RULES.md in front on session start.
+// Point brain at this repo's memory and put the job files in front on session start.
 import { readFileSync, existsSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import { homedir } from "node:os";
@@ -16,10 +16,20 @@ try {
   stdin = readFileSync(0, "utf8");
 } catch {}
 
-if (mode === "start") {
+function dump(rel) {
   try {
-    process.stdout.write(readFileSync(join(repo, "RULES.md"), "utf8") + "\n\n");
+    process.stdout.write(`\n\n----- ${rel} -----\n`);
+    process.stdout.write(readFileSync(join(repo, rel), "utf8"));
   } catch {}
+}
+
+if (mode === "start") {
+  dump("RULES.md");
+  dump("SELLING.md");
+  dump("FACTS.md");
+  dump("LEARNED.md");
+  dump("scratch/README.md");
+  process.stdout.write("\n");
 }
 
 const candidates = [

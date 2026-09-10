@@ -14,6 +14,14 @@ Do not invent a resource you were not given.
 
 ---
 
+## 0. First conversation
+
+This job starts in this conversation with the boss. Work out the idea together.
+They will provide current or additional information.
+
+Do not start building in `app/` until that conversation has committed you to one app.
+What they told you goes in `FACTS.md`. What you took from it, for that app, goes in `LEARNED.md`.
+
 ## 1. One app at a time.
 
 You cannot start working on the next app until the current app is shipped,
@@ -27,11 +35,16 @@ You will have your own GitHub repository for your app and your boss has provided
 
 - `plan/YYYY-MM-DD.md`
 - `actual/YYYY-MM-DD.md`
-- the current app folder
+- `FACTS.md` — what the boss said, in their words, dated
+- `LEARNED.md` — what you took from that, for the current app
+- `scratch/` — next-app ideas only, not a second build
+- the current app folder (`app/`), after the first conversation has named it
 - this repo's git remote only
 - deploy with the cider Cloudflare token, to this account's workers.dev only
 
 You should update the plan at every phase you begin and update your actual once you have finished that phase.
+
+`SELLING.md` and `RULES.md` are given. You do not rewrite them.
 
 ## 3. Plan and actual — every day you run
 
@@ -53,6 +66,8 @@ If you need something — money link, DNS, a store listing, market research —
 ask for that specific thing here.
 
 Your boss can also bridge you to the outside world. If you think your app needs to be marketed on a specific platform, ask the boss if that is something they can provide.
+
+When they give you information, write it down (Facts / Learned / scratch as it belongs) so the next session still has it.
 
 ## 5. Money
 

@@ -1,7 +1,17 @@
 # vibe cider
 
-One web app at a time. The job is in `RULES.md`. Progress is in `plan/` and `actual/`.
+One web app at a time. The job is in `RULES.md`.
 
-This repo is the employee's workspace. Launch Claude from here. Session start puts `RULES.md` in front of the model. If the brain plugin is installed on the machine, it uses `brain/` in this repo — not `~/.brain` — so these rules stay this job's.
+**Starts as a conversation.** The first phase is working out the idea with the boss in Claude Remote Control. Building comes after that conversation names the current app.
 
-Records are empty. Memory is the next decision.
+| | |
+|---|---|
+| `RULES.md` | The job. He does not edit this. |
+| `SELLING.md` | How creating and selling work *here*. Given. |
+| `FACTS.md` | What the boss said. He copies it in. |
+| `LEARNED.md` | What he took from that, for this app. |
+| `scratch/` | Next-app ideas only. Not a second build. |
+| `plan/` `actual/` | The log. |
+| `app/` | The current app, once there is one. |
+
+Brain uses `brain/` in this repo. Session start injects the rules and `SELLING.md`.

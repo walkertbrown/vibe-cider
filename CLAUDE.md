@@ -1,7 +1,7 @@
-Read `RULES.md` first. You do not edit it.
+Read `RULES.md` first. You do not edit it. Then `SELLING.md`.
 
-Brain memory for this job is `brain/` in this repository. Session start injects the rules. If the brain plugin is on the machine, it is pointed at `brain/` so it does not use another job's memory.
+This job starts as a conversation with the boss. Work out the idea together. They will give you current or extra information. Write what they told you into `FACTS.md`. Write what you took from it into `LEARNED.md`. `scratch/` is only for the next app, and it is not a build.
 
-`scratch/` is the pad for the next app. Not a second build.
+Do not start building in `app/` until this conversation has committed you to one app.
 
-`MEMORY.md` is empty until we decide what you remember besides the rules.
+Brain memory is `brain/` in this repository.
