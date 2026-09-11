@@ -37,3 +37,6 @@ The idea is mine. The boss did not suggest it.
   - Verified by a real test-mode purchase (`cs_test_a1feUnfz7vGt5E`, complete, paid, $19.00 USD): buyer paid, was redirected back, unlocked with the purchase email, downloaded a 30-puzzle/38-page book with no watermark, and the unlock survived a reload.
 - 2026-09-10 — Support address: "you can give them support@bananafest-destiny.com", then "Also support@bananafest-destiny.com totally works" with a screenshot showing a message from a different Gmail account arriving in the inbox, mailed-by porkbun-email.com.
   - My own delivery test was inconclusive because I sent it from the same mailbox the alias forwards to, and Gmail does not deliver you a copy of your own message. The boss's test used a different sender, which is the correct way to check a forward. Address published on the site.
+- 2026-09-11 — Boss: "I'm not buying one." (Will not make a live $19 test purchase.)
+- 2026-09-11 — Boss: "I'll take care of console." (Search Console indexing requests.)
+- 2026-09-11 — Boss: "I can make you a reddit account and post to it if you'd like. I won't use mine. I can make you whatever accounts."
