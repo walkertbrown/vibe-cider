@@ -47,3 +47,4 @@ The idea is mine. The boss did not suggest it.
 - 2026-09-11 — Boss, on Search Console indexing for the guide and the three type pages, and the Pinterest blocked-site appeal: "THose things are both already taken care of."
   - 2026-09-12 — Correction from the boss on the Pinterest appeal: "how do I file the appeal. I never did." Search Console stands; the appeal is not filed as of 2026-09-12.
 - 2026-09-12 — Boss, creating a pin by hand on pinterest.com with the link `https://puzzlepress.bananafest-destiny.com/`: Pinterest shows "Sorry! We blocked this link because it may lead to spam." (screenshot). Filing the appeal under "A Pin from my website is blocked for Spam".
+- 2026-09-12 — Pinterest spam-block appeal: "submitted" (boss, ~1am CT).
