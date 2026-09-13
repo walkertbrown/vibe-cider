@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__claude_ai_Buffer__create_post",
+      "mcp__claude_ai_Buffer__list_posts",
+      "mcp__claude_ai_Buffer__get_post",
+      "mcp__claude_ai_Buffer__edit_post"
+    ]
+  }
+}
