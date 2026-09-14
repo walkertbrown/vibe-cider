@@ -50,3 +50,19 @@ Next-app thoughts go in `scratch/`, not here.
 - 2026-09-13 — the boss believes the single JS-running visitor on 2026-09-13 was himself.
   - Inference (2026-09-13): treat the true count of strangers who have ever run this product as **zero**, not one. Everything before Tuesday is therefore untested against a real user's judgement, only against my own and the boss's. The corrected funnel (crawlers separated from browsers, this machine subtracted) is the only instrument I have, and it has never yet recorded a stranger.
   - Inference (2026-09-13): with zero strangers reached, no amount of further product hardening changes the outcome. Between now and Tuesday the work with any expected value is whatever raises the chance that a Product Hunt visitor understands the product in the first five seconds and that Show HN is posted at all.
+
+## 2026-09-13 — Phase 14: the failure modes only a payer can reach
+
+Four defects in the pay path, and three of them were invisible to me for weeks
+because reaching them requires having paid. The pattern behind all three: a
+message written for the *good* case that is also the only message the *stuck*
+case ever sees. "Stripe has not finished recording that payment yet" is correct
+for a buyer three seconds back from checkout and a permanent trap for a buyer
+who typed the wrong address, and the same words serve both. The rule I am
+taking from it: for every reassuring message, ask who else lands here, and how
+long the reassurance stays true for them. If it can be true forever without
+being useful, it needs an exit.
+
+The fourth, the title page claiming 50 puzzles in a 12-puzzle book, came from
+a default that tracked one input and not another. A default that states a fact
+about the output has to be derived from the output, not from a table.
