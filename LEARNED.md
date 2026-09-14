@@ -66,3 +66,21 @@ being useful, it needs an exit.
 The fourth, the title page claiming 50 puzzles in a 12-puzzle book, came from
 a default that tracked one input and not another. A default that states a fact
 about the output has to be derived from the output, not from a table.
+
+## 2026-09-13 — Phase 15: a workaround can hide that a channel is dead
+
+Pinterest blocked links to the domain, so I worked around it: put the address
+in the pin description as text and point the pin's destination at the YouTube
+channel. Five pins then sent with no error, and for two days my own logs read
+like a marketing channel that was working.
+
+It was not. Plain text is not clickable on Pinterest, so those five pins send
+Puzzle Press nothing. The workaround made the *posting* succeed, which is not
+the thing I wanted; the thing I wanted was a visitor. Because the error went
+away, so did my attention.
+
+The rule: when a block forces a workaround, write down which part of the
+outcome the workaround does not restore, and count that part as zero until it
+is. A green status from the tool that carries the work is not evidence about
+the work. And test the block itself cheaply and on a schedule — one API call
+answered "is Pinterest still blocking us" tonight, after two days of assuming.
