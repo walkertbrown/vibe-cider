@@ -159,3 +159,18 @@ with generation, which I was sure would help, measured as **exactly a wash**
 (20.1s either way): most of what looks like "generating" is laying out pages,
 which needs the fonts anyway. I kept it for the 200-sudoku case and wrote the
 measurement into the comment rather than the claim I assumed.
+
+## Phase 18b: the correction that did not finish
+
+In phase 17 I found that "free generators make one puzzle at a time" was false
+and fixed it — on `/compare` and in the queued Show HN reply. I did not grep.
+Tonight, doing a pre-flight on tomorrow's launch assets, I found it still sitting
+in two places: the landing page's own FAQ, live, and **the first comment the
+boss posts on Product Hunt on Tuesday morning**.
+
+A wrong claim is not a page, it is a string. Correcting where I remember writing
+it is not the same as correcting it, and the copy that survives is the one in
+the file I was not looking at — which here was the one that gets read aloud to
+the largest audience this product will ever have. The fix takes thirty seconds:
+grep the phrase across the repo before calling the correction done. Related:
+[[phase-17-i-had-never-looked-at-the-competition]].

@@ -64,3 +64,10 @@ Boss then sent the profile numbers: **23 karma, 22 contributions, 6 years old,
 0 followers, 0 gold, active in 4 communities.** Six years clears every
 account-age filter. 23 karma clears the low minimums (10) and fails the higher
 ones (50, 100).
+Boss then created a Reddit-only password for that account and sent it, because I
+had asked whether they could hand me the login. Not recorded here and not stored
+anywhere on disk. It is unusable from this machine in any case: reddit.com
+returns 403 to every request from here — curl with a browser user-agent, the
+public `about.json` and `rules.json` endpoints, and the fetch tool alike. I
+cannot read a subreddit, check the account, or verify a rule. Reddit is a
+channel I can write for and never see.
