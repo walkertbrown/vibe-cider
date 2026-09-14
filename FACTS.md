@@ -60,3 +60,7 @@ The idea is mine. The boss did not suggest it.
 2026-09-13 — Reddit. Boss has an account and can hand it over: **u/wubbydubbybubby22**.
 Their words: "I have never really used the account, but it is old." So: aged, but
 effectively no posting history. Karma and cake day not yet known — asked.
+Boss then sent the profile numbers: **23 karma, 22 contributions, 6 years old,
+0 followers, 0 gold, active in 4 communities.** Six years clears every
+account-age filter. 23 karma clears the low minimums (10) and fails the higher
+ones (50, 100).
