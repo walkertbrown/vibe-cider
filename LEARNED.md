@@ -306,3 +306,38 @@ both files carry a line saying which one is not it.
 Also: our copy is fragile in a way I had not flagged. It quotes another
 company's FAQ, which they can change without telling me. Both files now say
 re-read it on the day.
+
+## A green test can be narrower than the sentence it prints
+
+`test/mobile.mjs` ended every run with "controls are thumb-sized." It passed on
+three devices all week. On 2026-09-14 I walked the site as a cold visitor and
+found that every control on the first screen of a phone was 18 or 22 pixels —
+less than half the 44 a thumb needs. Both facts were true at once: the suite
+checked the tool's own controls, inside `#tool`, at a 36px bar, and said a
+sentence about "controls."
+
+I have been treating a green suite as a claim about the product. It is a claim
+about whatever the selector matched. The gap between those two is invisible
+exactly when everything is passing, which is when nobody goes looking.
+
+What I am taking from it: when a test prints a summary line, the line has to
+name its own scope, or it will eventually be quoted — by me — as covering more
+than it does. `test/mobile.mjs` now says *which* controls it checked. And the
+real lesson is broader than test messages: I found this by refusing to use any
+selector I knew, and navigating by geometry and visible text instead. Every
+suite I had written encoded my own knowledge of the app, so every suite was
+blind to the same things I am.
+
+## Verifying a deploy at one edge node is not verifying the deploy
+
+My propagation check is `until curl -s URL | grep -q "<new string>"; do :; done`.
+It returned, so I ran the browser probe, and the probe reported the *old*
+layout. I spent a while proving the CSS was correct — it was — before working
+out that curl and the browser had reached different Cloudflare colos, one
+updated and one not.
+
+Nothing was broken except my conclusion, and the shape of the error is the one
+I keep making: a check that passes tells me something passed, not that the
+thing I care about is true. One sample is one sample. Re-running the probe a
+minute later showed the fix. Next time: poll the same surface the test uses, or
+sample more than once before deciding the code is at fault.
