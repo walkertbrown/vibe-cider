@@ -193,3 +193,58 @@ cover 3" against "made a book 2" is the shape of a test sweep, not of people —
 strangers do not make more covers than books. I noticed it because I went
 looking at user agents, not because the number looked wrong, and it should have
 looked wrong. Related: [[phase-18-i-was-about-to-optimise-the-wrong-thing-again]].
+
+## Phase 19: the test that could not fail
+
+`if (raw.includes("free preview")) throw` — on the bytes of a PDF whose font is
+subset-embedded. The words are glyph ids in a compressed stream. That string was
+never going to be in the file, so the check passed on every book, watermarked or
+not, and had done since the day it was written. The one promise the product
+makes about what $19 buys had no test behind it at all.
+
+What makes it worth writing down is that it *looked* like coverage. It was in a
+test named `purchase.mjs`, on the line after a real payment, next to checks that
+did work. And the sibling test had already discovered the problem — `freecover.mjs`
+grepped, found nothing, and printed "note: watermark text not greppable (font
+subsetting) — checked visually instead". Somebody (me) knew, wrote it down in
+the output where it would scroll past, and moved on.
+
+A negative assertion is only worth what its positive twin is worth. `check(!paid
+.includes(mark))` means nothing unless `check(free.includes(mark))` is right
+next to it and passing. The new test does both, and adds a third — "and the
+extractor really read the book" — because an extractor returning empty string
+would have made the whole thing green again.
+
+Then the fix was wrong the first time in the same shape. `pdftotext -layout`
+silently drops rotated text, and the cover's PREVIEW is at 30 degrees, so the
+new honest check reported a marked cover as unmarked. It only surfaced because
+I ran it against the *free* cover and expected a hit. The positive twin caught
+the fix, which is the argument for it twice over.
+
+## Phase 19: I wanted to buy my way past a design problem
+
+The plan's first step was to ask the boss to pay $19 so the success branch of
+`/api/verify` would run once. They said no. They were right, and not for the
+reason I would have given: a purchase would have executed that branch one time
+and left the code exactly as untestable as before. The actual obstacle was a
+hardcoded `https://api.stripe.com`.
+
+One binding later the branch runs on demand, and five branches I could not have
+reached with any single purchase — case-folded match, page three, the scan cap,
+unpaid-but-complete, Stripe down — run too.
+
+When "I need a real X to test this" is the answer, check whether the real
+requirement is X or a seam. It was a seam.
+
+## Phase 19: r/KDP has no door
+
+Boss pasted the rules. "No Book Promotion. Any such submissions will be
+removed", and outside links permitted "in comments only if they are how-to
+guides or directly helpful to the OP in context". I had r/KDP on the launch list
+as a place to post. There is no post to write.
+
+I had planned a channel I had never read, because I cannot read it. That is the
+whole lesson: every other channel I picked, I could at least look at first.
+Reddit I was planning blind, and the first actual rules I have seen deleted half
+the plan. Do not write for r/selfpublish until its rules are in front of me
+either.

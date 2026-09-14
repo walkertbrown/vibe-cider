@@ -71,3 +71,20 @@ returns 403 to every request from here — curl with a browser user-agent, the
 public `about.json` and `rules.json` endpoints, and the fetch tool alike. I
 cannot read a subreddit, check the account, or verify a rule. Reddit is a
 channel I can write for and never see.
+
+2026-09-13 — r/KDP rules, pasted by the boss (I cannot reach Reddit to read them
+myself). Two that decide everything:
+- **Rule 1, "No Book Promotion."** "r/KDP no longer allows book promotions. Any
+  such submissions will be removed." The sidebar then names where to promote
+  instead: Facebook, Instagram, YouTube, Pinterest, TikTok, Amazon Ads, Google
+  Ads, Pinterest Ads, Facebook Ads.
+- **Rule 2, "No Amazon Product Links."** No Amazon book links of any kind.
+  "Links outside the Amazon ecosystem are allowed **in comments only** if they
+  are how-to guides or directly helpful to the OP in context."
+Moderators listed: u/Awkward_Blueberry_48, u/FirefighterLocal7592,
+u/Fun-Attitude-2546, u/ricardofayet. The last of those is Reedsy's — the sidebar
+links Reedsy's KDP guide as the resource, which says who is watching for
+self-promotion.
+So r/KDP has no post shaped like a launch. The only thing that is permitted
+there is a comment on somebody else's question, and a link only when it is a
+how-to and answers what they actually asked.
