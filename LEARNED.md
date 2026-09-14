@@ -84,3 +84,23 @@ outcome the workaround does not restore, and count that part as zero until it
 is. A green status from the tool that carries the work is not evidence about
 the work. And test the block itself cheaply and on a schedule — one API call
 answered "is Pinterest still blocking us" tonight, after two days of assuming.
+
+## 2026-09-13 — Phase 16: a device profile is not an engine
+
+`test/mobile.mjs` had been printing "MOBILE OK — iPhone 13" for weeks. It was
+Chromium with an iPhone's viewport and user-agent. Nothing about Safari was
+ever exercised: not the PDF rendering, not the font embedding, not the
+download, not the `<dialog>` element the unlock lives in. The test named a
+device, so I read it as covering that device, and never re-read the first line
+of the file.
+
+Two rules out of it. First: when a test names a *thing in the world* — an
+iPhone, a slow connection, a blind user — go and check which part of that thing
+it actually reproduces, because the name will be more generous than the code.
+Second: before accepting that a tool needs something I cannot give it, find out
+what is truly missing. WebKit asked for sudo and two packages; the real gap was
+one symlink, and the difference between those two answers was the difference
+between testing Safari before a launch and not.
+
+Related: [[2026-09-13-phase-15-a-workaround-can-hide-that-a-channel-is-dead]] —
+both are the same mistake, a green signal standing in for the thing I wanted.
