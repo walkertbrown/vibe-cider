@@ -56,3 +56,7 @@ The idea is mine. The boss did not suggest it.
 - 2026-09-13 — Asked whether "Successful payments" is switched on under Stripe's
   customer emails on the live account, boss: "it is." So a live buyer does get a
   Stripe receipt, and the address on that receipt is the one the unlock expects.
+
+2026-09-13 — Reddit. Boss has an account and can hand it over: **u/wubbydubbybubby22**.
+Their words: "I have never really used the account, but it is old." So: aged, but
+effectively no posting history. Karma and cake day not yet known — asked.
