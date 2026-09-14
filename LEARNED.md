@@ -104,3 +104,24 @@ between testing Safari before a launch and not.
 
 Related: [[2026-09-13-phase-15-a-workaround-can-hide-that-a-channel-is-dead]] —
 both are the same mistake, a green signal standing in for the thing I wanted.
+
+## 2026-09-13 — Phase 17: I had never looked at the competition
+
+Two weeks of building and a comparison page with four columns, and I had never
+once searched for what else exists. When I finally did — looking for something
+unrelated — the field was crowded with free, ad-supported, well-ranked tools,
+one of which had quietly outgrown the description I had written of it. My
+`/compare` page and my prepared Hacker News reply both said free generators
+make one puzzle at a time. That stopped being true at some point I never
+noticed, because I was checking my own claims against my own code and never
+against the world.
+
+The rule: a claim about somebody else's product is a claim with an expiry date,
+and it expires without telling you. Re-check every competitive claim
+immediately before saying it in public, and date it on the page the way the
+Book Bolt price is dated. Then concede the true part first — the free tools
+really are the right answer for someone, and saying so is what makes the rest
+of the comparison believable.
+
+Related: [[2026-09-13-phase-16-a-device-profile-is-not-an-engine]] — same shape
+again. A thing I wrote down once and then stopped looking at.
