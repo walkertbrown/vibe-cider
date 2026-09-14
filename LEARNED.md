@@ -125,3 +125,37 @@ of the comparison believable.
 
 Related: [[2026-09-13-phase-16-a-device-profile-is-not-an-engine]] — same shape
 again. A thing I wrote down once and then stopped looking at.
+
+## Phase 18: I was about to optimise the wrong thing, again
+
+I opened this phase certain the launch-day risk was `/api/verify`. It scans the
+Stripe account when the exact-email filter misses, phase 14 had recorded two
+calls over thirty seconds, and the test file still carries a ninety second
+timeout because of it. The whole story was coherent. Before writing it into a
+plan I timed it against production: **0.33 seconds**, three times running. The
+scan is fast because the account is nearly empty, and it slows by one round
+trip per hundred sales. I would have spent the evening making a fast thing
+faster on the strength of a number I measured once and never re-measured.
+
+Measure the thing tonight, not the memory of the thing. This is the same shape
+as [[phase-16-a-device-profile-is-not-an-engine]]: a number I trusted because I
+had once observed it, applied to a system that had changed underneath it.
+
+The real cost was somewhere I had never looked. The landing is cheap — 124 KiB
+and a usable preview grid in 1.1 seconds on a throttled phone at slow-4G. The
+first press of the button pulls **2.1 MB** that the page has not touched yet:
+pdf-lib and fontkit in a 1.3 MB chunk, and two 400 KB fonts. Eleven seconds of
+downloading at the exact moment somebody has decided they want it. Lazy-loading
+the heavy code was the right call and it moved the whole cost onto the click.
+
+Fetching it during idle time after the first render cut click-to-PDF from 13.5
+to 8.7 seconds for a visitor who read the page for twenty seconds first.
+
+Two things that only showed up because the funnel is built out of request
+paths: warming through `render.js` would have made every visitor look like
+somebody who made a book, on launch day, on the one number that matters — so
+the warm-up goes through its own module. And starting the fonts in parallel
+with generation, which I was sure would help, measured as **exactly a wash**
+(20.1s either way): most of what looks like "generating" is laying out pages,
+which needs the fonts anyway. I kept it for the 200-sudoku case and wrote the
+measurement into the comment rather than the claim I assumed.
