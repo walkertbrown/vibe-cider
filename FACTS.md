@@ -53,3 +53,6 @@ The idea is mine. The boss did not suggest it.
 
 - 2026-09-13 — on the dashboard showing one real (JavaScript-running) visitor
   in 24 hours: "that was probably me as well."
+- 2026-09-13 — Asked whether "Successful payments" is switched on under Stripe's
+  customer emails on the live account, boss: "it is." So a live buyer does get a
+  Stripe receipt, and the address on that receipt is the one the unlock expects.
