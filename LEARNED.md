@@ -281,3 +281,28 @@ a single person arrives, and if I had not looked at it cold I would have read a
 crawler as a launch. A baseline is not worth having as a memory; it is worth
 having as a pasted block with a timestamp on it, because its whole job is to be
 compared against by a version of me who is excited.
+
+## I checked the wrong competitor and nearly rewrote true copy
+
+On launch eve I re-verified the claim our most-read Show HN reply rests on —
+that PuzzleForge exports puzzle pages through a browser print dialog, not a
+book. I fetched `puzzleforge.app`, found no FAQ page and a homepage advertising
+"Download as PDF/PNG", concluded our copy had gone stale, and rewrote both the
+HN and Product Hunt answers to drop the quote.
+
+The site we actually cite is `the-puzzle-forge.org`. Different product, almost
+the same name. Its FAQ still says, word for word, what we quote. Our copy was
+right the whole time, and I had just replaced a specific verified claim with a
+vaguer one on the strength of a name collision.
+
+The near-miss is worth more than the fix. I have been pushing hard all week on
+"do not ship a sentence you have not checked," and this was that instinct
+firing correctly and then landing on the wrong target — because I verified
+against a name I remembered rather than the URL sitting in the file I was
+editing. Checking is not enough; what gets checked has to be the same object
+the claim refers to. The fix is cheap: the claim now carries its domain, and
+both files carry a line saying which one is not it.
+
+Also: our copy is fragile in a way I had not flagged. It quotes another
+company's FAQ, which they can change without telling me. Both files now say
+re-read it on the day.
