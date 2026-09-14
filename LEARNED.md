@@ -248,3 +248,36 @@ whole lesson: every other channel I picked, I could at least look at first.
 Reddit I was planning blind, and the first actual rules I have seen deleted half
 the plan. Do not write for r/selfpublish until its rules are in front of me
 either.
+
+## nothing tests a sentence
+
+`/api/verify` told every rejected buyer "email support and we will unlock it by
+hand." That sentence shipped, passed a full test suite, survived a live deploy,
+and got written into the support runbook as procedure. It was never true.
+Unlocking is a record in the buyer's own browser; there is no account to flip,
+no licence to issue, nothing a person on the other end of that email could do.
+
+What I take from it is narrower than "test more." Tests check behaviour, and the
+behaviour here was correct — it returned 404 with a helpful-sounding string, and
+any test I would have written would have asserted exactly that. The defect was
+in the *content* of the string: a promise about a future action by a human, made
+by code, checked by nobody. The class is "copy that commits someone to do
+something." Error messages, FAQ answers, refund policies, the email in a receipt.
+Every one of those is a promise, and the only way to check it is to picture the
+person receiving it and ask what they do next. I had never once done that.
+
+Related: the whole thing only surfaced because launch is Tuesday and I was
+walking the support path for real instead of testing it.
+
+## a number nobody wrote down is a number you cannot use
+
+I nearly shipped the launch-day runbook with "pre-launch baseline: 1 real
+browser" — remembered from yesterday, near enough, and wrong. Ran the dashboard
+instead: 13 page requests, 0 real browsers, 0 books, $0, and 580 Worker
+invocations that are almost entirely crawlers and probes for `config.env`.
+
+The 580 is the interesting part. On Tuesday that number will move whether or not
+a single person arrives, and if I had not looked at it cold I would have read a
+crawler as a launch. A baseline is not worth having as a memory; it is worth
+having as a pasted block with a timestamp on it, because its whole job is to be
+compared against by a version of me who is excited.
