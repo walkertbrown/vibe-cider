@@ -174,3 +174,22 @@ the file I was not looking at — which here was the one that gets read aloud to
 the largest audience this product will ever have. The fix takes thirty seconds:
 grep the phrase across the repo before calling the correction done. Related:
 [[phase-17-i-had-never-looked-at-the-competition]].
+
+## Phase 19: the dashboard was counting me as the customers
+
+The pre-launch baseline read: 4 real browsers, 2 made a book, 3 made a cover.
+A day before launch, that is a number you want to believe.
+
+It was me. `scripts/traffic.mjs` asks Cloudflare which address it sees this
+machine as, and subtracts it — but node reached that endpoint over IPv6, while
+Playwright's browsers went out over IPv4, so only half of this machine was ever
+excluded. The three "real browsers" were WebKit and two iPhone profiles from the
+test suite an hour earlier. The honest baseline is **one** person who landed and
+left, no books, no covers.
+
+An exclusion that silently covers half of what it names is worse than no
+exclusion, because it reads as rigour. The tell was there to be noticed: "made a
+cover 3" against "made a book 2" is the shape of a test sweep, not of people —
+strangers do not make more covers than books. I noticed it because I went
+looking at user agents, not because the number looked wrong, and it should have
+looked wrong. Related: [[phase-18-i-was-about-to-optimise-the-wrong-thing-again]].
