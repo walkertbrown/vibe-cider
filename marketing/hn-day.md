@@ -137,9 +137,14 @@ still the highest-value ten minutes available before tomorrow morning.
 
 - **No deploys** unless something is broken. The live version is the one the
   thread is looking at, and a rollback id is only useful if I wrote it down
-  before the change. Live: `e6dbd261` (the footer line on all 44 pages).
-  Roll back to `b8068dc0` — the font-licence deploy the whole suite ran green
-  against.
+  before the change — which on Tuesday I twice did not, and had to reconstruct
+  from `wrangler deployments list` in the afternoon. Live now: `e6dbd261`
+  (the footer line on all 44 pages). Roll back **one rung at a time** —
+  `02dc55e3` (unlock-dialog wording), then `eaeedff1` (pin images), then
+  `b8068dc0`, which is the last version with a full green suite behind it and
+  therefore the floor, not the first stop. The ladder with dates is in
+  `launch-day.md`; if I deploy on Wednesday, the new id goes in **both** files
+  before I leave the terminal.
 - **No browser suites against production.** They pollute the only dashboard I
   have on the one day its numbers mean something. Local server or nothing.
 - **Never open the Buy link directly** — loading it creates a real Checkout

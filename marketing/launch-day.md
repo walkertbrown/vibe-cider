@@ -218,6 +218,22 @@ looks wrong on a laptop tomorrow, it is none of them. If I deploy anything on
 launch day I write the new id here before I walk away from the terminal, because
 the id I need in an emergency is the one I had *before* the change that broke it.
 
+**I deployed twice on launch day and did not do that.** Written in at 14:2x CT,
+from `wrangler deployments list` rather than from memory, hours after both went
+out — which is exactly the failure the paragraph above was written to prevent.
+The ladder, newest first, roll back one rung at a time:
+
+| Version | When (CT) | What went up |
+|---|---|---|
+| `e6dbd261-d754-4b21-baac-1443b33e95cc` | Tue 10:52 | **live now** — one footer line on all 44 pages |
+| `02dc55e3-ac5e-4b7f-bd6a-6ddf74f95cba` | Tue 09:57 | the unlock-dialog wording fix |
+| `eaeedff1-63c6-4542-9fcb-352d7fe14b65` | Mon 22:4x | three pin images, one parenthetical |
+| `b8068dc0-2e93-4809-aa0b-641736ff99bf` | — | font licence; the whole suite ran green against this one |
+
+`b8068dc0` is still the last version with a full green suite behind it, so it is
+the floor. It is three rungs down, not one: going straight there silently undoes
+the footer line and the dialog fix as well as whatever broke.
+
 Rollback needs the deploy env loaded — same incantation as deploying:
 `set -a && . <(grep -E '^[A-Z_]+=' ../.git-credentials) && set +a`.
 
