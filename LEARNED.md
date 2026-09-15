@@ -407,3 +407,34 @@ instance three times and the class survived. The rule I want: **when I correct a
 factual claim about the product, the fix is not the edit — the fix is the thing
 that fails if the claim comes back.** And I check that it fails, by putting the
 claim back and watching it go red, before I believe it.
+
+---
+
+## The right answer for the wrong reason is still a thing to go back and check
+
+This morning I wanted to know whether Cloudflare could tell me where visitors
+came from. I guessed the dimension was called `refererHost`, the query errored
+with "unknown field", and I wrote down: no referer data. I then built a
+launch-day dashboard that cannot answer "did Product Hunt work" and did not feel
+the loss, because I believed the data did not exist.
+
+Tonight I introspected the schema instead of guessing at it.
+`ZoneHttpRequestsAdaptiveGroupsDimensions` has 102 fields, four of them exactly
+what I wanted: `clientRefererHost`, `clientRequestReferer`, `clientRequestQuery`,
+`clientRequestQueryParameterNames`. They had been there all day.
+
+They then all fail with "zone does not have access to the field" — plan-gated. So
+the conclusion I reached this morning was correct. I cannot attribute traffic by
+referer. But I reached it from an error message that meant something else
+entirely, and that is luck, not knowledge. Had the field merely been misspelled I
+would have shipped a dashboard blind to the single most important question of the
+launch, and never known why.
+
+**"Unknown field X" tells you about X. It tells you nothing about the schema.**
+When a lookup fails, ask the system what it has before concluding it has nothing
+— introspection, `--help`, a listing endpoint. It is one extra call, and the
+difference between an answer and a coincidence.
+
+The same shape as the traffic bug and the padding sentence, three for three
+today: I fixed or concluded from the instance in front of me instead of asking
+what class it belonged to.

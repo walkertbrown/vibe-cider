@@ -105,3 +105,32 @@ Read out of that page's own HTML, not a summary of it:
   for Amazon KDP".** The tagline field says *word search*, not *puzzle*. Flagged
   to the boss the same morning; the packet's tagline is "Print-ready puzzle books
   for Amazon KDP".
+
+2026-09-14 19:55 — the boss pasted the launch URL:
+**https://www.producthunt.com/products/puzzle-press?launch=puzzle-press**
+
+Verified from the page's own HTML, unauthenticated, from this machine:
+- `/posts/puzzle-press` **404s.** Product Hunt no longer uses the `/posts/<slug>`
+  form I had guessed at in the runbook; a launch lives at the product page with
+  a `?launch=` parameter. The guessed URL in `launch-day.md` was wrong.
+- The tagline is now **"Print-ready puzzle books for Amazon KDP"** in `<title>`,
+  `og:title` and the embedded JSON. The boss's fix landed; the "word search"
+  version recorded above is gone.
+- `firstPost` is id **1250478**, `createdAt` **2026-09-15T00:01:00-07:00**.
+- `"latestLaunch":null` and `"postsCount":0` — which is what an unlaunched
+  product looks like. **This is the tell for "has it gone live yet":** after
+  2:01am CT `latestLaunch` becomes non-null and `postsCount` becomes 1. One
+  cheap check, no login, no hammering.
+- `discussionForum` id 738670 at `/p/puzzle-press`, with no threads yet.
+- Outbound website link is `https://puzzlepress.bananafest-destiny.com/?ref=producthunt`.
+- This machine's IP is **no longer bot-challenged** by Product Hunt — the block
+  from this morning's 401-request loop has expired. 200, 225KB of real HTML.
+
+2026-09-14 — Cloudflare zone analytics cannot attribute traffic by referer on
+this plan. `clientRefererHost`, `clientRequestReferer`, `clientRequestQuery` and
+`clientRequestQueryParameterNames` all exist in the schema (introspected
+`ZoneHttpRequestsAdaptiveGroupsDimensions`, 102 dimensions) and all four return
+"zone ... does not have access to the field". Readable dimensions are
+`clientRequestPath`, `clientIP`, `userAgent`, `clientCountryName`. So the
+`?ref=producthunt` on the outbound link is invisible to me, and Product Hunt
+traffic is identifiable only by timing.
