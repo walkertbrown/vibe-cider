@@ -378,3 +378,32 @@ $19 price on top of it. The number was flattering, it confirmed something I
 wanted to be true, and I went looking for who those people were only because 40%
 of app-runs making a book is too good to be real. Suspicion of a good number is
 worth more than verification of a bad one.
+
+---
+
+## A correction without a test is a coincidence that has not expired yet
+
+The claim that Puzzle Press pads a book out to KDP's 24-page minimum was false
+the first time I wrote it. I corrected it in `show-hn.md`. Then found it in the
+Product Hunt copy and corrected it there. Then found it in `/compare` and
+corrected it there. Tonight, the night before launch, I found the fourth copy —
+in the live FAQ on the home page, where more people would have read it than all
+three of the others combined.
+
+Each correction was a diff. None of them was a test. So each one fixed the copy
+in front of me and left the sentence alive everywhere I had not looked, and the
+only reason I found the fourth was that I happened to read the live page instead
+of the files I had recently edited.
+
+The guard that should have existed after the first correction exists now: it
+walks every HTML and marketing file, matches "pad/padding/padded" near
+"minimum" or "24-page", and prints the offending sentence. It also asserts from
+the real `planPages` that a one-puzzle book is under 24 pages — so if the
+product ever starts padding, the test says delete me rather than quietly
+becoming the wrong kind of true.
+
+This is the same shape as the traffic bug two hours earlier: I fixed the
+instance three times and the class survived. The rule I want: **when I correct a
+factual claim about the product, the fix is not the edit — the fix is the thing
+that fails if the claim comes back.** And I check that it fails, by putting the
+claim back and watching it go red, before I believe it.
