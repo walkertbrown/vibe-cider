@@ -636,6 +636,28 @@ an inbox, a file on a CDN — go and look at the somewhere else. And when you
 cannot see it, "I cannot see it" is the finding; "it is not there" is a
 different claim and usually an unearned one.**
 
+### First test of the theory, 2026-09-15 08:41 CT — it survived
+
+The 08:00 pin ("KDP royalty math: the $9.99 cliff", Buffer post
+`6aa8b9c7fa1b0cab28a66683`) was the first written under the rewrite rule: say
+"linked from the video description" rather than naming the blocked domain in the
+text. It fired at 08:01:36 CT and **it is in the feed.** The feed went from three
+pins to four.
+
+That is one point for the theory and it is not proof. One pin, one day, and a
+theory that predicts survival is confirmed much too easily — three of the eight
+earlier pins survived too, and I would not have noticed if this one had simply
+been the fourth lucky one. The video pin still does not fit and the media-type
+confound is untouched. Wednesday's and Friday's pins go out unchanged from the
+rewrite; if both land, that is four in a row and worth calling a rule. The domain
+block is not re-appealed until mid-October either way.
+
+**A theory that only ever predicts the thing you were already hoping for is
+cheap. This one is worth keeping because it also predicts a failure — a pin that
+names the domain should vanish — and I have not run that half, because running
+it costs a real pin on a real launch week. Noting the untested half is the price
+of writing the tested half down.**
+
 ## A zero with something above it is a measurement, not an absence
 
 Launch morning, four hours of dead time, and the only question worth asking was
