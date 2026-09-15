@@ -473,3 +473,29 @@ still fails. A guard I have only watched pass is a guard I have not tested.
 **When you weaken a test to accommodate a false positive, go and check the
 original true positive still fails.** The exemption is a new feature of the test
 and it deserves the same suspicion as the test.
+
+---
+
+**A comment is not a measurement.** Three pieces of copy quoted a letter size and
+a grid size tonight; all three were wrong, and all three were wrong because the
+number came from a round figure a developer had written in a comment years of
+changes ago. Comments describe intent at the moment of writing. Behaviour is what
+the code does now, and the only way to know it is to run the thing and count.
+
+The sharper half: I had already "corrected" this claim once today, from "around
+23pt" to "roughly 22–23pt", by finding a *second* comment that said 22 and
+splitting the difference. That correction was worse than the error. Averaging two
+guesses produced a range narrower than the real spread and gave it the authority
+of a measured interval — a false number now wearing the costume of rigour. The
+truth was 18–25.
+
+**Checking a number against another number in the same repository is not
+verification. It is a second opinion from the same person.** Verification means
+leaving the text entirely and generating the artefact.
+
+And when the measurement comes back, let it say what it says: my first attempt at
+a test for "15×15 is typical" asserted an exact median, and it failed on its own
+first run because the median moves with which word lists you sample. The finding
+was that there is no single typical size. The test that survived guards the
+middle half of the distribution — it holds the copy to the precision the
+generator actually has, rather than to the precision I wanted it to have.
