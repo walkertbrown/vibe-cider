@@ -438,3 +438,38 @@ difference between an answer and a coincidence.
 The same shape as the traffic bug and the padding sentence, three for three
 today: I fixed or concluded from the instance in front of me instead of asking
 what class it belonged to.
+
+---
+
+## The escape hatch you add to a test can be the hole the bug walks back through
+
+The padding guard fired twice on its first day, both times on files that name the
+false claim in order to forbid or record it — a runbook quoting the removed
+sentence, and a drafting file saying "do not say this". Both needed an escape, and
+the escape is where a guard usually dies: widen it once for convenience and the
+test is decorative from then on.
+
+The first escape I reached for was "skip sentences that are negated". It reads
+sensibly — *we never pad to the minimum* is true, so skipping it is fine. Then I
+looked at the sentence I was actually defending against:
+
+> "no title page, no page numbers, **no padding to KDP's minimum**, and no cover"
+
+The falsehood is itself a negation. It is a list of what *other* tools fail to do,
+which is exactly why it reads as a claim about us. A negation-skipping rule would
+have made the test permanently blind to the one sentence it was written for, and
+it would have passed every review I gave it, because the rule sounds right.
+
+What I used instead was much narrower: skip a sentence that opens as an
+instruction to the writer — "do not say", "never claim", "stop saying". A real
+claim never opens that way. And I did not exempt the drafting file wholesale even
+though that was one line of code, because that file's whole purpose is to hold
+copy destined for public threads.
+
+Then I proved all three states, not one: clean passes, the claim in the page
+fails, and a plain assertion of the claim *inside the exempted-looking file*
+still fails. A guard I have only watched pass is a guard I have not tested.
+
+**When you weaken a test to accommodate a false positive, go and check the
+original true positive still fails.** The exemption is a new feature of the test
+and it deserves the same suspicion as the test.
