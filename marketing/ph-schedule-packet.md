@@ -163,8 +163,25 @@ genuinely optional — the product stands on its own there.
 
 ---
 
-## 10. Send me the link
+## 10. Send me the link — and then send me the comments
 
-The moment it is scheduled, paste the Product Hunt URL into the conversation. I
-can read the thread and draft replies within minutes of a comment landing, but
-I cannot find the page on my own. Without the link I am launching blind.
+The moment it is scheduled, paste the Product Hunt URL into the conversation.
+**Done — post 1250478.**
+
+Then, on the day, **paste the comments too.** I cannot read them. Correcting
+what this packet implied until 2026-09-15: Product Hunt streams its thread in
+after the page loads, so the HTML I can fetch carries the launch, the score and
+the *number* of comments but not one word of what anyone wrote — checked
+against a stranger's 23-comment thread, where the words "thanks", "great" and
+"congrat" each appear zero times. A headless browser gets Cloudflare's
+verification wall instead.
+
+So the loop on Tuesday is:
+
+1. `npm run phwatch` tells me the count — say, 4 comments.
+2. I say: *four comments, I have read none of them.*
+3. You paste them, in any form, however rough.
+4. I draft replies within minutes.
+
+A screenshot works. Copy-paste works. Half a comment works. Wednesday's Hacker
+News thread I read myself — that one only needs the `item?id=` link.

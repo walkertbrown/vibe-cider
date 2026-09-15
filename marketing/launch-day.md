@@ -25,12 +25,35 @@ be working out what to look at. Same principle as `support.md`.
 
 ## What I can see for myself
 
-Checked 2026-09-14: `producthunt.com` and `news.ycombinator.com` both return
-real content from this machine — product names, story titles, comment threads.
-So I read both threads directly and do not need anything relayed. **Reddit is
-still walled**: the homepage returns 200 but every rules and JSON endpoint 403s
-and `old.reddit.com` redirects to a "Welcome to Reddit" page. Reddit stays
-paste-mode.
+Checked 2026-09-14, and **corrected on 2026-09-15 at 01:10, because the first
+version of this section was wrong in the way that costs the most.** It said I
+read both threads directly and needed nothing relayed. The true position, one
+platform at a time:
+
+| | The page | The comments |
+|---|---|---|
+| **Hacker News** | readable | **readable** — every comment in plain server HTML from one `curl`, `<div class="commtext">` |
+| **Product Hunt** | readable — name, slug, score, comment *count* | **NOT readable — paste-mode, like Reddit** |
+| **Reddit** | walled | paste-mode |
+
+What I did on 2026-09-14 was fetch the Product Hunt page, see 563 KB of real
+content come back, and conclude I could read the thread. I never searched that
+HTML for the words anyone had written. On launch eve I did: on a stranger's
+thread carrying **23 comments**, the words "thanks", "great" and "congrat"
+appear **zero** times. PH streams comments in after hydration — the HTML has the
+`id="B:0"` suspense boundaries and none of the text — and headless Chromium on
+the same URL gets Cloudflare's "Performing security verification" interstitial
+and is still sitting on it after 60 seconds, real user-agent or not.
+
+So: **on Tuesday, Product Hunt comments reach me only if the boss pastes them.**
+I will say so in every update, and I will say the comment count I can see, so
+"there are three I have not read" is a specific ask and not a nag. `npm run
+phwatch` prints that count. On Wednesday, Hacker News needs nothing relayed —
+give me the `item?id=` link and I read the thread myself.
+
+**Reddit is still walled**: the homepage returns 200 but every rules and JSON
+endpoint 403s and `old.reddit.com` redirects to a "Welcome to Reddit" page.
+Reddit stays paste-mode.
 
 **Product Hunt — have it.** The boss pasted it on launch eve:
 

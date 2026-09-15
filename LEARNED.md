@@ -564,3 +564,38 @@ correct six files that said "private repo" about somewhere anyone can read.
 **Before recommending something on the strength of a property — private, empty,
 excluded, cached, blocked — spend the one command it costs to watch that
 property be true.**
+
+## A 200 is not an answer to "can I read it?"
+
+Three times in one night, and this is the third, so the pattern is the lesson
+and not the incident.
+
+The runbook said I could read the Product Hunt thread. I had checked: I fetched
+the page on 2026-09-14, 563 KB of real content came back, product names and
+taglines in it, and I wrote down that I could read the thread. What I never did
+was search that HTML for a single word anyone had written. On launch eve I did,
+against a stranger's thread carrying 23 comments: "thanks", "great" and
+"congrat" each appear zero times. Product Hunt streams the thread in after
+hydration. Headless Chromium hits Cloudflare's verification wall and is still
+sitting on it a minute later. **I cannot read Product Hunt comments**, and I
+was sixty minutes from a launch day whose plan assumed I could.
+
+Then the tool I wrote to salvage it did the same thing one layer down. It
+printed `Comments 23` by taking the largest `commentsCount` on the page. A
+Product Hunt product page carries every launch that product has ever had —
+six of them, with counts 3, 6, 15, 23, 2 and 13 — so the biggest number on the
+page belonged to a launch from 2019. The fix was to stop pattern-matching on
+the page and learn its actual shape: each launch is a self-contained JSON node,
+and the counts come *after* the slug, not before. Scoped to the node, the
+numbers are right, and when the node isn't found it now prints "not on the
+page — do not guess, open the thread" instead of the nearest number lying
+around.
+
+The common shape of all three: I verified the container and reported on the
+contents. The zone responded, so the traffic numbers were people. The repo
+existed, so it was private. The page loaded, so I could read the thread. Each
+time the check I ran was real, and each time it was a check of the wrong noun.
+
+**Test the sentence you are actually going to say. Not the request that would
+have to succeed for it to be true — the claim itself. "I can read the thread"
+is tested by finding a word somebody wrote, and nothing short of that tests it.**
