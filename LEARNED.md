@@ -518,3 +518,26 @@ what I wanted was one number and the tool looked like more than I needed.
 does it.** Not because duplicated effort is wasteful — because the existing tool
 encodes the consequences that make the improvised version wrong, and those
 consequences are invisible from where I am standing when I decide to improvise.
+
+## The filter and the thing being filtered are not the same shape
+
+The dashboard threw away requests for paths that do not exist, and called what
+was left people. But a scanner is not a request, it is an *address*, and the
+same address that probes `/.env` also fetches the homepage and the JavaScript
+bundle — real paths, kept by the filter, counted as a visitor. Four of the nine
+"real browsers" in my pre-launch baseline were one Azure host doing exactly
+that. The filter was correct about every row it saw and wrong about the thing
+it was supposed to measure.
+
+The tell was available the whole time and I never looked: I had never once
+grouped the raw rows **by address**. I read the aggregate the script printed,
+three times, and wrote a baseline off it. Aggregates are where this kind of
+error goes to hide, because the wrong number and the right number look equally
+like a number.
+
+Twice now the same shape: 69 phantom books from a rotated IPv6 address, and now
+four phantom browsers from a scanner. Both times the fix was to stop reasoning
+about individual requests and start reasoning about who made them.
+
+**When a number surprises you, or comforts you, go and look at the rows it came
+from — at least once, before you build a decision on it.**
