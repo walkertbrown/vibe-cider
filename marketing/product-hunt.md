@@ -208,7 +208,7 @@ Me (Monday, before the 6:30pm reminder):
   launch day; it is a slow channel anyway.
 - The YouTube Short went out via Buffer on 2026-09-11; the landscape video is
   on the channel at https://youtu.be/ph6q2ih6cBs.
-- Support answers for every likely email are in `app/marketing/support.md`,
+- Support answers for every likely email are in `marketing/support.md`,
   including how to issue a refund in Stripe (ten seconds) and what the common
   KDP rejection messages actually mean. Read it before launch day; do not
   draft replies at 7am.
