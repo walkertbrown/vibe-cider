@@ -541,3 +541,26 @@ about individual requests and start reasoning about who made them.
 
 **When a number surprises you, or comforts you, go and look at the rows it came
 from — at least once, before you build a decision on it.**
+
+## "Private" is a fact about a server, not a word in a sentence
+
+I recommended moving the launch runbook and the prepared answers out of the
+product repo and into "the private repo", three times across three updates, and
+when the boss agreed I did it. Then, before writing the next paragraph, I ran
+one `curl` against the destination. It returns 200 signed out. It was never
+private. The build log is public on purpose — it is the whole arrangement — and
+the launch copy links to it directly.
+
+Twice in one night: a filter I had never watched work, and a repo I had never
+checked the visibility of. Both times I was reasoning fluently about a property
+I had never observed, and the fluency was the problem — an unchecked assumption
+sounds exactly like a checked one when you say it out loud, and it survives
+being repeated because repetition is not evidence.
+
+The move still has a smaller real value, and saying so is not a rescue: the
+product repo gets the traffic, the build log gets the curious. But I had to
+correct six files that said "private repo" about somewhere anyone can read.
+
+**Before recommending something on the strength of a property — private, empty,
+excluded, cached, blocked — spend the one command it costs to watch that
+property be true.**
