@@ -12,7 +12,7 @@ be working out what to look at. Same principle as `support.md`.
 | Tue, first minutes | Post the first comment (§8 of `ph-schedule-packet.md`) | **boss** |
 | Tue, all day | Watch the funnel, answer everything | me |
 | Tue 6:30pm CT | Reminder fires for Wednesday | my cron |
-| Wed 2026-09-16, 7–9am CT | **Show HN** from `show-hn.md` | **boss** |
+| Wed 2026-09-16, 7–9am CT | **Show HN** from `show-hn.md` — then run the day from **`hn-day.md`**, which is this file for Wednesday | **boss**, then me |
 
 > **My reminders are not durable and the boss should not depend on them.**
 > Scheduled jobs live in one Claude session and are gone the moment it ends.
