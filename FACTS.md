@@ -167,3 +167,21 @@ So the thread has had no comment from a stranger all day. `ACCOUNTED = 1` in
 `app/scripts/phwatch.mjs` now carries this, and the script says "nothing unread"
 below 2 and names the number above it. Raise the constant when a comment is
 pasted.
+
+2026-09-15 11:23 CT — **The business name change did not take.** The boss said
+Stripe was done; the product half was (image renders, description reads
+"Unlimited print-ready KDP puzzle books — no watermark, one-time payment", price
+$19.00, no sandbox badge). The name half was not. `npm run test:livecheckout`
+screenshots the live card form, and the personal name appears three times on it:
+
+    Walker Brown                     (top left, beside the icon)
+    Pay Walker Brown                 (the heading, above $19.00)
+    ...provided by Walker Brown      (the terms line under the Pay button)
+
+The field is the account's **public business name**, not anything on the product
+or the payment link. Stripe falls back to the individual's name when the account
+has no business name set.
+
+Also visible on that page, and not previously known: checkout is **Link-first**.
+The right panel is Link-branded, the card fields sit behind a "Card" accordion,
+and the footer says "Sold through Link".

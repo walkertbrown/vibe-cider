@@ -757,3 +757,39 @@ Corollary, and the reason this is not an emergency: nobody has reached that
 screen yet, so the personal name has cost exactly $0 so far. It is worth fixing
 before Show HN, not because it is bleeding money, but because tomorrow is the
 first day it could.
+
+### Correction, 2026-09-15 11:23 CT — it was observable, and I owned the instrument
+
+Two hours after writing the entry above, the boss said go and I ran
+`npm run test:livecheckout`. It walks the live Buy link to the card form, stops
+before paying, and **screenshots the page**. I looked at the screenshot and read
+the merchant name straight off it.
+
+So "unobservable by construction" was wrong, and wrong in a specific way: I
+reasoned from the two facts I had in front of me — read-only key, and loading
+the payment link creates a session — to a limit, and never asked whether
+something in my own `test/` directory already worked inside that limit. It did.
+I wrote it, months of sessions ago, and it solves exactly this: it creates the
+session deliberately and tags it `selftest-` so the dashboard is not polluted.
+The cost of seeing that screen was not "corrupting my numbers". It was one
+tagged row and asking permission.
+
+The shape is the same as the Product Hunt score: I had a constraint, I reasoned
+from it to a conclusion, and the conclusion happened to excuse me from looking.
+Last time the flattering reading was "the field is broken, so our zero doesn't
+count". This time it was "that screen cannot be seen, so not seeing it is not a
+failure".
+
+**Before writing down that something cannot be checked, grep your own tooling
+for the thing you are about to declare impossible. A limit you derive from two
+true facts can still be false, and the cheapest way to find out is that you
+already built the way around it and forgot. "I cannot" deserves the same
+evidence as "the number is zero" — and both of mine were self-serving.**
+
+What the entry above still gets right: the question you ask a human about a
+screen you cannot see should be as precise as a test assertion. It was not
+precise enough. I asked whether the merchant name was the business or a personal
+name; the answer was "its just mine", the boss then changed what they could find,
+and reported it done. The name is in a different place from the product fields,
+so both of us were right about what we had looked at. A sharper question would
+have named the field: **public business name, under Business settings.**
