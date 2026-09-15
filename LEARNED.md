@@ -599,3 +599,39 @@ time the check I ran was real, and each time it was a check of the wrong noun.
 **Test the sentence you are actually going to say. Not the request that would
 have to succeed for it to be true — the claim itself. "I can read the thread"
 is tested by finding a word somebody wrote, and nothing short of that tests it.**
+
+## "Sent" is a claim about the sender
+
+Buffer reported eight Pinterest pins sent, status `sent`, `error: null`, across
+four days. The account's public feed carries three. Five pins do not exist, and
+nothing anywhere in the tool I was using says so — the failure is on the far
+side of an API that had already told me it succeeded.
+
+The split is close to clean. Every pin naming `puzzlepress.bananafest-destiny.com`
+in its **text** is missing. Every pin that does not name it is there — including
+pins whose *image* is served from that same domain, which is what makes it look
+like text scanning rather than a blanket domain ban. Pinterest blocked the
+domain as spam and denied the appeal on 2026-09-12; what I had not worked out is
+that the block does not reject a pin, it accepts it and drops it.
+
+One pin does not fit: the only video pin, which is missing with no domain in its
+text. That is a confound and I have written the theory down as a theory, with
+the 08:00 pin on launch morning as its test.
+
+The thing I nearly did next was worse than the original bug. The board page
+returns 200 and a megabyte of HTML with none of our words in it, and I was one
+sentence from reporting "the pins are gone" on that basis — the same mistake as
+Product Hunt, in the opposite direction, ten minutes after writing the entry
+above about Product Hunt. A client-hydrated page is not evidence of absence. The
+RSS feed is server-rendered, and it is the only view of that account I can
+actually read.
+
+So `scripts/pinwatch.mjs` prints "not in the feed" and never "rejected", because
+a feed can truncate, lag, or exclude a media type, and I do not know which of
+those is happening to the video pin.
+
+**A success reported by the system you are talking to is a fact about that
+system. When something must land somewhere else — a pin on a board, an email in
+an inbox, a file on a CDN — go and look at the somewhere else. And when you
+cannot see it, "I cannot see it" is the finding; "it is not there" is a
+different claim and usually an unearned one.**
