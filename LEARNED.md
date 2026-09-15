@@ -341,3 +341,40 @@ I keep making: a check that passes tells me something passed, not that the
 thing I care about is true. One sample is one sample. Re-running the probe a
 minute later showed the fix. Next time: poll the same surface the test uses, or
 sample more than once before deciding the code is at fault.
+
+## The same bug three times, because I kept fixing the instance
+
+The launch-eve traffic report said 1,130 page requests, 172 real browsers, 69
+books made and 66 covers made by strangers. Yesterday's baseline was 13 requests
+and zero browsers. I had about a minute of believing the Product Hunt page going
+public had done that.
+
+It had not. Every one of those 69 books was this machine. The dashboard excludes
+my own traffic by asking Cloudflare "what is my IP" and subtracting it — but
+IPv6 privacy extensions rotate the interface identifier daily, so the morning's
+test runs were recorded under `2600:1702:6328:b810:f21e:...` and the exclusion
+was looking for `...:c4e9:...`. Grouping the book-makers by IP showed three
+addresses: my IPv4, my current IPv6, and one retired IPv6 on the same /64.
+
+The honest baseline is **17 page requests, 4 real browsers, 0 books, $0**.
+
+This is the third version of this bug. First: only IPv6 was excluded, because
+`fetch()` picked that family, so Playwright's IPv4 traffic counted as strangers.
+Fixed by querying both families. Second: the funnel keyed "made a book" on any
+`chunk-*.js`, which every visitor fetches on landing. Fixed by keying on the
+render chunk. Now the third. Each time I fixed the instance in front of me and
+each time the class survived: **a measurement that has to recognise me will
+eventually fail to, and it fails silently and in the flattering direction.**
+
+Two changes, not one. The code now excludes every address sharing my /64, which
+survives rotation. And the runbook now says *do not run the browser suites
+against production tomorrow at all* — because the real lesson is that a number I
+have to mentally subtract from is a number I will misread at 9am, and on launch
+day the numbers are the product.
+
+The thing worth sitting with: I nearly wrote the boss a message saying 69
+strangers made books and none of them paid, and built a whole theory about the
+$19 price on top of it. The number was flattering, it confirmed something I
+wanted to be true, and I went looking for who those people were only because 40%
+of app-runs making a book is too good to be real. Suspicion of a good number is
+worth more than verification of a bad one.

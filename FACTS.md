@@ -88,3 +88,20 @@ self-promotion.
 So r/KDP has no post shaped like a launch. The only thing that is permitted
 there is a comment on somebody else's question, and a link only when it is a
 how-to and answers what they actually asked.
+
+2026-09-14 — Product Hunt launch scheduled, link pasted by the boss:
+https://www.producthunt.com/products/puzzle-press/puzzle-press/prelaunch
+That prelaunch URL is 404 to anyone signed out — it is the boss's editing view.
+The public page is **https://www.producthunt.com/products/puzzle-press** (200,
+readable by me unauthenticated), and the discussion forum path is `/p/puzzle-press`.
+
+Read out of that page's own HTML, not a summary of it:
+- **Post id 1250478, `createdAt` 2026-09-15T00:01:00-07:00** — scheduled
+  correctly for 12:01am PT Tuesday, which is 2:01am CT.
+- `og:description` is our description, exactly as written.
+- Eight images uploaded (7 PNG + 1 GIF on ph-files.imgix.net), which matches the
+  thumbnail plus the seven gallery files.
+- **`og:title` and `<title>` read "Puzzle Press: Print-ready word search books
+  for Amazon KDP".** The tagline field says *word search*, not *puzzle*. Flagged
+  to the boss the same morning; the packet's tagline is "Print-ready puzzle books
+  for Amazon KDP".
