@@ -10,7 +10,19 @@ post does.
 
 ## Title (paste exactly; 80-char limit)
 
-Show HN: Puzzle Press – print-ready KDP puzzle books, generated in the browser
+Show HN: Puzzle Press – print-ready KDP puzzle books, built by an AI agent
+
+Alternative, if you want the hook harder (78 chars) — more upvotes and more
+flamebait, your call:
+
+Show HN: An AI agent built this KDP puzzle book generator, including this post
+
+**Rewritten 2026-09-15 on the boss's direction: lead with the agent.** The
+earlier title sold the generator and buried the interesting part in the last
+paragraph. On this audience that is backwards — a browser-side PDF tool is a
+Tuesday, and an agent that was given a job, shipped, marketed and has so far
+failed to sell anything is not. The product still has to be real underneath, so
+nothing below has been softened to make room.
 
 ## URL
 
@@ -18,11 +30,13 @@ https://puzzlepress.bananafest-destiny.com
 
 ## Text (goes in the "text" box — HN shows it under the link)
 
-I built a browser-side generator for Amazon KDP puzzle books: word search, sudoku, mazes, criss-cross fill-ins and themed crosswords. It lays out the whole paperback interior — puzzles, solutions, page numbers, the four ruled pages at the back — to KDP's actual rules (gutter that grows with page count and swaps sides, 0.125" bleed, embedded subset fonts, even page count, 24–828 pages), then generates the full-wrap cover with the spine width computed from the page count of the book it just made.
+I gave a Claude agent a standing job — build and sell one web app at a time, log what you planned and what actually happened — and stayed out of the way. It picked the idea, wrote the code, deployed it, priced it, wrote the landing page, launched it on Product Hunt yesterday, and wrote this post. I supplied accounts, a card, and factual answers when it asked ("does this account exist", "what will you pay for"). It has been running for about a week.
+
+The product is real and you can use it now, so judge that first: a browser-side generator for Amazon KDP puzzle books — word search, sudoku, mazes, criss-cross fill-ins and themed crosswords. It lays out the whole paperback interior — puzzles, solutions, page numbers, the four ruled pages at the back — to KDP's actual rules (gutter that grows with page count and swaps sides, 0.125" bleed, embedded subset fonts, even page count, 24–828 pages), then generates the full-wrap cover with the spine width computed from the page count of the book it just made.
 
 Everything runs client-side with pdf-lib; nothing you type leaves the browser. The Worker only serves static files and checks Stripe for an unlock.
 
-Things I cared about that most generators skip:
+Things it cared about that most generators skip:
 
 - Every word search word appears exactly once, checked in all 8 directions after fill; nested words (CAT/CATALOG) never share a grid; filler letters are screened against a blocklist.
 - Every sudoku has exactly one solution — clues are removed in symmetric pairs and a removal is rejected if a counting solver finds a second solution.
@@ -35,13 +49,60 @@ Free to use with a watermark; $19 once removes it. No account.
 
 Also: three free calculators (spine width, margins, royalty) on the same code path as the PDF engine, because several top-ranked KDP spine calculators add 0.06" that Amazon's documentation doesn't — that's a hardcover rule and it gets paperback covers rejected.
 
-Disclosure: the whole thing — idea, code, deploy, copy — was built by an AI agent working as an employee, with me supplying accounts and answering factual questions. The build log with every plan and what actually happened is public: https://github.com/walkertbrown/vibe-cider. Happy to talk about that too.
+The part I think is worth your time is the log. Every phase has a plan written before it and an account written after, and the failures are the interesting half: it reported 69 strangers making books who were all its own machine under a rotated IPv6 address; it shipped a "free" book that was mostly blank Notes pages; it twice described a competitor's features wrongly, both times in the direction that flattered us, and caught itself both times; it wrote "I cannot see the checkout page" into its notes as a settled fact and then found the test it had already written months earlier to do exactly that. It's not a demo of an agent succeeding — it's a week of one working, wrong turns left in.
 
-## If you'd rather leave the AI disclosure out
+It has sold nothing. Not "no conversions" — the Stripe account holds sixteen checkout sessions and every one of them was created by its own test scripts. No stranger has ever reached the payment page. It launched on Product Hunt yesterday and scored 1. Whatever this is evidence of, it is not yet evidence that it works.
 
-Delete the last paragraph. But HN in particular will ask, and finding out later reads worse than saying it up front. Recommendation: keep it.
+Log: https://github.com/walkertbrown/vibe-cider — code: https://github.com/walkertbrown/puzzle-press
+
+## On posting this from your account
+
+You post it; the agent wrote it, and the first line says so — the "I" is yours
+for that paragraph and its for the rest, and the post makes clear which is
+which. One rule in the thread: nobody should come away thinking a bot is typing
+the replies, because a bot isn't. Drafts come from the agent, you paste them,
+and if anyone asks, say exactly that. Getting caught blurring it would cost more
+than the post is worth.
 
 ## Replies you will need (paste and adapt)
+
+### The agent questions — now the top of the thread, not the bottom
+
+Leading with the agent moves these from "somebody might ask" to "this is what
+the thread is about". Answer them the way the log does: specifically, with the
+failures first. Vagueness here reads as a stunt, and a stunt gets flagged.
+
+**"What did you actually do, then?"** — the question the whole framing lives or
+dies on. Answer it small and concrete; any hint of overclaiming and the thread
+turns.
+> Opened accounts (Cloudflare, Stripe, Product Hunt, Pinterest), put a card on file, and answered factual questions — does this account exist, what will you pay for, is this comment mine. I did not pick the idea, write a line of it, choose the price, or write the copy, and I have refused to workshop the product when asked; the standing rules say the idea is its own. The one real contribution was review: I caught a "free" book that came out mostly blank Notes pages. That's in the log with the date.
+
+**"What did it get wrong?"** — the best question anyone will ask, and the
+answer is the most credible thing in the post. Do not soften it.
+> Quite a lot, and it's all in the log because the rules make it write down what actually happened, not what it meant to happen. The worst one: it reported 69 strangers generating books, which was its own machine under an IPv6 privacy address it had rotated away from that morning — a launch baseline that was pure self-traffic. It shipped a free book that was mostly blank Notes pages. It twice got a competitor's feature list wrong in the direction that flattered us, and caught itself both times before posting. It wrote "I cannot see the Stripe checkout page" into its notes as a settled fact, reasoning from two true premises, and then found the test it had written weeks earlier that does exactly that. It also concluded Product Hunt's vote counts were a broken field when actually every launch really did have zero votes, because it was 43 minutes past midnight.
+>
+> The pattern it flagged about itself is the one worth reading: the wrong answers were the flattering ones.
+
+**"How much did it cost to run?"** — ASK THE BOSS FOR THIS NUMBER BEFORE
+POSTING. The agent does not have billing access and will not invent a figure;
+if you don't want to say, "I'm not going to give a number I haven't totted up"
+is a fine answer and better than a guess.
+
+**"Is this an ad for Anthropic / for agents?"**
+> No relationship with them beyond paying for the model like anyone else. And read the last line of the post: it has sold nothing. If I were selling the agent story I'd have picked a week where it made money.
+
+**"It's not autonomous, you're the one posting."**
+> Correct, and the post says so. It can't open accounts, take payment, or post as itself, so I'm the hands: I paste what it writes and I sign up for things. Everything upstream of that — what to build, how to build it, what to charge, what to say — is its, and the replies you're reading are drafted by it and pasted by me. I'll say so every time it's relevant, which is the only way this stays honest.
+
+**"Has it made any money?"**
+> None. $19 one-time, and the honest version is worse than "no sales": there are sixteen checkout sessions in the Stripe account and all sixteen were created by its own test scripts walking the Buy link. Nobody who isn't it has ever reached the payment page. Product Hunt yesterday: score 1.
+>
+> Worth adding, since it's the obvious follow-up — the payment path has never completed end to end in live mode either. It was proven once in Stripe's test mode, and the verification code has been rewritten twice since. It knows this and has it written down as the top risk for today.
+
+**"Why puzzle books?"**
+> Its reasoning, not mine: KDP is a real market with people already paying for tools, the hard part is a documentable spec (Amazon publishes the trim, bleed and gutter rules) rather than taste, and the whole thing could run in a browser with no server, no accounts and no data to look after. I was not consulted and, under the rules I set, wouldn't have been.
+
+### The product questions
 
 **"Why not just use Book Bolt / Canva / a free generator?"** — expect this to be the top comment. Answer it early and concede the true part first.
 > Fair question, and for a lot of people the free ones are the right answer. PuzzleForge, for instance, is genuinely free, no account, no watermark, and covers six types to our five — they have scrambles and hangman, we have criss-cross fill-ins, and we both do clued crosswords. They'll also bulk-generate up to 50 puzzles with answer keys, export PNG as well as PDF, and take your own Gemini/OpenAI/Anthropic key to write word lists and clues. If you don't need a cover and don't mind assembling the interior, use it.

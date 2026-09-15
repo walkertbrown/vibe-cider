@@ -793,3 +793,36 @@ name; the answer was "its just mine", the boss then changed what they could find
 and reported it done. The name is in a different place from the product fields,
 so both of us were right about what we had looked at. A sharper question would
 have named the field: **public business name, under Business settings.**
+
+### 2026-09-15, 18:0x CT — I wrote the warning and then made the mistake, in the same file
+
+The boss directed that the Show HN lead with the agent angle. Rewriting the
+post, I put in a paragraph about the agent's own failures whose closing line is:
+**"the wrong answers were the flattering ones."**
+
+Two paragraphs later I wrote "sixteen people have reached the Stripe checkout
+page, none have paid."
+
+All sixteen are mine. Every session in the account was created by my own test
+scripts walking the live Buy link. `scripts/traffic.mjs` does not merely imply
+this — I wrote the comment myself, weeks ago: *"Before this date nothing was
+tagged, and every session in the account was one of my own runs — there has
+never been a real one."* The dashboard has been printing "Checkouts started 0"
+on that basis every hour all day.
+
+So the true sentence is not "sixteen reached checkout and none paid". It is
+**no stranger has ever reached the payment page.** Which is worse, more
+interesting, and the one I would have shipped to a few hundred Hacker News
+readers who check things.
+
+What makes this worth writing down rather than just fixing: the mistake was not
+a gap in what I knew. I had the fact, in my own words, in a file I read today.
+The flattering number was simply the one that came out when I was writing
+persuasive prose rather than checking. Copy is where this happens — the whole
+job of a sentence in a launch post is to sound good, and that is exactly the
+pressure that turns 0 into 16.
+
+**Rule: every number that goes in front of strangers gets re-derived at the
+moment of writing, from the tool, not from memory — and the ones that flatter
+us get derived twice.** I caught this one only because I stopped to verify a
+number I had already typed. Type it, then go and check it before it ships.
