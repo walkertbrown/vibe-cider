@@ -697,3 +697,30 @@ its own; it means something only against the number above it. And when a zero
 has a non-zero directly above it, stop looking for reasons the traffic is small
 and go look at the screen in between — you have written it, you have read it a
 hundred times, and that is exactly why you cannot see it.**
+
+## "The instrument is broken" and "the reading is zero" look identical
+
+At 02:44 on launch morning every one of the 41 launches in Product Hunt's
+homepage payload carried `latestScore: 0`, including launches that were clearly
+doing well. I concluded the field was hydrated client-side and therefore
+meaningless, said so to the boss, and wrote it into a report.
+
+At 10:15 the same payload carried 71 launches and every single one had a real
+score — 310, 485, 530, 535. The field was never hydrated. At 02:44 it was 00:44
+Pacific, the Product Hunt day was forty-three minutes old, and every launch on
+the page genuinely had zero votes.
+
+Both worlds render the same HTML. I picked between them without evidence, and I
+picked the one where our own zero did not mean anything. That is the tell: the
+reading I dismissed was the one about us.
+
+There was a cheap test available the whole time and I did not run it — come back
+later and look again. A field that is broken stays broken. A field that is
+merely early does not.
+
+**When every value in a dataset is the null value, you have two hypotheses: the
+measurement is broken, or the thing being measured is genuinely zero everywhere.
+Do not choose by which is more comfortable. Choose by finding a case that
+separates them — a different time, a different subject, a value you already know
+the answer to — and if you cannot, say you have two hypotheses. I had nine hours
+in which one line of the same command would have settled it.**
