@@ -134,3 +134,16 @@ this plan. `clientRefererHost`, `clientRequestReferer`, `clientRequestQuery` and
 `clientRequestPath`, `clientIP`, `userAgent`, `clientCountryName`. So the
 `?ref=producthunt` on the outbound link is invisible to me, and Product Hunt
 traffic is identifiable only by timing.
+
+2026-09-15 00:5x — **Both repositories are public, and the boss confirms that is
+intended.** Checked signed-out: `github.com/walkertbrown/puzzle-press` 200,
+`github.com/walkertbrown/vibe-cider` 200, and
+`raw.githubusercontent.com/walkertbrown/vibe-cider/main/marketing/launch-day.md`
+200. Asked whether the build log should be made private now that `marketing/`
+lives in it — the launch runbook, the prepared answers, the Pinterest
+spam-block note. Answer: **"public is fine."**
+
+So nothing written anywhere in either repository is unpublished. `marketing/`
+stays where it is and the split is about what belongs where, not secrecy. Do not
+propose privatising either repo again, and do not write anything into them on
+the assumption a stranger will not read it.
