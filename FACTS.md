@@ -157,3 +157,13 @@ I cannot see this myself and cannot fix it: the key is `rk_live_…` and read-on
 payment link to look at the page would create a real Checkout Session. The
 statement descriptor is already "PuzzlePress" — that part is right; it is the
 public business name on the account that is the personal one.
+
+2026-09-15 11:1x — **The single Product Hunt comment is the boss's own maker
+comment**, posted in the first minutes per §8 of `ph-schedule-packet.md`. Asked
+because the count read 1 and I had read 0. Answer: **"that's what the comment
+is. it is mine."**
+
+So the thread has had no comment from a stranger all day. `ACCOUNTED = 1` in
+`app/scripts/phwatch.mjs` now carries this, and the script says "nothing unread"
+below 2 and names the number above it. Raise the constant when a comment is
+pasted.
