@@ -67,7 +67,19 @@ reply above is theirs about themselves. Re-read it on the day anyway.
 > Sudoku: dig clues out in symmetric pairs; before each removal, run a solver that counts solutions with a cap of 2; if it finds 2, keep the pair. Mazes: iterative DFS carve = spanning tree, so the path between any two cells is unique by construction. Word search: after placing words and filling, scan all 8 directions for every word and require exactly one occurrence (two for palindromes); nested words are removed from the list before placement. The generators and tests are in the repo.
 
 **"Client-side PDF generation — how big is the bundle?"**
-> pdf-lib + fontkit load lazily on first download; the page itself is ~40 KB of JS, ~250 KB total with the hero image, ~0.95 s to first puzzle on a throttled phone. Fonts are Liberation Sans, subset per book.
+
+Measured against the live site 2026-09-15; transfer figures are Brotli off
+Cloudflare, which is what devtools shows. Volunteer the 516 KB — whoever asks
+this question has devtools open and will find it, and being corrected on your
+own numbers is a worse comment than the number itself.
+
+> Two numbers, because it loads in two stages.
+>
+> First paint is 119 KB over the wire: 22 KB of JS, 14 KB of HTML, and 83 KB of that is the hero image (186 KB uncompressed). First puzzle renders in about 990 ms on a throttled mid-range phone.
+>
+> Then pdf-lib + fontkit are a 516 KB lazy chunk (1.37 MB raw) that doesn't load until you click Download — so browsing, generating and previewing puzzles never pays for it, and it warms in the background if you idle on the page. It's a real 516 KB and I'd rather say so than have you find it: it's most of pdf-lib, and the trade is that nothing you type ever leaves the browser.
+>
+> Fonts are Liberation Sans, subset per book.
 
 **"Crosswords?"**
 > Yes, themed ones — the open interlocking grids KDP crossword books use, 8–22 answers on a subject, clued in plain language (1,460 clues written for the tool, or paste your own). Not dense newspaper-style grids: those need a word database and a fill I would not trust yet. There is also a criss-cross / fill-in type, verified to have a unique fill.
