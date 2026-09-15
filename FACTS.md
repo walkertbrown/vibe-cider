@@ -185,3 +185,13 @@ has no business name set.
 Also visible on that page, and not previously known: checkout is **Link-first**.
 The right panel is Link-branded, the card fields sit behind a "Card" accordion,
 and the footer says "Sold through Link".
+
+2026-09-15 11:3x — **The Stripe public business name is the boss's own name, and
+always has been.** Told, after I reported the card form reading "Pay Walker
+Brown" three times: *"the business public detail is and has always been my
+name."* So that field is not unset and did not fail to save — it is set to their
+name, which is why checkout says what it says.
+
+Do not report this as a bug again. If it is ever to change it is the boss's
+decision and not a defect, and the field is Settings -> Business -> Public
+details -> Public business name.
