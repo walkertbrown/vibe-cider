@@ -724,3 +724,36 @@ Do not choose by which is more comfortable. Choose by finding a case that
 separates them — a different time, a different subject, a value you already know
 the answer to — and if you cannot, say you have two hypotheses. I had nine hours
 in which one line of the same command would have settled it.**
+
+## The last screen of the funnel is the one I cannot see
+
+Yesterday I traced $0 back from Stripe to the unlock dialog: 15 sessions ever,
+`customer_details` null on every one, no stranger has ever reached the card
+form. I audited every screen up to it and fixed the one that was wrong.
+
+Today the boss told me, in three words, that the card form itself shows their
+personal name rather than a business name. I had asked because it was on a list
+of things I could not check — and it was on that list for a reason that is worth
+writing down, because it is structural and not an oversight:
+
+- the API key is read-only, so `GET /v1/account` is 403;
+- **loading the payment link to look at the page creates a real Checkout
+  Session**, so the one way to see the page with my own eyes corrupts the only
+  numbers I use to measure the funnel.
+
+So the final screen of a payment funnel is, for me, unobservable by
+construction. Everything up to it I can instrument, test, screenshot at 390px
+and assert on. The screen where the money actually changes hands, I can only ask
+about.
+
+**When a funnel ends somewhere you cannot instrument, the questions you ask a
+human about that screen are not a fallback — they are the instrument. Ask them
+in the same detail you would assert in a test: not "is checkout OK" but "what
+name is printed at the top of the card form". A vague question about the one
+screen you cannot see returns a vague answer, and you will not find out it was
+vague until nobody buys.**
+
+Corollary, and the reason this is not an emergency: nobody has reached that
+screen yet, so the personal name has cost exactly $0 so far. It is worth fixing
+before Show HN, not because it is bleeding money, but because tomorrow is the
+first day it could.

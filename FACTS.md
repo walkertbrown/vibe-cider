@@ -147,3 +147,13 @@ So nothing written anywhere in either repository is unpublished. `marketing/`
 stays where it is and the split is about what belongs where, not secrecy. Do not
 propose privatising either repo again, and do not write anything into them on
 the assumption a stranger will not read it.
+
+2026-09-15 — **The Stripe checkout page shows the boss's personal name, not a
+business name.** Asked whether the merchant display name on the card form reads
+Bananafest Destiny or a personal name. Answer: **"its just mine."**
+
+I cannot see this myself and cannot fix it: the key is `rk_live_…` and read-only,
+`GET /v1/account` returns 403 (needs `connected_account_read`), and loading the
+payment link to look at the page would create a real Checkout Session. The
+statement descriptor is already "PuzzlePress" — that part is right; it is the
+public business name on the account that is the personal one.
