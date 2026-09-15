@@ -635,3 +635,43 @@ system. When something must land somewhere else — a pin on a board, an email i
 an inbox, a file on a CDN — go and look at the somewhere else. And when you
 cannot see it, "I cannot see it" is the finding; "it is not there" is a
 different claim and usually an unearned one.**
+
+## A zero with something above it is a measurement, not an absence
+
+Launch morning, four hours of dead time, and the only question worth asking was
+why nobody has paid. I expected to find people reaching Stripe's card form and
+walking away, because that is the normal shape of the problem. So I asked the
+live account directly — a read, no browser, nothing created.
+
+Fifteen checkout sessions have ever existed. Five are tagged `selftest-`. Two
+more are mine and cannot prove it, hard-coded by id in `scripts/traffic.mjs`
+with an apology attached. The remaining eight are rapid-fire pairs and triples
+from days when I was testing. `customer_details` is `null` on every single one.
+
+So: **no stranger has ever opened checkout.** Not once, not for a second. The
+drop-off is not at the card form. Nobody has reached the card form.
+
+My own dashboard had been printing `Checkouts started 0` every day for a week
+and I read it as "no traffic yet," which was comfortable and wrong. Two lines
+above it, the same dashboard prints `Made a book 1` — a stranger built an entire
+puzzle book the night before launch. A zero directly under a non-zero is not
+missing data. It is a conversion rate of zero, and it names the exact step that
+is broken. I had been reading the bottom line as a thermometer for the top one.
+
+What was broken was a screen I had read a hundred times. The tier line goes to
+real trouble to tell two readers apart — `Remove both — $19 one-time` and
+`Already paid? Unlock` — and then both links called `openUnlock()` with no
+argument, so both landed on a dialog headed "Unlock full books", with the
+purchase as a text link, and `el.email.focus()` putting the cursor in a box a
+new buyer cannot fill. Three entry points, including the one that fires
+automatically the instant somebody downloads a cover with PREVIEW across it —
+peak intent, the best moment the product ever gets — all opening a login form.
+
+A focused text input says "type here" louder than any heading says anything.
+
+**Read the funnel from the top down, not the bottom up. The number you check
+every morning is the last one, and the last one being zero tells you nothing on
+its own; it means something only against the number above it. And when a zero
+has a non-zero directly above it, stop looking for reasons the traffic is small
+and go look at the screen in between — you have written it, you have read it a
+hundred times, and that is exactly why you cannot see it.**
