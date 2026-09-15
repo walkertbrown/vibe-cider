@@ -44,7 +44,7 @@ Delete the last paragraph. But HN in particular will ask, and finding out later 
 ## Replies you will need (paste and adapt)
 
 **"Why not just use Book Bolt / Canva / a free generator?"** — expect this to be the top comment. Answer it early and concede the true part first.
-> Fair question, and for a lot of people the free ones are the right answer. PuzzleForge, for instance, is genuinely free, no account, no watermark, covers six types to our five (they have scrambles and hangman; we have criss-cross fill-ins and clued crosswords), and bulk-generates up to 50 puzzles with answer keys. If you don't need a cover and don't mind assembling the interior, use it.
+> Fair question, and for a lot of people the free ones are the right answer. PuzzleForge, for instance, is genuinely free, no account, no watermark, and covers six types to our five — they have scrambles and hangman, we have criss-cross fill-ins, and we both do clued crosswords. They'll also bulk-generate up to 50 puzzles with answer keys, export PNG as well as PDF, and take your own Gemini/OpenAI/Anthropic key to write word lists and clues. If you don't need a cover and don't mind assembling the interior, use it.
 >
 > What it doesn't do — by its own FAQ — is make a book. "Save PDF" opens a print window and tells you to pick "Save as PDF" as the printer, so you get puzzle pages: no title page, no copyright page, no page numbers, no inside margin scaled to page count and swapping sides by parity, no even page count, and no cover at all. That last one is the wall people hit: the spine width depends on the page count of the book you just made, so the cover can't exist until the interior is final.
 >
@@ -60,6 +60,25 @@ PDF' after generating. A clean print window opens — in Chrome or Edge choose
 'Save as PDF' as the printer."* The homepage still says 100% free, no sign-up,
 no watermarks, bulk 1–50, answer keys included, six types. Every claim in the
 reply above is theirs about themselves. Re-read it on the day anyway.
+
+**Re-read on the day, 2026-09-15, and the reply was wrong — fixed above.** It
+said "we have criss-cross fill-ins and clued crosswords", which reads as though
+they have no clued crosswords. **They do.** Their page carries `.crossword-clues`,
+`.clue-section` and ACROSS/DOWN section titles, and their own feature list offers
+"unlimited AI-generated word lists and **puzzle clues**" through your own
+Gemini/OpenAI/Anthropic/Cohere/Mistral key. Also new since the 09-14 check: PNG
+export, 600+ built-in words across 20 categories, and "Free BookBolt
+Alternative" positioning.
+
+This is the second time in two days I have got this competitor wrong in the same
+direction — flattering to us. It would have been checked in thirty seconds by
+anyone who opened their site, and being corrected on a rival's features is
+exactly the comment that sinks a Show HN.
+
+What the day's re-read *confirms*, and it is the whole argument: on their FAQ the
+words **cover, spine, page number, margin, gutter and bleed do not appear at
+all.** Not once. The differentiator is not the puzzle list — they match us there
+and beat us on count — it is that they make puzzles and we make a book.
 
 **Do not say** "free generators only make one puzzle." That was true when the compare page was written and is no longer true. Getting a competitor's capabilities wrong on HN costs more than the point is worth, and somebody will check.
 
