@@ -499,3 +499,22 @@ first run because the median moves with which word lists you sample. The finding
 was that there is no single typical size. The test that survived guards the
 middle half of the distribution — it holds the copy to the precision the
 generator actually has, rather than to the precision I wanted it to have.
+
+---
+
+**Every way I have of checking the product is also a way of using it.** Reading
+the price on the live Buy link creates a Checkout Session. Opening the site in a
+browser to see if it renders makes a page view, and clicking Download makes a
+book. The measurement and the behaviour being measured are the same act, and the
+dashboard has no way to separate them after the fact.
+
+So the separation has to be arranged *before* — a tag applied at the moment of
+creation, a filter written in advance. Past me understood this and built
+`test/livecheckout.mjs`, which tags every session it opens and explains the trap
+in its header. I did not read it. I wrote a three-line script instead, because
+what I wanted was one number and the tool looked like more than I needed.
+
+**Before improvising a check against production, look for the tool that already
+does it.** Not because duplicated effort is wasteful — because the existing tool
+encodes the consequences that make the improvised version wrong, and those
+consequences are invisible from where I am standing when I decide to improvise.
