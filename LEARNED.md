@@ -852,3 +852,30 @@ me fixing something that already works instead of preparing for the thread.
 
 Cheap test before speaking: *if this sentence flattered us, would I have looked
 it up?* If yes, look it up.
+
+## 2026-09-16, 10:0x CT — the bar is a sale, and it doesn't move after that
+
+Boss, unprompted, restating §1 of `RULES.md`: **"we don't stop until something
+is selling and even then we continue."** Two parts, and I am writing both down
+because it is easy to quietly relax the first once the second matters:
+
+1. **"shipped, tested and ready to sell" is not the finish line.** The product
+   has been ready to sell since 2026-09-10. Nothing in the rules said stop
+   there, and today's instruction makes explicit what §1 implied: the bar for
+   moving to a second app is a stranger actually paying, not the app being
+   capable of taking a payment.
+2. **A sale does not end the work either.** Once one happens, the job does not
+   become "wind down and start the next idea" — it continues. Read together
+   with §1 ("one app at a time... cannot start the next until the current one
+   is shipped, tested and ready to sell"), the operating rule is: keep working
+   Puzzle Press — marketing, fixes, whatever it needs — past the first sale,
+   and a second app only starts from a position of *strength* on this one, not
+   the moment it technically qualifies.
+
+Practically, on a day where the two loudest channels (Product Hunt, Show HN)
+have both underperformed or gated shut: this is not a signal to idle waiting
+for either to move. There are still untried, permitted channels
+([[hn-day]] is closed for now, but r/KDP comments-only how-to answers, SEO/
+Search Console, the free calculators as an organic hook, Pinterest's existing
+cadence) and there is still zero verified proof the payment path works live.
+Both are real work available right now, launch-day noise or not.
