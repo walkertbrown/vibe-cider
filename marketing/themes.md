@@ -1,0 +1,119 @@
+# Hyper-specific themes — spec
+
+Prompted by the boss, 2026-09-16, after the funnel review: "have we considered
+more themes? Like hyper specific stuff?" Researched before writing anything —
+sources at the bottom.
+
+## What we have now
+
+32 word-list themes in `app/src/generator/wordlists.js`, each with its own
+landing page under `public/word-lists/`: Animals, Food & Cooking, Travel &
+Places, Garden & Nature, Under the Sea, Space, Christmas, Sports, Music, In
+the Kitchen, Halloween, Thanksgiving, Easter, Valentine's Day, Birthdays,
+Weddings, American States, On the Farm, Dinosaurs, Camping, Fishing, Cars &
+Driving, Weather, Jobs & Careers, School Days, New Baby, Coffee & Tea,
+Birdwatching, Flowers, Desserts, Games Night, At the Beach.
+
+These are broad categories. A few (Birdwatching, New Baby, Weddings) are
+already reasonably specific; most (Animals, Food, Sports, Space) are the kind
+of generic theme every competing generator also has.
+
+## What the research says
+
+Consistent across every source: **generic themes are saturated; the theme has
+to describe a specific buyer in one sentence, or it isn't a niche yet.**
+"Word search for seniors" is a theme. "Large-print word search for a retired
+gardener whose adult kids are buying her a gift" is a niche — and that
+audience does not compete with the generic listing at all.
+
+Recurring winning patterns across every article:
+
+1. **Profession-specific** — nurses, teachers, truckers, retail, trades.
+   Vocabulary the audience uses at work; they buy because it names them.
+2. **Faith-based** — Bible/Scripture word search, sold through church
+   communities and Bible-study gift-giving, not general search.
+3. **Nostalgia by decade** — 1970s/80s/90s slang and pop culture, sold to an
+   older buyer remembering their own decade, not a kid's.
+4. **Large print for seniors** — cited in every source as the single most
+   dependable puzzle-book category on KDP. Buyers are usually adult children
+   buying a gift. **Corrected 2026-09-16: we already have this.** `main.js`
+   ships a one-click "Large print" checkbox (`el.largePrint`, added
+   2026-09-14, commit `485ac7f`) that presets 8.5×11 trim, automatic grid
+   size, and 14 words/puzzle — measured at 18–25pt letters. It's referenced
+   throughout the guide, royalty calculator, and index copy already. I first
+   wrote this section claiming it didn't exist; that was a bad grep (I
+   searched for `fontSize`/`cellSize` variable names and it's implemented as
+   grid-density + trim instead, so I missed it). What's actually still
+   missing, confirmed by reading the code:
+   - The preset only applies to word search — `el.largePrint` is force-
+     unchecked and disabled the moment `kind !== "wordsearch"` (`main.js`
+     line 156), even though the sudoku page's own copy talks about large
+     print at 8.5×11 as if it's available there too. A buyer can still pick
+     8.5×11 manually for sudoku/crossword/maze, just not via the preset.
+   - No cover treatment. `src/pdf/cover.js` has no "LARGE PRINT" badge or
+     auto-text — the one convention every KDP guide names as the actual
+     keyword-and-click driver on the thumbnail. A user can type "Large
+     Print" into their own title, but nothing does it for them.
+   - No dedicated landing page. We have type pages (`/word-search-book-
+     generator`) and theme pages (`/word-lists/*`), but nothing at, say,
+     `/large-print-word-search-generator` to catch that exact search term —
+     which our own guide quotes as *the* example of a good hyper-specific
+     title ("Large Print Word Search for Seniors").
+5. **Hobby micro-niches** — birdwatching (already have it), fishing (already
+   have it), gardening (already have it, but generic — "Garden & Nature" vs.
+   a rose-gardener specifically), quilting, knitting, golf, RVing.
+6. **State-specific, not "American States"** — the existing theme is one word
+   list naming all 50 states. The niche version is 50 separate books, each
+   with that one state's cities, landmarks, and nicknames — a Texan buys
+   "Texas Word Search," not "all 50 states." Different product, same effort
+   pattern as any other theme, just multiplied by 50.
+7. **Recovery / memory-care puzzles** — simpler grids, larger print, sold to
+   caregivers rather than the puzzle-doer. A positioning and difficulty
+   choice more than a word-list one.
+8. **Age-banded kids** — not a new theme, a labeling fix: "Ages 4-6" instead
+   of "Kids," on themes we already have (Animals, Space, Farm, Dinosaurs).
+
+## Gap analysis — what's cheap vs. what's real product work
+
+**Cheap (word list + landing page only, same pattern as the 32 we have):**
+nursing/medical, teaching, trucking, Bible/Scripture, decade nostalgia
+(70s/80s/90s separately), quilting, knitting, golf, wine, RVing, individual
+state pages (reusing the 50-state data we'd need to source once).
+
+**Real product work, not just content:**
+- **Large print, finishing it** — the core preset exists; what's left is
+  extending it to the other puzzle kinds, adding a cover badge, and giving
+  it a landing page of its own. Smaller than "build large print from
+  scratch," but still not just a word list.
+- **State-specific done right** — a generic "Texas" word list of city names
+  is weak; a good one needs real per-state content (landmarks, nicknames,
+  local terms), which is 50x the research of one normal theme, not free.
+- **Recovery/memory-care** — needs an easier difficulty preset and probably
+  its own grid-density ceiling; the word list itself is the easy part.
+
+## Recommendation (not yet built — spec only, per the boss's ask)
+
+1. **Finish large print, don't rebuild it.** The preset already exists for
+   word search; the gap is a cover badge, a dedicated landing page (the
+   exact phrase our own guide already recommends: "Large Print Word Search
+   for Seniors"), and — lower priority — extending the preset to sudoku,
+   since large-print sudoku is named in the research too. Small, and closes
+   out the one niche every source ranks above all others.
+2. **Add profession + faith themes next** — cheapest tier, matches the
+   research's most-cited winners, and directly reachable: nurses, teachers,
+   truckers, and Bible/Scripture are all named repeatedly and none of them
+   need new product capability, only word lists and a landing page.
+3. **State-specific is high-effort, high-count (50 pages)** — worth doing,
+   but only after item 1, since "Large Print Texas Word Search" is a
+   stronger listing than either piece alone.
+4. Decade nostalgia and hobby micro-niches (quilting, knitting, golf, wine)
+   are good filler additions once the above are done — same cheap pattern,
+   lower individual priority than profession/faith.
+
+## Sources
+
+- [Best Puzzle Book Niches for Amazon KDP — KDP Builder](https://kdpbuilder.com/blog/best-puzzle-book-niches)
+- [Word Search Puzzle Books on KDP: 2026 Market Data — KDP Easy](https://www.kdpeasy.com/niches/word-search-puzzles)
+- [24 Best KDP Niches for 2026 — KDP Builder](https://kdpbuilder.com/blog/best-kdp-niches-2026)
+- [9 Highly Profitable Amazon KDP Niche Ideas 2026 — Low Content Profits](https://lowcontentprofits.com/low-content-book-niches-kdp/)
+- [20 Most Profitable Niches for Low-Content Books — Automateed](https://www.automateed.com/profitable-niches-for-low-content-books)

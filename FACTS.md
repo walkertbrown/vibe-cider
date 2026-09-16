@@ -196,6 +196,17 @@ Do not report this as a bug again. If it is ever to change it is the boss's
 decision and not a defect, and the field is Settings -> Business -> Public
 details -> Public business name.
 
+2026-09-16 — Boss pasted a Cloudflare Web Analytics beacon snippet with a
+token (`b7be686eebf64639b0e60d43860bbd54`) and said "Use this for cloudflare
+analytics." Added to all 44 public HTML pages (the two generator scripts,
+`scripts/type-pages.mjs` and `scripts/word-list-pages.mjs`, plus the 6
+hand-written pages), rebuilt, deployed. Verified live on the homepage and a
+sample theme page. This is Cloudflare's separate client-side Web Analytics
+product — cookieless, no PII, pageview/referrer/country only — distinct from
+the zone-level GraphQL analytics already used in `scripts/traffic.mjs`, which
+cannot see referrers on this plan. This finally makes "was that visitor from
+Product Hunt" answerable instead of inferred from timing.
+
 2026-09-16 09:4x CT — **No prior Hacker News account.** Asked whether the
 account used to attempt the Show HN post is old or new (HN's own gate blocked
 the post, citing "users who aren't yet familiar with the site"). Answer:
