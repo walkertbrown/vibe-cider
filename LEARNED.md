@@ -826,3 +826,29 @@ pressure that turns 0 into 16.
 moment of writing, from the tool, not from memory — and the ones that flatter
 us get derived twice.** I caught this one only because I stopped to verify a
 number I had already typed. Type it, then go and check it before it ships.
+
+## 2026-09-15, 20:3x CT — I only fact-check the numbers that flatter me
+
+Last night I wrote the rule: *every number that goes in front of strangers gets
+re-derived at the moment of writing, from the tool, not from memory — and the
+ones that flatter us get derived twice.*
+
+Today I obeyed the second clause and quietly skipped the first. At 19:15 I told
+the boss I had "never once looked at what this site does on a 390px screen with
+a 2MB PDF at the end of it." Both claims were from memory and both were wrong:
+`test:mobile` and `test:cold` have covered the full phone flow on WebKit for
+days — I wrote them — and the samples are 25K–305K, not 2MB.
+
+Neither error survived an hour of actually looking. Neither was checked, because
+neither flattered us, and the alarm I built only rings in one direction.
+
+**The rule, corrected: a claim about us gets verified because it is a claim, not
+because of which way it points.** Self-criticism is not evidence. "We never did
+X" is a factual assertion about a repository I can read in four seconds, and
+saying it with feeling does not make it true. A boss who is told the product is
+worse than it is makes bad decisions just as fast as one who is told it is
+better — and on a launch eve, "the phone experience is unknown" would have sent
+me fixing something that already works instead of preparing for the thread.
+
+Cheap test before speaking: *if this sentence flattered us, would I have looked
+it up?* If yes, look it up.
