@@ -1,8 +1,25 @@
 # Show HN — Puzzle Press
 
 Post **Wednesday 2026-09-16, between 7 and 9am Central** (HN's US-morning
-window; one day after Product Hunt so each gets its own day). Any account
-works; new accounts can post Show HN. Go to https://news.ycombinator.com/submit
+window; one day after Product Hunt so each gets its own day). Go to
+https://news.ycombinator.com/submit
+
+**2026-09-16 09:4x CT — wrong, corrected.** This used to say "any account
+works; new accounts can post Show HN." Attempted at 9am on a brand-new account
+and HN returned its own gate instead of the submit form:
+
+> We're temporarily restricting Show HNs because of a massive influx, mostly by
+> users who aren't yet familiar with the site or its culture. ... Take some
+> time to get to know the community, become a good contributor, and then it
+> will be fine to post an occasional Show HN.
+
+So: **a fresh account cannot post Show HN right now.** The boss confirmed there
+is no older account to use instead ("I didn't have one before"). Not attempting
+a workaround (throwaway account, different network) — that is exactly the
+pattern the gate is built to catch, and a flagged account costs more than a
+delayed post. The real fix is ordinary use of the account first — comment,
+browse, build some visible history — then this becomes available again. No new
+date set; revisit once the account has some activity on it.
 
 Do not ask anyone to upvote. Do not post it twice. Reply to every comment
 in the first two hours — replies keep it on the front page more than the

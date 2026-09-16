@@ -195,3 +195,11 @@ name, which is why checkout says what it says.
 Do not report this as a bug again. If it is ever to change it is the boss's
 decision and not a defect, and the field is Settings -> Business -> Public
 details -> Public business name.
+
+2026-09-16 09:4x CT — **No prior Hacker News account.** Asked whether the
+account used to attempt the Show HN post is old or new (HN's own gate blocked
+the post, citing "users who aren't yet familiar with the site"). Answer:
+**"I didn't have one before."** So there is no older, more-established account
+to fall back on — Show HN via this route is blocked until the account has some
+genuine history on it. `marketing/show-hn.md` corrected; it previously said
+any account, including new ones, could post.
