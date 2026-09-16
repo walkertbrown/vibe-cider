@@ -214,3 +214,18 @@ the post, citing "users who aren't yet familiar with the site"). Answer:
 to fall back on — Show HN via this route is blocked until the account has some
 genuine history on it. `marketing/show-hn.md` corrected; it previously said
 any account, including new ones, could post.
+
+2026-09-16 — **Live outreach to a self-publishing service, boss-initiated.**
+Someone from Kingswell Press (kingswellpress.com — paid editing/cover-design/
+formatting/distribution service for indie authors, unrelated to a prior book
+project of the boss's, contact number (469) 457-9494) had been texting the
+boss unprompted. Boss doesn't know how they got the number or the original
+reason for contact. Rather than ignore it, the boss asked them directly by
+text whether they work with anyone selling puzzle books on KDP, then pitched
+Puzzle Press by name and link (puzzlepress.bananafest-destiny.com), asking
+"any suggestions on who to talk to about it? Or perhaps it is something that
+y'all would be interested in?" Their replies so far read as generic/possibly
+templated ("Yes, puzzle books are a popular category for self-publishing,
+including on KDP" / "We can also support you with the design, formatting,
+publishing,"). Outcome not yet known — this is a live, in-progress lead, not
+a closed fact. Log the resolution here once there's a real answer from them.
