@@ -108,7 +108,17 @@ state pages (reusing the 50-state data we'd need to source once).
    stronger listing than either piece alone.
 4. Decade nostalgia and hobby micro-niches (quilting, knitting, golf, wine)
    are good filler additions once the above are done — same cheap pattern,
-   lower individual priority than profession/faith.
+   lower individual priority than profession/faith. **Decade lists need a
+   verification pass before publishing, not just generation.** Boss caught
+   the risk directly: "the last thing you want to talk about is Nirvana in
+   an 80s puzzle" — Nirvana broke mainstream in 1991, not the 80s. A
+   nostalgia buyer knows their decade specifically; one wrong entry reads as
+   the whole list being AI-guessed rather than real, which is the opposite
+   of what this niche is selling. Every word/name/reference in a decade list
+   has to be checked against an actual date (chart date, release date, event
+   date), not pattern-matched by "feels like that decade." This is a
+   real per-word verification step, not free the way a themed word list
+   normally is — factor it into the effort estimate for this item.
 
 ## Sources
 
