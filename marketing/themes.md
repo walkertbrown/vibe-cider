@@ -163,7 +163,32 @@ state pages (reusing the 50-state data we'd need to source once).
    Theme count 51 → 66, clue table 1,797 → 1,952, word count 2,095 → 2,285.
    Landing pages, sitemap entries, and share cards generated for all 15;
    all hardcoded copy counts updated to match. 93/93 tests pass. ~20 states
-   remain for a future batch.
+   remain for a future batch. **Third batch done 2026-09-18**: 15 more
+   states shipped (45 of 50 total) — Nevada, Iowa, Arkansas, Kansas,
+   Mississippi, New Mexico, Nebraska, Idaho, West Virginia, Hawaii, New
+   Hampshire, Maine, Montana, Rhode Island, Delaware, again the next 15 by
+   population after the second batch. Fact corrections caught in
+   verification: Nebraska's state tree is Cottonwood, not an assumed pine;
+   Idaho's state bird is specifically the Mountain Bluebird; Maine's
+   largest city (Portland) collides in name with Oregon's already-shipped
+   theme, so Maine used "Portland Head Light" instead. Dropped Iowa's
+   planned "cyclone" (already an unrelated weather-theme clue) for
+   "statefair," and Kansas's planned "prairie" (already Illinois's specific
+   nickname clue) was removed rather than swapped. Shared words with one
+   real meaning across states (meadowlark, riverboat, goldenrod,
+   rhododendron, sugarmaple, cottonwood, mountainbluebird, whitepine) got a
+   single clue naming every applicable state, updating four of those from
+   earlier batches to add the new state. Where the same word names two
+   genuinely different real things across states — a pattern first seen
+   with "mobile"/"selma" in the second batch — this batch kept the shared
+   word and used a single "name shared by X and Y" dual-reference clue
+   instead of a swap, for lincoln, charleston, and augusta, since those are
+   real capital-city names worth keeping rather than losing to a swap.
+   Theme count 66 → 81, clue table 1,952 → 2,086, word count 2,285 → 2,459.
+   Landing pages, sitemap entries, and share cards generated for all 15;
+   all hardcoded copy counts updated to match. 93/93 tests pass. 5 states
+   remain for a future batch (South Dakota, North Dakota, Alaska, Vermont,
+   Wyoming).
 4. Decade nostalgia and hobby micro-niches (quilting, knitting, golf, wine)
    are good filler additions once the above are done — same cheap pattern,
    lower individual priority than profession/faith. **Decade lists need a
