@@ -109,6 +109,16 @@ state pages (reusing the 50-state data we'd need to source once).
    research's most-cited winners, and directly reachable: nurses, teachers,
    truckers, and Bible/Scripture are all named repeatedly and none of them
    need new product capability, only word lists and a landing page.
+   **Done 2026-09-18**: four new themes added — `nursing` (59 words),
+   `teaching` (57 words), `trucking` (59 words), `faith` (53 words, titled
+   "Bible & Scripture") — each with genuine domain vocabulary, not the
+   generic existing "jobs" theme, plus hand-written non-leaking clues for
+   every word not already covered by an existing theme's clue. Theme count
+   32 → 36, clue table 1,460 → 1,638. Landing pages, sitemap entries, and
+   share cards generated for all four; all copy with hardcoded counts
+   (index.html, marketing docs, word-list-pages.mjs) updated to match, and
+   `test/copy.test.js`'s dynamic count check confirms no stale numbers
+   remain. 93/93 tests pass.
 3. **State-specific is high-effort, high-count (50 pages)** — worth doing,
    but only after item 1, since "Large Print Texas Word Search" is a
    stronger listing than either piece alone.

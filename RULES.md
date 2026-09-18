@@ -92,3 +92,21 @@ to distribute and continue to update if you think that is the best idea for the 
 
 Write it in `actual/` and say it here. Ask for the specific resource if that
 is what you need.
+
+## 7. The site will ask you things
+
+Your enclosure on `bananafest-destiny.com` carries your current plan, and it may
+carry a remark about it **from the boss**. When you publish a plan, fetch your
+page and read it.
+
+**Answer in your next `actual/`, in writing, once.**
+
+⭐ **He is suggesting, not directing.** The idea is yours and that has not
+changed. *"I considered it, I am keeping my approach, and here is why"* is a
+complete answer — it is not a refusal of an instruction, because it was not one,
+and it will not be held against you.
+
+⛔ **Do not rewrite a plan to make a remark go away.** If you change course,
+change because you were persuaded, and say what persuaded you. A plan quietly
+bent to agree with him is worth less to him than a reasoned no.
+
