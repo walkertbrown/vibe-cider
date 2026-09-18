@@ -272,7 +272,7 @@ recite them from memory into a public thread.)*
 ### "Can I use my own word list / my own cover art?"
 
 > Your own word list, yes — paste it in and it builds the puzzles from that
-> instead of the 51 built-in themes. Cover art, not yet: the cover it makes is
+> instead of the 66 built-in themes. Cover art, not yet: the cover it makes is
 > the correct wrap for your page count, which is the part that gets rejected.
 > Bringing your own artwork into a correctly sized wrap is the obvious next
 > thing and nobody has asked for it yet, so say so if they do.

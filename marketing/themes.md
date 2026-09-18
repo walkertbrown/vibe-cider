@@ -136,7 +136,34 @@ state pages (reusing the 50-state data we'd need to source once).
    clue table 1,638 → 1,797, word count 1,888 → 2,095. Landing pages,
    sitemap entries, and share cards generated for all 15; all copy with
    hardcoded counts updated to match. 93/93 tests pass. Remaining ~35 states
-   are a future batch, same pattern.
+   are a future batch, same pattern. **Second batch done 2026-09-18**: 15
+   more states shipped (30 of 50 total) — Tennessee, Indiana, Missouri,
+   Maryland, Wisconsin, Colorado, Minnesota, South Carolina, Alabama,
+   Louisiana, Kentucky, Oregon, Oklahoma, Connecticut, Utah, again the next
+   15 most populous after the first batch. Fact corrections caught in
+   verification: Missouri's largest city is Kansas City, not St. Louis;
+   South Carolina's official flower is Yellow Jessamine, commonly confused
+   with jasmine; Alabama's largest city is now Huntsville, having overtaken
+   Birmingham per 2024 population data; Oklahoma has three floral emblems —
+   chose mistletoe, the original 1893 official one, over the newer 2004
+   Oklahoma rose. Five shared words within this batch (tulippoplar,
+   limestone, cardinal, magnolia, mardigras) got one state-neutral clue
+   each instead of a duplicate key; two existing clues from the first batch
+   (chesapeake, palmetto) were updated to name both states that now use
+   them, since Maryland and South Carolina respectively added the same
+   words. Swapped Alabama's planned "mobile" for "selma" after finding
+   "mobile" already had an unrelated existing clue (a baby-item sense) that
+   would have been misleading reused in a state-landmarks context — a
+   reminder that the shared flat clue table can force a word swap, not just
+   a clue swap, when an existing word's established meaning doesn't fit a
+   new theme. Nine draft clues were also over the test suite's 90-character
+   cap and had to be shortened, and two rewrites introduced fresh leaks
+   (the word appearing inside its own clue, e.g. "centennial" naming itself,
+   "pikespeak" containing "peak") caught by the same pre-validation script.
+   Theme count 51 → 66, clue table 1,797 → 1,952, word count 2,095 → 2,285.
+   Landing pages, sitemap entries, and share cards generated for all 15;
+   all hardcoded copy counts updated to match. 93/93 tests pass. ~20 states
+   remain for a future batch.
 4. Decade nostalgia and hobby micro-niches (quilting, knitting, golf, wine)
    are good filler additions once the above are done — same cheap pattern,
    lower individual priority than profession/faith. **Decade lists need a
