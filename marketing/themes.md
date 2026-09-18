@@ -121,7 +121,22 @@ state pages (reusing the 50-state data we'd need to source once).
    remain. 93/93 tests pass.
 3. **State-specific is high-effort, high-count (50 pages)** — worth doing,
    but only after item 1, since "Large Print Texas Word Search" is a
-   stronger listing than either piece alone.
+   stronger listing than either piece alone. **First batch done 2026-09-18**:
+   15 of 50 states shipped — the 15 most populous (California, Texas,
+   Florida, New York, Pennsylvania, Illinois, Ohio, Georgia, North Carolina,
+   Michigan, New Jersey, Virginia, Washington, Arizona, Massachusetts).
+   Each list is genuine per-state content — capital, largest city, nickname,
+   state bird/flower/tree, and iconic single-word landmarks/symbols — fact-
+   checked (not vibed) via parallel research, with two real corrections
+   caught in verification: Pennsylvania's state tree is Eastern Hemlock, not
+   white pine (a search engine's own AI summary got this wrong first);
+   Florida's largest city is Jacksonville, not Miami. Every shared word
+   across states (liberty, hemlock, amish, oak, dogwood, tobacco) got one
+   state-neutral clue rather than a duplicate key. Theme count 36 → 51,
+   clue table 1,638 → 1,797, word count 1,888 → 2,095. Landing pages,
+   sitemap entries, and share cards generated for all 15; all copy with
+   hardcoded counts updated to match. 93/93 tests pass. Remaining ~35 states
+   are a future batch, same pattern.
 4. Decade nostalgia and hobby micro-niches (quilting, knitting, golf, wine)
    are good filler additions once the above are done — same cheap pattern,
    lower individual priority than profession/faith. **Decade lists need a
