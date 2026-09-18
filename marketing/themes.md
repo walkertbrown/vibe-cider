@@ -98,7 +98,13 @@ state pages (reusing the 50-state data we'd need to source once).
    exact phrase our own guide already recommends: "Large Print Word Search
    for Seniors"), and — lower priority — extending the preset to sudoku,
    since large-print sudoku is named in the research too. Small, and closes
-   out the one niche every source ranks above all others.
+   out the one niche every source ranks above all others. **Done 2026-09-18**:
+   cover badge (`drawLargePrintBadge` in `src/pdf/cover.js`) and the
+   dedicated landing page at `/large-print-word-search-generator` are both
+   built and tested. Sudoku extension not started — still lower priority,
+   and doing it right means measuring actual rendered digit size the same
+   way the word-search figures were measured, not assuming a bigger trim
+   is automatically "large print."
 2. **Add profession + faith themes next** — cheapest tier, matches the
    research's most-cited winners, and directly reachable: nurses, teachers,
    truckers, and Bible/Scripture are all named repeatedly and none of them
