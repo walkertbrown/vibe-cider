@@ -188,7 +188,18 @@ state pages (reusing the 50-state data we'd need to source once).
    Landing pages, sitemap entries, and share cards generated for all 15;
    all hardcoded copy counts updated to match. 93/93 tests pass. 5 states
    remain for a future batch (South Dakota, North Dakota, Alaska, Vermont,
-   Wyoming).
+   Wyoming). **Fourth and final batch done 2026-09-18**: the last 5 states
+   shipped — South Dakota, North Dakota, Alaska, Vermont, Wyoming — all 50
+   states now covered. Same research/fact-check/leak-detection discipline as
+   every prior batch. Five clues (`meadowlark`, `cottonwood`, `badlands`,
+   `crazyhorse`, `juneau`) needed length-cap trims to stay under the
+   90-character limit, and the shared-clue set grew again: `meadowlark`,
+   `cottonwood`, `sugarmaple`, `wildrose`, and `elm` each now name every
+   state that uses them rather than just the states from earlier batches.
+   Theme count 81 → 86, clue table 2,086 → 2,128, word count 2,459 → 2,513.
+   Landing pages, sitemap entries, and share cards generated for all 5; all
+   hardcoded copy counts updated to match. 93/93 tests pass. Item 3 is
+   complete — all 50 states shipped.
 4. Decade nostalgia and hobby micro-niches (quilting, knitting, golf, wine)
    are good filler additions once the above are done — same cheap pattern,
    lower individual priority than profession/faith. **Decade lists need a
