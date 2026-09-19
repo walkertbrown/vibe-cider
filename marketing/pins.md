@@ -50,13 +50,20 @@ marketing content.
 |---|---|---|---|
 | Sat 2026-09-19 21:57 | `03-word-search.png` | Camping word list, 46 words | `/word-lists/camping` |
 | Sat 2026-09-19 23:26 | `03-word-search.png` | Dinosaurs word list, 49 words | `/word-lists/dinosaurs` |
+| Sun 2026-09-21 01:34 | `03-word-search.png` | Fishing word list, 46 words | `/word-lists/fishing` |
 
-Word counts and sample words in both captions were copied from each page's
-own `<meta name="description">`, not recalled from memory. Same domain-block
-workaround as every other pin: `metadata.pinterest.url` is the YouTube demo,
-the real address is plain text in the caption.
+Word counts and sample words in all three captions were copied from each
+page's own `<meta name="description">`, not recalled from memory. Same
+domain-block workaround as every other pin: `metadata.pinterest.url` is the
+YouTube demo, the real address is plain text in the caption.
 
-**89 more word-list pages remain unpromoted.** This is now the standing plan
+The fishing pin was queued proactively (post id `6aaf17014594e3153f438724`,
+`customScheduled`), before the queue actually emptied — the dinosaurs post
+was still ~17 minutes from sending when this one was created — rather than
+waiting for the queue to go empty again first. Same reuse-and-relabel
+pattern, just queued a beat earlier to keep a buffer in place.
+
+**88 more word-list pages remain unpromoted.** This is now the standing plan
 for refilling the queue without rendering new pin images: pick an unused
 theme/state page, pull its real word count and sample words straight from
 its own meta description, write a caption, reuse whichever of the 10 pin
