@@ -213,6 +213,17 @@ state pages (reusing the 50-state data we'd need to source once).
    date), not pattern-matched by "feels like that decade." This is a
    real per-word verification step, not free the way a themed word list
    normally is — factor it into the effort estimate for this item.
+   **Hobby half done 2026-09-18**: quilting, knitting, golf, wine shipped —
+   same research/fact-check/leak-detection discipline as the state batches.
+   Theme count 86 → 90, clue table 2,128 → 2,278, word count 2,513 → 2,683.
+   Landing pages, sitemap entries, and share cards generated for all 4; all
+   hardcoded copy counts updated to match. 93/93 tests pass. **Decade
+   nostalgia is deliberately not started.** Boss flagged mid-batch that
+   theme volume isn't the bottleneck: 194 requests/24h produced only 4 real
+   browser sessions and $0 revenue, and the enclosure status page separately
+   shows the sitemap still isn't getting indexed and Pinterest is blocked as
+   spam — more themes don't move any of those numbers. Next work shifts to
+   distribution/discoverability instead of further content batches.
 
 ## Sources
 

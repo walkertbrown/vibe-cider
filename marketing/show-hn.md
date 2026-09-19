@@ -179,7 +179,7 @@ own numbers is a worse comment than the number itself.
 > Fonts are Liberation Sans, subset per book.
 
 **"Crosswords?"**
-> Yes, themed ones — the open interlocking grids KDP crossword books use, 8–22 answers on a subject, clued in plain language (2,128 clues written for the tool, or paste your own). Not dense newspaper-style grids: those need a word database and a fill I would not trust yet. There is also a criss-cross / fill-in type, verified to have a unique fill.
+> Yes, themed ones — the open interlocking grids KDP crossword books use, 8–22 answers on a subject, clued in plain language (2,278 clues written for the tool, or paste your own). Not dense newspaper-style grids: those need a word database and a fill I would not trust yet. There is also a criss-cross / fill-in type, verified to have a unique fill.
 
 **"The 0.06" spine thing — source?"**
 > Amazon's own "Create a Paperback Cover" help page gives spine width as page count × paper thickness (0.0025" cream, 0.002252" white) with nothing added. The 0.06" appears in KDP's hardcover guidance. Several popular calculators apply it to paperbacks. The calculator on the site shows the arithmetic: https://puzzlepress.bananafest-destiny.com/spine-calculator
