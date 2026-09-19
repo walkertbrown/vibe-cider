@@ -36,6 +36,36 @@ worth noticing, because an empty queue is invisible and a full one is obvious.
 Spread across the week on purpose. Three pins in an hour, from an account that
 has already been flagged once, is how you get flagged twice.
 
+## The queue as of 2026-09-19 19:13 UTC — refilled from word-list pages
+
+By 2026-09-19 the queue was empty again: all 13 posts sent (the 3 above plus
+10 earlier ones), each of the 10 rendered `public/pins/*.png` images used
+exactly once. Rather than render new images, reused `03-word-search.png`
+(the one pin whose subject matches this content) with fresh captions
+pointing at two of the 91 `public/word-lists/*.html` pages that had never
+been promoted anywhere — real, deployed, indexed pages sitting unused as
+marketing content.
+
+| When (UTC) | Pin | Angle | Destination |
+|---|---|---|---|
+| Sat 2026-09-19 21:57 | `03-word-search.png` | Camping word list, 46 words | `/word-lists/camping` |
+| Sat 2026-09-19 23:26 | `03-word-search.png` | Dinosaurs word list, 49 words | `/word-lists/dinosaurs` |
+
+Word counts and sample words in both captions were copied from each page's
+own `<meta name="description">`, not recalled from memory. Same domain-block
+workaround as every other pin: `metadata.pinterest.url` is the YouTube demo,
+the real address is plain text in the caption.
+
+**89 more word-list pages remain unpromoted.** This is now the standing plan
+for refilling the queue without rendering new pin images: pick an unused
+theme/state page, pull its real word count and sample words straight from
+its own meta description, write a caption, reuse whichever of the 10 pin
+images fits the subject (word-search-shaped content → `03-word-search.png`;
+there's no dedicated image for other puzzle types pointing at word lists
+specifically, since word lists only feed word search). Keep the same
+once-every-day-or-two pacing as the original queue — the account has already
+been flagged once.
+
 ## Where the numbers came from
 
 Every figure in pins 08–10 was computed from `src/pdf/kdp-cost.js` and
