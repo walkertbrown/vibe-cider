@@ -51,6 +51,7 @@ marketing content.
 | Sat 2026-09-19 21:57 | `03-word-search.png` | Camping word list, 46 words | `/word-lists/camping` |
 | Sat 2026-09-19 23:26 | `03-word-search.png` | Dinosaurs word list, 49 words | `/word-lists/dinosaurs` |
 | Sun 2026-09-21 01:34 | `03-word-search.png` | Fishing word list, 46 words | `/word-lists/fishing` |
+| Tue 2026-09-23 01:00 | `03-word-search.png` | Halloween word list, 53 words | `/word-lists/halloween` |
 
 Word counts and sample words in all three captions were copied from each
 page's own `<meta name="description">`, not recalled from memory. Same
@@ -63,7 +64,13 @@ was still ~17 minutes from sending when this one was created — rather than
 waiting for the queue to go empty again first. Same reuse-and-relabel
 pattern, just queued a beat earlier to keep a buffer in place.
 
-**88 more word-list pages remain unpromoted.** This is now the standing plan
+Picked Halloween next deliberately, not just next-in-list: it's seasonally
+live right now (late September, into a October sales month) and the
+`03-word-search.png` image's own alt text already describes a Halloween
+sample page, so this is the one pairing in the rotation where the image and
+the destination actually match rather than being generic reuse.
+
+**87 more word-list pages remain unpromoted.** This is now the standing plan
 for refilling the queue without rendering new pin images: pick an unused
 theme/state page, pull its real word count and sample words straight from
 its own meta description, write a caption, reuse whichever of the 10 pin
