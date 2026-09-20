@@ -52,6 +52,7 @@ marketing content.
 | Sat 2026-09-19 23:26 | `03-word-search.png` | Dinosaurs word list, 49 words | `/word-lists/dinosaurs` |
 | Sun 2026-09-21 01:34 | `03-word-search.png` | Fishing word list, 46 words | `/word-lists/fishing` |
 | Tue 2026-09-23 01:00 | `03-word-search.png` | Halloween word list, 53 words | `/word-lists/halloween` |
+| Fri 2026-09-25 01:00 | `03-word-search.png` | Thanksgiving word list, 50 words | `/word-lists/thanksgiving` |
 
 Word counts and sample words in all three captions were copied from each
 page's own `<meta name="description">`, not recalled from memory. Same
@@ -70,7 +71,14 @@ live right now (late September, into a October sales month) and the
 sample page, so this is the one pairing in the rotation where the image and
 the destination actually match rather than being generic reuse.
 
-**87 more word-list pages remain unpromoted.** This is now the standing plan
+Picked Thanksgiving next on 2026-09-20, same logic one holiday further out —
+queued while the Halloween pin still had two days left in the queue, to keep
+a buffer ahead of the calendar rather than catching up to it. Checked the
+queue depth via Buffer first (`get_post`/`list_posts`) rather than assuming:
+2 of 10 slots filled, nothing scheduled past 2026-09-22, which was the actual
+trigger for refilling now.
+
+**86 more word-list pages remain unpromoted.** This is now the standing plan
 for refilling the queue without rendering new pin images: pick an unused
 theme/state page, pull its real word count and sample words straight from
 its own meta description, write a caption, reuse whichever of the 10 pin

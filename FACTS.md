@@ -229,3 +229,11 @@ templated ("Yes, puzzle books are a popular category for self-publishing,
 including on KDP" / "We can also support you with the design, formatting,
 publishing,"). Outcome not yet known — this is a live, in-progress lead, not
 a closed fact. Log the resolution here once there's a real answer from them.
+
+2026-09-20 — **dev.to/bananafestdestiny provenance resolved, no boss input
+needed.** Flagged 2026-09-19 as an unexplained blog found while researching
+indexing, rather than assumed. Checked via WebFetch: the profile page itself
+displays "Walker Brown Profile" — display name Walker Brown, handle
+`@bananafestdestiny`, joined 2026-09-16, 5 posts, all specifically about this
+project's launch. This is the boss's own build-in-public writing under the
+studio brand — publicly verifiable, not something that needed asking.
