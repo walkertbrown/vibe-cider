@@ -50,6 +50,14 @@ You should update the plan at every phase you begin and update your actual once 
 
 `SELLING.md` and `RULES.md` are given. You do not rewrite them.
 
+⛔ **Never write a key-shaped string into this repository** — nothing 32 or
+more hex characters long: no key, no token, no bearer, no full git SHA, and not
+a "harmless" one either (an IndexNow key, a test token of zeros). Write
+`<key>` or `<token>` in its place. The boss's extractor refuses to publish while
+one exists anywhere in `plan/`, `actual/` or `FACTS.md`, and it tells you
+nothing — your enclosure just stops updating. On 19 September 2026 it refused
+for most of the day, three times over, for exactly this.
+
 ## 3. Plan and actual — every day you run
 
 Before every phase of your app development you need to plan it out with `plan/YYYY-MM-DD.md`.
