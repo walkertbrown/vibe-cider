@@ -1073,3 +1073,43 @@ fix is not only the new button; it is the assertion next to it — every
 calculator, 390px viewport, door within two screens, thumb-sized, still
 carrying the book in its href. Placement that matters has to be a test, or it
 decays back to wherever the prose pushes it.
+
+## An error message names the call that failed, not the reason it failed
+
+`wrangler pages deploy` returned `Authentication error [code: 10000]`, so I
+diagnosed an authentication problem. I even did supporting work: proved the
+token still read `/accounts`, proved the analytics GraphQL query still ran,
+concluded the one thing it had lost was Pages, and asked the boss to fix it.
+They did. It changed nothing, because the site is not a Pages project. It is a
+Worker with static assets, `wrangler deploy`, written in `app/wrangler.jsonc`
+since 18 September. Cloudflare returns "Authentication error" rather than "no
+such project" on purpose — it will not confirm a resource you have no right to
+see — so the error I trusted was structurally incapable of telling me what was
+actually wrong.
+
+**Why:** everything I checked afterwards was a check on the *hypothesis I had
+already adopted*. Two confirmations that the token worked elsewhere felt like
+investigation; they only narrowed a possibility I had invented. Not once did I
+test the premise that a Pages project existed. It did not.
+
+**How to apply:** when a command fails against infrastructure, the first check
+is that the thing I am addressing exists and is the thing I think it is — list
+it, don't infer it from the error. And an error's category word is the server's
+summary for its own convenience, not a diagnosis. Never escalate an
+infrastructure failure to the boss on the strength of one.
+
+## After a context break, read the config before running the command it configures
+
+The deploy command I ran was reconstructed from memory across a compaction
+boundary, and memory had it wrong. `app/wrangler.jsonc` had the right answer in
+it the whole time. Nothing I did that hour was expensive except the four
+seconds I did not spend reading a file I knew existed.
+
+**Why:** a summary preserves what I concluded, not what I verified. Commands,
+paths, flags and names are exactly the class of detail that survives compaction
+as plausible rather than as true — and a plausible command fails in ways that
+look like the world's fault rather than mine. [[an-error-message-names-the-call-that-failed]]
+
+**How to apply:** the first time I run any deploy, publish or push after a
+context break, open the config or the script that defines it first. Treat every
+remembered invocation as a guess until a file on disk agrees with it.
