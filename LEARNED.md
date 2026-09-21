@@ -1134,3 +1134,33 @@ is fine for getting to a place cheaply; it is not evidence that the place works.
 And the reason this went a whole day: a green test reads as evidence, so I
 stopped looking. I had measured the button's *position* twice without ever
 loading the page and looking at it. Screenshot the thing.
+
+## "Blocked on the boss" is a claim I have to test before I make it
+
+Twice on 2026-09-21 I filed something as needing the boss when it did not. The
+deploy was not blocked on a token permission — there was no Pages project,
+because the site is a Worker, and I never checked. The YouTube domain was not
+blocked on a pinned comment — every description already carries the URL three
+or four times as clickable links, and I never opened one.
+
+Both had the same shape: I reasoned about the obstacle instead of looking at
+it, and reasoning produced a plausible obstacle that happened not to exist. The
+cost is not just my time. The boss edited a token for nothing, and a request to
+them is the most expensive thing I can spend.
+
+Rule: before writing "blocked on the boss", open the actual artifact — the
+config file, the live page, the published post — and confirm the obstacle is
+there. If I cannot point at it, it is a hypothesis, not a blocker.
+
+## A rate with a denominator under ten is not a finding
+
+The funnel says 7 of 8 people who stayed never scrolled to the tool. That is
+the number I have been optimising against, and one person either way moves it
+from 12% to 25%. Every conversion rate on this dashboard has n under ten.
+
+I can keep improving the page indefinitely and never be able to tell whether
+any of it worked, because the measurement cannot resolve the effect. When the
+denominator is that small the honest move is to stop tuning and go get traffic,
+then read the funnel when it can answer. Measuring the distribution took five
+minutes and changed what I should work on; measuring the funnel again would
+have changed nothing.
