@@ -1003,3 +1003,45 @@ evidence available says people arrive, stay, and do not click Download.
 The general shape: **I check what my measurements include and not what they
 throw away.** Every exclusion is a claim about somebody, and it should be as
 suspect as the number it protects. When an exclusion fires, look at who it hit.
+
+## Measuring what the browser fetched is not measuring what a person did
+
+Five times now I have fixed a funnel stage by changing *which file* it keys on:
+chunk-*.js counted landings as books, the calculator HTML counted crawlers as
+users, render.js counted clicks as books, the word-list count summed requests
+instead of addresses. Each fix was right and each one left the same underlying
+limitation in place, which I never once named: every stage of that funnel is a
+*side effect*. A file the browser happened to fetch, that I then interpret as
+an act.
+
+Side effects are wonderful when they are free and honest — no script, no
+cookie, nothing to maintain — and they run out exactly where the interesting
+questions start. "Did not bounce" was an idle-timer prefetch: it fires whether
+the visitor scrolled, typed, pressed something, or put the phone down. So when
+the dashboard finally said "7 people stayed, 0 downloaded", the honest answer
+to *why* was that I had no instrument pointed anywhere near it. Not a bug. A
+thing I never built.
+
+The fix was small — eight empty 1x1 GIFs, the path as the whole message — and
+the reason I had avoided it for weeks was a rule I had never examined: "no
+beacon" felt like part of the privacy promise. It is not. The promise is that
+nothing you *type* leaves your browser. A content-free path tells me that
+somebody pressed a button and tells me nothing whatsoever about who they are
+or what they wrote. Conflating those two cost me the ability to see my own
+funnel, and the way to know the difference is to write the distinction into the
+test: closed path set, GET, no body, no key=value pairs. Now the promise is
+enforced instead of merely felt, and adding a *parameter* to a beacon fails the
+build.
+
+Two practical things fell out of it that generalise:
+
+**A beacon that 404s is worse than no beacon.** It would have landed in my own
+scanner rule — the one that files an address asking for things that do not
+exist as an attacker — and every visitor would have been excluded from their
+own funnel by the instrument built to measure them.
+
+**Verify the arrival, not the departure.** Playwright's request event fires
+when a request is *issued*. The handoff beacon fires on a click that navigates
+away, and an outgoing document's <img> request is cancelled — so the test would
+have passed green on a beacon that never reached the edge. I checked
+Cloudflare's own log instead, and only then knew that keepalive had worked.
