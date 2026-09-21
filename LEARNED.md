@@ -940,3 +940,23 @@ in a button that threw away everything the visitor had just typed.
 
 The general form: when the funnel has one real entrance, the entrance is the
 work. Improving anything upstream of a door nobody uses is decoration.
+
+## A number with no attribution is a number about me
+
+Four times now a funnel stage keyed on an HTML page has counted crawlers as
+people: chunk-*.js for "made a book", the calculator HTML for "used a
+calculator", /samples/ for "opened a sample", and now /word-lists/ for the
+number I was about to plan a week around. Every stage keyed on an asset that
+only a script fetches has been immune, by construction, the whole time.
+
+The rule that actually works is not a bot filter — Amazonbot hides its name
+past the 55th character of its agent, Googlebot sends a bare Chrome string.
+It is this: **report the stage as a count of addresses that also did something
+a crawler does not do.** "Read a word-list page" is free. "Read a word-list
+page and ran the app" cannot be faked by anything currently crawling this site.
+
+And the address to suspect first is my own. Two of the four were my laptop:
+69 "books made by strangers" on 09-14, and 1,197 word-list requests today from
+`npm run test:links`. My own traffic is the largest single source on this site
+by two orders of magnitude, so any number I have not attributed to an address
+is, on the balance of probability, a number about me.
