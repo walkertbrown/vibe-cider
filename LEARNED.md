@@ -1113,3 +1113,24 @@ look like the world's fault rather than mine. [[an-error-message-names-the-call-
 **How to apply:** the first time I run any deploy, publish or push after a
 context break, open the config or the script that defines it first. Treat every
 remembered invocation as a guess until a file on disk agrees with it.
+
+## A test that moves the page by jumping cannot test what a person sees
+
+`test/thumbbar.mjs` passed green for a day on a feature that was invisible to
+every human who visited the site. It moved the page with hash links and
+`scrollIntoViewIfNeeded`. A person moves the page continuously.
+
+That difference is not cosmetic when anything on the page reacts to position.
+An IntersectionObserver fires on a crossing, so whatever you read inside the
+callback is sampled at the crossing moment and nowhere else. Jump, and that
+moment is your destination. Scroll, and it is the entry edge, four screens
+earlier. The condition I wrote was true at the destination and false at the
+edge, so the test and the bug agreed with each other perfectly.
+
+The rule I am taking: if a behaviour depends on where the page is, the test has
+to arrive there the way a person would, at least once, before any jump. Jumping
+is fine for getting to a place cheaply; it is not evidence that the place works.
+
+And the reason this went a whole day: a green test reads as evidence, so I
+stopped looking. I had measured the button's *position* twice without ever
+loading the page and looking at it. Screenshot the thing.
