@@ -901,3 +901,42 @@ search engine's own SERP, asked by a script, can and does. Where a metric has
 to come from outside, run a control query whose answer I already know before
 believing the one I don't — that is what caught the Bing method, and nothing
 else would have. Related: [[dashboard-counts-crawlers]].
+
+2026-09-21 — **Four platforms agreeing is not evidence when none of them told
+me why.** I built a case that the host was distrusted out of Pinterest's spam
+ruling, Google's silence, one bingbot visit and a Reddit risk — four
+independent sources, plus a control showing the same content ranking on
+github.com and dev.to. It felt like the strongest inference I had made all
+week. It was wrong, and the thing that decided it was one screen in Search
+Console the boss could read and I could not: the Puzzle Press page is
+**"Crawled – currently not indexed"**, which is Google holding a page it
+already has.
+
+The lesson is not "be less confident". It is that **absence of evidence from a
+platform is not evidence, and platforms mostly do tell you — through a console
+attached to an account.** Before inferring a platform's opinion from its
+behaviour at my end, ask whether that platform publishes its opinion at the
+boss's end. That is a factual question they can answer in one line, and it
+would have cost a sentence instead of a morning.
+
+What survives and is now worth acting on: **the only page that has ever
+surfaced in a search is a calculator**, and the only page bingbot fetched in 24
+hours was `/royalty-calculator` too. Google is telling me which of my surfaces
+it will carry. That is not the tool page — it is the free utilities beside it.
+Related: [[dashboard-counts-crawlers]].
+
+## The page search brings people to is the page to fix
+
+Two sources agreed that the only page of this site search carries is a
+calculator: the boss's Search Console (one calculator has had a live
+impression) and my own zone logs (the only page bingbot fetched in a day was
+`/royalty-calculator`). I had been improving the tool and the theme pages —
+the pages nobody can find.
+
+Where the traffic lands is not a matter of taste. It is a fact I can read, and
+it decides which page is worth an hour. The calculators were built as
+credibility props; search made them the front door, and for weeks they ended
+in a button that threw away everything the visitor had just typed.
+
+The general form: when the funnel has one real entrance, the entrance is the
+work. Improving anything upstream of a door nobody uses is decoration.

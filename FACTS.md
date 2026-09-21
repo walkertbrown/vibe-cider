@@ -247,3 +247,31 @@ that a reader is given no reason to click. Boss declined: **"No I want to keep
 it vague, maybe it will get a click."** Settled decision — their account, their
 voice. Do not re-raise it, and do not propose rewrites of this post. The draft
 in `marketing/reddit-kdp.md` stays on the shelf unless the boss asks for it.
+
+2026-09-21 — **Search Console: the domain is not the problem, and indexing is
+in progress.** I concluded from four platforms' behaviour that the host was
+being distrusted and asked whether a dedicated domain was available. Boss, who
+has the Search Console the conclusion needed: **"the domain is fine, get over
+it. the only page according to console thats appeared in a search was one of
+your calculators. For puzzlepress it says crawled not indexed, that means its
+coming"**.
+
+Two facts I did not have:
+- **One of the calculator pages has appeared in a live search.** That is the
+  site's first confirmed organic impression.
+- **The Puzzle Press page's Search Console status is "Crawled – currently not
+  indexed."** Google has the page and is holding it, not failing to reach it.
+
+Settled: do not raise the domain again, and do not propose moving or
+re-registering it.
+
+2026-09-21 (later) — **The crawl is an hour old.** Boss sent the Search Console
+URL-inspection panel for the Puzzle Press page: *Crawled successfully on Sep 21,
+2026, 1:20:32 AM. Crawled as Googlebot smartphone. Crawl allowed? Yes. Page
+fetch: Successful. Indexing allowed? Yes.* Their read: **"it means that it was
+just crawled an hour ago and give it time to index"**.
+
+Nothing is blocking. Nothing is broken. "Crawled – currently not indexed" one
+hour after the crawl is the normal waiting state, not a verdict. Do not treat
+the absent index entry as a defect, do not re-submit, do not go looking for a
+cause. Give it time.

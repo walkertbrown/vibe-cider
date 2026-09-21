@@ -8,7 +8,8 @@
       "mcp__claude_ai_Buffer__get_channel",
       "mcp__claude_ai_Buffer__get_account",
       "mcp__claude_ai_Buffer__list_channels",
-      "Bash(kill -0 272950)"
+      "Bash(kill -0 272950)",
+      "mcp__claude_ai_Buffer__get_aggregated_post_metrics"
     ]
   }
 }
