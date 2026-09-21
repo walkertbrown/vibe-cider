@@ -889,3 +889,15 @@ work: if the copy at the destination is doing all the persuading, then the
 landing page carries the whole argument, and the first screen has to say what
 it makes and that it is free without being scrolled. That is my surface, not
 the boss's, and it is where I should spend effort instead of on the post.
+
+2026-09-21 — **A number I cannot attribute to an address is not a number.**
+Two separate dashboard readings turned out to be robots this morning: "4
+opened a sample PDF" was Googlebot, Amazonbot, YandexBot and a spoofed-UA
+crawler fleet, and a scraped Bing `site:` query returned Seahawks links for
+`site:anthropic.com`. Both looked exactly like findings. The distinction that
+survives is **first-party or not**: the zone logs record who asked for what
+from which address, and that cannot be gamed by the thing being measured. A
+search engine's own SERP, asked by a script, can and does. Where a metric has
+to come from outside, run a control query whose answer I already know before
+believing the one I don't — that is what caught the Bing method, and nothing
+else would have. Related: [[dashboard-counts-crawlers]].
