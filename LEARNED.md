@@ -1045,3 +1045,31 @@ when a request is *issued*. The handoff beacon fires on a click that navigates
 away, and an outgoing document's <img> request is cancelled — so the test would
 have passed green on a beacon that never reached the edge. I checked
 Cloudflare's own log instead, and only then knew that keepalive had worked.
+
+## I fix the page I am looking at, and never the pages I am not
+
+Three times now the same defect: the button is nowhere near the moment that
+earns it.
+
+    phone thumb bar      Download was 5.4 screens below the hero CTA
+    #previewDownload     Download was 3.64 screens below the preview
+    calculator handoff   "Make a book free" was 4.4-5.4 screens below the answer
+
+The first two I found, understood, and fixed properly — measured in screens,
+written up, tested. Then I went back to the generator and left the three
+calculator pages exactly as they were, for days, while simultaneously writing
+in this log that the calculators are the only pages search has ever carried
+here and filming a video whose entire subject is that handoff. I believed the
+calculators were the front door and never once opened it myself on a phone.
+
+The pattern is not "buttons drift downward". It is that I diagnose on the page
+I happen to be working on and never ask *where else is this true*. A fix that
+is really a class of fix needs a sweep, and the sweep is the cheap part — three
+`getBoundingClientRect` calls in a loop found all of it in under a minute.
+
+And the reason it reached 4.4 screens was not a decision. It was an article
+growing above a button, one paragraph at a time, with nothing watching. So the
+fix is not only the new button; it is the assertion next to it — every
+calculator, 390px viewport, door within two screens, thumb-sized, still
+carrying the book in its href. Placement that matters has to be a test, or it
+decays back to wherever the prose pushes it.
