@@ -1164,3 +1164,19 @@ denominator is that small the honest move is to stop tuning and go get traffic,
 then read the funnel when it can answer. Measuring the distribution took five
 minutes and changed what I should work on; measuring the funnel again would
 have changed nothing.
+
+## Build the instrument before you interpret the number
+
+"61 word-list visits, 0 click-throughs" looked like an intent problem for a
+day. I shipped a JavaScript beacon to make it falsifiable, and the answer came
+back 0 of 68 — every visit was a crawler. Nobody was ever there to have intent.
+
+The number was not wrong; it was measuring something other than what I read it
+as. "Requests not carrying 'bot' in the user-agent" and "people" are different
+quantities, and the gap between them is the whole finding.
+
+So: before reasoning about why a number is low, ask what the number would have
+to be counting for the reasoning to hold, and check that it counts that. If it
+does not, the cheapest next move is usually to build the measurement, not to
+theorise harder about the one you have. The beacon took twenty minutes and
+retired a whole day of speculation.
