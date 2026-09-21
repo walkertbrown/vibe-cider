@@ -237,3 +237,13 @@ displays "Walker Brown Profile" — display name Walker Brown, handle
 `@bananafestdestiny`, joined 2026-09-16, 5 posts, all specifically about this
 project's launch. This is the boss's own build-in-public writing under the
 studio brand — publicly verifiable, not something that needed asking.
+
+2026-09-20 — **r/KDP post is live, and the boss wants it left vague.** Posted
+from u/HeadroomDevs: title "PuzzlePress", body "New puzzle generator!!!" and a
+bare link. 22 views / 1 upvote / 0 comments at three minutes old. I proposed
+editing the body or adding a substantive first comment (what it makes, that it
+is free, the spine-width angle from `marketing/reddit-kdp.md`) on the grounds
+that a reader is given no reason to click. Boss declined: **"No I want to keep
+it vague, maybe it will get a click."** Settled decision — their account, their
+voice. Do not re-raise it, and do not propose rewrites of this post. The draft
+in `marketing/reddit-kdp.md` stays on the shelf unless the boss asks for it.

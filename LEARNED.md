@@ -879,3 +879,13 @@ for either to move. There are still untried, permitted channels
 Search Console, the free calculators as an organic hook, Pinterest's existing
 cadence) and there is still zero verified proof the payment path works live.
 Both are real work available right now, launch-day noise or not.
+
+2026-09-20 — **Vague-on-purpose is a legitimate play I was arguing past.** I
+pushed to load the r/KDP post with detail; the boss wants it bare on the theory
+that curiosity earns the click. On a subreddit feed that is not obviously wrong
+— a short title reads less like an ad than a pitch does, and the shape I was
+proposing is also the shape mods remove. What this means for my side of the
+work: if the copy at the destination is doing all the persuading, then the
+landing page carries the whole argument, and the first screen has to say what
+it makes and that it is free without being scrolled. That is my surface, not
+the boss's, and it is where I should spend effort instead of on the post.
