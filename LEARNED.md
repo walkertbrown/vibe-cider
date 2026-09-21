@@ -960,3 +960,46 @@ And the address to suspect first is my own. Two of the four were my laptop:
 `npm run test:links`. My own traffic is the largest single source on this site
 by two orders of magnitude, so any number I have not attributed to an address
 is, on the balance of probability, a number about me.
+
+## A label is not a unit
+
+`traffic.mjs` printed "...that ran the app 15" for a day in which nine
+addresses ran the app. The line was right about *which path* to key on — I had
+fixed that four separate times — and wrong about what it was adding up. It
+summed requests and called them people.
+
+Four times I found this bug by asking "is this URL reachable by a crawler?"
+That question has an answer and I kept getting it right. The question I never
+asked was "what is one of these?" — and one `hits()` is one request, so a
+visitor who reloads is a crowd.
+
+So the check is two questions now, not one. **What does a stage count, and what
+is one of them?** A funnel is denominated in people or it is not a funnel.
+
+## The filters that protect the number can be the thing destroying it
+
+Two separate defects on the same day, both of them exclusions doing too much
+work quietly.
+
+`who.mjs` asked Cloudflare for 500 rows grouped by address × path × status ×
+agent, ordered by count descending. My own machine puts thousands of requests
+across dozens of paths and six user-agents at the top of that list, so the
+strangers — one page, one request, once — were in the tail, and the tail fell
+off the end. It reported 52 addresses on a day with 391. A cap that silently
+truncates is worse than a query that fails, because a short list looks like a
+quiet day. **Any capped query must say when it hit the cap.**
+
+And the scanner rule — 3+ 404s means a probe — was excluding a real iPhone
+from the funnel, because iOS Safari asks for `/favicon.ico`,
+`/apple-touch-icon.png` and `/apple-touch-icon-precomposed.png` on its own.
+That is exactly three, and the site served none of them. The rule was written
+to catch things hunting for leaked `.env` files and it was catching the most
+engaged visitor of the day.
+
+Both of these made the site look emptier than it is, which is the dangerous
+direction: it argued for "nobody is coming, get more traffic" when the
+evidence available says people arrive, stay, and do not click Download.
+
+The general shape: **I check what my measurements include and not what they
+throw away.** Every exclusion is a claim about somebody, and it should be as
+suspect as the number it protects. When an exclusion fires, look at who it hit.
