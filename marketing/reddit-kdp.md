@@ -50,8 +50,9 @@ While I was in there I ended up building out a full puzzle book generator
 too (word search, sudoku, mazes, fill-ins, themed crosswords), since I
 kept needing to make those for my own KDP stuff and every free generator
 I found would give you the puzzle pages but not an actual print-ready
-interior + cover with the spine width filled in correctly. That's free to
-use with a watermark, $19 one-time to remove it if it's useful to you:
+interior + cover with the spine width filled in correctly. It's free to
+use — free books get one small line in the page footer and a cover marked
+PREVIEW, and $19 one-time removes both if it's useful to you:
 https://puzzlepress.bananafest-destiny.com
 
 Not trying to turn this into an ad, mods feel free to pull it if it
