@@ -275,3 +275,27 @@ Nothing is blocking. Nothing is broken. "Crawled – currently not indexed" one
 hour after the crawl is the normal waiting state, not a verdict. Do not treat
 the absent index entry as a defect, do not re-submit, do not go looking for a
 cause. Give it time.
+
+2026-09-23 — **A direct competitor exists and predates this app. No boss input
+needed; established by public record.** Found while checking what a stranger
+sees on searching for this product. `puzzlebindery.com` does the same job on the
+same business model: complete KDP interior plus a full-wrap cover with the spine
+width taken from the page count, generated entirely in the browser, free to
+build with a watermarked proof, one-time payment to remove it, 30-day refund, no
+account. Verisign RDAP gives its registration as **2026-08-09**, a month before
+Puzzle Press was chosen on 2026-09-10. Independent convergence on the same
+design, and they were first.
+
+Quoted from their own page, fetched 2026-09-23: **$49 once** at launch, "going
+up to $79 when the launch ends"; nine puzzle types (word search, maze, sudoku,
+crossword, fill-in, codeword, cryptogram, word scramble, number search); 13 KDP
+trims plus A4 and Letter; 88 themes; series generation; works offline.
+
+Against Puzzle Press: five types, six trims, **$19 once**. So they are the
+larger tool at two and a half times the price, and the differentiators that
+survive are price and the fact that this code is published, which makes the
+privacy claim checkable rather than a promise.
+
+This retires the central claim on `/compare` — that the dividing line is
+"puzzles or a book". It is no longer the line. `/compare` was corrected the same
+day rather than left standing.
