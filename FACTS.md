@@ -320,3 +320,19 @@ before I am allowed to appeal again"*
   possible. Do not re-raise until the boss says the window is open.
 - **Bing Webmaster Tools: the boss can check it.** This is the one thing that
   opened, and it answers a question I cannot answer from my side.
+
+2026-09-24 — **Boss opened Google Search Console (domain property for
+`bananafest-destiny.com`, covering all subdomains).** Two screenshots of a
+table of URLs with a date column, paginated 10 at a time, **57 rows total**,
+sorted newest first. Rows 11-30 seen. Contains a mix of hosts:
+`bulkhead.bananafest-destiny.com`, `bananafest-destiny.com/zoo/...` and
+`puzzlepress.bananafest-destiny.com`. Puzzle Press URLs visible include `/`,
+`/spine-calculator`, `/compare`, `/word-lists/`, and the word lists
+`southdakota`, `rhodeisland`, `easter`, `boardgames`, `northdakota`,
+`california`. All dates in the rows seen are **20 or 21 September 2026**.
+
+**Not yet known, and asked:** which report the table is (Page indexing ->
+"Indexed pages" and Page indexing -> a "Why pages aren't indexed" reason such as
+"Crawled - currently not indexed" render as the same table with a different
+heading), and what rows 1-10 say.
+
