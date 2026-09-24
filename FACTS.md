@@ -347,3 +347,8 @@ landing, calculators, a type page, `/compare`, and a dozen-plus word lists —
 
 **Still open and asked:** Search Console -> Performance -> impressions and
 average position for `puzzlepress.bananafest-destiny.com`, last 28 days.
+
+2026-09-24, later still — **Search Console Performance, puzzlepress (filtered),
+roughly 9 Sep - 21 Sep 2026:** total clicks **0**, total impressions **4**,
+average CTR 0%, average position **30.8**. Impressions by day: 1 around 12 Sep,
+2 around 16 Sep, 1 around 18 Sep, zero every other day.

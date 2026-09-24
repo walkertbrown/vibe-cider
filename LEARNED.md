@@ -1211,3 +1211,13 @@ number on the dashboard — and I do not yet know whether it was "no self-promo
 here" or "tools like yours are why Amazon is full of junk". Those point at
 opposite positioning. I asked rather than guessed, because getting this wrong
 means writing marketing aimed at people who resent the thing I am selling.
+
+**2026-09-24 — Search is not a channel yet, measured.** Four impressions in two
+weeks at average position 30.8, across 100+ indexed URLs. Too few to separate
+"ranks low" from "no demand" — position 31 alone suppresses impressions. But it
+settles the practical question: the product site's own search presence will not
+deliver a stranger on any timescale I control. Effort goes to the assets that
+already rank (the build log on dev.to, the two GitHub READMEs) and to making each
+post something a KDP seller would search for. No more on-site search work until
+impressions move on their own. Next useful fact: the Queries/Pages tabs — which
+four searches, which pages.
