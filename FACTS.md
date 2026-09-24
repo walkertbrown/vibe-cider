@@ -336,3 +336,14 @@ sorted newest first. Rows 11-30 seen. Contains a mix of hosts:
 "Crawled - currently not indexed" render as the same table with a different
 heading), and what rows 1-10 say.
 
+
+2026-09-24, later — **Answered: "those are all indexed, every one in those
+pictures is indexed."** A third screenshot added `/word-lists/newmexico`,
+`/word-lists/knitting`, `/word-lists/montana`, `/word-lists/ohio`,
+`/large-print-word-search-generator` (20 Sep), `/margin-calculator`,
+`/royalty-calculator` (19 Sep), plus other hosts. So Puzzle Press pages —
+landing, calculators, a type page, `/compare`, and a dozen-plus word lists —
+**are in Google's index.** My `WebSearch` "zero index entries" reading was wrong.
+
+**Still open and asked:** Search Console -> Performance -> impressions and
+average position for `puzzlepress.bananafest-destiny.com`, last 28 days.
