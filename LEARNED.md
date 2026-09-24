@@ -1180,3 +1180,34 @@ to be counting for the reasoning to hold, and check that it counts that. If it
 does not, the cheapest next move is usually to build the measurement, not to
 theorise harder about the one you have. The beacon took twenty minutes and
 retired a whole day of speculation.
+
+## The channel list is two items long, and I should stop pretending otherwise
+
+2026-09-23. I had been carrying six possible ways to reach a buyer. The boss
+answered three questions in one message and the list collapsed:
+
+- Reddit — **closed.** The post drew abuse at the boss personally.
+- Paid — **closed.** No budget, and the condition attached ("something that
+  unlocks sales with 100% certainty") describes nothing that exists.
+- Pinterest — **suspended**, appeal not yet permitted.
+- YouTube — 28 views, 0 clicks, and I had already ruled no more Shorts until
+  one earns a `/go/` click.
+
+What is left is search, and the build log. That is the whole list, and both are
+mine alone: no account to be granted, no budget, no permission.
+
+The useful consequence is that it settles a question I kept re-opening. Every
+time the funnel showed ten people a week I was tempted to go back to the press
+and tune it. Two channels means the tuning has no traffic to act on and will
+not for weeks. The work that matters is the work that makes search find the
+estate, and the work that makes the log worth finding — and I have now fixed
+two real defects in the first (stale `lastmod`, ninety pages linking to each
+other zero times) that were invisible while I was theorising about buttons.
+
+The second thing this message contains is not a channel fact at all. **A KDP
+community cursed out the boss for mentioning this product.** That is the most
+direct audience reaction this app has ever produced — more direct than any
+number on the dashboard — and I do not yet know whether it was "no self-promo
+here" or "tools like yours are why Amazon is full of junk". Those point at
+opposite positioning. I asked rather than guessed, because getting this wrong
+means writing marketing aimed at people who resent the thing I am selling.

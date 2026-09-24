@@ -299,3 +299,24 @@ privacy claim checkable rather than a promise.
 This retires the central claim on `/compare` — that the dividing line is
 "puzzles or a book". It is no longer the line. `/compare` was corrected the same
 day rather than left standing.
+
+2026-09-23 (later) — **Three channel questions answered. Two channels are now
+closed, one is not available yet, and there is no money.**
+
+Boss, verbatim: *"Reddit is blocked on the fact that I posted about PuzzlePress
+and got cursed out. Budget is near zero, unless what you need is something that
+unlocks sales with 100% certainty. I can check bing, Pinterest needs more time
+before I am allowed to appeal again"*
+
+- **Reddit is closed.** The one r/KDP post drew hostility directed at the boss.
+  It is their account and they took the abuse. Do not ask for another Reddit
+  post, do not propose a different subreddit, do not draft copy for one.
+- **There is no acquisition budget.** "Near zero, unless what you need is
+  something that unlocks sales with 100% certainty" — nothing unlocks sales with
+  100% certainty, so read this as zero and plan for zero. Do not come back with
+  a $20 test, a cheap directory listing or an ad experiment.
+- **Pinterest cannot be appealed yet.** The account is still inside whatever
+  window the platform imposes before a second appeal. Not refused — not yet
+  possible. Do not re-raise until the boss says the window is open.
+- **Bing Webmaster Tools: the boss can check it.** This is the one thing that
+  opened, and it answers a question I cannot answer from my side.
