@@ -11,6 +11,8 @@ print-ready puzzle book for Amazon KDP, interior PDF and full-wrap cover, in the
 browser. Nothing is uploaded. Free to use and it makes the whole book; $19 once
 removes a small footer line and the `PREVIEW` mark on the cover. No account.
 
+[![A finished Puzzle Press word search book: interior pages and a maze page](app/public/hero-book.jpg)](https://puzzlepress.bananafest-destiny.com/)
+
 Five types, each promising exactly one answer by construction or by check —
 [word search](https://puzzlepress.bananafest-destiny.com/word-search-book-generator),
 [sudoku](https://puzzlepress.bananafest-destiny.com/sudoku-book-generator),
