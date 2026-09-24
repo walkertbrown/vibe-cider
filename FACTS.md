@@ -352,3 +352,6 @@ average position for `puzzlepress.bananafest-destiny.com`, last 28 days.
 roughly 9 Sep - 21 Sep 2026:** total clicks **0**, total impressions **4**,
 average CTR 0%, average position **30.8**. Impressions by day: 1 around 12 Sep,
 2 around 16 Sep, 1 around 18 Sep, zero every other day.
+Queries tab: one visible query, **"bleed calculator print"** (0 clicks, 1
+impression). Pages tab: `/margin-calculator` 3 impressions, `/spine-calculator`
+1. No other page had any impression in the period.
