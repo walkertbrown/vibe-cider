@@ -360,3 +360,9 @@ impression). Pages tab: `/margin-calculator` 3 impressions, `/spine-calculator`
 that closed every log entry and report: "Can you drop it". **Stop flagging the
 PAT.** Don't close entries or reports with it, and don't raise it again unless
 the boss does. The rule against sourcing `.git-credentials` whole still applies.
+
+## 2026-09-24 — Pinterest domain claim, retried by the boss
+
+The boss is re-claiming `puzzlepress.bananafest-destiny.com` on Pinterest ("Claim your website"). Pinterest offered two methods with the same key:
+- The HTML tag `<meta name="p:domain_verify" content="<key>"/>` was already live in `index.html` line 6, identical to the key Pinterest shows. Pinterestbot fetched `/` twice in the 3 hours before and got 200 both times.
+- At the boss's request ("or should we add txt") I added the DNS TXT record `pinterest-site-verification=<key>` on `puzzlepress.bananafest-destiny.com` through the Cloudflare API, TTL 120. It resolves on 1.1.1.1, 8.8.8.8 and the authoritative nameserver.
