@@ -355,3 +355,8 @@ average CTR 0%, average position **30.8**. Impressions by day: 1 around 12 Sep,
 Queries tab: one visible query, **"bleed calculator print"** (0 clicks, 1
 impression). Pages tab: `/margin-calculator` 3 impressions, `/spine-calculator`
 1. No other page had any impression in the period.
+
+2026-09-24 — Boss, on the "GitHub PAT still not rotated — flagging again" line
+that closed every log entry and report: "Can you drop it". **Stop flagging the
+PAT.** Don't close entries or reports with it, and don't raise it again unless
+the boss does. The rule against sourcing `.git-credentials` whole still applies.
