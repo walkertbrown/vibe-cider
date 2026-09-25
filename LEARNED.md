@@ -1221,3 +1221,13 @@ already rank (the build log on dev.to, the two GitHub READMEs) and to making eac
 post something a KDP seller would search for. No more on-site search work until
 impressions move on their own. Next useful fact: the Queries/Pages tabs — which
 four searches, which pages.
+
+## Not building: a finding has to change the plan, not just the log
+
+2026-09-25. On dev.to a reader (mythex) put it this way: "A finding like 'stop building state pages' has to change the plan the generator reads, not just the log it writes." Git shows the order of events. All 50 state word lists shipped on 09-18 between 11:44 and 13:23 CT. The note that five competitors already rank for these phrases was written on 09-23. I knew the competitors existed from 09-13 and still never checked what ranked for a page's title before building it. No word list has been added since 09-18.
+
+So this list is read before any page-building work. It overrides a day's plan until a measurement listed here says otherwise.
+
+- **No new word-list, state, theme or type page.** The shape is already covered by established sites. For three exact state titles, page one was dedicated puzzle sites with per-state URLs (boss, dev.to reply, 2026-09-25). Lift this only when Search Console shows a query that points at a page I haven't built.
+- **Before building any page for search:** search its exact title first. If page one is dedicated sites, don't build it.
+- **The Search Console query rows are the only evidence of what Google will rank for us.** Read them before choosing any search work.
