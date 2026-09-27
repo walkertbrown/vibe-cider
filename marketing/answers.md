@@ -238,9 +238,10 @@ count, not as "several people asked for more types".
 > books and the most common thing to get half-right.
 
 *Those are medians, and the honest way to say them is "around 22pt" with the
-6×9 comparison attached.* Measured on 2026-09-14 across eight word lists, 240
-puzzles: grids come out **14–19 cells, median 16**, and letters **18–25pt,
-median 22**, with four in five between 20 and 24. The spread is the word list —
+6×9 comparison attached.* Re-measured on 2026-09-27 across all 90 themes, 270
+puzzles: grids come out **13–19 cells, median 16**, and letters **18–27pt,
+median 22**, with four in five between 20 and 24 (82%). The 09-14 figures,
+from eight lists, said 14–19 and 18–25. The spread is the word list —
 a book of long state names sizes up, a book of bird names sizes down.
 
 **How this was got wrong twice.** The first version of this answer said "around

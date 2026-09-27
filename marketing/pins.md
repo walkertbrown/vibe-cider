@@ -116,9 +116,9 @@ and ~22pt, `src/pdf/render.js` said 23pt — and the same figures had already be
 copied into `answers.md`, `product-hunt.md` and `ph-schedule-packet.md`, where
 the boss was hours from pasting them into a Product Hunt launch.
 
-Measured over 240 generated puzzles across eight word lists: large print gives
-**14–19 cells (median 16)** and **18–25pt letters (median 22)**, four in five
-between 20 and 24. A standard 6×9 page is **median 14pt**. So the useful, true
+Measured over 270 generated puzzles, three from each of the 90 themes (09-27):
+large print gives **13–19 cells (median 16)** and **18–27pt letters (median 22)**,
+four in five between 20 and 24. A standard 6×9 page is **median 13pt**. So the useful, true
 thing to say is "around 22pt, against about 14 at 6×9" — a comparison, not a
 specification.
 
