@@ -11,7 +11,7 @@ Studio → Content → Shorts → open each one → **Related video** → "How t
 - [ ] `ivTWiVtvW3I`: spine
 - [ ] `v0-cvmEOcEk`: five kinds
 - [ ] `UDwBuUHuz1M`: groundwood
-- [ ] the large-print Short, after it posts at 09-27 00:30Z
+- [ ] `9nZrH4AK2yg`: large print (posted 09-27 00:30Z)
 
 ## 2. Titles: lead with the words people type
 
