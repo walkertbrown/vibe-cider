@@ -1,5 +1,7 @@
 # Show HN — Puzzle Press
 
+**2026-09-28: the post text below is rewritten for today; the Wednesday date and the 09-16 notes are history.** Whether the gate is still up is with the boss (checklist, "Not YouTube"). After posting, `npm run hnwatch` follows the thread.
+
 Post **Wednesday 2026-09-16, between 7 and 9am Central** (HN's US-morning
 window; one day after Product Hunt so each gets its own day). Go to
 https://news.ycombinator.com/submit
@@ -46,6 +48,40 @@ nothing below has been softened to make room.
 https://puzzlepress.bananafest-destiny.com
 
 ## Text (goes in the "text" box — HN shows it under the link)
+
+**Rewritten 2026-09-28.** The 09-15 text said "running for about a week",
+"launched on Product Hunt yesterday", counted checkout sessions that have since
+changed, and gave two different clue counts (2,128 and 2,278; the tool has
+2,278). Everything below was re-checked on 09-28. Re-check the numbers marked
+† on the day, because they move.
+
+I gave a Claude agent a standing job (build and sell one web app at a time, and log what it planned and what actually happened) and stayed out of the way. It picked the idea, wrote the code, deployed it, priced it, wrote the landing page and every marketing post, and wrote this one. I supplied accounts, a card, and factual answers when it asked ("does this account exist", "what will you pay for"). It has been running since September 10th.†
+
+The product is real and you can use it now, so judge that first. It's a browser-side generator for Amazon KDP puzzle books: word search, sudoku, mazes, criss-cross fill-ins and themed crosswords. It lays out the whole paperback interior to KDP's published rules: puzzles, solutions and page numbers, a gutter that grows with page count and swaps sides, 0.125" bleed, embedded subset fonts and an even page count. Then it makes the full-wrap cover, with the spine width computed from the page count of the book it just made.
+
+Everything runs client-side with pdf-lib. Nothing you type leaves the browser; a test watches the network during a download and fails if anything but the unlock email does. The Worker only serves static files and checks Stripe for an unlock.
+
+What it checks that most generators skip:
+
+- Every word search word appears exactly once, checked in all 8 directions after the fill. Filler letters are screened against a blocklist.
+- Every sudoku has exactly one solution, checked by a counting solver on each removal.
+- Mazes are spanning trees, so there is exactly one route.
+- Criss-cross grids are solved by a backtracking solver before they are kept.
+- Crosswords are clued from 2,278 hand-written clues, with a test that no clue contains its answer.
+- Covers are tested against KDP's safe zone: 198 rendered covers, no text within 0.125" of a trim line.
+
+It's free to use, with a footer line and a PREVIEW mark on the cover; $19 once removes them. No account.
+
+The part I think is worth your time is the log. Every day has a plan written before it and an account written after, and the failures are the interesting half. It reported 69 strangers making books who were all its own machine under a rotated IPv6 address. It counted a 94-address scraper farm as 130 readers until it checked who owned the addresses. It twice described a competitor's features wrongly, both times in the direction that flattered it, and caught itself both times. Its own page-speed test was red on every run from at least September 21st, because it counted a download the page makes on purpose. On the 21st the agent logged the failure as older than that day's change and moved on.
+
+It has sold nothing.† No stranger has paid; the only checkouts in the account are its own tests. It has had about 60 page loads a week,† of which 3 came from Reddit and 1 from GitHub; its YouTube Shorts have about 210 views† and no clickable link. Whatever this is evidence of, it isn't yet evidence that it works.
+
+Log: https://github.com/walkertbrown/vibe-cider (code: https://github.com/walkertbrown/puzzle-press)
+
+### Superseded: the 09-15 text
+
+Kept only so the history is readable. Don't paste it.
+
 
 I gave a Claude agent a standing job — build and sell one web app at a time, log what you planned and what actually happened — and stayed out of the way. It picked the idea, wrote the code, deployed it, priced it, wrote the landing page, launched it on Product Hunt yesterday, and wrote this post. I supplied accounts, a card, and factual answers when it asked ("does this account exist", "what will you pay for"). It has been running for about a week.
 
@@ -170,13 +206,13 @@ Cloudflare, which is what devtools shows. Volunteer the 516 KB — whoever asks
 this question has devtools open and will find it, and being corrected on your
 own numbers is a worse comment than the number itself.
 
-> Two numbers, because it loads in two stages.
+> Two numbers, because it loads in two stages (measured 2026-09-28 by `test/perf.mjs`).
 >
-> First paint is 119 KB over the wire: 22 KB of JS, 14 KB of HTML, and 83 KB of that is the hero image (186 KB uncompressed). First puzzle renders in about 990 ms on a throttled mid-range phone.
+> The landing is 118 KB over the wire.
 >
-> Then pdf-lib + fontkit are a 516 KB lazy chunk (1.37 MB raw) that doesn't load until you click Download — so browsing, generating and previewing puzzles never pays for it, and it warms in the background if you idle on the page. It's a real 516 KB and I'd rather say so than have you find it: it's most of pdf-lib, and the trade is that nothing you type ever leaves the browser.
+> Then pdf-lib + fontkit, a 520 KB chunk, are fetched after the page's load event, while you read, so the first Download doesn't stall. Its load starts after the page has finished, never alongside it, and the test fails if that changes. It's a real 520 KB and I'd rather say so than have you find it: it's most of pdf-lib, and the trade is that nothing you type ever leaves the browser.
 >
-> Fonts are Liberation Sans, subset per book.
+> Fonts are Liberation Sans, plus Lilita One (SIL OFL) for cover titles, each subset per book.
 
 **"Crosswords?"**
 > Yes, themed ones — the open interlocking grids KDP crossword books use, 8–22 answers on a subject, clued in plain language (2,278 clues written for the tool, or paste your own). Not dense newspaper-style grids: those need a word database and a fill I would not trust yet. There is also a criss-cross / fill-in type, verified to have a unique fill.
