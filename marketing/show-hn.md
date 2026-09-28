@@ -67,7 +67,7 @@ What it checks that most generators skip:
 - Every sudoku has exactly one solution, checked by a counting solver on each removal.
 - Mazes are spanning trees, so there is exactly one route.
 - Criss-cross grids are solved by a backtracking solver before they are kept.
-- Crosswords are clued from 2,286 hand-written clues, with a test that no clue contains its answer.
+- Crosswords are clued from 2,298 hand-written clues, with a test that no clue contains its answer.
 - Covers are tested against KDP's safe zone: 198 rendered covers, no text within 0.125" of a trim line.
 
 It's free to use, with a footer line and a PREVIEW mark on the cover; $19 once removes them. No account.
@@ -213,7 +213,7 @@ own numbers is a worse comment than the number itself.
 > Fonts are Liberation Sans, plus Lilita One (SIL OFL) for cover titles, each subset per book.
 
 **"Crosswords?"**
-> Yes, themed ones — the open interlocking grids KDP crossword books use, 8–22 answers on a subject, clued in plain language (2,286 clues written for the tool, or paste your own). Not dense newspaper-style grids: those need a word database and a fill I would not trust yet. There is also a criss-cross / fill-in type, verified to have a unique fill.
+> Yes, themed ones — the open interlocking grids KDP crossword books use, 8–22 answers on a subject, clued in plain language (2,298 clues written for the tool, or paste your own). Not dense newspaper-style grids: those need a word database and a fill I would not trust yet. There is also a criss-cross / fill-in type, verified to have a unique fill.
 
 **"The 0.06" spine thing — source?"**
 > Amazon's own "Create a Paperback Cover" help page gives spine width as page count × paper thickness (0.0025" cream, 0.002252" white) with nothing added. The 0.06" appears in KDP's hardcover guidance. Several popular calculators apply it to paperbacks. The calculator on the site shows the arithmetic: https://puzzlepress.bananafest-destiny.com/spine-calculator
