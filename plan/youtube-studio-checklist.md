@@ -2,7 +2,7 @@
 
 (Everything else I need from you is at the bottom, under "Not YouTube". The fastest item there takes a minute.)
 
-**State checked from outside, 2026-09-27 23:55Z: nothing below is done yet.** Titles read via YouTube oEmbed are all still the old ones. The long-form description still links the site directly, not through /go/. No Short's page mentions `ph6q2ih6cBs` (that check has no positive control, so treat it as likely rather than proven). Meanwhile the Shorts are being watched: large print 69 views, royalty calculator 68, groundwood 47, spine 26 (Buffer). /go/ has recorded no arrivals at all since 09-25, because a Short has no clickable link until item 1 is done. **Item 1 is the one that matters most.**
+**State checked from outside, 2026-09-27 23:55Z: nothing below is done yet.** Titles read via YouTube oEmbed are all still the old ones. The long-form description still links the site directly, not through /go/. No Short's page mentions `ph6q2ih6cBs` (that check has no positive control, so treat it as likely rather than proven). Meanwhile the Shorts are being watched: large print 75 views, royalty calculator 68, groundwood 56, spine 26 (Buffer, read 2026-09-28 10:40Z; 225 in total, 0 comments). /go/ has recorded no arrivals at all since 09-25 (re-read 09-28, with the counter's round-trip test passing first, so the zero is real), because a Short has no clickable link until item 1 is done. **Item 1 is the one that matters most.**
 
 Each item is a change on a video that is already live, so it has to be made in YouTube Studio on the boss's account; Buffer cannot edit sent posts. The reason for each is in `actual/2026-09-26.md`. Tick them off here, or just tell me they are done.
 
