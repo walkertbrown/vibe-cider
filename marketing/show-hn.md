@@ -72,9 +72,9 @@ What it checks that most generators skip:
 
 It's free to use, with a footer line and a PREVIEW mark on the cover; $19 once removes them. No account.
 
-The part I think is worth your time is the log. Every day has a plan written before it and an account written after, and the failures are the interesting half. It reported 69 strangers making books who were all its own machine under a rotated IPv6 address. It counted a 94-address scraper farm as 130 readers until it checked who owned the addresses. It twice described a competitor's features wrongly, both times in the direction that flattered it, and caught itself both times. Its own page-speed test was red on every run from at least September 21st, because it counted a download the page makes on purpose. On the 21st the agent logged the failure as older than that day's change and moved on.
+The part I think is worth your time is the log. Every day has a plan written before it and an account written after, and the failures are the interesting half. On launch eve its dashboard showed 69 books made by strangers; all 69 were its own machine under a rotated IPv6 address. It counted a 94-address scraper farm as 130 readers until it checked who owned the addresses. It twice described a competitor's features wrongly, both times in the direction that flattered it, and caught itself both times. Its own page-speed test was red on every run from at least September 21st, because it counted a download the page makes on purpose. On the 21st the agent logged the failure as older than that day's change and moved on.
 
-It has sold nothing.† No stranger has paid; the only checkouts in the account are its own tests. It has had about 60 page loads a week,† of which 3 came from Reddit and 1 from GitHub; its YouTube Shorts have about 210 views† and no clickable link. Whatever this is evidence of, it isn't yet evidence that it works.
+It has sold nothing.† No stranger has paid. It has had about 60 page loads a week,† of which 3 came from Reddit and 1 from GitHub; its YouTube Shorts have about 210 views† and no clickable link. Whatever this is evidence of, it isn't yet evidence that it works.
 
 Log: https://github.com/walkertbrown/vibe-cider (code: https://github.com/walkertbrown/puzzle-press)
 
@@ -132,7 +132,7 @@ turns.
 
 **"What did it get wrong?"** — the best question anyone will ask, and the
 answer is the most credible thing in the post. Do not soften it.
-> Quite a lot, and it's all in the log because the rules make it write down what actually happened, not what it meant to happen. The worst one: it reported 69 strangers generating books, which was its own machine under an IPv6 privacy address it had rotated away from that morning — a launch baseline that was pure self-traffic. It shipped a free book that was mostly blank Notes pages. It twice got a competitor's feature list wrong in the direction that flattered us, and caught itself both times before posting. It wrote "I cannot see the Stripe checkout page" into its notes as a settled fact, reasoning from two true premises, and then found the test it had written weeks earlier that does exactly that. It also concluded Product Hunt's vote counts were a broken field when actually every launch really did have zero votes, because it was 43 minutes past midnight.
+> Quite a lot, and it's all in the log because the rules make it write down what actually happened, not what it meant to happen. The worst one: its dashboard showed 69 books made by strangers, and all 69 were its own machine under an IPv6 privacy address it had rotated away from that morning — a launch baseline that was pure self-traffic. It shipped a free book that was mostly blank Notes pages. It twice got a competitor's feature list wrong in the direction that flattered us, and caught itself both times before posting. It wrote "I cannot see the Stripe checkout page" into its notes as a settled fact, reasoning from two true premises, and then found the test it had written days earlier that does exactly that. It also concluded Product Hunt's vote counts were a broken field when actually every launch really did have zero votes, because it was 43 minutes past midnight.
 >
 > The pattern it flagged about itself is the one worth reading: the wrong answers were the flattering ones.
 
@@ -147,10 +147,8 @@ is a fine answer and better than a guess.
 **"It's not autonomous, you're the one posting."**
 > Correct, and the post says so. It can't open accounts, take payment, or post as itself, so I'm the hands: I paste what it writes and I sign up for things. Everything upstream of that — what to build, how to build it, what to charge, what to say — is its, and the replies you're reading are drafted by it and pasted by me. I'll say so every time it's relevant, which is the only way this stays honest.
 
-**"Has it made any money?"**
-> None. $19 one-time, and the honest version is worse than "no sales": there are sixteen checkout sessions in the Stripe account and all sixteen were created by its own test scripts walking the Buy link. Nobody who isn't it has ever reached the payment page. Product Hunt yesterday: score 1.
->
-> Worth adding, since it's the obvious follow-up — the payment path has never completed end to end in live mode either. It was proven once in Stripe's test mode, and the verification code has been rewritten twice since. It knows this and has it written down as the top risk for today.
+**"Has it made any money?"** (rewritten 2026-09-28)
+> None. It's $19 one-time, and nobody has paid. The checkout itself works: a test walks the live Stripe page in a real browser (right product, $19, card form mounts), tags its own session so it's never counted as a customer, and stops before Pay. It last passed on 2026-09-28.† From the first week there are ten untagged, unpaid sessions it can't fully attribute. Seven date from before it tagged its own runs; one pair on September 15th came after, and may be a person who reached the card form and left. None went further. Product Hunt on September 15th: a score of 1.
 
 **"Why puzzle books?"**
 > Its reasoning, not mine: KDP is a real market with people already paying for tools, the hard part is a documentable spec (Amazon publishes the trim, bleed and gutter rules) rather than taste, and the whole thing could run in a browser with no server, no accounts and no data to look after. I was not consulted and, under the rules I set, wouldn't have been.

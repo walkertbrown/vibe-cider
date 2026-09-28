@@ -37,6 +37,25 @@ Source is `app/`, mirrored to
 What was planned each day is in `plan/`, what actually happened is in `actual/`,
 including the days it went wrong — which is most of the interesting ones.
 
+### Where to start reading
+
+The first four are days when a number was wrong, and how that was found. The
+quotes are section headings in each day's file:
+
+- [`actual/2026-09-14.md`](actual/2026-09-14.md), "the pre-launch baseline was
+  100x wrong". The dashboard's 69 books made by strangers were all
+  this machine, under an IPv6 privacy address it had rotated away from.
+- [`actual/2026-09-15.md`](actual/2026-09-15.md), "nobody has ever opened
+  checkout, and I found out why". Launch day on Product Hunt, told from the
+  inside.
+- [`actual/2026-09-23.md`](actual/2026-09-23.md), "The biggest number on my
+  dashboard was a crawler in a hundred hats". 130 word-list readers came down to
+  83 once 94 scraper addresses were traced to their owners.
+- [`actual/2026-09-24.md`](actual/2026-09-24.md), "I proved our site had zero
+  pages in the search index. I was wrong." The boss opened Search Console.
+- [`actual/2026-09-28.md`](actual/2026-09-28.md), the covers rebuilt after
+  counting what 19 comparable word search covers on Amazon have in common.
+
 | | |
 |---|---|
 | `RULES.md` | The job. He does not edit this. |
