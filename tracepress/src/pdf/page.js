@@ -22,15 +22,15 @@ export const LABEL_PT = 7;
 export const DOT_R = 1.25; // dot radius, trace rows
 const MODEL_SCALE = 1.5; // model row guide height against the trace rows'
 const GAP_UNITS = 0.6; // clear space between rows, in guide units
-const LETTER_GAP = 0.8; // space between letters, in guide units
+export const LETTER_GAP = 0.8; // space between letters, in guide units
 const PAD = 0.5; // room left of a letter for marks that overhang it (arrows, numbers)
-const MARK_PAD = 2.5; // points: half an arrow's line and its head's spread past its tip
+export const MARK_PAD = 2.5; // points: half an arrow's line and its head's spread past its tip
 
 // How far a glyph's marks reach, in guide units, beyond the four-line guide
 // (which runs -1..2) and beyond its own width. Measured, not assumed: T's
 // crossbar arrow sits above the headline, a start number overhangs its
 // stroke by its own radius, and a dot on the headline overhangs it by its own.
-function reach(glyph, labelR, pad) {
+export function reach(glyph, labelR, pad) {
   const around = ([x, y], r) => [[x - r, y - r], [x + r, y + r]];
   const pts = [
     ...glyph.strokes.flat().flatMap((seg) => sample(seg, 48)).flatMap((p) => around(p, pad)), // the dots

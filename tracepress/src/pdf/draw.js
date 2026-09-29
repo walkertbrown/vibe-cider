@@ -1,5 +1,4 @@
-// Drawing a laid-out letter page into a PDF with pdf-lib, from the shapes in
-// ink.js.
+// Drawing into a PDF with pdf-lib, from the shapes in ink.js.
 import { rgb } from "pdf-lib";
 import { pageInk } from "./ink.js";
 
@@ -8,7 +7,11 @@ const colour = ([r, g, b]) => rgb(r, g, b);
 // `fonts` holds embedded `bold` and `regular`; a book that isn't `licensed`
 // gets the watermark line.
 export function drawLetterPage(page, layout, fonts, { licensed = false } = {}) {
-  for (const s of pageInk(layout, { licensed })) {
+  drawShapes(page, pageInk(layout, { licensed }), fonts);
+}
+
+export function drawShapes(page, shapes, fonts) {
+  for (const s of shapes) {
     if (s.kind === "line") {
       page.drawLine({ start: { x: s.x1, y: s.y1 }, end: { x: s.x2, y: s.y2 }, thickness: s.width, color: colour(s.color), dashArray: s.dash });
     } else if (s.kind === "dot") {

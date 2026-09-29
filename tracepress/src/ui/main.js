@@ -4,6 +4,7 @@
 // /api/verify and nowhere else.
 import { planBook, GUIDES } from "../pdf/plan.js";
 import { TRIMS } from "../pdf/kdp.js";
+import { coverGeometry, PAPER } from "../pdf/cover-geometry.js";
 import { pageSvg } from "./preview.js";
 import { getLicense as storedLicense, setLicense, clearLicense, verifyEmail, PRICE_LABEL } from "./license.js";
 import { px } from "./px.js";
@@ -22,16 +23,29 @@ const el = {
   preview: $("preview"), prev: $("prev"), next: $("next"), pageNo: $("pageNo"),
   download: $("download"), status: $("status"), tier: $("tier"),
   dialog: $("unlockDialog"), dialogTitle: $("dialogTitle"), dialogLede: $("dialogLede"), buyLine: $("buyLine"),
+  title: $("title"), subtitle: $("subtitle"), author: $("author"), paper: $("paper"), coverNote: $("coverNote"),
+  downloadCover: $("downloadCover"), coverStatus: $("coverStatus"),
   email: $("email"), unlockErr: $("unlockErr"), verify: $("verify"), closeDialog: $("closeDialog"),
 };
 
 for (const [key, t] of Object.entries(TRIMS)) el.trim.add(new Option(t.label, key, false, key === "8.5x11"));
+for (const [key, p] of Object.entries(PAPER)) el.paper.add(new Option(p.label, key, false, key === "white"));
 for (const [label, inches] of Object.entries(GUIDES)) el.age.add(new Option(`${label} — ${inches}" lines`, String(inches), false, inches === 0.75));
 
 let pageIndex = 0;
 const opts = () => ({ trim: el.trim.value, bleed: el.bleed.checked, guideIn: Number(el.age.value) });
 
+// The cover's size, before it's made: what to type into KDP's cover
+// calculator to check it.
+const inch = (pt) => `${(pt / 72).toFixed(3).replace(/0+$/, "").replace(/\.$/, "")}"`;
+function showCoverNote() {
+  const pageCount = planBook(opts()).pages.length;
+  const g = coverGeometry({ trim: el.trim.value, pageCount, paper: el.paper.value });
+  el.coverNote.textContent = `${inch(g.width)} × ${inch(g.height)} with bleed, spine ${inch(g.spine)} for ${pageCount} pages. KDP allows spine text from 79 pages, so the spine is left blank.`;
+}
+
 function showPage() {
+  showCoverNote();
   const { geom, pages } = planBook(opts());
   pageIndex = Math.max(0, Math.min(pageIndex, pages.length - 1));
   const svg = pageSvg(geom, pages[pageIndex], { licensed: !!getLicense() });
@@ -43,7 +57,7 @@ function showPage() {
   el.next.disabled = pageIndex === pages.length - 1;
 }
 
-for (const c of [el.trim, el.bleed, el.age]) c.addEventListener("change", (e) => {
+for (const c of [el.trim, el.bleed, el.age, el.paper]) c.addEventListener("change", (e) => {
   if (e.isTrusted) px("touched");
   showPage();
 });
@@ -54,16 +68,16 @@ function refreshTier(note = "") {
   const lic = getLicense();
   el.tier.replaceChildren();
   if (lic) {
-    el.tier.append(`Unlocked for ${lic.email}: no footer line. `);
+    el.tier.append(`Unlocked for ${lic.email}: no footer line, no PREVIEW on the cover. `);
     const out = document.createElement("button");
     out.type = "button"; out.className = "linkish"; out.textContent = "Forget this browser";
     out.addEventListener("click", () => { clearLicense(); sessionLicense = null; refreshTier(); showPage(); });
     el.tier.append(out);
     if (note === "storage") el.tier.append(" (This browser won't remember it after you close the tab; enter your email again next time.)");
   } else {
-    el.tier.append("Free: every page carries a small Trace Press footer line. ");
+    el.tier.append("Free: every page carries a small Trace Press footer line, and the cover says PREVIEW. ");
     const up = document.createElement("button");
-    up.type = "button"; up.className = "linkish"; up.textContent = `Remove it — ${PRICE_LABEL}`;
+    up.type = "button"; up.className = "linkish"; up.textContent = `Remove them — ${PRICE_LABEL}`;
     up.addEventListener("click", () => openUnlock());
     el.tier.append(up);
   }
@@ -76,7 +90,17 @@ const loadRender = () => (renderMod ??= Promise.all([
   import("../pdf/book.js"),
   fetch("/fonts/LiberationSans-Bold.ttf").then((r) => r.arrayBuffer()),
   fetch("/fonts/LiberationSans-Regular.ttf").then((r) => r.arrayBuffer()),
+  import("../pdf/cover.js"),
 ]).catch((err) => { renderMod = null; throw err; }));
+
+function save(bytes, name) {
+  const url = URL.createObjectURL(new Blob([bytes], { type: "application/pdf" }));
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = name;
+  document.body.append(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 60000);
+}
 (window.requestIdleCallback || ((f) => setTimeout(f, 1500)))(() => loadRender().catch(() => {}));
 
 el.download.addEventListener("click", async (e) => {
@@ -87,12 +111,7 @@ el.download.addEventListener("click", async (e) => {
     const [{ renderBook }, bold, regular] = await loadRender();
     const o = opts();
     const bytes = await renderBook({ ...o, licensed: !!getLicense() }, { bold, regular });
-    const url = URL.createObjectURL(new Blob([bytes], { type: "application/pdf" }));
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `trace-press-${o.trim}${o.bleed ? "-bleed" : ""}-${String(o.guideIn).replace(".", "")}in.pdf`;
-    document.body.append(a); a.click(); a.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 60000);
+    save(bytes, `trace-press-${o.trim}${o.bleed ? "-bleed" : ""}-${String(o.guideIn).replace(".", "")}in.pdf`);
     px("made");
     el.status.textContent = getLicense()
       ? "Downloaded. Upload it to KDP as the paperback manuscript."
@@ -102,6 +121,30 @@ el.download.addEventListener("click", async (e) => {
     el.status.textContent = `Could not make the PDF: ${err.message}. Reload the page and try again, or email ${SUPPORT}.`;
   } finally {
     el.download.disabled = false;
+  }
+});
+
+el.downloadCover.addEventListener("click", async (e) => {
+  if (e.isTrusted) px("cover");
+  el.downloadCover.disabled = true;
+  el.coverStatus.textContent = "Making your cover…";
+  try {
+    const [, bold, regular, { renderCover }] = await loadRender();
+    const o = opts();
+    const bytes = await renderCover({
+      title: el.title.value.trim() || "My Letter Tracing Book", subtitle: el.subtitle.value.trim(), author: el.author.value.trim(),
+      trim: o.trim, paper: el.paper.value, pageCount: planBook(o).pages.length, licensed: !!getLicense(),
+    }, { bold, regular });
+    save(bytes, `trace-press-cover-${o.trim}-${el.paper.value}.pdf`);
+    px("covermade");
+    el.coverStatus.textContent = getLicense()
+      ? "Downloaded. Upload it to KDP as the paperback cover."
+      : "Downloaded, with PREVIEW across the front. Unlock to remove it.";
+  } catch (err) {
+    px("failed");
+    el.coverStatus.textContent = `Could not make the cover: ${err.message}. Reload the page and try again, or email ${SUPPORT}.`;
+  } finally {
+    el.downloadCover.disabled = false;
   }
 });
 
@@ -123,10 +166,10 @@ function openUnlock({ justPaid = false } = {}) {
   if (!justPaid) px(PAY_URL ? "pay" : "unlock");
   autoRetryFirstFailAt = 0;
   el.unlockErr.textContent = "";
-  el.dialogTitle.textContent = justPaid ? "Thanks — one step left" : "Remove the footer line";
+  el.dialogTitle.textContent = justPaid ? "Thanks — one step left" : "Unlock clean books and covers";
   el.dialogLede.textContent = justPaid
     ? "Enter the email you used at checkout and this browser is unlocked."
-    : `${PRICE_LABEL}, then every book you make has no Trace Press footer. After paying, enter the email you used at checkout here.`;
+    : `${PRICE_LABEL}, then every book you make has no Trace Press footer and every cover has no PREVIEW mark. After paying, enter the email you used at checkout here.`;
   el.buyLine.replaceChildren();
   if (!justPaid && PAY_URL) {
     const a = document.createElement("a");

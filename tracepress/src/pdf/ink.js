@@ -21,7 +21,9 @@ export const GREEN = [0.1, 0.45, 0.25];
 //   { kind: "tri", pts: [[x, y] × 3], color }
 //   { kind: "text", text, x, y, size, font: "bold" | "regular", color, align: "center" }
 //     (x is the centre; y the baseline)
-export function pageInk(layout, { licensed = false } = {}) {
+// `heavy` (the cover) thickens dots and arrows with the letter size; the
+// interior keeps its fixed weights.
+export function pageInk(layout, { licensed = false, heavy = false } = {}) {
   const out = [];
   if (!licensed) {
     const { box } = layout;
@@ -34,16 +36,17 @@ export function pageInk(layout, { licensed = false } = {}) {
     rule(1, GREY, [4, 3]);
     rule(0, BASE);
     rule(-1, GREY, [1, 3]);
-    for (const l of row.letters) letterInk(out, l, row);
+    for (const l of row.letters) letterInk(out, l, row, heavy);
   }
   return out;
 }
 
-function letterInk(out, { ch, x, marks }, { unit, baseY }) {
+function letterInk(out, { ch, x, marks }, { unit, baseY }, heavy) {
   const glyph = PRINT[ch];
   const P = ([gx, gy]) => [x + gx * unit, baseY + gy * unit];
-  const r = marks ? DOT_R * 1.3 : DOT_R;
-  for (const d of traceDots(glyph, (marks ? 5.5 : 4) / unit).flat()) {
+  const r = heavy ? Math.max(DOT_R * 1.3, unit * 0.03) : marks ? DOT_R * 1.3 : DOT_R;
+  const spacing = heavy ? Math.max(5.5, r * 3.4) : marks ? 5.5 : 4;
+  for (const d of traceDots(glyph, spacing / unit).flat()) {
     const [cx, cy] = P(d);
     out.push({ kind: "dot", x: cx, y: cy, r, color: BLACK });
   }
@@ -53,7 +56,7 @@ function letterInk(out, { ch, x, marks }, { unit, baseY }) {
     const [fx, fy] = P(a.from), [tx, ty] = P(a.to);
     const len = Math.hypot(tx - fx, ty - fy), ux = (tx - fx) / len, uy = (ty - fy) / len;
     // The shaft stops at the head's base so its square end doesn't poke past the point.
-    out.push({ kind: "line", x1: fx, y1: fy, x2: tx - ux * head * 0.8, y2: ty - uy * head * 0.8, width: 1, color: RED });
+    out.push({ kind: "line", x1: fx, y1: fy, x2: tx - ux * head * 0.8, y2: ty - uy * head * 0.8, width: heavy ? Math.max(1, unit * 0.02) : 1, color: RED });
     out.push({
       kind: "tri",
       pts: [[tx, ty], [tx - ux * head - uy * head * 0.6, ty - uy * head + ux * head * 0.6], [tx - ux * head + uy * head * 0.6, ty - uy * head - ux * head * 0.6]],

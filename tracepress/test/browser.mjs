@@ -1,7 +1,8 @@
 // End-to-end in a real browser: the preview draws, the pager and controls
 // work, a free download is a 26-page PDF with the footer line, the unlock
 // dialog unlocks against a stubbed /api/verify, a licensed download has no
-// footer, and ?paid=1 opens the dialog. Stripe is never called: /api/verify
+// footer, a free cover says PREVIEW and a licensed one doesn't, and ?paid=1
+// opens the dialog. Stripe is never called: /api/verify
 // is answered by page.route, because the Trace Press Payment Link is live.
 //
 // Run: node test/browser.mjs [baseUrl] [chromium|firefox|webkit]
@@ -58,8 +59,15 @@ try {
   check((got.text.match(/Made with Trace Press/g) || []).length === 26, "free download has the footer on every page");
   check(/^trace-press-6x9-075in\.pdf$/.test(dl.suggestedFilename()), `file name ${dl.suggestedFilename()}`);
 
+  check(/spine 0\.059" for 26 pages/.test(await page.textContent("#coverNote")), `cover note gives the spine (${await page.textContent("#coverNote")})`);
+  await page.fill("#title", "Tracing Fun For Test");
+  [dl] = await Promise.all([page.waitForEvent("download"), page.click("#downloadCover")]);
+  got = pdfText(await (await dl.createReadStream()).toArray().then(Buffer.concat));
+  check(got.pages === 1 && /PREVIEW/.test(got.text) && /Tracing Fun For Test/.test(got.text.replace(/\s+/g, " ")), "free cover: one page, the title, PREVIEW");
+  check(/^trace-press-cover-6x9-white\.pdf$/.test(dl.suggestedFilename()), `cover file name ${dl.suggestedFilename()}`);
+
   await page.click("#tier .linkish");
-  check(await page.isVisible("#unlockDialog"), "Remove it opens the unlock dialog");
+  check(await page.isVisible("#unlockDialog"), "the tier button opens the unlock dialog");
   const buy = page.locator("#buyLine a");
   check((await buy.getAttribute("href")) === "https://buy.stripe.com/bJe14p0IKcKV2gzblBeIw01" && (await buy.getAttribute("target")) === "_blank", "Buy is the Trace Press link, in a new tab (not clicked)");
   await page.fill("#email", "tester@example.com");
@@ -72,6 +80,10 @@ try {
   [dl] = await Promise.all([page.waitForEvent("download"), page.click("#download")]);
   got = pdfText(await (await dl.createReadStream()).toArray().then(Buffer.concat));
   check(got.pages === 26 && !/Made with Trace Press/.test(got.text), "licensed download: 26 pages, no footer");
+
+  [dl] = await Promise.all([page.waitForEvent("download"), page.click("#downloadCover")]);
+  got = pdfText(await (await dl.createReadStream()).toArray().then(Buffer.concat));
+  check(got.pages === 1 && !/PREVIEW|Trace Press/.test(got.text) && /Tracing Fun For Test/.test(got.text.replace(/\s+/g, " ")), "licensed cover: the title, no PREVIEW");
 
   await page.reload();
   await page.waitForSelector("#preview svg");
