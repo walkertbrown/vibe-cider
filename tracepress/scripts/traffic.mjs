@@ -88,6 +88,28 @@ try {
   console.log(`\n  (zone log unavailable: ${e.message.slice(0, 100)})`);
 }
 
+// The sample PDFs are fetched, not run, so no beacon: a crawler counts the
+// same as a person here. Read the user agents (--ips) before calling it people.
+try {
+  const z = await graphql(`query { viewer { zones(filter: {zoneTag: "${ZONE}"}) {
+    httpRequestsAdaptiveGroups(limit: 2000, filter: {datetime_geq: "${since}", clientRequestHTTPHost: "${HOST}", clientRequestPath_like: "/samples/%"}) {
+      count dimensions { clientIP userAgent clientRequestPath }
+    } } } }`);
+  const rows = z.viewer.zones[0].httpRequestsAdaptiveGroups.filter((r) => !MINE.test(r.dimensions.userAgent || ""));
+  const byFile = new Map();
+  for (const { dimensions: d } of rows) {
+    if (!byFile.has(d.clientRequestPath)) byFile.set(d.clientRequestPath, new Map());
+    byFile.get(d.clientRequestPath).set(d.clientIP, d.userAgent);
+  }
+  console.log(`\n  Sample PDFs fetched (distinct addresses, crawlers included):${byFile.size ? "" : " none"}`);
+  for (const [path, ips] of byFile) {
+    console.log(`    ${String(ips.size).padStart(4)}  ${path}`);
+    if (showIps) for (const [ip, ua] of ips) console.log(`          ${ip}  ${(ua || "").slice(0, 90)}`);
+  }
+} catch (e) {
+  console.log(`\n  (sample log unavailable: ${e.message.slice(0, 100)})`);
+}
+
 try {
   const rumSince = iso(Date.now() - 7 * 86400e3);
   const r = await graphql(`query { viewer { accounts(filter: {accountTag: "${ACCOUNT}"}) {

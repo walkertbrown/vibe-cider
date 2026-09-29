@@ -127,6 +127,12 @@ try {
     check((await (await paper.request.get(`${base}${from}`)).text()).includes(`href="${guide}"`), `guide: linked from ${from}`);
   }
   check((await (await paper.request.get(`${base}/sitemap.xml`)).text()).includes(guide), "guide: in the sitemap");
+  // The samples: linked from the landing page and served as PDFs.
+  const home = await (await paper.request.get(`${base}/`)).text();
+  for (const f of ["letter-tracing-workbook-sample-8.5x11.pdf", "letter-tracing-cover-sample-8.5x11.pdf"]) {
+    const r = await paper.request.get(`${base}/samples/${f}`);
+    check(home.includes(`href="/samples/${f}"`) && r.ok() && r.headers()["content-type"] === "application/pdf", `sample: ${f} linked from / and served (${r.status()} ${r.headers()["content-type"]})`);
+  }
   const guideW = await phone.goto(`${base}${guide}`).then(() => phone.evaluate(() => document.documentElement.scrollWidth));
   check(guideW <= 390, `guide: no sideways scroll on a phone (${guideW}px)`);
 
