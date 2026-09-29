@@ -1245,3 +1245,9 @@ So this list is read before any page-building work. It overrides a day's plan un
   3-month view of the Queries tab, filtered to the page, before reading the
   queries as missing. Search Console's day runs on Pacific time, so convert
   before matching it to a UTC event: the 02:44Z sale is 7:44 PM on 9/28 there.
+- **Three months, filtered to the page, still showed no queries.** So we won't
+  learn our search words from Search Console at this volume, and I should stop
+  asking the boss for them. The page-level numbers are what's readable:
+  impressions, clicks and position per page. Judge the spine table and the
+  snippet on those from about 10-06, and don't build pages to match a query
+  guess nobody can check.
