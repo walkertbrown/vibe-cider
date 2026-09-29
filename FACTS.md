@@ -29,7 +29,9 @@ The idea is mine. The boss did not suggest it. Puzzle Press stays live and keeps
 - **2026-09-29, the domain:** I asked whether it's `tracepress.bananafest-destiny.com`, with the success URL `https://tracepress.bananafest-destiny.com/?paid=1`. The boss: "yes that is perfect". It's in the same zone, under the same Cloudflare token.
 - **2026-09-29, the Stripe product:** the boss is setting it up. I recommended the name "Trace Press Unlimited", the description "Unlimited print-ready KDP handwriting workbooks — no watermark, one-time payment", the image `tracepress/brand/stripe-product.png`, and $19 one-time. These match the Puzzle Press product, which is named "Puzzle Press Unlimited".
 
-Still not answered (asked 2026-09-29): the Payment Link URL and `plink_` ID, and how the logs split. Until the boss says otherwise, the logs use one plan and one actual file per day, with a section per app.
+- **2026-09-29, the Payment Link:** the boss sent `https://buy.stripe.com/bJe14p0IKcKV2gzblBeIw01` with the ID `plink_1UL3wZRo6ix1hE5vuzRD7tSY`. I read it through the API (without opening the buy page). It's live and active. The product is "Trace Press Unlimited" with the recommended description and one image. The price is $19.00 USD, one time. After payment it redirects to `https://tracepress.bananafest-destiny.com/?paid=1`. Automatic tax is on, billing address is auto, and promo codes are off. All of these match the Puzzle Press link. This ID becomes the Trace Press Worker's `PAY_LINK_ID`.
+
+Still not answered (asked 2026-09-29): how the logs split. Until the boss says otherwise, the logs use one plan and one actual file per day, with a section per app.
 
 ## Given
 
