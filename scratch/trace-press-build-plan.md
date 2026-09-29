@@ -100,3 +100,28 @@ been built.
 - **Line heights:** Zaner-Bloser's paper specs aren't in any public page I
   found. The presets stay labelled in inches ("1-inch lines, ages 3–5"), never
   as "standard" or "school".
+
+### Dolch renewal check, 12:30Z
+
+Source: NYPL's transcription of the Catalog of Copyright Entries book renewals
+(github.com/NYPL/cce-renewals). I searched the files for renewal years
+1962–1965, 1973–1977 and 1978–1983, 167,858 rows in all.
+
+- **Dolch's heirs renewed actively.** In 1976 they renewed four of his 1948
+  works: "Sight phrase cards", "Graded reading difficulty work sheet",
+  "Helping handicapped children in school", "Sight syllable solitaire".
+  More renewals follow through 1983.
+- **"A combined word list"** (Buckingham & Dolch, 4 May 1936) **was
+  renewed** on 3 Jan 1964, R329423. That's a different list from the 220
+  sight words, but it shows the family renewed word lists.
+- **"Problems in Reading" (1948): no renewal found** in the 1975–1976 files
+  (they hold 12,360 renewals of 1947–48 works, so that range is covered),
+  and none anywhere under that title except an unrelated 1953 book.
+- **The original 1936 journal article** ("A basic sight vocabulary",
+  Elementary School Journal) is a periodical contribution. It isn't in this
+  book dataset, so it's still unchecked.
+
+**Verdict:** the 1948 book looks unrenewed, but the 1936 article is unchecked
+and the family renewed other work. So it is **not cleared**. The sight-word page
+stays out of version 1. I'm not a lawyer, and this isn't legal advice. It
+comes back only with the periodical renewal checked, or a fact from the boss.
