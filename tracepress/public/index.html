@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Handwriting Tracing Workbook Generator for Amazon KDP — Trace Press</title>
+<meta name="description" content="Make a print-ready A–Z letter tracing workbook for Amazon KDP in your browser: stroke-order arrows, numbered start dots, dotted letters on four-line guides, KDP trim sizes, margins and embedded fonts. Free to try; $19 once removes the footer.">
+<link rel="canonical" href="https://tracepress.bananafest-destiny.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Trace Press">
+<meta property="og:url" content="https://tracepress.bananafest-destiny.com/">
+<meta property="og:title" content="Trace Press — letter tracing workbooks for Amazon KDP">
+<meta property="og:description" content="An A–Z handwriting workbook with stroke-order arrows and numbered start dots, laid out to KDP's manuscript rules, made in your browser.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23234e3a'/%3E%3Ctext x='16' y='22' font-family='sans-serif' font-weight='700' font-size='18' fill='white' text-anchor='middle'%3ET%3C/text%3E%3C/svg%3E">
+<style>
+  :root { --ink: #1a1a1a; --muted: #5c6470; --line: #d9dde3; --bg: #f6f7f9; --card: #fff; --accent: #234e3a; --accent-ink: #fff; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  a { color: var(--accent); }
+  header { padding: 18px 24px; border-bottom: 1px solid var(--line); background: var(--card); display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+  header h1 { margin: 0; font-size: 20px; }
+  header p { margin: 0; color: var(--muted); }
+  .hero { max-width: 1100px; margin: 0 auto; padding: 28px 24px 8px; }
+  .hero h2 { font-size: clamp(24px, 4vw, 34px); line-height: 1.15; margin: 0 0 10px; letter-spacing: -0.01em; }
+  .hero p { margin: 0; color: var(--muted); max-width: 70ch; font-size: 16px; }
+  main { display: grid; grid-template-columns: minmax(260px, 340px) 1fr; gap: 24px; padding: 24px; max-width: 1100px; margin: 0 auto; }
+  @media (max-width: 760px) { main { grid-template-columns: 1fr; } .viewer { order: -1; } }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px; }
+  label { display: block; font-weight: 600; font-size: 14px; margin: 14px 0 4px; }
+  label:first-child { margin-top: 0; }
+  select { width: 100%; font: inherit; padding: 8px; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+  .check { display: flex; gap: 8px; align-items: center; font-weight: 400; }
+  .hint { color: var(--muted); font-size: 13px; margin: 4px 0 0; }
+  .primary { display: block; width: 100%; margin-top: 18px; background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 8px; padding: 12px; font: 600 16px system-ui, sans-serif; cursor: pointer; }
+  .primary:disabled { opacity: 0.6; cursor: progress; }
+  #status { min-height: 20px; font-size: 14px; margin: 10px 0 0; }
+  #tier { font-size: 13px; color: var(--muted); margin: 14px 0 0; padding-top: 12px; border-top: 1px solid var(--line); }
+  .linkish { background: none; border: 0; padding: 0; font: inherit; color: var(--accent); text-decoration: underline; cursor: pointer; }
+  .viewer { display: flex; flex-direction: column; gap: 10px; }
+  #preview svg { display: block; width: 100%; height: auto; max-height: 80vh; border: 1px solid var(--line); border-radius: 4px; box-shadow: 0 2px 10px rgba(0,0,0,0.06); background: #fff; }
+  .pager { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .pager button { font: inherit; padding: 8px 14px; border: 1px solid var(--line); border-radius: 8px; background: #fff; cursor: pointer; }
+  .pager button:disabled { opacity: 0.4; cursor: default; }
+  #pageNo { color: var(--muted); font-size: 14px; }
+  section.info { max-width: 1100px; margin: 0 auto; padding: 8px 24px 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+  section.info h3 { margin: 0 0 6px; font-size: 17px; }
+  section.info p, section.info li { color: var(--muted); }
+  section.info ul { padding-left: 18px; margin: 0; }
+  footer { text-align: center; color: var(--muted); font-size: 13px; padding: 24px; border-top: 1px solid var(--line); }
+  dialog { border: 1px solid var(--line); border-radius: 12px; padding: 22px; max-width: 420px; width: calc(100% - 32px); }
+  dialog::backdrop { background: rgba(0,0,0,0.35); }
+  dialog h2 { margin: 0 0 8px; font-size: 18px; }
+  dialog p { margin: 6px 0; color: var(--muted); font-size: 14px; }
+  dialog input { width: 100%; font: inherit; padding: 9px; border: 1px solid var(--line); border-radius: 8px; }
+  dialog .buybtn { display: block; text-align: center; background: var(--accent); color: var(--accent-ink); border-radius: 8px; font-weight: 600; padding: 12px 18px; font-size: 16px; text-decoration: none; margin: 14px 0 6px; }
+  dialog .row { display: flex; gap: 8px; margin-top: 12px; }
+  dialog .row button { flex: 1; font: inherit; padding: 10px; border-radius: 8px; border: 1px solid var(--line); background: #fff; cursor: pointer; }
+  dialog .row #verify { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 600; }
+  .err { color: #b00020; font-size: 13px; min-height: 18px; }
+  .err a { color: inherit; }
+</style>
+<script src="/config.js"></script>
+</head>
+<body>
+<header>
+  <h1>Trace Press</h1>
+  <p>Letter tracing workbooks for Amazon KDP</p>
+</header>
+
+<div class="hero">
+  <h2>An A–Z handwriting workbook, ready to upload to KDP</h2>
+  <p>Pick a trim size and a line size. You get a 26-page paperback interior: one page for each letter, capital and lowercase. Each page has a model letter with numbered start dots and arrows showing stroke order, rows of dotted letters to trace, and rows for writing the letter alone. It's built in your browser. No sign-up.</p>
+</div>
+
+<main id="tool">
+  <div class="card">
+    <label for="trim">Trim size</label>
+    <select id="trim"></select>
+    <label for="age">Line size</label>
+    <select id="age"></select>
+    <p class="hint">The height from the top line to the baseline on the tracing rows. Bigger lines are for younger hands.</p>
+    <label class="check"><input type="checkbox" id="bleed"> Bleed</label>
+    <p class="hint">Only turn this on if you chose bleed in KDP. The page is then 0.125" wider and 0.25" taller, as KDP asks.</p>
+    <button class="primary" id="download" type="button">Download the interior PDF</button>
+    <p id="status" role="status"></p>
+    <p id="tier"></p>
+  </div>
+  <div class="viewer">
+    <div id="preview" aria-live="polite"></div>
+    <div class="pager">
+      <button id="prev" type="button">← Previous</button>
+      <span id="pageNo"></span>
+      <button id="next" type="button">Next →</button>
+    </div>
+  </div>
+</main>
+
+<section class="info">
+  <div>
+    <h3>Built to KDP's manuscript rules</h3>
+    <ul>
+      <li>Six KDP paperback trims, from 5" × 8" to 8.5" × 11", with or without bleed.</li>
+      <li>Inside, outside, top and bottom margins at KDP's minimums for the page count. Every mark sits 1/32" inside them, and the test suite renders every page to pixels to check that.</li>
+      <li>Every line at least 0.75 pt thick, every grey well darker than KDP's 10% minimum, and all text 7 pt or larger.</li>
+      <li>Fonts embedded (Liberation Sans).</li>
+    </ul>
+  </div>
+  <div>
+    <h3>Stroke order you can see</h3>
+    <p>Every letter is drawn as the strokes a pencil makes, not as a font outline. The model letter numbers where each stroke starts, and red arrows show which way it goes. The letters follow a vertical manuscript (ball-and-stick) style.</p>
+  </div>
+  <div>
+    <h3>Free, or $19 once</h3>
+    <p>The free PDF is the whole book, with a small "Made with Trace Press" footer line on every page. Pay $19 once and every book you make from then on has no footer, so you can sell it. There's no subscription. The unlock is tied to the email you pay with. Checkout is hosted by Stripe and may show the account holder's name rather than "Trace Press". <button class="linkish" type="button" data-unlock>Remove the footer</button></p>
+  </div>
+</section>
+
+<footer>Trace Press · questions: <a href="mailto:support@bananafest-destiny.com">support@bananafest-destiny.com</a> · from the maker of <a href="https://puzzlepress.bananafest-destiny.com/">Puzzle Press</a></footer>
+
+<dialog id="unlockDialog">
+  <h2 id="dialogTitle">Remove the footer line</h2>
+  <p id="dialogLede"></p>
+  <p id="buyLine"></p>
+  <label for="email">Email used at checkout</label>
+  <input id="email" type="email" autocomplete="email" inputmode="email">
+  <p class="err" id="unlockErr" role="alert"></p>
+  <div class="row">
+    <button id="closeDialog" type="button">Close</button>
+    <button id="verify" type="button">Unlock</button>
+  </div>
+</dialog>
+
+<script type="module" src="/js/main.js"></script>
+</body>
+</html>

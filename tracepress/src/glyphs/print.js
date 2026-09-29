@@ -33,8 +33,10 @@ export const PRINT = {
   c: { width: 1, strokes: [[BOWL(45, 315)]] },
   d: { width: 1, strokes: [[BOWL(0, 360), line(1, 0.5, 1, 2), line(1, 2, 1, 0)]] },
   e: { width: 1, strokes: [[line(0, 0.5, 1, 0.5), BOWL(0, 315)]] },
-  // f: the one reference I have is wrong for lowercase f (it repeats F).
-  // Left out until a second source says how it is written.
+  // f: start below the headline, curve back, pull down to the baseline; then
+  // slide right along the midline. Zaner-Bloser's manuscript stroke
+  // descriptions and primarylearning.org's lowercase f page agree.
+  f: { width: 1, strokes: [[circle(0.65, 1.6, 0.4, 30, 180), line(0.25, 1.6, 0.25, 0)], [line(0, 1, 0.8, 1)]] },
   g: { width: 1, strokes: [[BOWL(0, 360), line(1, 0.5, 1, 1), line(1, 1, 1, -0.75), circle(0.75, -0.75, 0.25, 0, -180)]] },
   h: { width: 1, strokes: [[line(0, 2, 0, 0), line(0, 0, 0, 0.5), BOWL(180, 0), line(1, 0.5, 1, 0)]] },
   i: { width: 0, strokes: [[line(0, 1, 0, 0)], [dot(0, 1.5)]] },

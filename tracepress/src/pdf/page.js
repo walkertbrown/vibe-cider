@@ -58,9 +58,8 @@ export function contentBox(geom, pageNumber) {
 // is the size; test/layout.test.js checks it fits the narrowest page.
 export const WATERMARK = "Made with Trace Press, free preview — tracepress.bananafest-destiny.com";
 
-// The layout for one page. `letters` is the pair on the page, e.g. ["A", "a"]
-// (just ["F"] while lowercase f has no source). `guideIn` is the trace rows'
-// headline-to-baseline height in inches. Returns rows top to bottom:
+// The layout for one page. `letters` is the pair on the page, e.g. ["A", "a"].
+// `guideIn` is the trace rows' headline-to-baseline height in inches. Returns rows top to bottom:
 //   { kind, unit, baseY, left, right, letters: [{ ch, x, marks }] }
 // in points, with `unit` the size of one guide unit.
 export function letterPage({ geom, pageNumber, letters, guideIn }) {

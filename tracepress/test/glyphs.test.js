@@ -9,7 +9,7 @@ import { PRINT, ends, sample, spell } from "../src/glyphs/print.js";
 // Where the reference says "curve back" or "curve forward" for a hook, the
 // mark is the way the hook actually turns: g and j's hooks turn clockwise.
 const SPEC = {
-  a: "⟲↑↓", b: "↓↑⟳", c: "⟲", d: "⟲↑↓", e: "→⟲", g: "⟲↑↓⟳", h: "↓↑⟳↓",
+  a: "⟲↑↓", b: "↓↑⟳", c: "⟲", d: "⟲↑↓", e: "→⟲", f: "⟲↓|→", g: "⟲↑↓⟳", h: "↓↑⟳↓",
   i: "↓|•", j: "↓⟳|•", k: "↓|↙↘", l: "↓", m: "↓↑⟳↓↑⟳↓", n: "↓↑⟳↓", o: "⟲",
   p: "↓↑⟳", q: "⟲↑↓⟲", r: "↓↑⟳", s: "⟲⟳", t: "↓|→", u: "↓⟲↑↓", v: "↘↗",
   w: "↘↗↘↗", x: "↘|↙", y: "↘|↙", z: "→↙→",
@@ -23,8 +23,8 @@ const SPEC = {
 const letters = Object.keys(PRINT);
 const near = (a, b) => Math.abs(a[0] - b[0]) < 1e-6 && Math.abs(a[1] - b[1]) < 1e-6;
 
-test("every letter a–z and A–Z is drawn, except lowercase f (no source yet)", () => {
-  const want = [..."abcdeghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"];
+test("every letter a–z and A–Z is drawn", () => {
+  const want = [..."abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"];
   assert.deepEqual([...letters].sort(), want.sort());
 });
 

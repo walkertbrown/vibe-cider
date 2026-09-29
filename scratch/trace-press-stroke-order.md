@@ -115,4 +115,4 @@ The handout also covers ? and !, not digits. Digits need another source.
 3. **Nineteen lowercase letters take one stroke.** Only i, j, k, t, x and y
    lift (f is unknown). So the numbered start dot matters most for the
    uppercase, where A, E, F, H and I take 3 or 4 strokes. (Corrected 13:50Z: Y is 2. The handout has no "Lift" between the slant and the pull down.)
-4. **Still to source:** lowercase f, and the digits 0–9.
+4. **Still to source:** the digits 0–9. Lowercase f was sourced 2026-09-29: Zaner-Bloser manuscript stroke descriptions (sharpschool.com PDF) and primarylearning.org, "Start below the headline. Curve back. Pull down to the baseline. Start at the midline. Slide right."
