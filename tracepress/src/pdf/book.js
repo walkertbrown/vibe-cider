@@ -3,7 +3,8 @@ import { PDFDocument } from "pdf-lib";
 import fontkit from "@pdf-lib/fontkit";
 import { PRINT } from "../glyphs/print.js";
 import { pageGeometry } from "./kdp.js";
-import { letterPage, drawLetterPage } from "./page.js";
+import { letterPage } from "./page.js";
+import { drawLetterPage } from "./draw.js";
 
 // The letter pairs, in order. A lowercase letter with no strokes yet (f) is
 // left off its page rather than drawn wrong.

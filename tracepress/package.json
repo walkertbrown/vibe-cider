@@ -13,6 +13,8 @@
     "pdf-lib": "^1.17.1"
   },
   "devDependencies": {
-    "pngjs": "^7.0.0"
+    "esbuild": "^0.28.2",
+    "pngjs": "^7.0.0",
+    "wrangler": "^4.131.0"
   }
 }

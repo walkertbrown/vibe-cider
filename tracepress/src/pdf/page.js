@@ -7,10 +7,10 @@
 //
 // Everything is laid out first as plain numbers (`letterPage`), so a test can
 // check every mark sits inside KDP's margins without rendering, and drawn
-// second (`drawLetterPage`). test/inkcheck.mjs then checks the pixels.
-import { rgb } from "pdf-lib";
+// second (`drawLetterPage` in draw.js, which is the only part that needs
+// pdf-lib, so the web page's preview can use this file without loading it).
+// test/inkcheck.mjs then checks the pixels.
 import { PRINT, sample } from "../glyphs/print.js";
-import { traceDots } from "./trace.js";
 import { strokeArrows, strokeStarts } from "./arrows.js";
 import { PT, SAFETY_IN, marginsForPage } from "./kdp.js";
 
@@ -19,7 +19,7 @@ import { PT, SAFETY_IN, marginsForPage } from "./kdp.js";
 // notes; the same rules apply to any KDP interior).
 export const LINE_W = 0.75;
 export const LABEL_PT = 7;
-const DOT_R = 1.25; // dot radius, trace rows
+export const DOT_R = 1.25; // dot radius, trace rows
 const MODEL_SCALE = 1.5; // model row guide height against the trace rows'
 const GAP_UNITS = 0.6; // clear space between rows, in guide units
 const LETTER_GAP = 0.8; // space between letters, in guide units
@@ -112,59 +112,4 @@ export function labelRadius(unit) {
   // The number's disc: 7pt type needs about 4.6pt of radius around it, and
   // grows with the letter so the model row doesn't look pinched.
   return Math.max(LABEL_PT * 0.66, unit * 0.16);
-}
-
-const GREY = rgb(0.45, 0.45, 0.45); // far above KDP's 10% minimum
-const BASE = rgb(0.2, 0.2, 0.2);
-const RED = rgb(0.8, 0.15, 0.1);
-const GREEN = rgb(0.1, 0.45, 0.25);
-
-// Draw a laid-out page onto a pdf-lib page. `fonts` holds embedded `bold`
-// and `regular`; a book that isn't `licensed` gets the watermark line.
-export function drawLetterPage(page, layout, { bold, regular }, { licensed = false } = {}) {
-  if (!licensed) {
-    const { box } = layout;
-    const w = regular.widthOfTextAtSize(WATERMARK, LABEL_PT);
-    page.drawText(WATERMARK, { x: box.left + (box.right - box.left - w) / 2, y: box.bottom - FOOTER_PT + 3, size: LABEL_PT, font: regular, color: GREY });
-  }
-  for (const row of layout.rows) {
-    const { unit, baseY, left, right } = row;
-    const at = (u) => baseY + u * unit;
-    const rule = (u, color, dashArray) => page.drawLine({ start: { x: left, y: at(u) }, end: { x: right, y: at(u) }, thickness: LINE_W, color, dashArray });
-    rule(2, GREY);
-    rule(1, GREY, [4, 3]);
-    rule(0, BASE);
-    rule(-1, GREY, [1, 3]);
-    for (const l of row.letters) drawLetter(page, l, row, bold);
-  }
-}
-
-function drawLetter(page, { ch, x, marks }, { unit, baseY }, bold) {
-  const glyph = PRINT[ch];
-  const P = ([gx, gy]) => [x + gx * unit, baseY + gy * unit];
-  const r = marks ? DOT_R * 1.3 : DOT_R;
-  for (const d of traceDots(glyph, (marks ? 5.5 : 4) / unit).flat()) {
-    const [cx, cy] = P(d);
-    page.drawCircle({ x: cx, y: cy, size: r, color: rgb(0, 0, 0) });
-  }
-  if (!marks) return;
-  const head = Math.max(3.2, unit * 0.1);
-  for (const a of strokeArrows(glyph)) {
-    const [fx, fy] = P(a.from), [tx, ty] = P(a.to);
-    const len = Math.hypot(tx - fx, ty - fy), ux = (tx - fx) / len, uy = (ty - fy) / len;
-    // The shaft stops at the head's base so its square end doesn't poke past the point.
-    page.drawLine({ start: { x: fx, y: fy }, end: { x: tx - ux * head * 0.8, y: ty - uy * head * 0.8 }, thickness: 1, color: RED });
-    page.drawSvgPath(
-      `M ${tx} ${-ty} L ${tx - ux * head - uy * head * 0.6} ${-(ty - uy * head + ux * head * 0.6)} L ${tx - ux * head + uy * head * 0.6} ${-(ty - uy * head - ux * head * 0.6)} Z`,
-      { x: 0, y: 0, color: RED },
-    );
-  }
-  const lr = labelRadius(unit);
-  const size = Math.max(LABEL_PT, lr * 1.5);
-  for (const { n, at } of strokeStarts(glyph)) {
-    const [sx, sy] = P(at);
-    page.drawCircle({ x: sx, y: sy, size: lr, color: GREEN });
-    const label = String(n);
-    page.drawText(label, { x: sx - bold.widthOfTextAtSize(label, size) / 2, y: sy - size * 0.36, size, font: bold, color: rgb(1, 1, 1) });
-  }
 }

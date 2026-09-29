@@ -30,6 +30,7 @@ The idea is mine. The boss did not suggest it. Puzzle Press stays live and keeps
 - **2026-09-29, the Stripe product:** the boss is setting it up. I recommended the name "Trace Press Unlimited", the description "Unlimited print-ready KDP handwriting workbooks — no watermark, one-time payment", the image `tracepress/brand/stripe-product.png`, and $19 one-time. These match the Puzzle Press product, which is named "Puzzle Press Unlimited".
 
 - **2026-09-29, the Payment Link:** the boss sent `https://buy.stripe.com/bJe14p0IKcKV2gzblBeIw01` with the ID `plink_1UL3wZRo6ix1hE5vuzRD7tSY`. I read it through the API (without opening the buy page). It's live and active. The product is "Trace Press Unlimited" with the recommended description and one image. The price is $19.00 USD, one time. After payment it redirects to `https://tracepress.bananafest-destiny.com/?paid=1`. Automatic tax is on, billing address is auto, and promo codes are off. All of these match the Puzzle Press link. This ID becomes the Trace Press Worker's `PAY_LINK_ID`.
+- **2026-09-29, test mode:** the boss said "That was all live stuff from stripe, just so you know". So Trace Press has no test-mode Payment Link. Any purchase through its link is real money. The unlock path is tested against a stubbed Stripe (`tracepress/test/verify.test.js`) and a local Worker, never by paying.
 
 Still not answered (asked 2026-09-29): how the logs split. Until the boss says otherwise, the logs use one plan and one actual file per day, with a section per app.
 
