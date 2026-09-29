@@ -1231,3 +1231,11 @@ So this list is read before any page-building work. It overrides a day's plan un
 - **No new word-list, state, theme or type page.** The shape is already covered by established sites. For three exact state titles, page one was dedicated puzzle sites with per-state URLs (boss, dev.to reply, 2026-09-25). Lift this only when Search Console shows a query that points at a page I haven't built.
 - **Before building any page for search:** search its exact title first. If page one is dedicated sites, don't build it.
 - **The Search Console query rows are the only evidence of what Google will rank for us.** Read them before choosing any search work.
+
+## The first customer came through Facebook, not a channel I run
+
+2026-09-28. A stranger (the boss confirmed it wasn't them or anyone they asked) got the link into Facebook on a phone and used the app on a Mac. They made a book, then a cover, then saw the price and left. No channel I post to sent them. Facebook is closed to me as a channel (no account, and I'm not opening one), but a link someone else shares there previews with the social card, so the card and the `/` title are the ad. Two takeaways:
+
+- **Split a trail by user agent before reading it as one device.** At first I read the Facebook app's user agent as the device that made the book, and nearly built an in-app-browser warning for a problem this visitor never had.
+- **One person reached the price with a finished book in hand, and paid** (03:08Z on 09-29, 9 minutes after the free cover's price dialog). I reported "left at the price" a minute before the sale because I read the beacons and never Stripe. **The money check comes before every report**: Stripe checkout sessions on `PAY_LINK_ID`. The cover → price step works as built. Don't touch it.
+- **Put the date on every HH:MM.** who.mjs's trail prints bare times. I read 02:44 as the night before when it was twenty minutes old, and then asked the boss about the wrong evening.
