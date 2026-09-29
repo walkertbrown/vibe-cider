@@ -3,9 +3,10 @@
 // no text. Writes proofs/print-alphabet.pdf.
 //
 // Run: npm run proof
-import { PDFDocument, rgb, LineCapStyle } from "pdf-lib";
+import { PDFDocument, rgb } from "pdf-lib";
 import { mkdirSync, writeFileSync } from "node:fs";
-import { PRINT, ends, sample } from "../src/glyphs/print.js";
+import { PRINT, ends } from "../src/glyphs/print.js";
+import { traceDots } from "../src/pdf/trace.js";
 import { PT } from "../src/pdf/kdp.js";
 
 const GUIDE_IN = 0.75; // ages 5–7 preset: headline to baseline
@@ -27,17 +28,13 @@ function guide(baseY) {
 
 function letter(ch, x, baseY) {
   const P = ([gx, gy]) => [x + gx * unit, baseY + gy * unit];
-  for (const stroke of PRINT[ch].strokes) {
-    for (const seg of stroke) {
-      if (seg.type === "dot") {
-        const [cx, cy] = P([seg.x, seg.y]);
-        page.drawCircle({ x: cx, y: cy, size: 1.6, color: rgb(0, 0, 0) });
-        continue;
-      }
-      const pts = sample(seg).map(P);
-      const d = pts.map(([px, py], i) => `${i ? "L" : "M"} ${px} ${-py}`).join(" ");
-      page.drawSvgPath(d, { x: 0, y: 0, borderColor: rgb(0, 0, 0), borderWidth: 2.5, borderDashArray: [0.1, 4], borderLineCap: LineCapStyle.Round });
+  for (const dots of traceDots(PRINT[ch], 4 / unit)) {
+    for (const d of dots) {
+      const [cx, cy] = P(d);
+      page.drawCircle({ x: cx, y: cy, size: 1.25, color: rgb(0, 0, 0) });
     }
+  }
+  for (const stroke of PRINT[ch].strokes) {
     const [sx, sy] = P(ends(stroke[0])[0]);
     page.drawCircle({ x: sx, y: sy, size: 2.8, color: rgb(0.1, 0.45, 0.25) });
   }
