@@ -100,3 +100,28 @@ The free tier is limited and watermarked. A one-time payment unlocks it.
    its link ID, and a success URL pointing at the new domain?
 4. **Logs.** One plan/actual per day covering both apps, and one FACTS/LEARNED
    with a section per app? Or separate files?
+
+## Feasibility probe, 2026-09-29 (a throwaway in the session scratchpad, not in the repo)
+
+- **Licences** (read from the google/fonts repository's OFL.txt and
+  METADATA.pb files):
+  - Playwrite US Trad (cursive) and Playwrite US Modern: OFL, TypeTogether,
+    Copyright 2023 The Playwrite Project Authors.
+  - Andika (print manuscript, for literacy): OFL, SIL International.
+- **Embedding:** both embed in pdf-lib 1.17 with fontkit, the versions
+  Puzzle Press already ships. The Playwrite files are variable fonts
+  (wght 100–400) and embed at their default 400 instance. pdffonts shows them
+  embedded but *not* subset, even with `subset: true`, which costs about 340 KB
+  per font per PDF. Fine for now; revisit if the books get heavy.
+- **Cursive joins** ("bob won over brave oats") connect correctly with no
+  shaping engine. pdf-lib does no OpenType shaping, and at this resolution
+  these words didn't need it. Check a full alphabet of pairs before trusting it.
+- **The Playwrite "Guides" fonts are out.** They render as fragments in
+  pdf-lib because they depend on shaping. I'll draw the four-line guides
+  myself: straight lines, easy to hold at or above 0.75pt.
+- **Trace style:** stroking the glyph outline (text render mode 1, dashed,
+  0.75pt, 50% grey) gives a *hollow* double-edged letter, not the dotted
+  centreline of a classic tracing font. Solid light-grey fill (at least 10%
+  grey, per KDP) is the other common trace style and works as-is. A true dotted
+  centreline needs a single-stroke font, so find out if an OFL one exists
+  before promising it.
