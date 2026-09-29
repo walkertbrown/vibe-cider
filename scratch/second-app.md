@@ -154,3 +154,32 @@ The free tier is limited and watermarked. A one-time payment unlocks it.
   question. It also gives **stroke order and direction** (numbered starts,
   arrows), which a font can't carry and which the free worksheet tools I saw
   don't draw. Cursive stays a grey-fill Playwrite trace for version 1.
+
+## Demand and spec notes, 09:20Z
+
+- **Name check:**
+  - tracepress.com is registered by someone else (it resolves); tracepress.app
+    and tracepress.io don't resolve.
+  - Peter Pauper Press sells a "Trace & Learn" series on Amazon, a different
+    name.
+  - We'd live on a subdomain of the studio domain, so I'm keeping the working
+    name.
+- **Amazon:** Best Sellers returned 503 and Book Bolt's niche article returned
+  403 to my fetch, so their sales figures are unverified here. The search
+  snippet claims "handwriting practice" returns over 60,000 results on
+  Amazon, with a $3.90–$14.99 price range. That's a vendor's claim, undated.
+- **KDPEasy playbook (dated 2026-05-21, a vendor blog, so their claims, not
+  facts):**
+  - **Trim:** 8.5 × 11 on white paper.
+  - **Pages by age:** 80–100 for ages 3–5, 100–120 for older ages.
+  - **Writing-line heights:**
+    - ages 3–5: 1" total;
+    - ages 5–7: 0.75", with a dashed midline at 0.375" and 0.2" descender;
+    - ages 7–9: 0.6";
+    - ages 10+: 0.4–0.5".
+  - **Book prices:** $5.99–$8.99, and $8.99–$10.99 for themed or cursive.
+  - **Sub-niches it names:** name tracing, animal alphabets, seasonal, Bible
+    verse copywork, bilingual.
+
+  These are good defaults for the generator's age presets. Verify them
+  against a school handwriting spec before calling them standard.
