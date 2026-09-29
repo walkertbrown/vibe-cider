@@ -78,7 +78,21 @@ export function strokeArrows(glyph, skipped = []) {
   return out;
 }
 
-// Where each stroke's number goes: its start point.
+// Where each stroke's number goes: its start point. When two strokes start
+// at the same place (A's two slants both start at the apex), the later number
+// moves a little way down its own stroke so it doesn't hide the earlier one.
+const LABEL_APART = 0.3; // guide units between number centres
 export function strokeStarts(glyph) {
-  return glyph.strokes.map((stroke, i) => ({ n: i + 1, at: ends(stroke[0])[0] }));
+  const out = [];
+  glyph.strokes.forEach((stroke, i) => {
+    let p = ends(stroke[0])[0];
+    for (const f of [0, 0.25, 0.4, 0.55]) {
+      const m = f === 0 ? { at: p } : at(stroke[0], f);
+      if (!m) continue;
+      p = m.at;
+      if (out.every((o) => dist(o.at, p) >= LABEL_APART)) break;
+    }
+    out.push({ n: i + 1, at: p });
+  });
+  return out;
 }

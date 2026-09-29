@@ -48,3 +48,14 @@ test("only the known segments go without an arrow", () => {
     assert.deepEqual(skipped.map((s) => `${s.stroke}.${s.segment}`), NO_ROOM[ch] ?? [], ch);
   }
 });
+
+test("no stroke number hides another", () => {
+  for (const [ch, glyph] of Object.entries(PRINT)) {
+    const starts = strokeStarts(glyph);
+    for (let i = 0; i < starts.length; i++) {
+      for (let j = i + 1; j < starts.length; j++) {
+        assert.ok(dist(starts[i].at, starts[j].at) >= 0.3 - 1e-9, `${ch}: numbers ${i + 1} and ${j + 1} overlap`);
+      }
+    }
+  }
+});
