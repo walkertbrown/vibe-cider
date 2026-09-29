@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://tracepress.bananafest-destiny.com/sitemap.xml
