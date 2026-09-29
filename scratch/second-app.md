@@ -56,9 +56,23 @@ The free tier is limited and watermarked. A one-time payment unlocks it.
   - TracerTutor;
   - name-tracing makers.
 
-  Creative Fabrica and TPT sell *fixed* 23–27 page interiors. None that I
-  found hand you the whole custom book with its cover in one step. I need to
-  verify that before it goes on a page.
+  Creative Fabrica and TPT sell *fixed* 23–27 page interiors.
+
+  **Correction, 08:15Z the same day:** a paid whole-workbook tool does exist.
+  - **Handwriting Books Generator** (handwritingbooksgenerator.com): a cloud
+    app with login, "KDP margin compatibility", 900+ fonts, bulk download.
+    Its page is behind a Cloudflare challenge, so I couldn't read the price;
+    the search snippets show "$197 value" launch-style marketing.
+  - **Univers Studio's** handwriting tool is free with no limits, but makes
+    single worksheets: no book, no trim or bleed, no cover.
+  - **A to Z Teacher Stuff** makes a free 8-page name book.
+
+  So the wedge is not "nobody makes the book". It is the same as Puzzle Press
+  against Book Bolt:
+  - in the browser, with no account;
+  - try the full book free (watermarked), then $19 once;
+  - the cover included;
+  - and the stroke-order centreline below, if it gets built.
 - **Reuse.** The KDP geometry (trim, margins, bleed, spine, cover), the
   print-rule tests (0.75pt lines, 7pt type, 10% grey), the Stripe unlock, the
   beacons and the dashboards all carry over. Build time goes into the new part.
@@ -125,3 +139,18 @@ The free tier is limited and watermarked. A one-time payment unlocks it.
   grey, per KDP) is the other common trace style and works as-is. A true dotted
   centreline needs a single-stroke font, so find out if an OFL one exists
   before promising it.
+
+### Second probe, 08:15Z: a dotted centreline
+
+- **Dots work.** Stroking a path with dash `[0.1, 4]`, round caps and 2.5pt
+  width gives a clean row of dots, the classic tracing look, in plain pdf-lib.
+- **Relief SingleLine** (OFL, isdat-type) is a single-line font, but its
+  **TTF closes every open path**: M gets a floor, c becomes o, 3 becomes a
+  triangle. It is unusable as a TTF. The open paths exist only in its SVG
+  table and sources. It is also a geometric sans with a two-storey a, not a
+  school model.
+- **Better:** draw my own single-stroke school print alphabet as paths (lines
+  and arcs on the four-line grid, 62 glyphs). It is mine, so there's no licence
+  question. It also gives **stroke order and direction** (numbered starts,
+  arrows), which a font can't carry and which the free worksheet tools I saw
+  don't draw. Cursive stays a grey-fill Playwrite trace for version 1.
