@@ -3,20 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Handwriting Tracing Workbook Generator for Amazon KDP — Trace Press</title>
-<meta name="description" content="Make a print-ready A–Z letter tracing workbook for Amazon KDP in your browser: stroke-order arrows, numbered start dots, dotted letters on four-line guides, KDP trims and margins, plus a full-wrap cover. Free to try; $19 once removes the footer and the PREVIEW mark.">
-<link rel="canonical" href="https://tracepress.bananafest-destiny.com/">
+<title>Handwriting Practice Paper PDF: Free Generator, KDP-Ready — Trace Press</title>
+<meta name="description" content="Free printable handwriting paper: four-line guides (headline, dashed midline, baseline, descender) in four line sizes, as a PDF of 24 to 300 pages. Laid out to Amazon KDP's trims and margins, so it can be a blank practice notebook interior. No sign-up.">
+<link rel="canonical" href="https://tracepress.bananafest-destiny.com/handwriting-paper">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Trace Press">
-<meta property="og:url" content="https://tracepress.bananafest-destiny.com/">
-<meta property="og:title" content="Trace Press — letter tracing workbooks for Amazon KDP">
-<meta property="og:description" content="An A–Z handwriting workbook with stroke-order arrows and numbered start dots, laid out to KDP's manuscript rules, made in your browser.">
+<meta property="og:url" content="https://tracepress.bananafest-destiny.com/handwriting-paper">
+<meta property="og:title" content="Free handwriting practice paper, as a KDP-ready PDF">
+<meta property="og:description" content="Four-line handwriting guides in four sizes, 24 to 300 pages, inside Amazon KDP's margins. Made in your browser.">
 <meta property="og:image" content="https://tracepress.bananafest-destiny.com/social-card.png?v=2026-09-29">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Trace Press — letter tracing workbooks for Amazon KDP">
-<meta name="twitter:image" content="https://tracepress.bananafest-destiny.com/social-card.png?v=2026-09-29">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23234e3a'/%3E%3Ctext x='16' y='22' font-family='sans-serif' font-weight='700' font-size='18' fill='white' text-anchor='middle'%3ET%3C/text%3E%3C/svg%3E">
 <style>
   :root { --ink: #1a1a1a; --muted: #5c6470; --line: #d9dde3; --bg: #f6f7f9; --card: #fff; --accent: #234e3a; --accent-ink: #fff; }
@@ -70,91 +66,65 @@
   .err { color: #b00020; font-size: 13px; min-height: 18px; }
   .err a { color: inherit; }
 </style>
-<script src="/config.js"></script>
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "b7be686eebf64639b0e60d43860bbd54"}'></script>
 </head>
 <body>
 <header>
-  <h1>Trace Press</h1>
-  <p>Letter tracing workbooks for Amazon KDP</p>
+  <h1><a href="/" style="color:inherit;text-decoration:none">Trace Press</a></h1>
+  <p>Letter tracing workbooks for Amazon KDP · <a href="/">A–Z tracing workbook</a> · Handwriting paper</p>
 </header>
 
 <div class="hero">
-  <h2>An A–Z handwriting workbook, ready to upload to KDP</h2>
-  <p>Pick a trim size and a line size. You get a 26-page paperback interior: one page for each letter, capital and lowercase. Each page has a model letter with numbered start dots and arrows showing stroke order, rows of dotted letters to trace, and rows for writing the letter alone. There's a matching full-wrap cover too. It's all built in your browser. No sign-up.</p>
+  <h2>Handwriting practice paper, as a free PDF</h2>
+  <p>Blank four-line handwriting guides on every page: a solid top line, a dashed midline, a solid baseline and a dotted descender line. Choose a page size, a line size and how many pages. Print it at home, or upload it to Amazon KDP as the interior of a blank handwriting notebook. The margins are already KDP's. It's free, with no footer, no sign-up, and nothing uploaded.</p>
 </div>
 
 <main id="tool">
   <div class="card">
-    <label for="trim">Trim size</label>
+    <label for="trim">Page size</label>
     <select id="trim"></select>
     <label for="age">Line size</label>
     <select id="age"></select>
-    <p class="hint">The height from the top line to the baseline on the tracing rows. Bigger lines are for younger hands.</p>
+    <p class="hint">The height from the top line to the baseline. Bigger lines are for younger hands.</p>
+    <label for="pages">Pages</label>
+    <input id="pages" type="number" min="24" max="300" step="2" value="100" style="width:100%;font:inherit;padding:8px;border:1px solid var(--line);border-radius:8px">
+    <p class="hint">24 to 300. KDP's minimum for a paperback is 24 pages. The inside margin grows past 150 pages, as KDP requires.</p>
     <label class="check"><input type="checkbox" id="bleed"> Bleed</label>
-    <p class="hint">Only turn this on if you chose bleed in KDP. The page is then 0.125" wider and 0.25" taller, as KDP asks.</p>
-    <button class="primary" id="download" type="button">Download the interior PDF</button>
+    <p class="hint">Only for KDP, and only if you chose bleed there. For printing at home, leave it off and pick 8.5" × 11".</p>
+    <button class="primary" id="download" type="button">Download the PDF</button>
     <p id="status" role="status"></p>
-    <h3 class="sub">Cover</h3>
-    <label for="title">Title</label>
-    <input id="title" type="text" maxlength="120" value="My Letter Tracing Book">
-    <label for="subtitle">Subtitle <span class="opt">(optional)</span></label>
-    <input id="subtitle" type="text" maxlength="160" placeholder="Practice A to Z with arrows and start dots">
-    <label for="author">Author <span class="opt">(optional)</span></label>
-    <input id="author" type="text" maxlength="80">
-    <label for="paper">Paper</label>
-    <select id="paper"></select>
-    <p class="hint" id="coverNote"></p>
-    <button class="primary secondary" id="downloadCover" type="button">Download the cover PDF</button>
-    <p id="coverStatus" role="status"></p>
-    <p id="tier"></p>
   </div>
   <div class="viewer">
     <div id="preview" aria-live="polite"></div>
     <div class="pager">
-      <button id="prev" type="button">← Previous</button>
+      <button id="prev" type="button">← Left page</button>
       <span id="pageNo"></span>
-      <button id="next" type="button">Next →</button>
+      <button id="next" type="button">Right page →</button>
     </div>
   </div>
 </main>
 
 <section class="info">
   <div>
+    <h3>The four lines</h3>
+    <p>The same four lines as every page of the Trace Press workbook. Tall letters (b, d, h, capitals) reach the top line. Small letters (a, c, e) stop at the dashed midline. Every letter sits on the solid baseline, and tails (g, j, p, q, y) drop to the dotted line below it. The line size is the distance from the top line to the baseline: 1" for ages 4–5, down to 0.45" for older children.</p>
+  </div>
+  <div>
     <h3>Built to KDP's manuscript rules</h3>
     <ul>
-      <li>Six KDP paperback trims, from 5" × 8" to 8.5" × 11", with or without bleed.</li>
-      <li>Inside, outside, top and bottom margins at KDP's minimums for the page count. Every mark sits 1/32" inside them, and the test suite renders every page to pixels to check that.</li>
-      <li>Every line at least 0.75 pt thick, every grey well darker than KDP's 10% minimum, and all text 7 pt or larger.</li>
-      <li>Fonts embedded (Liberation Sans).</li>
-      <li>A full-wrap cover, back, spine and front on one page, sized for the book's 26 pages and your paper, with the barcode area left clear. Your title, subtitle and name, and a big traced "Aa" on the front.</li>
+      <li>All six KDP trims offered here, from 5" × 8" to 8.5" × 11", with or without bleed.</li>
+      <li>Inside margin at KDP's minimum for the page count, on the correct side of each page. Outside, top and bottom margins too. Every line sits 1/32" inside them.</li>
+      <li>Every line at least 0.75 pt thick, the minimum in KDP's paperback submission guidelines.</li>
     </ul>
   </div>
   <div>
-    <h3>Stroke order you can see</h3>
-    <p>Every letter is drawn as the strokes a pencil makes, not as a font outline. The model letter numbers where each stroke starts, and red arrows show which way it goes. The letters follow a vertical manuscript (ball-and-stick) style.</p>
-  </div>
-  <div>
-    <h3>Free, or $19 once</h3>
-    <p>The free PDF is the whole book, with a small "Made with Trace Press" footer line on every page, and the free cover has PREVIEW across the front. Pay $19 once and every book and cover you make from then on is clean, so you can sell it. There's no subscription. The unlock is tied to the email you pay with. Checkout is hosted by Stripe and may show the account holder's name rather than "Trace Press". <button class="linkish" type="button" data-unlock>Unlock clean books and covers</button></p>
+    <h3>Want the letters as well?</h3>
+    <p><a href="/">Trace Press</a> makes a full A–Z tracing workbook: for each letter, capital and lowercase, a model with numbered start dots and stroke-order arrows, rows of dotted letters to trace, and rows like these for writing it alone. It includes the cover. It's free to try; $19 once makes it ready to sell.</p>
   </div>
 </section>
 
-<footer>Trace Press · questions: <a href="mailto:support@bananafest-destiny.com">support@bananafest-destiny.com</a> · <a href="/handwriting-paper">free handwriting practice paper</a> · from the maker of <a href="https://puzzlepress.bananafest-destiny.com/">Puzzle Press</a><br>Not affiliated with Amazon. KDP is a trademark of Amazon.com, Inc.</footer>
+<footer>Trace Press · questions: <a href="mailto:support@bananafest-destiny.com">support@bananafest-destiny.com</a> · from the maker of <a href="https://puzzlepress.bananafest-destiny.com/">Puzzle Press</a><br>Not affiliated with Amazon. KDP is a trademark of Amazon.com, Inc.</footer>
 
-<dialog id="unlockDialog">
-  <h2 id="dialogTitle">Unlock clean books and covers</h2>
-  <p id="dialogLede"></p>
-  <p id="buyLine"></p>
-  <label for="email">Email used at checkout</label>
-  <input id="email" type="email" autocomplete="email" inputmode="email">
-  <p class="err" id="unlockErr" role="alert"></p>
-  <div class="row">
-    <button id="closeDialog" type="button">Close</button>
-    <button id="verify" type="button">Unlock</button>
-  </div>
-</dialog>
-
-<script type="module" src="/js/main.js"></script>
+<script type="module" src="/js/paper-page.js"></script>
 </body>
 </html>

@@ -103,6 +103,20 @@ try {
   const scrollW = await phone.evaluate(() => document.documentElement.scrollWidth);
   check(scrollW <= 390, `phone: no sideways scroll (${scrollW}px)`);
 
+  const paper = await (await browser.newContext({ acceptDownloads: true, userAgent: "trace-press-test/browser" })).newPage();
+  paper.on("pageerror", (e) => errors.push(`paper: ${e.message}`));
+  await paper.goto(`${base}/handwriting-paper`);
+  await paper.waitForSelector("#preview svg line", { state: "attached" });
+  check(/Right-hand \(odd\) page · \d+ rows · 100 pages/.test(await paper.textContent("#pageNo")), `paper: preview (${await paper.textContent("#pageNo")})`);
+  await paper.fill("#pages", "40");
+  await paper.selectOption("#trim", "6x9");
+  await paper.click("#prev");
+  check(/Left-hand/.test(await paper.textContent("#pageNo")) && (await paper.getAttribute("#preview svg", "viewBox")) === "0 0 432 648", "paper: left page at 6x9");
+  [dl] = await Promise.all([paper.waitForEvent("download"), paper.click("#download")]);
+  got = pdfText(await (await dl.createReadStream()).toArray().then(Buffer.concat));
+  check(got.pages === 40 && got.text.trim() === "", `paper: 40 blank-text pages (${got.pages}), ${dl.suggestedFilename()}`);
+  check((await (await paper.request.get(`${base}/sitemap.xml`)).text()).includes("/handwriting-paper"), "paper: in the sitemap");
+
   check(errors.length === 0, `no page errors ${errors.join("; ")}`);
 } finally {
   await browser.close();

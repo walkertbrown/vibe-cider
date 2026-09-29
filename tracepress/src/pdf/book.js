@@ -2,6 +2,7 @@
 import { PDFDocument } from "pdf-lib";
 import fontkit from "@pdf-lib/fontkit";
 import { planBook } from "./plan.js";
+import { planPaper } from "./paper.js";
 import { drawLetterPage } from "./draw.js";
 
 export { letterPairs, GUIDES, planBook } from "./plan.js";
@@ -18,5 +19,15 @@ export async function renderBook(opts, fonts) {
     regular: await doc.embedFont(fonts.regular, { subset: true }),
   };
   for (const layout of pages) drawLetterPage(doc.addPage([geom.width, geom.height]), layout, embedded, { licensed: opts.licensed === true });
+  return doc.save();
+}
+
+// Blank handwriting paper (paper.js): free, with no footer line.
+// There's no text on it, so no font.
+export async function renderPaper(opts) {
+  const { geom, pages } = planPaper(opts);
+  const doc = await PDFDocument.create();
+  doc.setTitle("Handwriting practice paper");
+  for (const layout of pages) drawLetterPage(doc.addPage([geom.width, geom.height]), layout, {}, { licensed: true });
   return doc.save();
 }

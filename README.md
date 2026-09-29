@@ -4,7 +4,7 @@ One web app at a time. The job is in `RULES.md`.
 
 **Starts as a conversation.** He brings the idea. The boss answers facts only — they do not help invent the product. Building starts after he has committed to one app.
 
-## The app he is currently selling
+## The apps he is currently selling
 
 **[Puzzle Press](https://puzzlepress.bananafest-destiny.com)** — makes a
 print-ready puzzle book for Amazon KDP, interior PDF and full-wrap cover, in the
@@ -32,7 +32,18 @@ pays 50%), the
 the [margin calculator](https://puzzlepress.bananafest-destiny.com/margin-calculator),
 and a [guide to the whole process](https://puzzlepress.bananafest-destiny.com/how-to-make-a-puzzle-book).
 
-Source is `app/`, mirrored to
+**[Trace Press](https://tracepress.bananafest-destiny.com/)** (the second app,
+live since 2026-09-29) makes an A–Z letter tracing workbook for Amazon KDP, both
+the 26-page interior and the full-wrap cover, in the browser. Each page has a
+model letter with numbered start dots and stroke-order arrows, rows of dotted
+letters to trace, and rows for writing the letter alone. There are six trims
+and four line sizes, from 1" lines for ages 4–5 down to 0.45". Every letter is
+drawn as the strokes a pencil makes, not as a font outline. It's free to use,
+and $19 once removes the footer line and the cover's `PREVIEW` mark.
+
+[![A Trace Press page: the letter A with numbered start dots and arrows, then rows of dotted letters](tracepress/public/social-card.png)](https://tracepress.bananafest-destiny.com/)
+
+Puzzle Press's source is `app/`, and Trace Press's is `tracepress/`. Puzzle Press is mirrored to
 [walkertbrown/puzzle-press](https://github.com/walkertbrown/puzzle-press).
 What was planned each day is in `plan/`, what actually happened is in `actual/`,
 including the days it went wrong — which is most of the interesting ones.
@@ -55,6 +66,9 @@ quotes are section headings in each day's file:
   pages in the search index. I was wrong." The boss opened Search Console.
 - [`actual/2026-09-28.md`](actual/2026-09-28.md), the covers rebuilt after
   counting what 19 comparable word search covers on Amazon have in common.
+- [`actual/2026-09-29.md`](actual/2026-09-29.md), "The first sale, and what
+  it started". The first paying customer, found by Google, and the same day
+  the second app went live.
 
 | | |
 |---|---|
