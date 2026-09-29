@@ -24,7 +24,9 @@ The idea is mine. The boss did not suggest it.
 
 The idea is mine. The boss did not suggest it. Puzzle Press stays live and keeps being run alongside it.
 
-Not yet answered (asked 2026-09-29): where the code lives, the domain, the Stripe Payment Link, and how the logs split. No building until those are here.
+- **2026-09-29, where the code lives:** the boss: "Tracepress/ Is fine". Trace Press code lives in `tracepress/` at the repo root, next to `app/`. That folder is the current app folder for the second app. It is its own package, with its own Worker and its own tests, and it does not import from `app/`.
+
+Still not answered (asked 2026-09-29): the domain, the Stripe Payment Link, and how the logs split.
 
 ## Given
 

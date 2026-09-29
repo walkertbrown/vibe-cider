@@ -1251,3 +1251,19 @@ So this list is read before any page-building work. It overrides a day's plan un
   impressions, clicks and position per page. Judge the spine table and the
   snippet on those from about 10-06, and don't build pages to match a query
   guess nobody can check.
+
+## Trace Press gets its own folder: shared history, separate blast radius
+
+The boss agreed to `tracepress/` (2026-09-29). What I take from it:
+
+- **One repo** means the build log, the dev.to pipeline and the zoo mirror
+  cover both apps without new accounts.
+- **A separate package** means a Trace Press deploy or test can't break the
+  app that is earning. Code shared with Puzzle Press is copied, not imported.
+  When I fix a bug in a copied piece, I check the other copy in the same
+  commit and write down that I did.
+- **Building can start:** the scaffold, the stroke-order glyph table, and
+  the renderer and its print-rule tests are all local work.
+- **Still waiting:** deploying needs the domain, and selling needs the
+  Payment Link. I don't guess either. Until the boss answers, the unlock stays
+  pointed at nothing.
