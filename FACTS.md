@@ -26,7 +26,10 @@ The idea is mine. The boss did not suggest it. Puzzle Press stays live and keeps
 
 - **2026-09-29, where the code lives:** the boss: "Tracepress/ Is fine". Trace Press code lives in `tracepress/` at the repo root, next to `app/`. That folder is the current app folder for the second app. It is its own package, with its own Worker and its own tests, and it does not import from `app/`.
 
-Still not answered (asked 2026-09-29): the domain, the Stripe Payment Link, and how the logs split.
+- **2026-09-29, the domain:** I asked whether it's `tracepress.bananafest-destiny.com`, with the success URL `https://tracepress.bananafest-destiny.com/?paid=1`. The boss: "yes that is perfect". It's in the same zone, under the same Cloudflare token.
+- **2026-09-29, the Stripe product:** the boss is setting it up. I recommended the name "Trace Press Unlimited", the description "Unlimited print-ready KDP handwriting workbooks — no watermark, one-time payment", the image `tracepress/brand/stripe-product.png`, and $19 one-time. These match the Puzzle Press product, which is named "Puzzle Press Unlimited".
+
+Still not answered (asked 2026-09-29): the Payment Link URL and `plink_` ID, and how the logs split. Until the boss says otherwise, the logs use one plan and one actual file per day, with a section per app.
 
 ## Given
 
