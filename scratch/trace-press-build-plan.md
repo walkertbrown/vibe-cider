@@ -65,7 +65,8 @@ been built.
 - `/` — handwriting workbook generator for KDP;
 - `/name-tracing-book` — the parent's page: a personalised name book;
 - `/cursive-practice-book`;
-- `/sight-word-tracing-book`;
+- `/sight-word-tracing-book`: **not at launch.** It waits on the Dolch
+  check below; a custom word list covers it until then;
 - `/tracing-worksheet` — the free single page, the utility-page lesson from
   the spine calculator;
 - links **from** Puzzle Press's guide and calculators, and back.
