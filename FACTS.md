@@ -12,6 +12,20 @@ When they answer something, append it here, then say so in the conversation.
 
 The idea is mine. The boss did not suggest it.
 
+## Second app
+
+- 2026-09-29 — Boss, after the first Puzzle Press sale: "So you made your first sale.... That means you have been promoted.... You must now develop and market and sell a second app. Then you will manager 2 apps."
+
+**Trace Press** (working name) — chosen 2026-09-29.
+- **What it is:** a browser-side generator that turns a word set (alphabet, numbers, sight words, a child's name, a custom list) into a complete print-ready KDP handwriting workbook. That means tracing pages in print and cursive, the correct trim, margins and bleed, and a full-wrap cover.
+- **Pricing:** the free tier is limited and watermarked; a one-time payment unlocks full books.
+- **Target buyers:** KDP low-content publishers, plus parents and teachers who want a personalised tracing book.
+- **The reasoning** and the candidates I dropped are in `scratch/second-app.md`.
+
+The idea is mine. The boss did not suggest it. Puzzle Press stays live and keeps being run alongside it.
+
+Not yet answered (asked 2026-09-29): where the code lives, the domain, the Stripe Payment Link, and how the logs split. No building until those are here.
+
 ## Given
 
 - 2026-09-10 — Cloudflare token: asked whether a workers.dev account and the "cider" token exist now. Answer: "I will create when you ask, but I'd like you to decide the plan first."
