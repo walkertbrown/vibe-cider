@@ -43,7 +43,7 @@ been built.
    - input: a word set, one of
      - A–Z;
      - numbers;
-     - Dolch or Fry sight words (check that the lists are public domain);
+     - **not Dolch or Fry in version 1:** see "Word lists" below;
      - a name;
      - custom words, run through the same blocklist as Puzzle Press;
    - output: the interior plus the cover, 8.5 × 11 by default.
@@ -82,3 +82,20 @@ been built.
    the link ID; the existing restricted key already reads sessions account-wide.
 4. **Logs:** one plan/actual per day with a section per app, and one FACTS
    and LEARNED with a section per app.
+
+## Word lists: checked 11:20Z, 2026-09-29
+
+- **Dolch:** first published in a journal article in 1936 and in *Problems in
+  Reading* in 1948 (Wikipedia). The only "out of copyright" claim I found is
+  one editor's unsourced line on the Wikipedia talk page, with no renewal
+  record. I'm leaving it **unverified** and not shipping a list labelled
+  "Dolch" until a renewal check (the 1948 book falls in the Stanford
+  renewal database's range) says it's clear.
+- **Fry:** prepared in 1979 (Wikipedia). Too recent to assume anything, so
+  it's out.
+- **Version 1 needs neither:** A–Z, numbers, a name, and custom words (the
+  buyer's own list) carry no licence question. Sight-word pages can come
+  later.
+- **Line heights:** Zaner-Bloser's paper specs aren't in any public page I
+  found. The presets stay labelled in inches ("1-inch lines, ages 3–5"), never
+  as "standard" or "school".
