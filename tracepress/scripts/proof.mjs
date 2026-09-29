@@ -4,17 +4,22 @@
 //
 // Run: npm run proof
 import { PDFDocument, rgb } from "pdf-lib";
+import fontkit from "@pdf-lib/fontkit";
+import { readFileSync } from "node:fs";
+import { strokeArrows, strokeStarts } from "../src/pdf/arrows.js";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { PRINT, ends } from "../src/glyphs/print.js";
 import { traceDots } from "../src/pdf/trace.js";
 import { PT } from "../src/pdf/kdp.js";
 
-const GUIDE_IN = 0.75; // ages 5–7 preset: headline to baseline
+const GUIDE_IN = Number(process.env.GUIDE ?? 0.75); // ages 5–7 preset: headline to baseline
 const unit = (GUIDE_IN * PT) / 2; // one guide unit (baseline→midline) in points
 const INK = rgb(0.45, 0.45, 0.45); // well above KDP's 10% grey minimum
 const LINE_W = 0.75; // KDP's minimum line weight
 
 const doc = await PDFDocument.create();
+doc.registerFontkit(fontkit);
+const bold = await doc.embedFont(readFileSync(new URL("../fonts/LiberationSans-Bold.ttf", import.meta.url)), { subset: true });
 const page = doc.addPage([8.5 * PT, 11 * PT]);
 const left = 0.75 * PT, right = 8.5 * PT - 0.75 * PT;
 
@@ -34,9 +39,18 @@ function letter(ch, x, baseY) {
       page.drawCircle({ x: cx, y: cy, size: 1.25, color: rgb(0, 0, 0) });
     }
   }
-  for (const stroke of PRINT[ch].strokes) {
-    const [sx, sy] = P(ends(stroke[0])[0]);
-    page.drawCircle({ x: sx, y: sy, size: 2.8, color: rgb(0.1, 0.45, 0.25) });
+  const RED = rgb(0.8, 0.15, 0.1);
+  for (const a of strokeArrows(PRINT[ch])) {
+    const [fx, fy] = P(a.from), [tx, ty] = P(a.to);
+    page.drawLine({ start: { x: fx, y: fy }, end: { x: tx, y: ty }, thickness: 0.9, color: RED });
+    const len = Math.hypot(tx - fx, ty - fy), ux = (tx - fx) / len, uy = (ty - fy) / len, h = 3.2;
+    page.drawSvgPath(`M ${tx} ${-ty} L ${tx - ux * h - uy * h * 0.6} ${-(ty - uy * h + ux * h * 0.6)} L ${tx - ux * h + uy * h * 0.6} ${-(ty - uy * h - ux * h * 0.6)} Z`, { x: 0, y: 0, color: RED });
+  }
+  for (const { n, at } of strokeStarts(PRINT[ch])) {
+    const [sx, sy] = P(at);
+    page.drawCircle({ x: sx, y: sy, size: 4.2, color: rgb(0.1, 0.45, 0.25) });
+    const label = String(n), size = 6.5;
+    page.drawText(label, { x: sx - bold.widthOfTextAtSize(label, size) / 2, y: sy - size * 0.36, size, font: bold, color: rgb(1, 1, 1) });
   }
 }
 
