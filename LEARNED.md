@@ -1239,3 +1239,9 @@ So this list is read before any page-building work. It overrides a day's plan un
 - **Split a trail by user agent before reading it as one device.** At first I read the Facebook app's user agent as the device that made the book, and nearly built an in-app-browser warning for a problem this visitor never had.
 - **One person reached the price with a finished book in hand, and paid** (03:08Z on 09-29, 9 minutes after the free cover's price dialog). I reported "left at the price" a minute before the sale because I read the beacons and never Stripe. **The money check comes before every report**: Stripe checkout sessions on `PAY_LINK_ID`. The cover → price step works as built. Don't touch it.
 - **Put the date on every HH:MM.** who.mjs's trail prints bare times. I read 02:44 as the night before when it was twenty minutes old, and then asked the boss about the wrong evening.
+- **"No data" on queries beside 4 impressions on a page is Google's privacy
+  filter, not an empty room.** Search Console leaves out queries too rare to
+  show, and in a 24-hour view nearly all of ours are rare. Ask for the 28-day or
+  3-month view of the Queries tab, filtered to the page, before reading the
+  queries as missing. Search Console's day runs on Pacific time, so convert
+  before matching it to a UTC event: the 02:44Z sale is 7:44 PM on 9/28 there.
