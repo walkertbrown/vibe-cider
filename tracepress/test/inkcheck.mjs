@@ -15,7 +15,8 @@ import { marginsForPage, PT, TRIMS } from "../src/pdf/kdp.js";
 const DPI = 100;
 const INK = 200; // grey level below which a pixel counts as ink
 const tmp = mkdtempSync(join(tmpdir(), "tp-ink-"));
-const fonts = { bold: readFileSync(new URL("../fonts/LiberationSans-Bold.ttf", import.meta.url)) };
+// Free books: they carry everything a paid book does plus the watermark line.
+const fonts = { bold: readFileSync(new URL("../fonts/LiberationSans-Bold.ttf", import.meta.url)), regular: readFileSync(new URL("../fonts/LiberationSans-Regular.ttf", import.meta.url)) };
 let failed = 0, pages = 0;
 
 for (const trim of (process.env.TRIMS?.split(",") ?? Object.keys(TRIMS))) for (const bleed of [false, true]) {

@@ -43,11 +43,20 @@ function reach(glyph, labelR, pad) {
 
 // The content box of a page, in PDF points (y up), kept SAFETY_IN inside
 // KDP's margins.
+// The bottom FOOTER_PT is kept free of rows on every page, free or paid, so
+// the free preview lays out exactly like the book the buyer pays for; on a
+// free book the watermark line goes there.
+export const FOOTER_PT = 14;
 export function contentBox(geom, pageNumber) {
   const m = marginsForPage(geom, pageNumber);
   const s = SAFETY_IN * PT;
-  return { left: m.left + s, right: geom.width - m.right - s, bottom: m.bottom + s, top: geom.height - m.top - s };
+  return { left: m.left + s, right: geom.width - m.right - s, bottom: m.bottom + s + FOOTER_PT, top: geom.height - m.top - s };
 }
+
+// On every page of a free book. The address is in it because a free book can
+// still reach a reader, and the line says where it came from. KDP's 7pt floor
+// is the size; test/layout.test.js checks it fits the narrowest page.
+export const WATERMARK = "Made with Trace Press, free preview — tracepress.bananafest-destiny.com";
 
 // The layout for one page. `letters` is the pair on the page, e.g. ["A", "a"]
 // (just ["F"] while lowercase f has no source). `guideIn` is the trace rows'
@@ -110,8 +119,14 @@ const BASE = rgb(0.2, 0.2, 0.2);
 const RED = rgb(0.8, 0.15, 0.1);
 const GREEN = rgb(0.1, 0.45, 0.25);
 
-// Draw a laid-out page onto a pdf-lib page. `bold` is an embedded font.
-export function drawLetterPage(page, layout, bold) {
+// Draw a laid-out page onto a pdf-lib page. `fonts` holds embedded `bold`
+// and `regular`; a book that isn't `licensed` gets the watermark line.
+export function drawLetterPage(page, layout, { bold, regular }, { licensed = false } = {}) {
+  if (!licensed) {
+    const { box } = layout;
+    const w = regular.widthOfTextAtSize(WATERMARK, LABEL_PT);
+    page.drawText(WATERMARK, { x: box.left + (box.right - box.left - w) / 2, y: box.bottom - FOOTER_PT + 3, size: LABEL_PT, font: regular, color: GREY });
+  }
   for (const row of layout.rows) {
     const { unit, baseY, left, right } = row;
     const at = (u) => baseY + u * unit;

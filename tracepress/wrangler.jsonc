@@ -1,0 +1,39 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "trace-press",
+  "main": "src/worker.js",
+  "compatibility_date": "2026-09-01",
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    "run_worker_first": ["/config.js", "/api/*"]
+  },
+  "observability": { "enabled": true },
+  // /api/verify is an unauthenticated POST that spends Stripe read calls, on
+  // the Stripe account Puzzle Press shares. Ten tries a minute per IP, as on
+  // Puzzle Press (see app/wrangler.jsonc for the measurements). Its own
+  // namespace, so a burst on one app never throttles the other's buyers.
+  "unsafe": {
+    "bindings": [
+      {
+        "name": "VERIFY_LIMIT",
+        "type": "ratelimit",
+        "namespace_id": "1002",
+        "simple": { "limit": 10, "period": 60 }
+      }
+    ]
+  },
+  // Confirmed by the boss 2026-09-29 (FACTS.md, "Second app").
+  "routes": [{ "pattern": "tracepress.bananafest-destiny.com", "custom_domain": true }],
+  "workers_dev": true,
+  // Non-secret config. STRIPE_KEY is set with `wrangler secret put`.
+  "vars": {
+    // LIVE link — real charges. The boss created it 2026-09-29; read back
+    // through the API the same day: "Trace Press Unlimited", $19 one-time,
+    // redirects to https://tracepress.bananafest-destiny.com/?paid=1.
+    "PAY_URL": "https://buy.stripe.com/bJe14p0IKcKV2gzblBeIw01",
+    // /api/verify only accepts sessions made through this link.
+    "PAY_LINK_ID": "plink_1UL3wZRo6ix1hE5vuzRD7tSY"
+  }
+}

@@ -1,0 +1,139 @@
+// Trace Press /api/verify against a stubbed Stripe (copied from Puzzle Press's
+// app/test/verify.test.js with the two apps' links added). The thing worth testing is the
+// fallback scan: it must page through completed sessions rather than looking
+// at only the newest hundred, or a buyer from a hundred sales ago whose email
+// case does not match exactly gets told they never paid.
+import { test } from "node:test";
+import assert from "node:assert/strict";
+import worker from "../src/worker.js";
+
+const session = (i, email, paid = true, link = "plink_T") => ({
+  id: `cs_${i}`,
+  payment_status: paid ? "paid" : "unpaid",
+  payment_link: link,
+  customer_details: { email },
+});
+
+// `pages` is an array of arrays, newest first, as Stripe would return them.
+function stubStripe(pages, { exact = {} } = {}) {
+  const calls = [];
+  globalThis.fetch = async (url) => {
+    const u = new URL(url);
+    calls.push(u.searchParams.get("starting_after") ?? (u.searchParams.get("customer_details[email]") ? `exact:${u.searchParams.get("customer_details[email]")}` : "first"));
+    const filtered = u.searchParams.get("customer_details[email]");
+    if (filtered) return Response.json({ data: exact[filtered] ?? [], has_more: false });
+    const after = u.searchParams.get("starting_after");
+    const index = after ? pages.findIndex((p) => p.some((s) => s.id === after)) + 1 : 0;
+    const data = pages[index] ?? [];
+    return Response.json({ data, has_more: index < pages.length - 1 });
+  };
+  return calls;
+}
+
+const ask = (email, env = { STRIPE_KEY: "rk_test", PAY_LINK_ID: "plink_T" }) =>
+  worker.fetch(new Request("https://x/api/verify", { method: "POST", body: JSON.stringify({ email }) }), env);
+
+// The Stripe account also takes payments for other products (2026-09-27), so
+// a paid session through any other link, or none, is not a licence.
+test("a payment for another product on the account is not an unlock", async () => {
+  stubStripe([[session(2, "Shelf@Example.com", true, null)]], { exact: { "shelf@example.com": [session(1, "shelf@example.com", true, "plink_OTHER")] } });
+  const res = await ask("shelf@example.com");
+  assert.equal(res.status, 404);
+  assert.equal((await res.json()).ok, false);
+});
+
+test("the scan asks Stripe for this product's link, and the exact call cannot", async () => {
+  const seen = [];
+  globalThis.fetch = async (url) => { seen.push(new URL(url).searchParams); return Response.json({ data: [], has_more: false }); };
+  await ask("nobody@example.com");
+  for (const q of seen) assert.ok(!(q.has("payment_link") && q.has("customer_details[email]")), "Stripe refuses both filters at once");
+  assert.ok(seen.some((q) => q.get("payment_link") === "plink_T"), "the scan filters by link");
+});
+
+test("with no Payment Link configured, nothing unlocks", async () => {
+  stubStripe([[session(1, "buyer@example.com")]], { exact: { "buyer@example.com": [session(1, "buyer@example.com")] } });
+  const res = await ask("buyer@example.com", { STRIPE_KEY: "rk_test" });
+  assert.equal(res.status, 503);
+  assert.match((await res.json()).error, /support@/);
+});
+
+test("the exact filter answers without scanning", async () => {
+  const calls = stubStripe([[]], { exact: { "buyer@example.com": [session(1, "buyer@example.com")] } });
+  const res = await ask("buyer@example.com");
+  const body = await res.json();
+  assert.equal(body.ok, true);
+  assert.equal(body.token, "stripe:cs_1");
+  assert.deepEqual(calls, ["exact:buyer@example.com"]);
+});
+
+test("a buyer 300 sales ago with different email case is still found", async () => {
+  // Three full pages; the match is on the third, spelled with capitals.
+  const pages = [
+    Array.from({ length: 100 }, (_, i) => session(`a${i}`, `other${i}@example.com`)),
+    Array.from({ length: 100 }, (_, i) => session(`b${i}`, `other${i}@example.net`)),
+    [...Array.from({ length: 99 }, (_, i) => session(`c${i}`, `other${i}@example.org`)), session("old", "Buyer@Example.com")],
+  ];
+  const calls = stubStripe(pages);
+  const res = await ask("buyer@example.com");
+  const body = await res.json();
+  assert.equal(body.ok, true, `expected a match, got ${JSON.stringify(body)}`);
+  assert.equal(body.token, "stripe:cs_old");
+  // One exact-filter call, then three scan pages.
+  assert.equal(calls.length, 4);
+  assert.equal(calls[2], "cs_a99", "second page continues after the first page's last id");
+});
+
+test("an unpaid session for that email is not an unlock", async () => {
+  stubStripe([[session(1, "buyer@example.com", false)]]);
+  const res = await ask("buyer@example.com");
+  assert.equal(res.status, 404);
+  assert.equal((await res.json()).ok, false);
+});
+
+// Somebody who paid with a different address — a work address, a typo, the
+// account their card sits under — meets this message, and it used to end at
+// "no". Every refusal a buyer can reach has to name a way out.
+test("every refusal a buyer can reach names a way out", async () => {
+  stubStripe([[]]);
+  const res = await ask("buyer@example.com");
+  assert.equal(res.status, 404);
+  assert.match((await res.json()).error, /support@bananafest-destiny\.com/);
+});
+
+test("when the scan hits its page cap, the message sends them to support", async () => {
+  const pages = Array.from({ length: 25 }, (_, p) => Array.from({ length: 100 }, (_, i) => session(`p${p}_${i}`, `nobody${p}${i}@example.com`)));
+  stubStripe(pages);
+  const res = await ask("buyer@example.com");
+  const body = await res.json();
+  assert.equal(res.status, 404);
+  assert.match(body.error, /support@bananafest-destiny\.com/);
+  assert.doesNotMatch(body.error, /No completed payment found/);
+});
+
+test("a bad email is refused before Stripe is called", async () => {
+  const calls = stubStripe([[]]);
+  const res = await ask("not-an-email");
+  assert.equal(res.status, 400);
+  assert.equal(calls.length, 0);
+});
+
+// The two apps share one Stripe account. Each Worker is deployed with its own
+// PAY_LINK_ID, and a receipt from the other app must not unlock this one.
+test("a Puzzle Press receipt does not unlock Trace Press, and the Trace Press link does", async () => {
+  const PP = "plink_1UEFsXRo6ix1hE5vvy5l5zAE", TP = "plink_1UL3wZRo6ix1hE5vuzRD7tSY";
+  const env = { STRIPE_KEY: "rk_test", PAY_LINK_ID: TP };
+  stubStripe([[session(2, "pp@example.com", true, PP)]], { exact: { "pp@example.com": [session(2, "pp@example.com", true, PP)] } });
+  assert.equal((await ask("pp@example.com", env)).status, 404);
+  stubStripe([[session(3, "tp@example.com", true, TP)]], { exact: { "tp@example.com": [session(3, "tp@example.com", true, TP)] } });
+  const res = await ask("tp@example.com", env);
+  assert.equal(res.status, 200);
+  assert.equal((await res.json()).token, "stripe:cs_3");
+});
+
+test("the wrangler config carries this app's own Payment Link, not Puzzle Press's", async () => {
+  const { readFileSync } = await import("node:fs");
+  const cfg = readFileSync(new URL("../wrangler.jsonc", import.meta.url), "utf8");
+  assert.match(cfg, /"PAY_LINK_ID":\s*"plink_1UL3wZRo6ix1hE5vuzRD7tSY"/);
+  assert.match(cfg, /"PAY_URL":\s*"https:\/\/buy\.stripe\.com\/bJe14p0IKcKV2gzblBeIw01"/);
+  assert.doesNotMatch(cfg, /plink_1UEFsXRo6ix1hE5vvy5l5zAE/);
+});

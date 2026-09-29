@@ -20,12 +20,17 @@ export function planBook({ trim = "8.5x11", bleed = false, guideIn = 0.75 } = {}
   return { geom, pages: pairs.map((letters, i) => letterPage({ geom, pageNumber: i + 1, letters, guideIn })) };
 }
 
-// `fonts.bold` is the bytes of an embeddable TTF (KDP needs fonts embedded).
+// `fonts.bold` and `fonts.regular` are the bytes of embeddable TTFs (KDP needs
+// fonts embedded). `opts.licensed` is true only after /api/verify has found a
+// payment; anything else is the free, watermarked book.
 export async function renderBook(opts, fonts) {
   const { geom, pages } = planBook(opts);
   const doc = await PDFDocument.create();
   doc.registerFontkit(fontkit);
-  const bold = await doc.embedFont(fonts.bold, { subset: true });
-  for (const layout of pages) drawLetterPage(doc.addPage([geom.width, geom.height]), layout, bold);
+  const embedded = {
+    bold: await doc.embedFont(fonts.bold, { subset: true }),
+    regular: await doc.embedFont(fonts.regular, { subset: true }),
+  };
+  for (const layout of pages) drawLetterPage(doc.addPage([geom.width, geom.height]), layout, embedded, { licensed: opts.licensed === true });
   return doc.save();
 }
