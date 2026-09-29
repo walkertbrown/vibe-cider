@@ -117,6 +117,19 @@ try {
   check(got.pages === 40 && got.text.trim() === "", `paper: 40 blank-text pages (${got.pages}), ${dl.suggestedFilename()}`);
   check((await (await paper.request.get(`${base}/sitemap.xml`)).text()).includes("/handwriting-paper"), "paper: in the sitemap");
 
+  // The KDP guide: served, reachable from the pages a reader arrives on, and
+  // its links go to the tool and the paper page.
+  const guide = "/how-to-make-a-handwriting-workbook";
+  await paper.goto(`${base}${guide}`);
+  const links = await paper.$$eval("article a", (as) => as.map((a) => a.getAttribute("href")));
+  check(links.includes("/") && links.includes("/handwriting-paper"), `guide: links to the tool and the paper page (${links.length} links)`);
+  for (const from of ["/", "/handwriting-paper", "/nope-404"]) {
+    check((await (await paper.request.get(`${base}${from}`)).text()).includes(`href="${guide}"`), `guide: linked from ${from}`);
+  }
+  check((await (await paper.request.get(`${base}/sitemap.xml`)).text()).includes(guide), "guide: in the sitemap");
+  const guideW = await phone.goto(`${base}${guide}`).then(() => phone.evaluate(() => document.documentElement.scrollWidth));
+  check(guideW <= 390, `guide: no sideways scroll on a phone (${guideW}px)`);
+
   check(errors.length === 0, `no page errors ${errors.join("; ")}`);
 } finally {
   await browser.close();
