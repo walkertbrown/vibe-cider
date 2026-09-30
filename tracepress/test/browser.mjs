@@ -169,6 +169,24 @@ try {
   const nameW = await phone.goto(`${base}/name-tracing`).then(() => phone.evaluate(() => document.documentElement.scrollWidth));
   check(nameW <= 390, `name: no sideways scroll on a phone (${nameW}px)`);
 
+  // The sight word page: its buttons open the tool with the list filled in,
+  // and the book grows by that many pages.
+  const sw = "/sight-word-tracing-workbook";
+  await nm.goto(`${base}${sw}`);
+  const ctas = await nm.$$eval("a.cta", (as) => as.map((a) => a.getAttribute("href")));
+  check(ctas.length === 2 && ctas.every((h) => h.startsWith("/?words=")), `sight words: two buttons into the tool (${ctas.length})`);
+  for (const [i, n] of [[0, 66], [1, 78]]) {
+    await nm.goto(`${base}${ctas[i]}`);
+    await nm.waitForSelector("#preview svg circle");
+    check(new RegExp(`Page 1 of ${n} `).test(await nm.textContent("#pageNo")) && new RegExp(`for ${n} pages`).test(await nm.textContent("#coverNote")), `sight words: button ${i + 1} makes a ${n}-page book (${await nm.textContent("#pageNo")})`);
+  }
+  for (const from of ["/", "/handwriting-paper", guide, "/name-tracing", "/nope-404"]) {
+    check((await (await nm.request.get(`${base}${from}`)).text()).includes(`href="${sw}"`), `sight words: linked from ${from}`);
+  }
+  check((await (await nm.request.get(`${base}/sitemap.xml`)).text()).includes(sw), "sight words: in the sitemap");
+  const swW = await phone.goto(`${base}${sw}`).then(() => phone.evaluate(() => document.documentElement.scrollWidth));
+  check(swW <= 390, `sight words: no sideways scroll on a phone (${swW}px)`);
+
   check(errors.length === 0, `no page errors ${errors.join("; ")}`);
 } finally {
   await browser.close();

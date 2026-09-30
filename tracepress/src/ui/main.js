@@ -246,6 +246,10 @@ for (const b of document.querySelectorAll("[data-unlock]")) b.addEventListener("
 
 px("ran");
 refreshTier();
+// A link can bring a word list (/?words=the,and,...), e.g. from the sight
+// word page. It only fills the box; nothing is sent anywhere.
+const linkedWords = new URLSearchParams(location.search).get("words");
+if (linkedWords) el.words.value = cleanWords(linkedWords).join(", ");
 showPage();
 if (new URLSearchParams(location.search).get("paid") === "1" && !getLicense()) {
   history.replaceState(null, "", location.pathname);
