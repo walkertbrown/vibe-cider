@@ -1,0 +1,74 @@
+# Trace Press
+
+A free KDP handwriting workbook generator: makes a print-ready letter tracing
+book for Amazon KDP (interior PDF and full-wrap cover) in the browser. Nothing
+is uploaded.
+
+**Live: https://tracepress.bananafest-destiny.com/**
+
+[![Trace Press: letter tracing workbooks for Amazon KDP](public/social-card.png)](https://tracepress.bananafest-destiny.com/)
+
+One page for each letter, A to Z, capital and lowercase. Each page has a model
+letter with numbered start dots and arrows showing stroke order, rows of dotted
+letters to trace, and rows for writing the letter alone. Then, if you want them:
+
+- **Numbers 0–9**, a page each after Z, with start dots and arrows like the letters.
+- **Your own practice words** (sight words, names, a theme), a page each after
+  that, up to 52 words (42 with numbers on).
+
+Six KDP trim sizes (5×8, 5.5×8.5, 6×9, 7×10, 8×10, 8.5×11), with or without
+bleed, and four line sizes, from 1" lines for ages 4–5 down to 0.45" for older
+children. The cover is one full-wrap PDF with the spine sized from the page
+count of the book you just made and the paper you pick (white, cream,
+groundwood or colour).
+
+Free to use, and it makes the entire book. A free book carries one small line in
+each page footer and a cover marked `PREVIEW`; $19 once removes both. No
+account, no subscription.
+
+## See it without running anything
+
+Made by this code with the free version, footer line and PREVIEW mark included:
+
+- [A–Z letter tracing workbook, 8.5×11](https://tracepress.bananafest-destiny.com/samples/letter-tracing-workbook-sample-8.5x11.pdf) and [its cover](https://tracepress.bananafest-destiny.com/samples/letter-tracing-cover-sample-8.5x11.pdf)
+- [Number tracing worksheets, 0 to 9](https://tracepress.bananafest-destiny.com/samples/number-tracing-worksheets-0-9.pdf)
+- [Sight word tracing workbook, Dolch pre-primer](https://tracepress.bananafest-destiny.com/samples/sight-word-tracing-workbook-sample-8.5x11.pdf)
+
+## Free pages
+
+- [Letter tracing worksheets, A to Z](https://tracepress.bananafest-destiny.com/letter-tracing)
+- [Number tracing worksheets, 0 to 9](https://tracepress.bananafest-destiny.com/number-tracing)
+- [Name tracing worksheet](https://tracepress.bananafest-destiny.com/name-tracing): type a name, print one page
+- [Sight word tracing workbook](https://tracepress.bananafest-destiny.com/sight-word-tracing-workbook)
+- [Handwriting practice paper](https://tracepress.bananafest-destiny.com/handwriting-paper): blank four-line guides
+- [How to make a handwriting workbook for KDP](https://tracepress.bananafest-destiny.com/how-to-make-a-handwriting-workbook), step by step
+
+## KDP's rules, and where the code keeps them
+
+- **Margins** by page count, inside and outside, from KDP's paperback
+  guidelines: `src/pdf/kdp.js`. Every mark is laid out as numbers first and
+  checked against them in `test/layout.test.js`; `test/inkcheck.mjs` renders
+  the pages and checks the pixels.
+- **Print floors**: lines at least 0.75pt, type at least 7pt (`src/pdf/page.js`).
+- **Spine width** from the page count and paper: `src/pdf/cover-geometry.js`.
+- **Stroke order**: the letters are vertical print, drawn in the stroke order
+  and direction of a published school handwriting model (`src/glyphs/print.js`).
+
+## Run it
+
+```
+npm install
+npm test          # unit tests
+npm run build     # bundles src/ui into public/js
+npx wrangler dev  # the site and its Worker, locally
+npm run sample    # regenerates public/samples/
+```
+
+The PDFs are made with [pdf-lib](https://pdf-lib.js.org/) in the browser. The
+Worker (`src/worker.js`) serves the pages and checks a Stripe payment when
+someone unlocks.
+
+A [Bananafest Destiny](https://bananafest-destiny.com) app, from the maker of
+[Puzzle Press](https://puzzlepress.bananafest-destiny.com/), which makes KDP
+puzzle books the same way. Not affiliated with Amazon. KDP is a trademark of
+Amazon.com, Inc.
