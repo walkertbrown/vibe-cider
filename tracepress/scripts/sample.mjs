@@ -45,7 +45,19 @@ export const SAMPLES = {
     title: "Letter Tracing Book Cover for KDP, 8.5x11 (Free Sample) · Trace Press",
     subject: "A full-wrap paperback cover (back, spine, front) sized by KDP's formula for a 26-page 8.5 x 11 letter tracing book. Made free with Trace Press; free covers carry a PREVIEW mark.",
   },
+  sightWords: {
+    file: "sight-word-tracing-workbook-sample-8.5x11.pdf",
+    title: "Free Sight Word Tracing Workbook PDF, Dolch Pre-Primer · Trace Press",
+    subject: "A 66-page handwriting workbook: A to Z, then one page for each of the 40 Dolch pre-primer sight words, with stroke-order arrows, numbered start dots and dotted words to trace on four-line guides. 8.5 x 11, laid out to Amazon KDP's rules. Made free with Trace Press.",
+  },
 };
+
+// The pre-primer list, read from the button on /sight-word-tracing-workbook
+// rather than typed out a second time, so the sample and the page that links
+// it cannot disagree.
+const sightPage = readFileSync(new URL("../public/sight-word-tracing-workbook.html", import.meta.url), "utf8");
+export const PRE_PRIMER = decodeURIComponent(sightPage.match(/href="\/\?words=([^"]+)">Open Trace Press with the 40 pre-primer words/)[1]).split(",");
+if (PRE_PRIMER.length !== 40) throw new Error(`pre-primer list has ${PRE_PRIMER.length} words, expected 40`);
 const KEYWORDS = ["letter tracing", "handwriting workbook", "alphabet tracing", "KDP", "printable", "PDF", "Trace Press"];
 
 function link(doc, page, rect) {
@@ -66,14 +78,14 @@ function meta(doc, { title, subject }) {
   doc.setProducer(`Trace Press — ${SITE}`);
 }
 
-// The book.
-{
-  const doc = await PDFDocument.load(await renderBook({ trim: TRIM, guideIn: GUIDE_IN }, fonts));
+// A book, with a link on every footer and a closing page that is one link.
+async function book(sample, words = []) {
+  const doc = await PDFDocument.load(await renderBook({ trim: TRIM, guideIn: GUIDE_IN, words }, fonts));
   doc.registerFontkit(fontkit);
-  meta(doc, SAMPLES.book);
+  meta(doc, sample);
   const regular = await doc.embedFont(fonts.regular, { subset: true });
   const bold = await doc.embedFont(fonts.bold, { subset: true });
-  const { geom, pages } = planBook({ trim: TRIM, guideIn: GUIDE_IN });
+  const { geom, pages } = planBook({ trim: TRIM, guideIn: GUIDE_IN, words });
   pages.forEach((layout, i) => {
     const f = pageInk(layout).find((s) => s.kind === "text" && /Trace Press/.test(s.text));
     if (!f) throw new Error(`page ${i + 1}: no footer line to link`);
@@ -90,9 +102,11 @@ function meta(doc, { title, subject }) {
   line("Tap anywhere on this page to make your own.", regular, 11, h / 2 - 50, rgb(0.5, 0.5, 0.5));
   link(doc, page, [0, 0, w, h]);
   const bytes = await doc.save();
-  writeFileSync(new URL(SAMPLES.book.file, out), bytes);
-  console.log(`wrote public/samples/${SAMPLES.book.file}: ${pages.length} book pages + 1, ${bytes.length} bytes`);
+  writeFileSync(new URL(sample.file, out), bytes);
+  console.log(`wrote public/samples/${sample.file}: ${pages.length} book pages + 1, ${bytes.length} bytes`);
 }
+await book(SAMPLES.book);
+await book(SAMPLES.sightWords, PRE_PRIMER);
 
 // The cover, sized for that book. The link sits on the free cover's own
 // back-panel note (cover.js drawPreviewMark puts it at the barcode margin).

@@ -184,6 +184,13 @@ try {
     check((await (await nm.request.get(`${base}${from}`)).text()).includes(`href="${sw}"`), `sight words: linked from ${from}`);
   }
   check((await (await nm.request.get(`${base}/sitemap.xml`)).text()).includes(sw), "sight words: in the sitemap");
+  {
+    const f = "/samples/sight-word-tracing-workbook-sample-8.5x11.pdf";
+    const r = await nm.request.get(`${base}${f}`);
+    const swHtml = await (await nm.request.get(`${base}${sw}`)).text();
+    const map = await (await nm.request.get(`${base}/sitemap.xml`)).text();
+    check(swHtml.includes(`href="${f}"`) && map.includes(f) && r.ok() && r.headers()["content-type"] === "application/pdf", `sight words: sample PDF linked, in the sitemap, served (${r.status()} ${r.headers()["content-type"]})`);
+  }
   const swW = await phone.goto(`${base}${sw}`).then(() => phone.evaluate(() => document.documentElement.scrollWidth));
   check(swW <= 390, `sight words: no sideways scroll on a phone (${swW}px)`);
 

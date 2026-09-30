@@ -13,6 +13,7 @@ const SITE = "https://tracepress.bananafest-destiny.com/";
 const path = (f) => fileURLToPath(new URL(`../public/samples/${f}`, import.meta.url));
 const BOOK = path("letter-tracing-workbook-sample-8.5x11.pdf");
 const COVER = path("letter-tracing-cover-sample-8.5x11.pdf");
+const SIGHT = path("sight-word-tracing-workbook-sample-8.5x11.pdf");
 
 function links(doc, page) {
   const annots = page.node.lookup(PDFName.of("Annots"));
@@ -44,4 +45,14 @@ test("the sample cover: one sheet, PREVIEW on it, and a link", async () => {
   assert.equal(doc.getPageCount(), 1);
   assert.ok(links(doc, doc.getPage(0)).some((x) => x.uri === SITE));
   assert.match(execFileSync("pdftotext", [COVER, "-"], { encoding: "utf8" }), /PREVIEW/);
+});
+
+test("the sight word sample: A to Z, then the 40 pre-primer words, a link on every page", async () => {
+  const doc = await PDFDocument.load(readFileSync(SIGHT));
+  assert.ok(doc.getTitle().length <= 70 && /Sight Word/.test(doc.getTitle()), doc.getTitle());
+  assert.equal(doc.getPageCount(), 67);
+  for (let i = 0; i < 67; i++) assert.ok(links(doc, doc.getPage(i)).some((x) => x.uri === SITE), `page ${i + 1} has no link to the site`);
+  const page = (n) => execFileSync("pdftotext", ["-f", String(n), "-l", String(n), SIGHT, "-"], { encoding: "utf8" });
+  assert.match(page(66), /Made with Trace Press, free preview/);
+  assert.match(page(67), /Made with Trace Press/);
 });
