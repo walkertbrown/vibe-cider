@@ -66,6 +66,17 @@ try {
   check(got.pages === 1 && /PREVIEW/.test(got.text) && /Tracing Fun For Test/.test(got.text.replace(/\s+/g, " ")), "free cover: one page, the title, PREVIEW");
   check(/^trace-press-cover-6x9-white\.pdf$/.test(dl.suggestedFilename()), `cover file name ${dl.suggestedFilename()}`);
 
+  // Practice words: two word pages after Z, the pager and the cover note follow.
+  await page.fill("#words", "cat, the");
+  check(/Page \d+ of 28/.test(await page.textContent("#pageNo")) && /2 word pages after Z/.test(await page.textContent("#wordsNote")), `words: 28 pages (${await page.textContent("#pageNo")})`);
+  for (let i = 0; i < 30; i++) if (!(await page.isDisabled("#next"))) await page.click("#next");
+  check(/Page 28 of 28 · “the”/.test(await page.textContent("#pageNo")), `words: last page is the word (${await page.textContent("#pageNo")})`);
+  check(/for 28 pages/.test(await page.textContent("#coverNote")), "words: the cover note counts them");
+  [dl] = await Promise.all([page.waitForEvent("download"), page.click("#download")]);
+  got = pdfText(await (await dl.createReadStream()).toArray().then(Buffer.concat));
+  check(got.pages === 28, `words: the download has 28 pages (${got.pages})`);
+  await page.fill("#words", "");
+
   await page.click("#tier .linkish");
   check(await page.isVisible("#unlockDialog"), "the tier button opens the unlock dialog");
   const buy = page.locator("#buyLine a");

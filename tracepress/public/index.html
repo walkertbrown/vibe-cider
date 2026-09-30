@@ -94,6 +94,10 @@
     <p class="hint">The height from the top line to the baseline on the tracing rows. Bigger lines are for younger hands.</p>
     <label class="check"><input type="checkbox" id="bleed"> Bleed</label>
     <p class="hint">Only turn this on if you chose bleed in KDP. The page is then 0.125" wider and 0.25" taller, as KDP asks.</p>
+    <label for="words">Practice words <span class="opt">(optional)</span></label>
+    <textarea id="words" rows="3" placeholder="the, and, cat, dog" style="width:100%;font:inherit;padding:8px;border:1px solid var(--line);border-radius:8px"></textarea>
+    <p class="hint">Sight words, names, a theme. Separate them with commas or new lines. Each gets a page after Z: the word large with start dots and arrows, then rows to trace. Letters A–Z only, up to 52 words.</p>
+    <p class="hint" id="wordsNote" role="status"></p>
     <button class="primary" id="download" type="button">Download the interior PDF</button>
     <p id="status" role="status"></p>
     <h3 class="sub">Cover</h3>

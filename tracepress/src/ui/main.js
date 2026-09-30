@@ -2,7 +2,7 @@
 // book exactly as it prints, download the interior PDF. Nothing typed here
 // leaves the browser except the email in the unlock dialog, which goes to
 // /api/verify and nowhere else.
-import { planBook, GUIDES } from "../pdf/plan.js";
+import { planBook, GUIDES, cleanWords, WORDS_MAX } from "../pdf/plan.js";
 import { TRIMS } from "../pdf/kdp.js";
 import { coverGeometry, PAPER } from "../pdf/cover-geometry.js";
 import { pageSvg } from "./preview.js";
@@ -19,7 +19,7 @@ const getLicense = () => storedLicense() ?? sessionLicense;
 
 const $ = (id) => document.getElementById(id);
 const el = {
-  trim: $("trim"), bleed: $("bleed"), age: $("age"),
+  trim: $("trim"), bleed: $("bleed"), age: $("age"), words: $("words"), wordsNote: $("wordsNote"),
   preview: $("preview"), prev: $("prev"), next: $("next"), pageNo: $("pageNo"),
   download: $("download"), status: $("status"), tier: $("tier"),
   dialog: $("unlockDialog"), dialogTitle: $("dialogTitle"), dialogLede: $("dialogLede"), buyLine: $("buyLine"),
@@ -33,7 +33,7 @@ for (const [key, p] of Object.entries(PAPER)) el.paper.add(new Option(p.label, k
 for (const [label, inches] of Object.entries(GUIDES)) el.age.add(new Option(`${label} — ${inches}" lines`, String(inches), false, inches === 0.75));
 
 let pageIndex = 0;
-const opts = () => ({ trim: el.trim.value, bleed: el.bleed.checked, guideIn: Number(el.age.value) });
+const opts = () => ({ trim: el.trim.value, bleed: el.bleed.checked, guideIn: Number(el.age.value), words: el.words.value });
 
 // The cover's size, before it's made: what to type into KDP's cover
 // calculator to check it.
@@ -49,7 +49,10 @@ function showPage() {
   const { geom, pages } = planBook(opts());
   pageIndex = Math.max(0, Math.min(pageIndex, pages.length - 1));
   const svg = pageSvg(geom, pages[pageIndex], { licensed: !!getLicense() });
-  const letters = pages[pageIndex].rows[0].letters.map((l) => l.ch).join(" ");
+  const { word } = pages[pageIndex];
+  const letters = word ? `“${word}”` : pages[pageIndex].rows[0].letters.map((l) => l.ch).join(" ");
+  const n = cleanWords(el.words.value).length;
+  el.wordsNote.textContent = n ? `${n} word page${n === 1 ? "" : "s"} after Z${n === WORDS_MAX ? ` (the most: ${WORDS_MAX})` : ""}.` : "";
   svg.setAttribute("aria-label", `Page ${pageIndex + 1} of ${pages.length}: tracing practice for ${letters}`);
   el.preview.replaceChildren(svg);
   el.pageNo.textContent = `Page ${pageIndex + 1} of ${pages.length} · ${letters}`;
@@ -58,6 +61,10 @@ function showPage() {
 }
 
 for (const c of [el.trim, el.bleed, el.age, el.paper]) c.addEventListener("change", (e) => {
+  if (e.isTrusted) px("touched");
+  showPage();
+});
+el.words.addEventListener("input", (e) => {
   if (e.isTrusted) px("touched");
   showPage();
 });
