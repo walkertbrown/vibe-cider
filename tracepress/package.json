@@ -10,7 +10,8 @@
     "ink": "node test/inkcheck.mjs",
     "build": "rm -rf public/js && esbuild src/ui/main.js src/ui/paper-page.js src/ui/name-page.js --bundle --minify --format=esm --target=es2020 --splitting --outdir=public/js",
     "deploy": "npm run build && wrangler deploy",
-    "traffic": "node scripts/traffic.mjs"
+    "traffic": "node scripts/traffic.mjs",
+    "indexnow": "node scripts/indexnow.mjs"
   },
   "dependencies": {
     "@pdf-lib/fontkit": "^1.1.1",
