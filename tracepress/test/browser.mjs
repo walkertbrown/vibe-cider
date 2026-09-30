@@ -261,6 +261,27 @@ try {
     const w = await phone.goto(`${base}${tl}`).then(() => phone.evaluate(() => document.documentElement.scrollWidth));
     check(w <= 390, `lines page: no sideways scroll on a phone (${w}px)`);
   }
+  // Worksheet previews: the sitemap names each page's picture. Every one is
+  // on its page and served as a PNG, and no page on the sitemap shows a
+  // broken image. The pages come from the sitemap, not a list typed here.
+  {
+    const map = await (await nm.request.get(`${base}/sitemap.xml`)).text();
+    const urls = [...map.matchAll(/<url>(.*?)<\/url>/g)].map((m) => m[1]);
+    const imaged = urls.filter((u) => u.includes("<image:loc>"));
+    check(imaged.length >= 4, `previews: ${imaged.length} sitemap pages name a picture`);
+    for (const u of urls) {
+      const path = new URL(u.match(/<loc>(.*?)<\/loc>/)[1]).pathname;
+      if (path.endsWith(".pdf")) continue;
+      await nm.goto(`${base}${path}`, { waitUntil: "load" });
+      const imgs = await nm.$$eval("img", (els) => els.map((e) => ({ src: e.getAttribute("src"), ok: e.complete && e.naturalWidth > 0, alt: e.alt.length })));
+      const pics = [...u.matchAll(/<image:loc>(.*?)<\/image:loc>/g)].map((m) => new URL(m[1]).pathname);
+      for (const p of pics) {
+        const r = await nm.request.get(`${base}${p}`);
+        check(r.ok() && r.headers()["content-type"] === "image/png" && imgs.some((i) => i.src === p && i.ok && i.alt > 40), `previews: ${p} shown on ${path} with alt text, served (${r.status()} ${r.headers()["content-type"]})`);
+      }
+      check(imgs.every((i) => i.ok), `previews: no broken image on ${path}`);
+    }
+  }
   const swW = await phone.goto(`${base}${sw}`).then(() => phone.evaluate(() => document.documentElement.scrollWidth));
   check(swW <= 390, `sight words: no sideways scroll on a phone (${swW}px)`);
 
