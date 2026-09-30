@@ -755,6 +755,12 @@ try {
   // "arrivals" counts the redirect; the people line counts the ones that were
   // not crawlers. A crawler following a link out of a video description is a
   // normal thing and is not an arrival.
+  //
+  // 2026-09-30: "YouTube, channel link 2" — both Amazon Dublin (AMAZON-DUB,
+  // RDAP), Chrome 134, each fetching /go/ytchan and / and nothing else: no
+  // main.js, no beacon. An honest user-agent was the only test here, and these
+  // didn't say what they were. So a person is also someone whose page ran,
+  // the same line every funnel stage above is drawn on.
   const GO_LABEL = {
     yt: "YouTube, generator", ytcalc: "YouTube, royalty calc", ytspine: "YouTube, spine calc", ytchan: "YouTube, channel link",
     ytmargin: "YouTube, margin calc", ytguide: "YouTube, the guide",
@@ -762,7 +768,7 @@ try {
   };
   const goRows = Object.keys(GO_LABEL).map((slug) => {
     const re = new RegExp(`^/go/${slug}$`);
-    return { slug, all: hits(re), real: people(re) };
+    return { slug, all: hits(re), real: peopleWhere((paths) => [...paths].some((p) => re.test(p)) && RAN(paths)) };
   });
   const goAll = goRows.reduce((n, r) => n + r.all, 0);
   console.log("\n  Where they came from:");
@@ -772,7 +778,7 @@ try {
     console.log("    (typed the domain, or an old link) are deliberately not attributed at all.");
   } else {
     for (const r of goRows.filter((r) => r.all)) {
-      console.log(`    ${GO_LABEL[r.slug].padEnd(26)} ${String(r.real).padStart(3)}${r.all > r.real ? `   (${r.all - r.real} more were crawlers following the link)` : ""}`);
+      console.log(`    ${GO_LABEL[r.slug].padEnd(26)} ${String(r.real).padStart(3)}${r.all > r.real ? `   (${r.all - r.real} more were crawlers, or never ran the page)` : ""}`);
     }
   }
 
