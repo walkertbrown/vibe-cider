@@ -55,6 +55,11 @@ export const SAMPLES = {
     title: "Free Number Tracing Worksheets 0–9, Printable PDF · Trace Press",
     subject: "Ten printable number tracing pages, 0 to 9: each digit large with a numbered start dot and stroke-order arrows, then rows of dotted digits to trace on four-line guides with 1-inch lines for ages 4 to 5. 8.5 x 11. Made free with Trace Press.",
   },
+  lines: {
+    file: "tracing-lines-worksheets.pdf",
+    title: "Free Tracing Lines Worksheets, Pre-Writing Printable PDF · Trace Press",
+    subject: "Four printable pre-writing pages: down and across lines, slants, zigzags and waves, circles and crosses, each with numbered start dots and direction arrows, then rows to trace on four-line guides with 1-inch lines for ages 4 to 5. 8.5 x 11. Made free with Trace Press.",
+  },
 };
 
 // The pre-primer list, read from the button on /sight-word-tracing-workbook
@@ -85,21 +90,22 @@ function meta(doc, { title, subject }) {
 
 // A book, with a link on every footer and a closing page that is one link.
 // `from` keeps only the pages from that index on (the number worksheets are
-// the digit pages of a book with numbers on, without A–Z in front).
-async function book(sample, { words = [], numbers = false, guideIn = GUIDE_IN, from = 0 } = {}) {
-  const opts = { trim: TRIM, guideIn, words, numbers };
+// the digit pages of a book with numbers on, without A–Z in front), and `to`
+// stops before that index (the line worksheets are the four pages before A).
+async function book(sample, { words = [], numbers = false, lines = false, guideIn = GUIDE_IN, from = 0, to } = {}) {
+  const opts = { trim: TRIM, guideIn, words, numbers, lines };
   let doc = await PDFDocument.load(await renderBook(opts, fonts));
-  if (from) {
+  if (from || to) {
     const whole = doc;
     doc = await PDFDocument.create();
-    for (const p of await doc.copyPages(whole, whole.getPageIndices().slice(from))) doc.addPage(p);
+    for (const p of await doc.copyPages(whole, whole.getPageIndices().slice(from, to))) doc.addPage(p);
   }
   doc.registerFontkit(fontkit);
   meta(doc, sample);
   const regular = await doc.embedFont(fonts.regular, { subset: true });
   const bold = await doc.embedFont(fonts.bold, { subset: true });
   const { geom } = planBook(opts);
-  const pages = planBook(opts).pages.slice(from);
+  const pages = planBook(opts).pages.slice(from, to);
   pages.forEach((layout, i) => {
     const f = pageInk(layout).find((s) => s.kind === "text" && /Trace Press/.test(s.text));
     if (!f) throw new Error(`page ${i + 1}: no footer line to link`);
@@ -122,6 +128,7 @@ async function book(sample, { words = [], numbers = false, guideIn = GUIDE_IN, f
 await book(SAMPLES.book);
 await book(SAMPLES.sightWords, { words: PRE_PRIMER });
 await book(SAMPLES.numbers, { numbers: true, guideIn: 1, from: 26 });
+await book(SAMPLES.lines, { lines: true, guideIn: 1, to: 4 });
 
 // The cover, sized for that book. The link sits on the free cover's own
 // back-panel note (cover.js drawPreviewMark puts it at the barcode margin).

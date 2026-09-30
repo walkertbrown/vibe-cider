@@ -243,6 +243,24 @@ try {
     const w = await phone.goto(`${base}${lt}`).then(() => phone.evaluate(() => document.documentElement.scrollWidth));
     check(w <= 390, `letters page: no sideways scroll on a phone (${w}px)`);
   }
+  // Tracing lines worksheets: the PDF is linked and served, the button opens
+  // the tool with Pre-writing lines ticked, and every page links here.
+  {
+    const tl = "/tracing-lines", f = "/samples/tracing-lines-worksheets.pdf";
+    const html = await (await nm.request.get(`${base}${tl}`)).text();
+    const r = await nm.request.get(`${base}${f}`);
+    const map = await (await nm.request.get(`${base}/sitemap.xml`)).text();
+    check(html.includes(`href="${f}"`) && map.includes(`${tl}<`) && map.includes(f) && r.ok() && r.headers()["content-type"] === "application/pdf", `lines page: PDF linked, both in the sitemap, served (${r.status()} ${r.headers()["content-type"]})`);
+    await nm.goto(`${base}${tl}`);
+    await nm.click('a[href="/?lines=1"]');
+    await nm.waitForSelector("#preview svg circle");
+    check(await nm.isChecked("#lines") && /for 30 pages/.test(await nm.textContent("#coverNote")) && /Page 1 of 30 · lines/.test(await nm.textContent("#pageNo")), `lines page: the button opens a 30-page book at the lines (${await nm.textContent("#pageNo")})`);
+    for (const from of ["/", "/handwriting-paper", guide, "/name-tracing", sw, "/number-tracing", "/letter-tracing", "/nope-404"]) {
+      check((await (await nm.request.get(`${base}${from}`)).text()).includes(`href="${tl}"`), `lines page: linked from ${from}`);
+    }
+    const w = await phone.goto(`${base}${tl}`).then(() => phone.evaluate(() => document.documentElement.scrollWidth));
+    check(w <= 390, `lines page: no sideways scroll on a phone (${w}px)`);
+  }
   const swW = await phone.goto(`${base}${sw}`).then(() => phone.evaluate(() => document.documentElement.scrollWidth));
   check(swW <= 390, `sight words: no sideways scroll on a phone (${swW}px)`);
 

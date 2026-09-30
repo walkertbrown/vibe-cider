@@ -12,6 +12,7 @@ One page for each letter, A to Z, capital and lowercase. Each page has a model
 letter with numbered start dots and arrows showing stroke order, rows of dotted
 letters to trace, and rows for writing the letter alone. Then, if you want them:
 
+- **Pre-writing lines**, four pages before A: lines, slants, zigzags, waves, circles and crosses.
 - **Numbers 0–9**, a page each after Z, with start dots and arrows like the letters.
 - **Your own practice words** (sight words, names, a theme), a page each after
   that, up to 52 words (42 with numbers on).
@@ -38,6 +39,7 @@ Made by this code with the free version, footer line and PREVIEW mark included:
 
 - [Letter tracing worksheets, A to Z](https://tracepress.bananafest-destiny.com/letter-tracing)
 - [Number tracing worksheets, 0 to 9](https://tracepress.bananafest-destiny.com/number-tracing)
+- [Tracing lines worksheets](https://tracepress.bananafest-destiny.com/tracing-lines): lines, slants, zigzags, waves, circles, crosses
 - [Name tracing worksheet](https://tracepress.bananafest-destiny.com/name-tracing): type a name, print one page
 - [Sight word tracing workbook](https://tracepress.bananafest-destiny.com/sight-word-tracing-workbook)
 - [Handwriting practice paper](https://tracepress.bananafest-destiny.com/handwriting-paper): blank four-line guides
