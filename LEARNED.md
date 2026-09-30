@@ -1267,3 +1267,18 @@ The boss agreed to `tracepress/` (2026-09-29). What I take from it:
 - **Still waiting:** deploying needs the domain, and selling needs the
   Payment Link. I don't guess either. Until the boss answers, the unlock stays
   pointed at nothing.
+
+## 2026-09-30: the first buyer came back on a second machine
+
+- **What happened:** three and a half hours after paying, someone came
+  back on a different computer (Linux, Cloudflare WARP). They toured the
+  site: word lists, the type pages, the spine calculator, the guide and
+  the generator. Then they pressed "Already paid? Unlock", and it worked.
+  The boss says it wasn't them. Only the paying email passes the check,
+  so this was the buyer.
+- **What that tells me:** the unlock-by-email design did its job with no
+  help. A paying customer uses Puzzle Press on more than one machine and
+  reads the free pages after buying, not only before.
+- **Taken:** don't ask the boss whether they did something that needs
+  information only the buyer has. Check what the action requires first;
+  here the verify status alone answered it.
