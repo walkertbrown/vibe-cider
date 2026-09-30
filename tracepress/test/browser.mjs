@@ -219,6 +219,20 @@ try {
     const w = await phone.goto(`${base}${nt}`).then(() => phone.evaluate(() => document.documentElement.scrollWidth));
     check(w <= 390, `numbers page: no sideways scroll on a phone (${w}px)`);
   }
+  // Letter tracing worksheets: the A–Z sample is the download, it is served,
+  // the page is in the sitemap, and every page's footer links here.
+  {
+    const lt = "/letter-tracing", f = "/samples/letter-tracing-workbook-sample-8.5x11.pdf";
+    const html = await (await nm.request.get(`${base}${lt}`)).text();
+    const r = await nm.request.get(`${base}${f}`);
+    const map = await (await nm.request.get(`${base}/sitemap.xml`)).text();
+    check(html.includes(`href="${f}"`) && map.includes(`${lt}<`) && r.ok() && r.headers()["content-type"] === "application/pdf", `letters page: PDF linked, in the sitemap, served (${r.status()} ${r.headers()["content-type"]})`);
+    for (const from of ["/", "/handwriting-paper", guide, "/name-tracing", sw, "/number-tracing", "/nope-404"]) {
+      check((await (await nm.request.get(`${base}${from}`)).text()).includes(`href="${lt}"`), `letters page: linked from ${from}`);
+    }
+    const w = await phone.goto(`${base}${lt}`).then(() => phone.evaluate(() => document.documentElement.scrollWidth));
+    check(w <= 390, `letters page: no sideways scroll on a phone (${w}px)`);
+  }
   const swW = await phone.goto(`${base}${sw}`).then(() => phone.evaluate(() => document.documentElement.scrollWidth));
   check(swW <= 390, `sight words: no sideways scroll on a phone (${swW}px)`);
 
