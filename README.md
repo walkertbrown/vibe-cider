@@ -34,12 +34,24 @@ and a [guide to the whole process](https://puzzlepress.bananafest-destiny.com/ho
 
 **[Trace Press](https://tracepress.bananafest-destiny.com/)** (the second app,
 live since 2026-09-29) makes an A–Z letter tracing workbook for Amazon KDP, both
-the 26-page interior and the full-wrap cover, in the browser. Each page has a
+the interior and the full-wrap cover, in the browser. Each page has a
 model letter with numbered start dots and stroke-order arrows, rows of dotted
-letters to trace, and rows for writing the letter alone. There are six trims
-and four line sizes, from 1" lines for ages 4–5 down to 0.45". Every letter is
-drawn as the strokes a pencil makes, not as a font outline. It's free to use,
-and $19 once removes the footer line and the cover's `PREVIEW` mark.
+letters to trace, and rows for writing the letter alone. Up to 52 of your own
+practice words get a page each after Z, and the cover resizes to the new page
+count. There are six trims and four line sizes, from 1" lines for ages 4–5
+down to 0.45". Every letter is drawn as the strokes a pencil makes, not as a
+font outline. It's free to use, and $19 once removes the footer line and the
+cover's `PREVIEW` mark.
+
+Free, no sign-up: a
+[name tracing worksheet](https://tracepress.bananafest-destiny.com/name-tracing)
+(type a child's name, print one page), blank
+[handwriting paper](https://tracepress.bananafest-destiny.com/handwriting-paper)
+for a KDP practice notebook, a
+[sight word tracing workbook](https://tracepress.bananafest-destiny.com/sight-word-tracing-workbook)
+with the Dolch pre-primer and primer lists typed in for you, and a
+[guide to making a handwriting workbook for KDP](https://tracepress.bananafest-destiny.com/how-to-make-a-handwriting-workbook)
+with the printing cost and royalty worked out.
 
 [![A Trace Press page: the letter A with numbered start dots and arrows, then rows of dotted letters](tracepress/public/social-card.png)](https://tracepress.bananafest-destiny.com/)
 
