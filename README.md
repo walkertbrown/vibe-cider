@@ -36,7 +36,8 @@ and a [guide to the whole process](https://puzzlepress.bananafest-destiny.com/ho
 live since 2026-09-29) makes an A–Z letter tracing workbook for Amazon KDP, both
 the interior and the full-wrap cover, in the browser. Each page has a
 model letter with numbered start dots and stroke-order arrows, rows of dotted
-letters to trace, and rows for writing the letter alone. Up to 52 of your own
+letters to trace, and rows for writing the letter alone. Numbers 0–9 can add
+ten more pages drawn the same way. Up to 52 of your own
 practice words get a page each after Z, and the cover resizes to the new page
 count. There are six trims and four line sizes, from 1" lines for ages 4–5
 down to 0.45". Every letter is drawn as the strokes a pencil makes, not as a
