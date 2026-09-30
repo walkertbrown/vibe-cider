@@ -14,6 +14,7 @@ const path = (f) => fileURLToPath(new URL(`../public/samples/${f}`, import.meta.
 const BOOK = path("letter-tracing-workbook-sample-8.5x11.pdf");
 const COVER = path("letter-tracing-cover-sample-8.5x11.pdf");
 const SIGHT = path("sight-word-tracing-workbook-sample-8.5x11.pdf");
+const NUMBERS = path("number-tracing-worksheets-0-9.pdf");
 
 function links(doc, page) {
   const annots = page.node.lookup(PDFName.of("Annots"));
@@ -55,4 +56,14 @@ test("the sight word sample: A to Z, then the 40 pre-primer words, a link on eve
   const page = (n) => execFileSync("pdftotext", ["-f", String(n), "-l", String(n), SIGHT, "-"], { encoding: "utf8" });
   assert.match(page(66), /Made with Trace Press, free preview/);
   assert.match(page(67), /Made with Trace Press/);
+});
+
+test("the number worksheets: 0 to 9 only, one page each, a link on every page", async () => {
+  const doc = await PDFDocument.load(readFileSync(NUMBERS));
+  assert.ok(doc.getTitle().length <= 70 && /Number Tracing/.test(doc.getTitle()), doc.getTitle());
+  assert.equal(doc.getPageCount(), 11);
+  for (let i = 0; i < 11; i++) assert.ok(links(doc, doc.getPage(i)).some((x) => x.uri === SITE), `page ${i + 1} has no link to the site`);
+  const page = (n) => execFileSync("pdftotext", ["-f", String(n), "-l", String(n), NUMBERS, "-"], { encoding: "utf8" });
+  for (let n = 1; n <= 10; n++) assert.match(page(n), /Made with Trace Press, free preview/);
+  assert.match(page(11), /Made with Trace Press/);
 });

@@ -201,6 +201,24 @@ try {
     const map = await (await nm.request.get(`${base}/sitemap.xml`)).text();
     check(swHtml.includes(`href="${f}"`) && map.includes(f) && r.ok() && r.headers()["content-type"] === "application/pdf", `sight words: sample PDF linked, in the sitemap, served (${r.status()} ${r.headers()["content-type"]})`);
   }
+  // Number tracing worksheets: the PDF is linked and served, the button opens
+  // the tool with Numbers ticked, and every page's footer links here.
+  {
+    const nt = "/number-tracing", f = "/samples/number-tracing-worksheets-0-9.pdf";
+    const html = await (await nm.request.get(`${base}${nt}`)).text();
+    const r = await nm.request.get(`${base}${f}`);
+    const map = await (await nm.request.get(`${base}/sitemap.xml`)).text();
+    check(html.includes(`href="${f}"`) && map.includes(`${nt}<`) && map.includes(f) && r.ok() && r.headers()["content-type"] === "application/pdf", `numbers page: PDF linked, both in the sitemap, served (${r.status()} ${r.headers()["content-type"]})`);
+    await nm.goto(`${base}${nt}`);
+    await nm.click('a[href="/?numbers=1"]');
+    await nm.waitForSelector("#preview svg circle");
+    check(await nm.isChecked("#numbers") && /for 36 pages/.test(await nm.textContent("#coverNote")), `numbers page: the button opens a 36-page book (${await nm.textContent("#coverNote")})`);
+    for (const from of ["/", "/handwriting-paper", guide, "/name-tracing", sw, "/nope-404"]) {
+      check((await (await nm.request.get(`${base}${from}`)).text()).includes(`href="${nt}"`), `numbers page: linked from ${from}`);
+    }
+    const w = await phone.goto(`${base}${nt}`).then(() => phone.evaluate(() => document.documentElement.scrollWidth));
+    check(w <= 390, `numbers page: no sideways scroll on a phone (${w}px)`);
+  }
   const swW = await phone.goto(`${base}${sw}`).then(() => phone.evaluate(() => document.documentElement.scrollWidth));
   check(swW <= 390, `sight words: no sideways scroll on a phone (${swW}px)`);
 
