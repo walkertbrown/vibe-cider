@@ -116,3 +116,36 @@ The handout also covers ? and !, not digits. Digits need another source.
    lift (f is unknown). So the numbered start dot matters most for the
    uppercase, where A, E, F, H and I take 3 or 4 strokes. (Corrected 13:50Z: Y is 2. The handout has no "Lift" between the slant and the pull down.)
 4. **Still to source:** the digits 0–9. Lowercase f was sourced 2026-09-29: Zaner-Bloser manuscript stroke descriptions (sharpschool.com PDF) and primarylearning.org, "Start below the headline. Curve back. Pull down to the baseline. Start at the midline. Slide right."
+
+## Digits 0–9: sourcing so far (2026-09-30 06:40Z)
+
+Not drawn yet. One source has per-digit directions, and I want two that
+agree before a child copies them.
+
+- **Source 1: school "Letter and Number Formation" page**
+  (app.oncoursesystems.com/school/webpage/11411880/1429955). These are
+  rhymes, and the page names no handwriting program. Read as strokes:
+  - 0: start at the top, curve (direction not stated), close the loop.
+  - 1: top to bottom.
+  - 2: half a moon, then slide right along the bottom.
+  - 3: two backward c's, top then bottom.
+  - 4: down and over, *back at the top* and down: 2 strokes.
+  - 5: down, big belly, *hat on top* last: 2 strokes, hat after.
+  - 6: from the top, down and around, close the loop.
+  - 7: across the top, then down.
+  - 8: an S, then "shut the gate" back up: 1 stroke.
+  - 9: a magic c (counter-clockwise), up, then down the line.
+- **Not usable:**
+  - Zaner-Bloser's K teacher sample stops before its numerals unit
+    (pp. 105ff).
+  - The media.zaner-bloser.com practice pack fails certificate checks.
+    Don't fetch it unverified.
+  - The OT Toolbox says only "all of the numbers start at the top".
+  - Tools To Grow lists worksheet titles only.
+- **Still open:**
+  - 0's direction. My guess is counter-clockwise from the top, like the
+    letter o, but it needs a source.
+  - Whether 5's hat is the second stroke.
+  - Whether 8 starts like S at the top right.
+  - Next to try: the tes.com "number formation 0-9" resource, or a
+    state education department handout.
