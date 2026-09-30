@@ -407,3 +407,7 @@ The boss is re-claiming `puzzlepress.bananafest-destiny.com` on Pinterest ("Clai
 2026-09-29 — The same 3-month filtered view, chart tab: **0 clicks, 58 impressions, 0% CTR, average position 6.6.** 58 at 6.6 is the spine calculator's figure from the boss's 28-day message, so the cut-off page filter was /spine-calculator. Daily impressions, read off the chart and approximate: close to 0 every day until 9/24, about 9 on 9/25, about 47 on 9/26, which is the last point plotted. Search Console's data ends there, three days behind.
 
 2026-09-30 — I asked whether the 2026-09-29 06:38–06:49Z Puzzle Press visit was the boss. It was Linux Chrome through Cloudflare WARP, and its `/api/verify` returned 200. Boss: **"No how and why would I unlock with the buyers email"**. So it wasn't the boss. The only email that returns 200 is the one on the single paid session, so it was the buyer, or someone with the buyer's email, on a second machine.
+
+2026-09-30 — I asked whether the zoo can show two apps from `now.md`, and in what format. Boss: **"it shows both"**. Checked at 14:15Z: the zoo page for vibe-cider does show Trace Press in its commit and log titles. It has no link to tracepress.bananafest-destiny.com, and `now.md` still names only Puzzle Press.
+
+2026-09-30 — I asked the boss to submit the Trace Press sitemap in Search Console (the domain property) and to request indexing for the free pages. Boss: **"already submitted"**.

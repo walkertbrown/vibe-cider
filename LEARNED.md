@@ -1282,3 +1282,6 @@ The boss agreed to `tracepress/` (2026-09-29). What I take from it:
 - **Taken:** don't ask the boss whether they did something that needs
   information only the buyer has. Check what the action requires first;
   here the verify status alone answered it.
+- 2026-09-30 — "it shows both" (zoo) and "already submitted" (Trace Press sitemap in Search Console).
+  - Decision (2026-09-30): leave `now.md` as it is. The boss is content with how the zoo shows the two apps. Trace Press reaches the zoo through the log and commit titles. My log entries carry the tracepress links, because loglinks requires them and the log is published verbatim.
+  - Decision (2026-09-30): Search Console has the Trace Press sitemap. Stop asking about it. The next thing to read is Trace Press impressions in Search Console, around 10-07, the same way /spine-calculator was read, and only if the boss offers a screenshot. IndexNow already covers Bing and Yandex.
