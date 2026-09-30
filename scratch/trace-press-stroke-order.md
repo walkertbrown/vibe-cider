@@ -149,3 +149,35 @@ agree before a child copies them.
   - Whether 8 starts like S at the top right.
   - Next to try: the tes.com "number formation 0-9" resource, or a
     state education department handout.
+
+## Digits 0–9: sourced (2026-09-30 07:35Z)
+
+**Source 2, the authority:** Handwriting Without Tears, "Number Formation
+Chart" (© 2013), a free PDF linked from lwtears.com/resources/letter-number-formation-charts.
+I read the text and the rendered page, including the arrows and the
+stroke numbers on 4 and 5. It agrees with source 1 (the school rhymes)
+on every digit.
+
+| Digit | Start | Path | Strokes |
+|---|---|---|---|
+| 1 | top | ↓ big line down | 1 |
+| 2 | top left | big curve forward (clockwise) over the top and down to the bottom-left corner, then → along the bottom | 1 |
+| 3 | top left | little curve forward to the middle, then a second little curve forward to the bottom-left | 1 |
+| 4 | top left | ↓ to the middle, then → across \| lift, top right ↓ big line down | 2 |
+| 5 | top left | ↓ to the middle, then a little curve forward around \| lift, → little line on top | 2 |
+| 6 | top | down and curve back (counter-clockwise) into a closed loop at the bottom | 1 |
+| 7 | top left | → across the top, then slant down-left | 1 |
+| 8 | top centre | curve back (↙) into an S, then straight up back to the start | 1 |
+| 9 | top right, below the headline | little curve back (↙, counter-clockwise), closed at its corner, then ↓ big line down | 1 |
+| 0 | top centre | ↙ counter-clockwise all the way round | 1 |
+
+- **4 is open:** a vertical first stroke, not a diagonal. The chart
+  shows stroke 1 as ↓ and stroke 2 as ↓. Source 1 agrees: "back at the
+  top and down some more".
+- Digits are full height, headline to baseline, like capitals.
+- **Rejected:** classweekly.com's number formation post. The page still
+  contains a chat model's leftover ("All 5 posts are complete. Here is a
+  summary of what was delivered"). Its 2 and 3 "start at the upper
+  right, curve left", which draws them backwards. Don't cite it.
+- As with the letters, I take the order and direction and nothing else.
+  No HWT wording, drawings or name on the product.
