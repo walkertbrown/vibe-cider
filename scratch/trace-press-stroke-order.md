@@ -167,8 +167,8 @@ on every digit.
 | 5 | top left | ↓ to the middle, then a little curve forward around \| lift, → little line on top | 2 |
 | 6 | top | down and curve back (counter-clockwise) into a closed loop at the bottom | 1 |
 | 7 | top left | → across the top, then slant down-left | 1 |
-| 8 | top centre | curve back (↙) into an S, then straight up back to the start | 1 |
-| 9 | top right, below the headline | little curve back (↙, counter-clockwise), closed at its corner, then ↓ big line down | 1 |
+| 8 | top centre | curve back (↙) into an S, then straight up across the waist, closing the top loop back to the start (drawn as ⟲⟳↗⟲) | 1 |
+| 9 | top right, below the headline | little curve back (↙, counter-clockwise), closed at its corner, ↑ up to the top corner, then ↓ big line down (retracing) | 1 |
 | 0 | top centre | ↙ counter-clockwise all the way round | 1 |
 
 - **4 is open:** a vertical first stroke, not a diagonal. The chart
