@@ -2,7 +2,7 @@
 // points with y up: lines, dots, arrowheads, discs and text. The PDF
 // (draw.js) and the web preview (ui/preview.js) both draw this one list, so
 // the preview can't drift from the book. No pdf-lib here.
-import { PRINT } from "../glyphs/print.js";
+import { GLYPHS } from "../glyphs/lines.js";
 import { traceDots } from "./trace.js";
 import { strokeArrows, strokeStarts } from "./arrows.js";
 import { DOT_R, FOOTER_PT, LABEL_PT, LINE_W, WATERMARK, labelRadius } from "./page.js";
@@ -42,7 +42,7 @@ export function pageInk(layout, { licensed = false, heavy = false } = {}) {
 }
 
 function letterInk(out, { ch, x, marks }, { unit, baseY }, heavy) {
-  const glyph = PRINT[ch];
+  const glyph = GLYPHS[ch];
   const P = ([gx, gy]) => [x + gx * unit, baseY + gy * unit];
   const r = heavy ? Math.max(DOT_R * 1.3, unit * 0.03) : marks ? DOT_R * 1.3 : DOT_R;
   const spacing = heavy ? Math.max(5.5, r * 3.4) : marks ? 5.5 : 4;

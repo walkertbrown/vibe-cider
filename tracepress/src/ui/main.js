@@ -19,7 +19,7 @@ const getLicense = () => storedLicense() ?? sessionLicense;
 
 const $ = (id) => document.getElementById(id);
 const el = {
-  trim: $("trim"), bleed: $("bleed"), age: $("age"), numbers: $("numbers"), words: $("words"), wordsNote: $("wordsNote"),
+  trim: $("trim"), bleed: $("bleed"), age: $("age"), numbers: $("numbers"), lines: $("lines"), words: $("words"), wordsNote: $("wordsNote"),
   preview: $("preview"), prev: $("prev"), next: $("next"), pageNo: $("pageNo"),
   download: $("download"), status: $("status"), tier: $("tier"),
   dialog: $("unlockDialog"), dialogTitle: $("dialogTitle"), dialogLede: $("dialogLede"), buyLine: $("buyLine"),
@@ -33,7 +33,7 @@ for (const [key, p] of Object.entries(PAPER)) el.paper.add(new Option(p.label, k
 for (const [label, inches] of Object.entries(GUIDES)) el.age.add(new Option(`${label} — ${inches}" lines`, String(inches), false, inches === 0.75));
 
 let pageIndex = 0;
-const opts = () => ({ trim: el.trim.value, bleed: el.bleed.checked, guideIn: Number(el.age.value), numbers: el.numbers.checked, words: el.words.value });
+const opts = () => ({ trim: el.trim.value, bleed: el.bleed.checked, guideIn: Number(el.age.value), numbers: el.numbers.checked, lines: el.lines.checked, words: el.words.value });
 
 // The cover's size, before it's made: what to type into KDP's cover
 // calculator to check it.
@@ -50,10 +50,11 @@ function showPage() {
   pageIndex = Math.max(0, Math.min(pageIndex, pages.length - 1));
   const svg = pageSvg(geom, pages[pageIndex], { licensed: !!getLicense() });
   const { word } = pages[pageIndex];
-  const letters = word ? `“${word}”` : pages[pageIndex].rows[0].letters.map((l) => l.ch).join(" ");
-  const max = wordsMax(el.numbers.checked), n = cleanWords(el.words.value, max).length;
+  const chars = pages[pageIndex].rows[0].letters.map((l) => l.ch);
+  const letters = word ? `“${word}”` : chars[0].startsWith("~") ? `lines: ${chars.map((c) => c.slice(1).replace("-", " ")).join(", ")}` : chars.join(" ");
+  const max = wordsMax(el.numbers.checked, el.lines.checked), n = cleanWords(el.words.value, max).length;
   const after = el.numbers.checked ? "after 9" : "after Z";
-  el.wordsNote.textContent = n ? `${n} word page${n === 1 ? "" : "s"} ${after}${n === max ? ` (the most: ${max}${el.numbers.checked ? " with numbers on" : ""})` : ""}.` : "";
+  el.wordsNote.textContent = n ? `${n} word page${n === 1 ? "" : "s"} ${after}${n === max ? ` (the most: ${max}${el.numbers.checked || el.lines.checked ? ` with ${[el.lines.checked && "lines", el.numbers.checked && "numbers"].filter(Boolean).join(" and ")} on` : ""})` : ""}.` : "";
   svg.setAttribute("aria-label", `Page ${pageIndex + 1} of ${pages.length}: tracing practice for ${letters}`);
   el.preview.replaceChildren(svg);
   el.pageNo.textContent = `Page ${pageIndex + 1} of ${pages.length} · ${letters}`;
@@ -61,7 +62,7 @@ function showPage() {
   el.next.disabled = pageIndex === pages.length - 1;
 }
 
-for (const c of [el.trim, el.bleed, el.age, el.numbers, el.paper]) c.addEventListener("change", (e) => {
+for (const c of [el.trim, el.bleed, el.age, el.numbers, el.lines, el.paper]) c.addEventListener("change", (e) => {
   if (e.isTrusted) px("touched");
   showPage();
 });
@@ -252,6 +253,7 @@ refreshTier();
 const linkedWords = new URLSearchParams(location.search).get("words");
 if (linkedWords) el.words.value = cleanWords(linkedWords).join(", ");
 if (new URLSearchParams(location.search).get("numbers") === "1") el.numbers.checked = true;
+if (new URLSearchParams(location.search).get("lines") === "1") el.lines.checked = true;
 showPage();
 if (new URLSearchParams(location.search).get("paid") === "1" && !getLicense()) {
   history.replaceState(null, "", location.pathname);

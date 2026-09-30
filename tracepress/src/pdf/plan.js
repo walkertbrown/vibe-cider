@@ -1,6 +1,7 @@
 // What a book is, before anything is drawn: its pages laid out. Pure, so the
 // web preview can plan a book without loading pdf-lib.
 import { PRINT } from "../glyphs/print.js";
+import { LINE_PAGES } from "../glyphs/lines.js";
 import { pageGeometry } from "./kdp.js";
 import { letterPage } from "./page.js";
 import { namePage, cleanName } from "./name.js";
@@ -24,15 +25,17 @@ export const DIGITS = [..."0123456789"].filter((d) => PRINT[d]);
 // cover's blank spine stays right: 52 words, or 10 numbers and 42 words.
 export const EXTRA_MAX = 52;
 export const WORDS_MAX = EXTRA_MAX;
-export const wordsMax = (numbers) => EXTRA_MAX - (numbers ? DIGITS.length : 0);
+// Pre-writing line pages, if chosen, come before A and count toward the same
+// 52: 4 line pages, 10 numbers and 38 words at the most.
+export const wordsMax = (numbers, lines = false) => EXTRA_MAX - (numbers ? DIGITS.length : 0) - (lines ? LINE_PAGES.length : 0);
 export function cleanWords(words, max = WORDS_MAX) {
   const list = typeof words === "string" ? words.split(/[,\n;]+/) : words ?? [];
   return list.map(cleanName).filter(Boolean).slice(0, max);
 }
 
-export function planBook({ trim = "8.5x11", bleed = false, guideIn = 0.75, numbers = false, words = [] } = {}) {
-  const singles = [...letterPairs(), ...(numbers ? DIGITS.map((d) => [d]) : [])];
-  const extra = cleanWords(words, wordsMax(numbers));
+export function planBook({ trim = "8.5x11", bleed = false, guideIn = 0.75, numbers = false, lines = false, words = [] } = {}) {
+  const singles = [...(lines ? LINE_PAGES : []), ...letterPairs(), ...(numbers ? DIGITS.map((d) => [d]) : [])];
+  const extra = cleanWords(words, wordsMax(numbers, lines));
   const geom = pageGeometry({ trim, bleed, pageCount: singles.length + extra.length });
   return {
     geom,

@@ -10,7 +10,8 @@
 // second (`drawLetterPage` in draw.js, which is the only part that needs
 // pdf-lib, so the web page's preview can use this file without loading it).
 // test/inkcheck.mjs then checks the pixels.
-import { PRINT, sample } from "../glyphs/print.js";
+import { sample } from "../glyphs/print.js";
+import { GLYPHS } from "../glyphs/lines.js";
 import { strokeArrows, strokeStarts } from "./arrows.js";
 import { PT, SAFETY_IN, marginsForPage } from "./kdp.js";
 
@@ -70,7 +71,7 @@ export function letterPage({ geom, pageNumber, letters, guideIn }) {
   // The model row: its height is the tallest reach of any mark on it.
   const mUnit = (guideIn * MODEL_SCALE * PT) / 2;
   const labelR = labelRadius(mUnit) / mUnit;
-  const reaches = letters.map((ch) => reach(PRINT[ch], labelR, MARK_PAD / mUnit));
+  const reaches = letters.map((ch) => reach(GLYPHS[ch], labelR, MARK_PAD / mUnit));
   const above = Math.max(...reaches.map((r) => r.maxY)), below = Math.min(...reaches.map((r) => r.minY));
   const mBase = top - above * mUnit;
   let x = box.left + PAD * mUnit;
@@ -91,8 +92,8 @@ export function letterPage({ geom, pageNumber, letters, guideIn }) {
   const pitch = (3 + GAP_UNITS) * unit;
   const traceFor = (ch) => {
     const out = [];
-    const step = (PRINT[ch].width + LETTER_GAP) * unit;
-    for (let x = box.left + PAD * unit; x + PRINT[ch].width * unit <= box.right - PAD * unit; x += step) out.push({ ch, x, marks: false });
+    const step = (GLYPHS[ch].width + (GLYPHS[ch].gap ?? LETTER_GAP)) * unit;
+    for (let x = box.left + PAD * unit; x + GLYPHS[ch].width * unit <= box.right - PAD * unit; x += step) out.push({ ch, x, marks: false });
     return out;
   };
   const plan = [...letters, ...letters].map((ch) => ({ kind: "trace", ch }));

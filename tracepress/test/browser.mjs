@@ -86,6 +86,16 @@ try {
   check(got.pages === 38, `numbers: the download has 38 pages (${got.pages})`);
   await page.uncheck("#numbers");
   await page.fill("#words", "");
+  // Pre-writing lines: four pages before A.
+  await page.check("#lines");
+  for (let i = 0; i < 40; i++) if (!(await page.isDisabled("#prev"))) await page.click("#prev");
+  check(/Page 1 of 30 · lines: down, across$/.test(await page.textContent("#pageNo")), `lines: page 1 is lines (${await page.textContent("#pageNo")})`);
+  for (let i = 0; i < 4; i++) await page.click("#next");
+  check(/Page 5 of 30 · A a$/.test(await page.textContent("#pageNo")), `lines: page 5 is A (${await page.textContent("#pageNo")})`);
+  [dl] = await Promise.all([page.waitForEvent("download"), page.click("#download")]);
+  got = pdfText(await (await dl.createReadStream()).toArray().then(Buffer.concat));
+  check(got.pages === 30, `lines: the download has 30 pages (${got.pages})`);
+  await page.uncheck("#lines");
 
   await page.click("#tier .linkish");
   check(await page.isVisible("#unlockDialog"), "the tier button opens the unlock dialog");
