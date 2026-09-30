@@ -14,7 +14,7 @@ import { renderBook } from "../src/pdf/book.js";
 import { pageInk } from "../src/pdf/ink.js";
 
 test("cleanWords splits on commas, semicolons and new lines, and caps the list", () => {
-  assert.deepEqual(cleanWords("the, and\ncat;; 123 ,  big dog "), ["the", "and", "cat", "big dog"]);
+  assert.deepEqual(cleanWords("the, and\ncat;; 123 ,  big dog "), ["the", "and", "cat", "123", "big dog"]);
   assert.equal(cleanWords(Array(99).fill("go")).length, WORDS_MAX);
   assert.ok(26 + WORDS_MAX < SPINE_TEXT_MIN_PAGES);
 });

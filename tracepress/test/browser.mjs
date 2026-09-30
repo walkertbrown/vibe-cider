@@ -75,6 +75,16 @@ try {
   [dl] = await Promise.all([page.waitForEvent("download"), page.click("#download")]);
   got = pdfText(await (await dl.createReadStream()).toArray().then(Buffer.concat));
   check(got.pages === 28, `words: the download has 28 pages (${got.pages})`);
+  // Numbers 0–9: ten digit pages between Z and the words.
+  await page.check("#numbers");
+  check(/for 38 pages/.test(await page.textContent("#coverNote")) && /2 word pages after 9/.test(await page.textContent("#wordsNote")), `numbers: 38 pages (${await page.textContent("#coverNote")})`);
+  for (let i = 0; i < 40; i++) if (!(await page.isDisabled("#prev"))) await page.click("#prev");
+  for (let i = 0; i < 26; i++) await page.click("#next");
+  check(/Page 27 of 38 · 0$/.test(await page.textContent("#pageNo")), `numbers: page 27 is 0 (${await page.textContent("#pageNo")})`);
+  [dl] = await Promise.all([page.waitForEvent("download"), page.click("#download")]);
+  got = pdfText(await (await dl.createReadStream()).toArray().then(Buffer.concat));
+  check(got.pages === 38, `numbers: the download has 38 pages (${got.pages})`);
+  await page.uncheck("#numbers");
   await page.fill("#words", "");
 
   await page.click("#tier .linkish");

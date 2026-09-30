@@ -18,13 +18,14 @@ const SPEC = {
   M: "↓|↘↗↓", N: "↓|↘↑", O: "⟲", P: "↓|→⟳←", Q: "⟲|↘", R: "↓|→⟳←↘",
   S: "⟲⟳", T: "↓|→", U: "↓⟲↑", V: "↘↗", W: "↘↗↘↗", X: "↘|↙", Y: "↘|↙↓",
   Z: "→↙→",
+  0: "⟲", 1: "↓", 2: "⟳↙→", 3: "⟳⟳", 4: "↓→|↓", 5: "↓⟳|→", 6: "⟲⟲", 7: "→↙", 8: "⟲⟳↗", 9: "⟲↓",
 };
 
 const letters = Object.keys(PRINT);
 const near = (a, b) => Math.abs(a[0] - b[0]) < 1e-6 && Math.abs(a[1] - b[1]) < 1e-6;
 
-test("every letter a–z and A–Z is drawn", () => {
-  const want = [..."abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"];
+test("every letter a–z and A–Z and every digit 0–9 is drawn", () => {
+  const want = [..."abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"];
   assert.deepEqual([...letters].sort(), want.sort());
 });
 
@@ -53,6 +54,13 @@ test("every mark stays between the descender line and the headline, inside the l
         assert.ok(x >= -e && x <= width + e, `${ch} reaches x=${x}, width ${width}`);
       }
     }
+  }
+});
+
+test("digits are full height, headline to baseline, like the capitals", () => {
+  for (const ch of "0123456789") {
+    const ys = PRINT[ch].strokes.flat().flatMap((s) => sample(s).map(([, y]) => y));
+    assert.ok(Math.abs(Math.max(...ys) - 2) < 0.1 && Math.abs(Math.min(...ys)) < 0.1, `${ch} spans ${Math.min(...ys)}..${Math.max(...ys)}`);
   }
 });
 

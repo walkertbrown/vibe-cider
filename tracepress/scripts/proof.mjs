@@ -54,7 +54,7 @@ function letter(ch, x, baseY) {
   }
 }
 
-const rows = ["abcdeghijklm", "nopqrstuvw", "xyz", "ABCDEFGHI", "JKLMNOPQR", "STUVWXYZ"];
+const rows = ["abcdeghijklm", "nopqrstuvw", "xyz", "ABCDEFGHI", "JKLMNOPQR", "STUVWXYZ", "0123456789"];
 let baseY = 11 * PT - 1.3 * PT;
 for (const row of rows) {
   guide(baseY);

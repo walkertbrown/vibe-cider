@@ -23,6 +23,8 @@ const line = (x0, y0, x1, y1) => ({ type: "line", x0, y0, x1, y1 });
 const arc = (cx, cy, rx, ry, from, to) => ({ type: "arc", cx, cy, rx, ry, from, to });
 const dot = (x, y) => ({ type: "dot", x, y });
 const circle = (cx, cy, r, from, to) => arc(cx, cy, r, r, from, to);
+// The point at an angle on an ellipse, so a line can start where an arc ends.
+const on = (cx, cy, rx, ry, deg) => [cx + rx * Math.cos((deg * Math.PI) / 180), cy + ry * Math.sin((deg * Math.PI) / 180)];
 
 // Lowercase: bowls are a circle of diameter 1 sitting on the baseline.
 const BOWL = (from, to) => circle(0.5, 0.5, 0.5, from, to);
@@ -97,6 +99,33 @@ export const PRINT = {
   X: { width: 1.4, strokes: [[line(0, 2, 1.4, 0)], [line(1.4, 2, 0, 0)]] },
   Y: { width: 1.4, strokes: [[line(0, 2, 0.7, 1)], [line(1.4, 2, 0.7, 1), line(0.7, 1, 0.7, 0)]] },
   Z: { width: 1.4, strokes: [[line(0, 2, 1.4, 2), line(1.4, 2, 0, 0), line(0, 0, 1.4, 0)]] },
+
+  // Digits: headline to baseline, like the capitals. Start points, direction
+  // and lifts follow the number formation table in
+  // scratch/trace-press-stroke-order.md: 4 is open with the short stroke
+  // first, 5 gets its hat last, and 8 is an S with a line back up.
+  0: { width: 1.2, strokes: [[arc(0.6, 1, 0.6, 1, 90, 450)]] },
+  1: { width: 0, strokes: [[line(0, 2, 0, 0)]] },
+  2: { width: 1.2, strokes: [[circle(0.6, 1.4, 0.6, 150, -40), line(...on(0.6, 1.4, 0.6, 0.6, -40), 0, 0), line(0, 0, 1.2, 0)]] },
+  3: { width: 1.2, strokes: [[arc(0.6, 1.5, 0.55, 0.5, 150, -90), arc(0.6, 0.5, 0.6, 0.5, 90, -150)]] },
+  4: { width: 1.2, strokes: [[line(0, 2, 0, 0.8), line(0, 0.8, 1.2, 0.8)], [line(0.9, 2, 0.9, 0)]] },
+  5: {
+    width: 1.2,
+    strokes: [
+      [line(on(0.6, 0.6, 0.6, 0.6, 140)[0], 2, ...on(0.6, 0.6, 0.6, 0.6, 140)), circle(0.6, 0.6, 0.6, 140, -140)],
+      [line(on(0.6, 0.6, 0.6, 0.6, 140)[0], 2, 1.1, 2)],
+    ],
+  },
+  6: { width: 1.2, strokes: [[arc(0.6, 0.6, 0.6, 1.4, 80, 180), circle(0.6, 0.6, 0.6, 180, 540)]] },
+  7: { width: 1.2, strokes: [[line(0, 2, 1.2, 2), line(1.2, 2, 0.4, 0)]] },
+  8: {
+    width: 1.2,
+    strokes: [[
+      arc(0.6, 1.5, 0.45, 0.5, 40, 270), arc(0.6, 0.5, 0.6, 0.5, 90, -150),
+      line(...on(0.6, 0.5, 0.6, 0.5, -150), ...on(0.6, 1.5, 0.45, 0.5, 40)),
+    ]],
+  },
+  9: { width: 1.2, strokes: [[circle(0.6, 1.45, 0.55, 0, 360), line(1.15, 1.45, 1.15, 0)]] },
 };
 
 // Where a segment starts and ends, in guide units.

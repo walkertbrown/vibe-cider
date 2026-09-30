@@ -16,11 +16,12 @@ import { LINE_W, WATERMARK } from "../src/pdf/page.js";
 
 const NAMES = ["Jo", "Maya", "Christopher Lee", "Wwwwwwwwwwwwwwww"];
 
-test("cleanName keeps A–Z, a–z and single spaces, up to NAME_MAX", () => {
+test("cleanName keeps A–Z, a–z, 0–9 and single spaces, up to NAME_MAX", () => {
   assert.equal(cleanName("  Mary-Kate  O'Brien "), "MaryKate OBrien");
   assert.equal(cleanName("José"), "Jos");
   assert.equal(cleanName("a".repeat(40)).length, NAME_MAX);
-  assert.equal(planName({ name: "123" }).name, "Name");
+  assert.equal(planName({ name: "123" }).name, "123");
+  assert.equal(planName({ name: "-_-" }).name, "Name");
 });
 
 test("every row and every shape is inside KDP's margins", () => {

@@ -94,9 +94,11 @@
     <p class="hint">The height from the top line to the baseline on the tracing rows. Bigger lines are for younger hands.</p>
     <label class="check"><input type="checkbox" id="bleed"> Bleed</label>
     <p class="hint">Only turn this on if you chose bleed in KDP. The page is then 0.125" wider and 0.25" taller, as KDP asks.</p>
+    <label class="check"><input type="checkbox" id="numbers"> Numbers 0–9</label>
+    <p class="hint">Ten more pages after Z, one for each digit, with start dots and arrows like the letters.</p>
     <label for="words">Practice words <span class="opt">(optional)</span></label>
     <textarea id="words" rows="3" placeholder="the, and, cat, dog" style="width:100%;font:inherit;padding:8px;border:1px solid var(--line);border-radius:8px"></textarea>
-    <p class="hint">Sight words, names, a theme. Separate them with commas or new lines. Each gets a page after Z: the word large with start dots and arrows, then rows to trace. Letters A–Z only, up to 52 words.</p>
+    <p class="hint">Sight words, names, a theme. Separate them with commas or new lines. Each gets a page after Z: the word large with start dots and arrows, then rows to trace. Letters and numbers only, up to 52 words (42 with Numbers 0–9 on).</p>
     <p class="hint" id="wordsNote" role="status"></p>
     <button class="primary" id="download" type="button">Download the interior PDF</button>
     <p id="status" role="status"></p>
@@ -140,6 +142,8 @@
     <p>Every letter is drawn as the strokes a pencil makes, not as a font outline. The model letter numbers where each stroke starts, and red arrows show which way it goes. The letters follow a vertical manuscript (ball-and-stick) style.</p>
   </div>
   <div>
+    <h3>Numbers 0–9</h3>
+    <p>Tick Numbers 0–9 and the book gets ten more pages after Z, one for each digit, laid out like the letter pages: the number large with a numbered start dot and arrows, then rows to trace. Each follows a published school number formation chart: the 4 open with the short stroke first, the 5's hat last, the 8 as an S with a line back up.</p>
     <h3>Your own words, after Z</h3>
     <p>Type up to 52 words in the Practice words box. Each gets its own page: the word large with start dots and arrows on every letter, rows of it to trace, and blank lines to write it alone. The page count and the cover's spine width follow. 52 words keeps the book under 79 pages, the point where KDP starts allowing spine text, so the blank spine stays correct.</p>
   </div>
