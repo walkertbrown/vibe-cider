@@ -104,28 +104,33 @@ export const PRINT = {
   // and lifts follow the number formation table in
   // scratch/trace-press-stroke-order.md: 4 is open with the short stroke
   // first, 5 gets its hat last, and 8 is an S with a line back up.
-  0: { width: 1.2, strokes: [[arc(0.6, 1, 0.6, 1, 90, 450)]] },
+  // Shapes are checked against the chart by eye (the boss sent it 09-30 after
+  // the first drawings looked wrong): 2's curve meets its slant at the tangent,
+  // and 8 starts at top centre, so the line home crosses at the waist and a
+  // short curve closes the top loop.
+  0: { width: 1.3, strokes: [[arc(0.65, 1, 0.65, 1, 90, 450)]] },
   1: { width: 0, strokes: [[line(0, 2, 0, 0)]] },
-  2: { width: 1.2, strokes: [[circle(0.6, 1.4, 0.6, 150, -40), line(...on(0.6, 1.4, 0.6, 0.6, -40), 0, 0), line(0, 0, 1.2, 0)]] },
-  3: { width: 1.2, strokes: [[arc(0.6, 1.5, 0.55, 0.5, 150, -90), arc(0.6, 0.5, 0.6, 0.5, 90, -150)]] },
-  4: { width: 1.2, strokes: [[line(0, 2, 0, 0.8), line(0, 0.8, 1.2, 0.8)], [line(0.9, 2, 0.9, 0)]] },
+  2: { width: 1.3, strokes: [[circle(0.65, 1.35, 0.65, 155, -50), line(...on(0.65, 1.35, 0.65, 0.65, -50), 0, 0), line(0, 0, 1.3, 0)]] },
+  3: { width: 1.25, strokes: [[arc(0.6, 1.5, 0.6, 0.5, 150, -90), arc(0.6, 0.5, 0.65, 0.5, 90, -150)]] },
+  4: { width: 1.3, strokes: [[line(0, 2, 0, 0.85), line(0, 0.85, 1.3, 0.85)], [line(1, 2, 1, 0)]] },
   5: {
-    width: 1.2,
+    width: 1.3,
     strokes: [
-      [line(on(0.6, 0.6, 0.6, 0.6, 140)[0], 2, ...on(0.6, 0.6, 0.6, 0.6, 140)), circle(0.6, 0.6, 0.6, 140, -140)],
-      [line(on(0.6, 0.6, 0.6, 0.6, 140)[0], 2, 1.1, 2)],
+      [line(on(0.65, 0.62, 0.65, 0.62, 145)[0], 2, ...on(0.65, 0.62, 0.65, 0.62, 145)), arc(0.65, 0.62, 0.65, 0.62, 145, -145)],
+      [line(on(0.65, 0.62, 0.65, 0.62, 145)[0], 2, 1.2, 2)],
     ],
   },
-  6: { width: 1.2, strokes: [[arc(0.6, 0.6, 0.6, 1.4, 80, 180), circle(0.6, 0.6, 0.6, 180, 540)]] },
-  7: { width: 1.2, strokes: [[line(0, 2, 1.2, 2), line(1.2, 2, 0.4, 0)]] },
+  6: { width: 1.3, strokes: [[arc(0.65, 0.65, 0.65, 1.35, 80, 180), circle(0.65, 0.65, 0.65, 180, 540)]] },
+  7: { width: 1.3, strokes: [[line(0, 2, 1.3, 2), line(1.3, 2, 0.4, 0)]] },
   8: {
-    width: 1.2,
+    width: 1.3,
     strokes: [[
-      arc(0.6, 1.5, 0.45, 0.5, 40, 270), arc(0.6, 0.5, 0.6, 0.5, 90, -150),
-      line(...on(0.6, 0.5, 0.6, 0.5, -150), ...on(0.6, 1.5, 0.45, 0.5, 40)),
+      arc(0.65, 1.5, 0.5, 0.5, 90, 270), arc(0.65, 0.5, 0.65, 0.5, 90, -210),
+      line(...on(0.65, 0.5, 0.65, 0.5, 150), ...on(0.65, 1.5, 0.5, 0.5, -40)),
+      arc(0.65, 1.5, 0.5, 0.5, -40, 90),
     ]],
   },
-  9: { width: 1.2, strokes: [[circle(0.6, 1.45, 0.55, 0, 360), line(1.15, 1.45, 1.15, 0)]] },
+  9: { width: 1.25, strokes: [[circle(0.65, 1.45, 0.55, 0, 360), line(1.2, 1.45, 1.2, 2), line(1.2, 2, 1.2, 0)]] },
 };
 
 // Where a segment starts and ends, in guide units.
