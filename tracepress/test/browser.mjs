@@ -136,6 +136,28 @@ try {
   const guideW = await phone.goto(`${base}${guide}`).then(() => phone.evaluate(() => document.documentElement.scrollWidth));
   check(guideW <= 390, `guide: no sideways scroll on a phone (${guideW}px)`);
 
+  // The name tracing sheet: typing redraws the preview, the download is one
+  // page with the name in its title, and every page a reader lands on links it.
+  const nm = await (await browser.newContext({ acceptDownloads: true, userAgent: "trace-press-test/browser" })).newPage();
+  nm.on("pageerror", (e) => errors.push(`name: ${e.message}`));
+  await nm.goto(`${base}/name-tracing`);
+  await nm.waitForSelector("#preview svg circle");
+  const dotsMaya = await nm.locator("#preview svg circle").count();
+  await nm.fill("#name", "Christopher-Lee");
+  check(/Showing “ChristopherLee”/.test(await nm.textContent("#nameNote")), `name: dropped characters are reported (${await nm.textContent("#nameNote")})`);
+  check((await nm.locator("#preview svg circle").count()) !== dotsMaya, "name: typing redraws the preview");
+  [dl] = await Promise.all([nm.waitForEvent("download"), nm.click("#download")]);
+  const nf = join(tmp, "n.pdf");
+  writeFileSync(nf, await (await dl.createReadStream()).toArray().then(Buffer.concat));
+  const ninfo = execFileSync("pdfinfo", [nf], { encoding: "utf8" });
+  check(/Pages:\s+1\n/.test(ninfo) && /Title:\s+Name tracing worksheet: ChristopherLee/.test(ninfo) && dl.suggestedFilename() === "name-tracing-christopherlee-8.5x11.pdf", `name: one-page PDF, ${dl.suggestedFilename()}`);
+  for (const from of ["/", "/handwriting-paper", guide, "/nope-404"]) {
+    check((await (await nm.request.get(`${base}${from}`)).text()).includes('href="/name-tracing"'), `name: linked from ${from}`);
+  }
+  check((await (await nm.request.get(`${base}/sitemap.xml`)).text()).includes("/name-tracing"), "name: in the sitemap");
+  const nameW = await phone.goto(`${base}/name-tracing`).then(() => phone.evaluate(() => document.documentElement.scrollWidth));
+  check(nameW <= 390, `name: no sideways scroll on a phone (${nameW}px)`);
+
   check(errors.length === 0, `no page errors ${errors.join("; ")}`);
 } finally {
   await browser.close();

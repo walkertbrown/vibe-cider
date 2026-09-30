@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Handwriting Practice Paper PDF: Free Generator, KDP-Ready — Trace Press</title>
-<meta name="description" content="Free printable handwriting paper: four-line guides (headline, dashed midline, baseline, descender) in four line sizes, as a PDF of 24 to 300 pages. Laid out to Amazon KDP's trims and margins, so it can be a blank practice notebook interior. No sign-up.">
-<link rel="canonical" href="https://tracepress.bananafest-destiny.com/handwriting-paper">
+<title>Free Name Tracing Worksheet Maker, Printable PDF — Trace Press</title>
+<meta name="description" content="Type a child's name and get a printable name tracing worksheet: the name large with numbered start dots and stroke arrows, rows of dotted letters to trace, and empty lines to write it alone. Four line sizes. Free PDF, no sign-up.">
+<link rel="canonical" href="https://tracepress.bananafest-destiny.com/name-tracing">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Trace Press">
-<meta property="og:url" content="https://tracepress.bananafest-destiny.com/handwriting-paper">
-<meta property="og:title" content="Free handwriting practice paper, as a KDP-ready PDF">
-<meta property="og:description" content="Four-line handwriting guides in four sizes, 24 to 300 pages, inside Amazon KDP's margins. Made in your browser.">
+<meta property="og:url" content="https://tracepress.bananafest-destiny.com/name-tracing">
+<meta property="og:title" content="Free name tracing worksheet maker">
+<meta property="og:description" content="Type a name, get a printable tracing sheet with start dots and stroke arrows. Made in your browser.">
 <meta property="og:image" content="https://tracepress.bananafest-destiny.com/social-card.png?v=2026-09-29">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23234e3a'/%3E%3Ctext x='16' y='22' font-family='sans-serif' font-weight='700' font-size='18' fill='white' text-anchor='middle'%3ET%3C/text%3E%3C/svg%3E">
@@ -71,60 +71,50 @@
 <body>
 <header>
   <h1><a href="/" style="color:inherit;text-decoration:none">Trace Press</a></h1>
-  <p>Letter tracing workbooks for Amazon KDP · <a href="/">A–Z tracing workbook</a> · Handwriting paper · <a href="/name-tracing">Name tracing</a></p>
+  <p>Letter tracing workbooks for Amazon KDP · <a href="/">A–Z tracing workbook</a> · <a href="/handwriting-paper">Handwriting paper</a> · Name tracing</p>
 </header>
 
 <div class="hero">
-  <h2>Handwriting practice paper, as a free PDF</h2>
-  <p>Blank four-line handwriting guides on every page: a solid top line, a dashed midline, a solid baseline and a dotted descender line. Choose a page size, a line size and how many pages. Print it at home, or upload it to Amazon KDP as the interior of a blank handwriting notebook. The margins are already KDP's. It's free, with no footer, no sign-up, and nothing uploaded.</p>
+  <h2>Name tracing worksheet, as a free PDF</h2>
+  <p>Type a name. The sheet shows it large at the top, with a numbered green dot where each stroke starts and a red arrow for the way it goes. Below that are rows of the name in dots to trace, and empty lines at the bottom to write it without help. Print it at home. It's free, with no sign-up, and the name never leaves your browser.</p>
 </div>
 
 <main id="tool">
   <div class="card">
-    <label for="trim">Page size</label>
-    <select id="trim"></select>
+    <label for="name">Name</label>
+    <input id="name" type="text" value="Maya" autocomplete="off" spellcheck="false">
+    <p class="hint" id="nameNote" role="status"></p>
     <label for="age">Line size</label>
     <select id="age"></select>
-    <p class="hint">The height from the top line to the baseline. Bigger lines are for younger hands.</p>
-    <label for="pages">Pages</label>
-    <input id="pages" type="number" min="24" max="300" step="2" value="100" style="width:100%;font:inherit;padding:8px;border:1px solid var(--line);border-radius:8px">
-    <p class="hint">24 to 300. KDP's minimum for a paperback is 24 pages. The inside margin grows past 150 pages, as KDP requires.</p>
-    <label class="check"><input type="checkbox" id="bleed"> Bleed</label>
-    <p class="hint">Only for KDP, and only if you chose bleed there. For printing at home, leave it off and pick 8.5" × 11".</p>
+    <p class="hint">The height from the top line to the baseline. Bigger lines are for younger hands. A long name gets smaller letters so it fits across the page.</p>
+    <label for="trim">Page size</label>
+    <select id="trim"></select>
+    <p class="hint">For printing at home, 8.5" × 11" is US Letter.</p>
     <button class="primary" id="download" type="button">Download the PDF</button>
     <p id="status" role="status"></p>
   </div>
   <div class="viewer">
     <div id="preview" aria-live="polite"></div>
-    <div class="pager">
-      <button id="prev" type="button">← Left page</button>
-      <span id="pageNo"></span>
-      <button id="next" type="button">Right page →</button>
-    </div>
   </div>
 </main>
 
 <section class="info">
   <div>
-    <h3>The four lines</h3>
-    <p>The same four lines as every page of the Trace Press workbook. Tall letters (b, d, h, capitals) reach the top line. Small letters (a, c, e) stop at the dashed midline. Every letter sits on the solid baseline, and tails (g, j, p, q, y) drop to the dotted line below it. The line size is the distance from the top line to the baseline: 1" for ages 4–5, down to 0.45" for older children.</p>
+    <h3>What's on the sheet</h3>
+    <p>One page. The name once, big, with start dots and arrows on every letter, in the same print letters as the Trace Press workbook. Then the name in dotted letters, repeated across each row as many times as it fits. The last rows are blank four-line guides: a solid top line, a dashed midline, a solid baseline and a dotted line for tails.</p>
   </div>
   <div>
-    <h3>Built to KDP's manuscript rules</h3>
-    <ul>
-      <li>All six KDP trims offered here, from 5" × 8" to 8.5" × 11", with or without bleed.</li>
-      <li>Inside margin at KDP's minimum for the page count, on the correct side of each page. Outside, top and bottom margins too. Every line sits 1/32" inside them.</li>
-      <li>Every line at least 0.75 pt thick, the minimum in KDP's paperback submission guidelines.</li>
-    </ul>
+    <h3>Letters it draws</h3>
+    <p>Capitals A–Z and lowercase a–z, up to 16 letters and spaces. Accented letters, hyphens and apostrophes aren't drawn yet, so "Mary-Kate" comes out as "MaryKate". The note under the name box says when something was left out.</p>
   </div>
   <div>
-    <h3>Want the letters as well?</h3>
-    <p><a href="/">Trace Press</a> makes a full A–Z tracing workbook: for each letter, capital and lowercase, a model with numbered start dots and stroke-order arrows, rows of dotted letters to trace, and rows like these for writing it alone. It includes the cover. It's free to try; $19 once makes it ready to sell.</p>
+    <h3>Making a whole book?</h3>
+    <p><a href="/">Trace Press</a> makes a full A–Z letter tracing workbook with these same letters and guides, plus its cover, laid out to Amazon KDP's rules so it can be sold as a paperback. It's free to try; $19 once makes it ready to sell. Or see <a href="/samples/letter-tracing-workbook-sample-8.5x11.pdf">a finished book</a> first.</p>
   </div>
 </section>
 
-<footer>Trace Press · questions: <a href="mailto:support@bananafest-destiny.com">support@bananafest-destiny.com</a> · <a href="/how-to-make-a-handwriting-workbook">how to make a handwriting workbook for KDP</a> · <a href="/name-tracing">free name tracing worksheet</a> · from the maker of <a href="https://puzzlepress.bananafest-destiny.com/">Puzzle Press</a><br>Not affiliated with Amazon. KDP is a trademark of Amazon.com, Inc.</footer>
+<footer>Trace Press · questions: <a href="mailto:support@bananafest-destiny.com">support@bananafest-destiny.com</a> · <a href="/how-to-make-a-handwriting-workbook">how to make a handwriting workbook for KDP</a> · <a href="/handwriting-paper">free handwriting paper</a> · from the maker of <a href="https://puzzlepress.bananafest-destiny.com/">Puzzle Press</a><br>Not affiliated with Amazon. KDP is a trademark of Amazon.com, Inc.</footer>
 
-<script type="module" src="/js/paper-page.js"></script>
+<script type="module" src="/js/name-page.js"></script>
 </body>
 </html>

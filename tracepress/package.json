@@ -8,7 +8,7 @@
     "proof": "node scripts/proof.mjs",
     "sample": "node scripts/sample.mjs",
     "ink": "node test/inkcheck.mjs",
-    "build": "rm -rf public/js && esbuild src/ui/main.js src/ui/paper-page.js --bundle --minify --format=esm --target=es2020 --splitting --outdir=public/js",
+    "build": "rm -rf public/js && esbuild src/ui/main.js src/ui/paper-page.js src/ui/name-page.js --bundle --minify --format=esm --target=es2020 --splitting --outdir=public/js",
     "deploy": "npm run build && wrangler deploy",
     "traffic": "node scripts/traffic.mjs"
   },

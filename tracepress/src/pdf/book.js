@@ -3,7 +3,8 @@ import { PDFDocument } from "pdf-lib";
 import fontkit from "@pdf-lib/fontkit";
 import { planBook } from "./plan.js";
 import { planPaper } from "./paper.js";
-import { drawLetterPage } from "./draw.js";
+import { planName, nameInk } from "./name.js";
+import { drawLetterPage, drawShapes } from "./draw.js";
 
 export { letterPairs, GUIDES, planBook } from "./plan.js";
 
@@ -29,5 +30,20 @@ export async function renderPaper(opts) {
   const doc = await PDFDocument.create();
   doc.setTitle("Handwriting practice paper");
   for (const layout of pages) drawLetterPage(doc.addPage([geom.width, geom.height]), layout, {}, { licensed: true });
+  return doc.save();
+}
+
+// A name tracing sheet (name.js): one page, free, with its one footer line.
+export async function renderName(opts, fonts) {
+  const { geom, name, page } = planName(opts);
+  const doc = await PDFDocument.create();
+  doc.registerFontkit(fontkit);
+  doc.setTitle(`Name tracing worksheet: ${name}`);
+  doc.setCreator("Trace Press — tracepress.bananafest-destiny.com");
+  const embedded = {
+    bold: await doc.embedFont(fonts.bold, { subset: true }),
+    regular: await doc.embedFont(fonts.regular, { subset: true }),
+  };
+  drawShapes(doc.addPage([geom.width, geom.height]), nameInk(page), embedded);
   return doc.save();
 }

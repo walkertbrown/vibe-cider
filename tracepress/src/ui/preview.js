@@ -7,7 +7,8 @@ const NS = "http://www.w3.org/2000/svg";
 const css = ([r, g, b]) => `rgb(${Math.round(r * 255)},${Math.round(g * 255)},${Math.round(b * 255)})`;
 
 // PDF space has y up from the bottom of the page; SVG has y down.
-export function pageSvg(geom, layout, { licensed = false } = {}) {
+// `shapes`, when given, is drawn instead of the layout's own ink.
+export function pageSvg(geom, layout, { licensed = false, shapes } = {}) {
   const H = geom.height;
   const svg = document.createElementNS(NS, "svg");
   svg.setAttribute("viewBox", `0 0 ${geom.width} ${H}`);
@@ -19,7 +20,7 @@ export function pageSvg(geom, layout, { licensed = false } = {}) {
     svg.append(n);
   };
   add("rect", { x: 0, y: 0, width: geom.width, height: H, fill: "#fff" });
-  for (const s of pageInk(layout, { licensed })) {
+  for (const s of shapes ?? pageInk(layout, { licensed })) {
     if (s.kind === "line") {
       add("line", { x1: s.x1, y1: H - s.y1, x2: s.x2, y2: H - s.y2, stroke: css(s.color), "stroke-width": s.width, "stroke-dasharray": s.dash?.join(" ") });
     } else if (s.kind === "dot") {
