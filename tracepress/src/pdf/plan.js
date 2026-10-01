@@ -3,7 +3,7 @@
 import { PRINT } from "../glyphs/print.js";
 import { LINE_PAGES } from "../glyphs/lines.js";
 import { pageGeometry } from "./kdp.js";
-import { letterPage } from "./page.js";
+import { letterPage, belongsPage } from "./page.js";
 import { namePage, cleanName } from "./name.js";
 
 // The letter pages, in order: each capital with its lowercase, or one case
@@ -29,22 +29,25 @@ export const DIGITS = [..."0123456789"].filter((d) => PRINT[d]);
 export const EXTRA_MAX = 52;
 export const WORDS_MAX = EXTRA_MAX;
 // Pre-writing line pages, if chosen, come before A and count toward the same
-// 52: 4 line pages, 10 numbers and 38 words at the most.
-export const wordsMax = (numbers, lines = false) => EXTRA_MAX - (numbers ? DIGITS.length : 0) - (lines ? LINE_PAGES.length : 0);
+// 52: 4 line pages, 10 numbers and 38 words at the most. So does the "This
+// book belongs to" page, first of all.
+export const wordsMax = (numbers, lines = false, belongs = false) => EXTRA_MAX - (numbers ? DIGITS.length : 0) - (lines ? LINE_PAGES.length : 0) - (belongs ? 1 : 0);
 export function cleanWords(words, max = WORDS_MAX) {
   const list = typeof words === "string" ? words.split(/[,\n;]+/) : words ?? [];
   return list.map(cleanName).filter(Boolean).slice(0, max);
 }
 
-export function planBook({ trim = "8.5x11", bleed = false, guideIn = 0.75, numbers = false, lines = false, words = [], cases = "both" } = {}) {
+export function planBook({ trim = "8.5x11", bleed = false, guideIn = 0.75, numbers = false, lines = false, words = [], cases = "both", belongs = false } = {}) {
+  const first = belongs ? 1 : 0;
   const singles = [...(lines ? LINE_PAGES : []), ...letterPairs(CASES[cases] ? cases : "both"), ...(numbers ? DIGITS.map((d) => [d]) : [])];
-  const extra = cleanWords(words, wordsMax(numbers, lines));
-  const geom = pageGeometry({ trim, bleed, pageCount: singles.length + extra.length });
+  const extra = cleanWords(words, wordsMax(numbers, lines, belongs));
+  const geom = pageGeometry({ trim, bleed, pageCount: first + singles.length + extra.length });
   return {
     geom,
     pages: [
-      ...singles.map((letters, i) => letterPage({ geom, pageNumber: i + 1, letters, guideIn })),
-      ...extra.map((word, i) => ({ ...namePage({ geom, pageNumber: singles.length + i + 1, name: word, guideIn }), word })),
+      ...(belongs ? [belongsPage({ geom, pageNumber: 1, guideIn })] : []),
+      ...singles.map((letters, i) => letterPage({ geom, pageNumber: first + i + 1, letters, guideIn })),
+      ...extra.map((word, i) => ({ ...namePage({ geom, pageNumber: first + singles.length + i + 1, name: word, guideIn }), word })),
     ],
   };
 }

@@ -38,6 +38,7 @@ export function pageInk(layout, { licensed = false, heavy = false } = {}) {
     rule(-1, GREY, [1, 3]);
     for (const l of row.letters) letterInk(out, l, row, heavy);
   }
+  for (const t of layout.text ?? []) out.push({ kind: "text", color: BLACK, ...t });
   return out;
 }
 

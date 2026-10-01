@@ -113,3 +113,23 @@ export function labelRadius(unit) {
   // grows with the letter so the model row doesn't look pinched.
   return Math.max(LABEL_PT * 0.66, unit * 0.16);
 }
+
+// The "This book belongs to" page, first in the book if chosen: the words,
+// then one empty guide at the model row's size for the child's name. Most
+// printed tracing books open with one. The heading is sized to the narrowest
+// trim (about 0.62 em a character in Liberation Sans Bold, measured loosely)
+// and never below KDP's 7pt.
+export const BELONGS = "This book belongs to";
+export function belongsPage({ geom, pageNumber, guideIn }) {
+  const box = contentBox(geom, pageNumber);
+  const size = Math.max(LABEL_PT, Math.min(30, (box.right - box.left) / (BELONGS.length * 0.62)));
+  const headY = box.top - (box.top - box.bottom) * 0.3;
+  const unit = (guideIn * MODEL_SCALE * PT) / 2;
+  const baseY = headY - size * 0.9 - 2 * unit;
+  return {
+    box,
+    belongs: true,
+    rows: [{ kind: "free", unit, baseY, left: box.left, right: box.right, letters: [] }],
+    text: [{ text: BELONGS, x: (box.left + box.right) / 2, y: headY, size, font: "bold" }],
+  };
+}

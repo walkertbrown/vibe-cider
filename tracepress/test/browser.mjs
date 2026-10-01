@@ -102,6 +102,14 @@ try {
   got = pdfText(await (await dl.createReadStream()).toArray().then(Buffer.concat));
   check(got.pages === 26, `capitals: the download has 26 pages (${got.pages})`);
   await page.selectOption("#cases", "both");
+  // "This book belongs to": first page, 27 in the download.
+  await page.check("#belongs");
+  for (let i = 0; i < 40; i++) if (!(await page.isDisabled("#prev"))) await page.click("#prev");
+  check(/Page 1 of 27 · This book belongs to$/.test(await page.textContent("#pageNo")), `belongs: page 1 is the name page (${await page.textContent("#pageNo")})`);
+  [dl] = await Promise.all([page.waitForEvent("download"), page.click("#download")]);
+  got = pdfText(await (await dl.createReadStream()).toArray().then(Buffer.concat));
+  check(got.pages === 27, `belongs: the download has 27 pages (${got.pages})`);
+  await page.uncheck("#belongs");
 
   await page.click("#tier .linkish");
   check(await page.isVisible("#unlockDialog"), "the tier button opens the unlock dialog");

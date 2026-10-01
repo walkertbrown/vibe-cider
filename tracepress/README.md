@@ -12,6 +12,7 @@ One page for each letter, A to Z, capital and lowercase (or one case alone). Eac
 letter with numbered start dots and arrows showing stroke order, rows of dotted
 letters to trace, and rows for writing the letter alone. Then, if you want them:
 
+- **A "This book belongs to" page** first, with a big writing line for the child's name.
 - **Pre-writing lines**, four pages before A: lines, slants, zigzags, waves, circles and crosses.
 - **Numbers 0–9**, a page each after Z, with start dots and arrows like the letters.
 - **Your own practice words** (sight words, names, a theme), a page each after

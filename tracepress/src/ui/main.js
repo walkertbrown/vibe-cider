@@ -19,7 +19,7 @@ const getLicense = () => storedLicense() ?? sessionLicense;
 
 const $ = (id) => document.getElementById(id);
 const el = {
-  trim: $("trim"), bleed: $("bleed"), age: $("age"), cases: $("cases"), numbers: $("numbers"), lines: $("lines"), words: $("words"), wordsNote: $("wordsNote"),
+  trim: $("trim"), bleed: $("bleed"), age: $("age"), cases: $("cases"), numbers: $("numbers"), lines: $("lines"), belongs: $("belongs"), words: $("words"), wordsNote: $("wordsNote"),
   preview: $("preview"), prev: $("prev"), next: $("next"), pageNo: $("pageNo"),
   download: $("download"), status: $("status"), tier: $("tier"),
   dialog: $("unlockDialog"), dialogTitle: $("dialogTitle"), dialogLede: $("dialogLede"), buyLine: $("buyLine"),
@@ -34,7 +34,7 @@ for (const [value, label] of Object.entries(CASES)) el.cases.add(new Option(labe
 for (const [label, inches] of Object.entries(GUIDES)) el.age.add(new Option(`${label} — ${inches}" lines`, String(inches), false, inches === 0.75));
 
 let pageIndex = 0;
-const opts = () => ({ trim: el.trim.value, bleed: el.bleed.checked, guideIn: Number(el.age.value), cases: el.cases.value, numbers: el.numbers.checked, lines: el.lines.checked, words: el.words.value });
+const opts = () => ({ trim: el.trim.value, bleed: el.bleed.checked, guideIn: Number(el.age.value), cases: el.cases.value, numbers: el.numbers.checked, lines: el.lines.checked, belongs: el.belongs.checked, words: el.words.value });
 
 // The cover's size, before it's made: what to type into KDP's cover
 // calculator to check it.
@@ -50,12 +50,12 @@ function showPage() {
   const { geom, pages } = planBook(opts());
   pageIndex = Math.max(0, Math.min(pageIndex, pages.length - 1));
   const svg = pageSvg(geom, pages[pageIndex], { licensed: !!getLicense() });
-  const { word } = pages[pageIndex];
+  const { word, belongs } = pages[pageIndex];
   const chars = pages[pageIndex].rows[0].letters.map((l) => l.ch);
-  const letters = word ? `“${word}”` : chars[0].startsWith("~") ? `lines: ${chars.map((c) => c.slice(1).replace("-", " ")).join(", ")}` : chars.join(" ");
-  const max = wordsMax(el.numbers.checked, el.lines.checked), n = cleanWords(el.words.value, max).length;
+  const letters = belongs ? "This book belongs to" : word ? `“${word}”` : chars[0].startsWith("~") ? `lines: ${chars.map((c) => c.slice(1).replace("-", " ")).join(", ")}` : chars.join(" ");
+  const max = wordsMax(el.numbers.checked, el.lines.checked, el.belongs.checked), n = cleanWords(el.words.value, max).length;
   const after = el.numbers.checked ? "after 9" : "after Z";
-  el.wordsNote.textContent = n ? `${n} word page${n === 1 ? "" : "s"} ${after}${n === max ? ` (the most: ${max}${el.numbers.checked || el.lines.checked ? ` with ${[el.lines.checked && "lines", el.numbers.checked && "numbers"].filter(Boolean).join(" and ")} on` : ""})` : ""}.` : "";
+  el.wordsNote.textContent = n ? `${n} word page${n === 1 ? "" : "s"} ${after}${n === max ? ` (the most: ${max}${el.numbers.checked || el.lines.checked || el.belongs.checked ? ` with ${[el.belongs.checked && "the name page", el.lines.checked && "lines", el.numbers.checked && "numbers"].filter(Boolean).join(" and ")} on` : ""})` : ""}.` : "";
   svg.setAttribute("aria-label", `Page ${pageIndex + 1} of ${pages.length}: tracing practice for ${letters}`);
   el.preview.replaceChildren(svg);
   el.pageNo.textContent = `Page ${pageIndex + 1} of ${pages.length} · ${letters}`;
@@ -63,7 +63,7 @@ function showPage() {
   el.next.disabled = pageIndex === pages.length - 1;
 }
 
-for (const c of [el.trim, el.bleed, el.age, el.cases, el.numbers, el.lines, el.paper]) c.addEventListener("change", (e) => {
+for (const c of [el.trim, el.bleed, el.age, el.cases, el.belongs, el.numbers, el.lines, el.paper]) c.addEventListener("change", (e) => {
   if (e.isTrusted) px("touched");
   showPage();
 });
