@@ -2,7 +2,8 @@
 // book exactly as it prints, download the interior PDF. Nothing typed here
 // leaves the browser except the email in the unlock dialog, which goes to
 // /api/verify and nowhere else.
-import { planBook, GUIDES, CASES, cleanWords, wordsMax } from "../pdf/plan.js";
+import { planBook, GUIDES, CASES, SCRIPTS, cleanWords, wordsMax } from "../pdf/plan.js";
+import { cursiveWidth } from "../pdf/cursive.js";
 import { TRIMS } from "../pdf/kdp.js";
 import { coverGeometry, PAPER } from "../pdf/cover-geometry.js";
 import { pageSvg } from "./preview.js";
@@ -19,7 +20,7 @@ const getLicense = () => storedLicense() ?? sessionLicense;
 
 const $ = (id) => document.getElementById(id);
 const el = {
-  trim: $("trim"), bleed: $("bleed"), age: $("age"), cases: $("cases"), numbers: $("numbers"), lines: $("lines"), belongs: $("belongs"), words: $("words"), wordsNote: $("wordsNote"),
+  trim: $("trim"), script: $("script"), bleed: $("bleed"), age: $("age"), cases: $("cases"), numbers: $("numbers"), lines: $("lines"), belongs: $("belongs"), words: $("words"), wordsNote: $("wordsNote"),
   preview: $("preview"), prev: $("prev"), next: $("next"), pageNo: $("pageNo"),
   download: $("download"), status: $("status"), tier: $("tier"),
   dialog: $("unlockDialog"), dialogTitle: $("dialogTitle"), dialogLede: $("dialogLede"), buyLine: $("buyLine"),
@@ -31,10 +32,24 @@ const el = {
 for (const [key, t] of Object.entries(TRIMS)) el.trim.add(new Option(t.label, key, false, key === "8.5x11"));
 for (const [key, p] of Object.entries(PAPER)) el.paper.add(new Option(p.label, key, false, key === "white"));
 for (const [value, label] of Object.entries(CASES)) el.cases.add(new Option(label, value));
+for (const [value, label] of Object.entries(SCRIPTS)) el.script.add(new Option(label, value));
 for (const [label, inches] of Object.entries(GUIDES)) el.age.add(new Option(`${label} — ${inches}" lines`, String(inches), false, inches === 0.75));
 
+// The cursive font (and fontkit, to join its letters) loads only when
+// someone picks Cursive. Until it has, the page shows print.
+let cursive = null, cursiveBytes = null, cursiveLoading = null;
+const loadCursive = () => (cursiveLoading ??= Promise.all([
+  import("@pdf-lib/fontkit"),
+  fetch("/fonts/PlaywriteUSTrad.ttf").then((r) => { if (!r.ok) throw new Error(`cursive font: ${r.status}`); return r.arrayBuffer(); }),
+]).then(([fk, bytes]) => {
+  cursiveBytes = bytes;
+  cursive = (fk.default ?? fk).create(new Uint8Array(bytes));
+}).catch((err) => { cursiveLoading = null; throw err; }));
+const wantsCursive = () => el.script.value === "cursive";
+const script = () => (wantsCursive() && cursive ? "cursive" : "print");
+
 let pageIndex = 0;
-const opts = () => ({ trim: el.trim.value, bleed: el.bleed.checked, guideIn: Number(el.age.value), cases: el.cases.value, numbers: el.numbers.checked, lines: el.lines.checked, belongs: el.belongs.checked, words: el.words.value });
+const opts = () => ({ script: script(), measure: cursive ? (text, unit) => cursiveWidth(cursive, text, unit) : undefined, trim: el.trim.value, bleed: el.bleed.checked, guideIn: Number(el.age.value), cases: el.cases.value, numbers: el.numbers.checked, lines: el.lines.checked, belongs: el.belongs.checked, words: el.words.value });
 
 // The cover's size, before it's made: what to type into KDP's cover
 // calculator to check it.
@@ -49,9 +64,10 @@ function showPage() {
   showCoverNote();
   const { geom, pages } = planBook(opts());
   pageIndex = Math.max(0, Math.min(pageIndex, pages.length - 1));
-  const svg = pageSvg(geom, pages[pageIndex], { licensed: !!getLicense() });
+  const svg = pageSvg(geom, pages[pageIndex], { licensed: !!getLicense(), cursive });
   const { word, belongs } = pages[pageIndex];
-  const chars = pages[pageIndex].rows[0].letters.map((l) => l.ch);
+  const first = pages[pageIndex].rows[0];
+  const chars = first.letters.length ? first.letters.map((l) => l.ch) : (first.runs?.[0]?.text.split(/\s+/) ?? []);
   const letters = belongs ? "This book belongs to" : word ? `“${word}”` : chars[0].startsWith("~") ? `lines: ${chars.map((c) => c.slice(1).replace("-", " ")).join(", ")}` : chars.join(" ");
   const max = wordsMax(el.numbers.checked, el.lines.checked, el.belongs.checked), n = cleanWords(el.words.value, max).length;
   const after = el.numbers.checked ? "after 9" : "after Z";
@@ -61,6 +77,19 @@ function showPage() {
   el.pageNo.textContent = `Page ${pageIndex + 1} of ${pages.length} · ${letters}`;
   el.prev.disabled = pageIndex === 0;
   el.next.disabled = pageIndex === pages.length - 1;
+}
+
+el.script.addEventListener("change", (e) => {
+  if (e.isTrusted) px("touched");
+  if (e.isTrusted && wantsCursive()) px("cursive");
+  showScript();
+});
+// Shows print at once, then cursive when its font has arrived.
+function showScript() {
+  showPage();
+  if (!wantsCursive() || cursive) return;
+  el.pageNo.textContent = "Loading the cursive font…";
+  loadCursive().then(showPage, (err) => { el.pageNo.textContent = `Could not load the cursive font: ${err.message}. Reload the page to try again.`; });
 }
 
 for (const c of [el.trim, el.bleed, el.age, el.cases, el.belongs, el.numbers, el.lines, el.paper]) c.addEventListener("change", (e) => {
@@ -119,9 +148,10 @@ el.download.addEventListener("click", async (e) => {
   el.status.textContent = "Making your book…";
   try {
     const [{ renderBook }, bold, regular] = await loadRender();
+    if (wantsCursive()) { await loadCursive(); showPage(); }
     const o = opts();
-    const bytes = await renderBook({ ...o, licensed: !!getLicense() }, { bold, regular });
-    save(bytes, `trace-press-${o.trim}${o.bleed ? "-bleed" : ""}-${String(o.guideIn).replace(".", "")}in.pdf`);
+    const bytes = await renderBook({ ...o, licensed: !!getLicense() }, { bold, regular, cursive: cursiveBytes });
+    save(bytes, `trace-press-${o.trim}${o.bleed ? "-bleed" : ""}-${String(o.guideIn).replace(".", "")}in${o.script === "cursive" ? "-cursive" : ""}.pdf`);
     px("made");
     el.status.textContent = getLicense()
       ? "Downloaded. Upload it to KDP as the paperback manuscript."
@@ -258,7 +288,8 @@ if (new URLSearchParams(location.search).get("lines") === "1") el.lines.checked 
 if (new URLSearchParams(location.search).get("belongs") === "1") el.belongs.checked = true;
 const linkedCases = new URLSearchParams(location.search).get("letters");
 if (CASES[linkedCases]) el.cases.value = linkedCases;
-showPage();
+if (new URLSearchParams(location.search).get("script") === "cursive") el.script.value = "cursive";
+showScript();
 if (new URLSearchParams(location.search).get("paid") === "1" && !getLicense()) {
   history.replaceState(null, "", location.pathname);
   openUnlock({ justPaid: true });

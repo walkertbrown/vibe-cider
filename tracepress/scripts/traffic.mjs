@@ -36,6 +36,7 @@ const MINE = /trace-press-test|puzzle-press-test|HeadlessChrome/;
 const RUNGS = [
   ["ran", "ran the page"],
   ["touched", "changed a control"],
+  ["cursive", "picked Cursive"],
   ["pager", "paged through the preview"],
   ["download", "pressed Download"],
   ["made", "got a PDF"],

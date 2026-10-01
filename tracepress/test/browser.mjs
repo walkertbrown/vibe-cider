@@ -31,6 +31,8 @@ try {
   const page = await ctx.newPage();
   const errors = [];
   page.on("pageerror", (e) => errors.push(e.message));
+  const mainBeacons = [];
+  page.on("request", (r) => { const m = r.url().match(/\/px\/(\w+)\.gif/); if (m) mainBeacons.push(m[1]); });
   let verifyCalls = 0;
   await page.route("**/api/verify", (route) => {
     verifyCalls++;
@@ -102,6 +104,20 @@ try {
   got = pdfText(await (await dl.createReadStream()).toArray().then(Buffer.concat));
   check(got.pages === 26, `capitals: the download has 26 pages (${got.pages})`);
   await page.selectOption("#cases", "both");
+  // Cursive: the font loads on demand, the preview draws joined paths, the
+  // download is the same 26 pages under its own name.
+  // Picked with the keyboard, so the change event is a trusted one and fires the beacon.
+  await page.focus("#script");
+  await page.keyboard.press("ArrowDown");
+  await page.waitForFunction(() => document.querySelectorAll("#preview svg path").length >= 10);
+  check(/Page 1 of 26 · A a$/.test(await page.textContent("#pageNo")), `cursive: page 1 is A a (${await page.textContent("#pageNo")})`);
+  check(await page.$$eval("#preview svg circle", (c) => c.length) === 0, "cursive: no tracing dots on a letter page");
+  [dl] = await Promise.all([page.waitForEvent("download"), page.click("#download")]);
+  got = pdfText(await (await dl.createReadStream()).toArray().then(Buffer.concat));
+  check(got.pages === 26 && /-cursive\.pdf$/.test(dl.suggestedFilename()), `cursive: 26 pages, ${dl.suggestedFilename()}`);
+  check(mainBeacons.includes("cursive"), `cursive: its beacon (${mainBeacons})`);
+  await page.selectOption("#script", "print");
+  check(await page.$$eval("#preview svg circle", (c) => c.length) > 20, "print again: dots are back");
   // "This book belongs to": first page, 27 in the download.
   await page.check("#belongs");
   for (let i = 0; i < 40; i++) if (!(await page.isDisabled("#prev"))) await page.click("#prev");
@@ -320,6 +336,9 @@ try {
   await nm.goto(`${base}/?letters=lower`);
   await nm.waitForSelector("#preview svg circle");
   check(/Page 1 of 26 · a$/.test(await nm.textContent("#pageNo")), `?letters=lower: page 1 is a alone (${await nm.textContent("#pageNo")})`);
+  await nm.goto(`${base}/?script=cursive`);
+  await nm.waitForFunction(() => document.querySelectorAll("#preview svg path").length >= 10);
+  check(await nm.inputValue("#script") === "cursive", "?script=cursive: Cursive chosen");
   // The "this book belongs to" page links the tool with the name page on.
   await nm.goto(`${base}/?belongs=1`);
   await nm.waitForSelector("#preview svg");

@@ -95,6 +95,9 @@
     <label for="cases">Letters</label>
     <select id="cases"></select>
     <p class="hint">Both cases on each page, or a book of capitals or of lowercase alone. 26 pages either way.</p>
+    <label for="script">Handwriting</label>
+    <select id="script"></select>
+    <p class="hint">Print, with numbered start dots and arrows, or joined cursive: a solid model row, then grey rows to write over. Lines pages stay print.</p>
     <label class="check"><input type="checkbox" id="bleed"> Bleed</label>
     <p class="hint">Only turn this on if you chose bleed in KDP. The page is then 0.125" wider and 0.25" taller, as KDP asks.</p>
     <label class="check"><input type="checkbox" id="belongs"> “This book belongs to” page</label>
@@ -140,7 +143,8 @@
       <li>Six KDP paperback trims, from 5" × 8" to 8.5" × 11", with or without bleed.</li>
       <li>Inside, outside, top and bottom margins at KDP's minimums for the page count. Every mark sits 1/32" inside them, and the test suite renders every page to pixels to check that.</li>
       <li>Every line at least 0.75 pt thick, every grey well darker than KDP's 10% minimum, and all text 7 pt or larger.</li>
-      <li>Fonts embedded (Liberation Sans).</li>
+      <li>Fonts embedded (Liberation Sans, and Playwrite US Trad for cursive, under the SIL Open Font License).</li>
+      <li>Print or cursive. Cursive letters are joined the way the font joins them, every pair from aa to zz, and drawn as outlines, so what you see in the preview is what prints.</li>
       <li>A full-wrap cover, back, spine and front on one page, sized for the book's page count and your paper, with the barcode area left clear. Your title, subtitle and name, and a big traced "Aa" on the front.</li>
     </ul>
   </div>
