@@ -6,6 +6,7 @@ import { PRINT } from "../glyphs/print.js";
 import { pageGeometry, PT } from "./kdp.js";
 import { contentBox, reach, labelRadius, GAP_UNITS, LETTER_GAP, MARK_PAD, FOOTER_PT, LABEL_PT } from "./page.js";
 import { pageInk, GREY } from "./ink.js";
+import { cursivePage } from "./cursive-page.js";
 
 export const NAME_MAX = 16;
 const MODEL_SCALE = 1.5; // as in page.js
@@ -84,16 +85,23 @@ export function namePage({ geom, pageNumber = 1, name, guideIn }) {
   return { box, rows };
 }
 
-export function planName({ trim = "8.5x11", guideIn = 0.75, name = "" } = {}) {
+// In cursive (`script: "cursive"`, with `measure` as for planBook) the sheet
+// is a cursive word page: the name solid, rows of it in grey to write over,
+// then empty rows, as in a cursive book.
+export function planName({ trim = "8.5x11", guideIn = 0.75, name = "", script = "print", measure } = {}) {
+  if (script === "cursive" && !measure) throw new Error("cursive needs measure()");
   const geom = pageGeometry({ trim, bleed: false });
   const clean = cleanName(name) || "Name";
-  return { geom, name: clean, page: namePage({ geom, name: clean, guideIn }) };
+  const page = script === "cursive"
+    ? cursivePage({ geom, pageNumber: 1, model: clean, trace: [clean], guideIn, measure, word: true })
+    : namePage({ geom, name: clean, guideIn });
+  return { geom, name: clean, page };
 }
 
 // The one line of text on the sheet, in the footer band every page keeps free.
 export const NAME_FOOTER = "Free tracing sheet from tracepress.bananafest-destiny.com";
 
-export function nameInk(layout) {
+export function nameInk(layout, { cursive } = {}) {
   const { box } = layout;
-  return [...pageInk(layout, { licensed: true }), { kind: "text", text: NAME_FOOTER, x: (box.left + box.right) / 2, y: box.bottom - FOOTER_PT + 3, size: LABEL_PT, font: "regular", color: GREY }];
+  return [...pageInk(layout, { licensed: true, cursive }), { kind: "text", text: NAME_FOOTER, x: (box.left + box.right) / 2, y: box.bottom - FOOTER_PT + 3, size: LABEL_PT, font: "regular", color: GREY }];
 }

@@ -37,8 +37,10 @@ export async function renderPaper(opts) {
 }
 
 // A name tracing sheet (name.js): one page, free, with its one footer line.
+// A cursive sheet (`opts.script === "cursive"`) also needs `fonts.cursive`.
 export async function renderName(opts, fonts) {
-  const { geom, name, page } = planName(opts);
+  const cursive = opts.script === "cursive" ? fontkit.create(new Uint8Array(fonts.cursive)) : undefined;
+  const { geom, name, page } = planName({ ...opts, measure: cursive && ((text, unit) => cursiveWidth(cursive, text, unit)) });
   const doc = await PDFDocument.create();
   doc.registerFontkit(fontkit);
   doc.setTitle(`Name tracing worksheet: ${name}`);
@@ -47,6 +49,6 @@ export async function renderName(opts, fonts) {
     bold: await doc.embedFont(fonts.bold, { subset: true }),
     regular: await doc.embedFont(fonts.regular, { subset: true }),
   };
-  drawShapes(doc.addPage([geom.width, geom.height]), nameInk(page), embedded);
+  drawShapes(doc.addPage([geom.width, geom.height]), nameInk(page, { cursive }), embedded);
   return doc.save();
 }

@@ -228,6 +228,20 @@ try {
   [dl] = await Promise.all([nm.waitForEvent("download"), nm.click("#download")]);
   check(dl.suggestedFilename() === "tracing-worksheet-cat-sun-dog-8.5x11.pdf", `words: file name ${dl.suggestedFilename()}`);
   check(beacons.includes("words") && !beacons.includes("name"), `words: own page beacon (${beacons})`);
+  // Cursive on the same tool: picked with the keyboard (a trusted change, so
+  // the beacon fires), the preview turns to joined paths with no dots, and
+  // the download is one page under its own name. ?script=cursive opens on it.
+  await nm.focus("#script");
+  await nm.keyboard.press("ArrowDown");
+  await nm.waitForFunction(() => document.querySelectorAll("#preview svg circle").length === 0 && document.querySelectorAll("#preview svg path").length >= 4);
+  [dl] = await Promise.all([nm.waitForEvent("download"), nm.click("#download")]);
+  const wf = join(tmp, "w.pdf");
+  writeFileSync(wf, await (await dl.createReadStream()).toArray().then(Buffer.concat));
+  check(/Pages:\s+1\n/.test(execFileSync("pdfinfo", [wf], { encoding: "utf8" })) && dl.suggestedFilename() === "tracing-worksheet-cat-sun-dog-8.5x11-cursive.pdf", `words cursive: one page, ${dl.suggestedFilename()}`);
+  check(beacons.includes("namecursive"), `words cursive: its beacon (${beacons})`);
+  await nm.goto(`${base}/name-tracing?script=cursive`);
+  await nm.waitForFunction(() => document.querySelectorAll("#preview svg circle").length === 0 && document.querySelectorAll("#preview svg path").length >= 4);
+  check(await nm.inputValue("#script") === "cursive", "name: ?script=cursive opens on Cursive");
   check((await (await nm.request.get(`${base}/sitemap.xml`)).text()).includes("/tracing-worksheet-generator"), "words: in the sitemap");
   const wordsW = await phone.goto(`${base}/tracing-worksheet-generator`).then(() => phone.evaluate(() => document.documentElement.scrollWidth));
   check(wordsW <= 390, `words: no sideways scroll on a phone (${wordsW}px)`);

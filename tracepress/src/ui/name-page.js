@@ -1,7 +1,8 @@
 // The name tracing page: type a name, pick a line size, see the sheet as it
 // prints, download it. Free, one page, with a one-line footer.
 import { planName, nameInk, cleanName, NAME_MAX } from "../pdf/name.js";
-import { GUIDES } from "../pdf/plan.js";
+import { GUIDES, SCRIPTS } from "../pdf/plan.js";
+import { cursiveWidth } from "../pdf/cursive.js";
 import { TRIMS } from "../pdf/kdp.js";
 import { pageSvg } from "./preview.js";
 import { px } from "./px.js";
@@ -12,17 +13,32 @@ const SUPPORT = "support@bananafest-destiny.com";
 const PAGE = document.body.dataset.px ?? "name";
 const FILE = document.body.dataset.file ?? "name-tracing";
 const $ = (id) => document.getElementById(id);
-const el = { name: $("name"), trim: $("trim"), age: $("age"), preview: $("preview"), note: $("nameNote"), download: $("download"), status: $("status") };
+const el = { name: $("name"), trim: $("trim"), age: $("age"), script: $("script"), preview: $("preview"), note: $("nameNote"), download: $("download"), status: $("status") };
 
 el.name.maxLength = NAME_MAX + 8; // room for characters cleanName drops
 for (const [key, t] of Object.entries(TRIMS)) el.trim.add(new Option(t.label, key, false, key === "8.5x11"));
 for (const [label, inches] of Object.entries(GUIDES)) el.age.add(new Option(`${label} — ${inches}" lines`, String(inches), false, inches === 0.75));
 
-const opts = () => ({ name: el.name.value, trim: el.trim.value, guideIn: Number(el.age.value) });
+for (const [value, label] of Object.entries(SCRIPTS)) el.script.add(new Option(label, value));
+
+// The cursive font (and fontkit, to join its letters) loads only when
+// someone picks Cursive, as in the workbook (main.js). Until then: print.
+let cursive = null, cursiveBytes = null, cursiveLoading = null;
+const loadCursive = () => (cursiveLoading ??= Promise.all([
+  import("@pdf-lib/fontkit"),
+  fetch("/fonts/PlaywriteUSTrad.ttf").then((r) => { if (!r.ok) throw new Error(`cursive font: ${r.status}`); return r.arrayBuffer(); }),
+]).then(([fk, bytes]) => {
+  cursiveBytes = bytes;
+  cursive = (fk.default ?? fk).create(new Uint8Array(bytes));
+}).catch((err) => { cursiveLoading = null; throw err; }));
+const wantsCursive = () => el.script.value === "cursive";
+const measure = (text, unit) => cursiveWidth(cursive, text, unit);
+const opts = () => ({ name: el.name.value, trim: el.trim.value, guideIn: Number(el.age.value), script: wantsCursive() && cursive ? "cursive" : "print" });
 
 function show() {
-  const { geom, name, page } = planName(opts());
-  const svg = pageSvg(geom, page, { shapes: nameInk(page) });
+  const o = opts();
+  const { geom, name, page } = planName({ ...o, measure: o.script === "cursive" ? measure : undefined });
+  const svg = pageSvg(geom, page, { shapes: nameInk(page, { cursive }) });
   svg.setAttribute("aria-label", `A name tracing sheet for ${name}`);
   el.preview.replaceChildren(svg);
   const typed = el.name.value.trim();
@@ -31,6 +47,13 @@ function show() {
     : "";
 }
 
+el.script.addEventListener("change", (e) => {
+  if (e.isTrusted) { px("nametouched"); if (wantsCursive()) px("namecursive"); }
+  show();
+  if (!wantsCursive() || cursive) return;
+  el.note.textContent = "Loading the cursive font…";
+  loadCursive().then(show, (err) => { el.note.textContent = `Could not load the cursive font: ${err.message}. Reload the page to try again.`; });
+});
 for (const c of [el.trim, el.age]) c.addEventListener("change", (e) => { if (e.isTrusted) px("nametouched"); show(); });
 el.name.addEventListener("input", (e) => { if (e.isTrusted) px("nametouched"); show(); });
 
@@ -47,13 +70,14 @@ el.download.addEventListener("click", async () => {
   el.status.textContent = "Making your PDF…";
   try {
     const [{ renderName }, bold, regular] = await loadRender();
+    if (wantsCursive()) await loadCursive();
     const o = opts();
-    const { name } = planName(o);
-    const bytes = await renderName(o, { bold: new Uint8Array(bold), regular: new Uint8Array(regular) });
+    const { name } = planName({ ...o, measure: o.script === "cursive" ? measure : undefined });
+    const bytes = await renderName(o, { bold: new Uint8Array(bold), regular: new Uint8Array(regular), cursive: cursiveBytes });
     const url = URL.createObjectURL(new Blob([bytes], { type: "application/pdf" }));
     const a = document.createElement("a");
     a.href = url;
-    a.download = `${FILE}-${name.replace(/ /g, "-").toLowerCase()}-${o.trim}.pdf`;
+    a.download = `${FILE}-${name.replace(/ /g, "-").toLowerCase()}-${o.trim}${o.script === "cursive" ? "-cursive" : ""}.pdf`;
     document.body.append(a); a.click(); a.remove();
     setTimeout(() => URL.revokeObjectURL(url), 60000);
     px("namemade");
@@ -67,4 +91,6 @@ el.download.addEventListener("click", async () => {
 });
 
 px(PAGE);
+if (new URLSearchParams(location.search).get("script") === "cursive") el.script.value = "cursive";
 show();
+if (wantsCursive()) loadCursive().then(show, () => {});

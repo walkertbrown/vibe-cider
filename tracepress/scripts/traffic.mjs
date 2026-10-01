@@ -49,6 +49,7 @@ const RUNGS = [
   ["name", "ran /name-tracing"],
   ["words", "ran /tracing-worksheet-generator"],
   ["nametouched", "typed a name or words, or changed a control (either page)"],
+  ["namecursive", "picked Cursive on a name/words sheet"],
   ["namedownload", "pressed Download name/words sheet"],
   ["namemade", "got a name/words sheet"],
   ["failed", "hit an error making any PDF"],
