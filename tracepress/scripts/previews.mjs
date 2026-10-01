@@ -19,6 +19,7 @@ const PREVIEWS = [
   ["cursive-name-tracing-worksheet-maya.pdf", 1, "cursive-name-tracing-worksheet-maya"],
   ["tracing-worksheet-cat-sun-dog.pdf", 1, "tracing-worksheet-cat-sun-dog"],
   ["cursive-letter-tracing-worksheets.pdf", 2, "cursive-letter-tracing-worksheet-b"],
+  ["cursive-handwriting-workbook-sample-8.5x11.pdf", 47, "cursive-handwriting-workbook-word"],
 ];
 const pub = new URL("../public/", import.meta.url).pathname;
 mkdirSync(`${pub}img`, { recursive: true });

@@ -53,6 +53,8 @@ letter tracing,
 [cursive letter tracing worksheets](https://tracepress.bananafest-destiny.com/cursive-letter-tracing)
 A to Z, a
 [cursive name tracing worksheet](https://tracepress.bananafest-destiny.com/cursive-name-tracing),
+a [cursive handwriting workbook guide](https://tracepress.bananafest-destiny.com/cursive-handwriting-workbook)
+for KDP,
 [number tracing worksheets](https://tracepress.bananafest-destiny.com/number-tracing)
 0 to 9,
 [tracing lines worksheets](https://tracepress.bananafest-destiny.com/tracing-lines)

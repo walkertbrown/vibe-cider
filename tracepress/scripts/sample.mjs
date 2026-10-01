@@ -75,6 +75,11 @@ export const SAMPLES = {
     title: "Free Lowercase Letter Tracing Worksheets a–z, PDF · Trace Press",
     subject: "26 printable lowercase letter tracing pages, a to z: each letter large with numbered start dots and stroke-order arrows, then rows of dotted letters to trace on four-line guides with 1-inch lines for ages 4 to 5. 8.5 x 11. Made free with Trace Press.",
   },
+  cursiveBook: {
+    file: "cursive-handwriting-workbook-sample-8.5x11.pdf",
+    title: "Free Cursive Handwriting Workbook PDF, A–Z, 0–9, Words · Trace Press",
+    subject: "A 76-page cursive handwriting workbook: A to Z, 0 to 9 and the 40 Dolch pre-primer sight words in joined cursive, solid once, then grey rows to trace on four-line guides. 8.5 x 11, laid out to Amazon KDP's rules. Made free with Trace Press.",
+  },
   cursive: {
     file: "cursive-letter-tracing-worksheets.pdf",
     title: "Free Cursive Letter Tracing Worksheets A–Z, PDF · Trace Press",
@@ -163,6 +168,7 @@ await book(SAMPLES.lines, { lines: true, guideIn: 1, to: 4 });
 await book(SAMPLES.upper, { cases: "upper", guideIn: 1 });
 await book(SAMPLES.lower, { cases: "lower", guideIn: 1 });
 await book(SAMPLES.cursive, { script: "cursive", guideIn: 1 });
+await book(SAMPLES.cursiveBook, { script: "cursive", numbers: true, words: PRE_PRIMER });
 
 // The cover, sized for that book. The link sits on the free cover's own
 // back-panel note (cover.js drawPreviewMark puts it at the barcode margin).
