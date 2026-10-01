@@ -5,6 +5,11 @@ import { LINE_PAGES } from "../glyphs/lines.js";
 import { pageGeometry } from "./kdp.js";
 import { letterPage, belongsPage } from "./page.js";
 import { namePage, cleanName } from "./name.js";
+import { cursivePage } from "./cursive-page.js";
+
+// Print is drawn as dotted strokes with start dots and arrows; cursive as
+// joined letters to trace over (cursive-page.js), which needs `measure`.
+export const SCRIPTS = { print: "Print", cursive: "Cursive" };
 
 // The letter pages, in order: each capital with its lowercase, or one case
 // alone ("upper" or "lower"), 26 pages either way. A letter with no strokes in
@@ -37,7 +42,9 @@ export function cleanWords(words, max = WORDS_MAX) {
   return list.map(cleanName).filter(Boolean).slice(0, max);
 }
 
-export function planBook({ trim = "8.5x11", bleed = false, guideIn = 0.75, numbers = false, lines = false, words = [], cases = "both", belongs = false } = {}) {
+export function planBook({ trim = "8.5x11", bleed = false, guideIn = 0.75, numbers = false, lines = false, words = [], cases = "both", belongs = false, script = "print", measure } = {}) {
+  if (script === "cursive" && !measure) throw new Error("cursive needs measure()");
+  const cursive = script === "cursive";
   const first = belongs ? 1 : 0;
   const singles = [...(lines ? LINE_PAGES : []), ...letterPairs(CASES[cases] ? cases : "both"), ...(numbers ? DIGITS.map((d) => [d]) : [])];
   const extra = cleanWords(words, wordsMax(numbers, lines, belongs));
@@ -46,8 +53,16 @@ export function planBook({ trim = "8.5x11", bleed = false, guideIn = 0.75, numbe
     geom,
     pages: [
       ...(belongs ? [belongsPage({ geom, pageNumber: 1, guideIn })] : []),
-      ...singles.map((letters, i) => letterPage({ geom, pageNumber: first + i + 1, letters, guideIn })),
-      ...extra.map((word, i) => ({ ...namePage({ geom, pageNumber: first + singles.length + i + 1, name: word, guideIn }), word })),
+      ...singles.map((letters, i) => {
+        const pageNumber = first + i + 1;
+        // Pre-writing lines are strokes, not letters: print-drawn either way.
+        if (!cursive || !PRINT[letters[0]] || !/[A-Za-z0-9]/.test(letters[0])) return letterPage({ geom, pageNumber, letters, guideIn });
+        return cursivePage({ geom, pageNumber, model: letters.join("   "), trace: [...letters, ...letters], guideIn, measure });
+      }),
+      ...extra.map((word, i) => {
+        const pageNumber = first + singles.length + i + 1;
+        return { ...(cursive ? cursivePage({ geom, pageNumber, model: word, trace: [word], guideIn, measure, word: true }) : namePage({ geom, pageNumber, name: word, guideIn })), word };
+      }),
     ],
   };
 }

@@ -5,21 +5,24 @@ import { planBook } from "./plan.js";
 import { planPaper } from "./paper.js";
 import { planName, nameInk } from "./name.js";
 import { drawLetterPage, drawShapes } from "./draw.js";
+import { cursiveWidth } from "./cursive.js";
 
 export { letterPairs, CASES, GUIDES, planBook } from "./plan.js";
 
 // `fonts.bold` and `fonts.regular` are the bytes of embeddable TTFs (KDP needs
 // fonts embedded). `opts.licensed` is true only after /api/verify has found a
 // payment; anything else is the free, watermarked book.
+// A cursive book also needs `fonts.cursive`, the bytes of the cursive font.
 export async function renderBook(opts, fonts) {
-  const { geom, pages } = planBook(opts);
+  const cursive = opts.script === "cursive" ? fontkit.create(new Uint8Array(fonts.cursive)) : undefined;
+  const { geom, pages } = planBook({ ...opts, measure: cursive && ((text, unit) => cursiveWidth(cursive, text, unit)) });
   const doc = await PDFDocument.create();
   doc.registerFontkit(fontkit);
   const embedded = {
     bold: await doc.embedFont(fonts.bold, { subset: true }),
     regular: await doc.embedFont(fonts.regular, { subset: true }),
   };
-  for (const layout of pages) drawLetterPage(doc.addPage([geom.width, geom.height]), layout, embedded, { licensed: opts.licensed === true });
+  for (const layout of pages) drawLetterPage(doc.addPage([geom.width, geom.height]), layout, embedded, { licensed: opts.licensed === true, cursive });
   return doc.save();
 }
 

@@ -55,3 +55,53 @@ test("shapes sit on the guide: body to the midline, tall letters to the top line
   assert.ok(Math.abs(top("l") - 2 * unit) < 0.05 * unit, top("l"));
   assert.ok(Math.abs(top("x") - unit) < 0.05 * unit, top("x"));
 });
+
+// The page layout (cursive-page.js) trusts CURSIVE_REACH for how far ink goes
+// past the guide and past a run's advance. Hold the font to it.
+test("no glyph reaches past CURSIVE_REACH, in any letter, digit or pair", async () => {
+  const { CURSIVE_REACH } = await import("../src/pdf/cursive-page.js");
+  const UPPER = LOWER.toUpperCase();
+  const texts = [...LOWER, ...UPPER, ..."0123456789", ...[...LOWER + UPPER].flatMap((a) => [...LOWER].map((b) => a + b))];
+  for (const t of texts) {
+    const run = font.layout(t);
+    let pen = 0;
+    run.glyphs.forEach((g, i) => {
+      const b = g.path.bbox;
+      if (g.path.commands.length) {
+        assert.ok(b.maxY / 500 <= CURSIVE_REACH.above && b.minY / 500 >= CURSIVE_REACH.below, `${t}: ${b.minY}..${b.maxY}`);
+        assert.ok((pen + b.minX) / 500 >= -CURSIVE_REACH.side && (pen + b.maxX - run.advanceWidth) / 500 <= CURSIVE_REACH.side, `${t} sideways`);
+      }
+      pen += run.positions[i].xAdvance;
+    });
+  }
+});
+
+test("a cursive book: same pages as print, lines stay print, every mark inside KDP's margins", async () => {
+  const { planBook, GUIDES } = await import("../src/pdf/plan.js");
+  const { TRIMS, marginsForPage } = await import("../src/pdf/kdp.js");
+  const { pageInk } = await import("../src/pdf/ink.js");
+  const measure = (text, unit) => cursiveWidth(font, text, unit);
+  const opts = { lines: true, numbers: true, words: "the,butterfly,Grandma,Christopher", belongs: true };
+  assert.throws(() => planBook({ ...opts, script: "cursive" }), /measure/);
+  for (const trim of Object.keys(TRIMS)) for (const guideIn of Object.values(GUIDES)) for (const bleed of [false, true]) {
+    const print = planBook({ ...opts, trim, guideIn, bleed });
+    const { geom, pages } = planBook({ ...opts, trim, guideIn, bleed, script: "cursive", measure });
+    assert.equal(pages.length, print.pages.length);
+    for (const [i, page] of pages.entries()) {
+      const where = `${trim} ${guideIn}" bleed=${bleed} p${i + 1}`;
+      const runs = page.rows.flatMap((r) => r.runs ?? []);
+      if (i >= 1 && i <= 4) assert.equal(runs.length, 0, `${where}: a line page in cursive`);
+      if (i >= 5) assert.ok(runs.length > 0 && page.rows.every((r) => r.letters.length === 0), `${where}: not cursive`);
+      const m = marginsForPage(geom, i + 1);
+      for (const s of pageInk(page, { cursive: font })) {
+        if (s.kind !== "path") continue;
+        const xs = [], ys = [];
+        // The path's own bounds, in points on the page.
+        const nums = s.d.match(/-?[\d.]+(e-?\d+)?/g).map(Number);
+        for (let k = 0; k + 1 < nums.length; k += 2) { xs.push(s.x + nums[k] * s.scale); ys.push(s.y - nums[k + 1] * s.scale); }
+        assert.ok(Math.min(...xs) >= m.left && Math.max(...xs) <= geom.width - m.right, `${where}: ink outside the side margins`);
+        assert.ok(Math.min(...ys) >= m.bottom && Math.max(...ys) <= geom.height - m.top, `${where}: ink outside the top or bottom margin`);
+      }
+    }
+  }
+});

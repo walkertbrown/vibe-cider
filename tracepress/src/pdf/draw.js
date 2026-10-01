@@ -41,8 +41,8 @@ function drawDot(page, s) {
 
 // `fonts` holds embedded `bold` and `regular`; a book that isn't `licensed`
 // gets the watermark line.
-export function drawLetterPage(page, layout, fonts, { licensed = false } = {}) {
-  drawShapes(page, pageInk(layout, { licensed }), fonts);
+export function drawLetterPage(page, layout, fonts, { licensed = false, cursive } = {}) {
+  drawShapes(page, pageInk(layout, { licensed, cursive }), fonts);
 }
 
 export function drawShapes(page, shapes, fonts) {

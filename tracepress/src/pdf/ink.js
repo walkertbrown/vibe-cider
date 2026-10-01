@@ -5,6 +5,7 @@
 import { GLYPHS } from "../glyphs/lines.js";
 import { traceDots } from "./trace.js";
 import { strokeArrows, strokeStarts } from "./arrows.js";
+import { cursiveRun } from "./cursive.js";
 import { DOT_R, FOOTER_PT, LABEL_PT, LINE_W, WATERMARK, labelRadius } from "./page.js";
 
 // Colours as [r, g, b] in 0..1.
@@ -14,6 +15,7 @@ export const BLACK = [0, 0, 0];
 export const WHITE = [1, 1, 1];
 export const RED = [0.8, 0.15, 0.1];
 export const GREEN = [0.1, 0.45, 0.25];
+export const TRACE = [0.7, 0.7, 0.7]; // cursive to write over: a 30% tint, KDP's floor is 10%
 
 // Shapes:
 //   { kind: "line", x1, y1, x2, y2, width, color, dash }
@@ -25,7 +27,8 @@ export const GREEN = [0.1, 0.45, 0.25];
 //     (x is the centre; y the baseline)
 // `heavy` (the cover) thickens dots and arrows with the letter size; the
 // interior keeps its fixed weights.
-export function pageInk(layout, { licensed = false, heavy = false } = {}) {
+// `cursive` is the loaded cursive font (fontkit), needed for rows with runs.
+export function pageInk(layout, { licensed = false, heavy = false, cursive } = {}) {
   const out = [];
   if (!licensed) {
     const { box } = layout;
@@ -39,6 +42,7 @@ export function pageInk(layout, { licensed = false, heavy = false } = {}) {
     rule(0, BASE);
     rule(-1, GREY, [1, 3]);
     for (const l of row.letters) letterInk(out, l, row, heavy);
+    for (const r of row.runs ?? []) out.push(...cursiveRun(cursive, r.text, { x: r.x, baseY, unit, color: row.kind === "model" ? BASE : TRACE }).shapes);
   }
   for (const t of layout.text ?? []) out.push({ kind: "text", color: BLACK, ...t });
   return out;
