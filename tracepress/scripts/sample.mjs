@@ -24,6 +24,7 @@ import { BARCODE_IN } from "../src/pdf/cover-geometry.js";
 import { pageInk } from "../src/pdf/ink.js";
 import { PT, TRIMS } from "../src/pdf/kdp.js";
 import { drawLetterPage } from "../src/pdf/draw.js";
+import { cursiveWidth } from "../src/pdf/cursive.js";
 
 const SITE = "https://tracepress.bananafest-destiny.com/";
 const TRIM = "8.5x11";
@@ -31,7 +32,10 @@ const GUIDE_IN = 0.75;
 const fonts = {
   bold: readFileSync(new URL("../fonts/LiberationSans-Bold.ttf", import.meta.url)),
   regular: readFileSync(new URL("../fonts/LiberationSans-Regular.ttf", import.meta.url)),
+  cursive: readFileSync(new URL("../public/fonts/PlaywriteUSTrad.ttf", import.meta.url)),
 };
+const cursiveFont = fontkit.create(fonts.cursive);
+const measure = (text, unit) => cursiveWidth(cursiveFont, text, unit);
 const out = new URL("../public/samples/", import.meta.url);
 mkdirSync(out, { recursive: true });
 
@@ -70,6 +74,11 @@ export const SAMPLES = {
     file: "lowercase-letter-tracing-worksheets.pdf",
     title: "Free Lowercase Letter Tracing Worksheets a–z, PDF · Trace Press",
     subject: "26 printable lowercase letter tracing pages, a to z: each letter large with numbered start dots and stroke-order arrows, then rows of dotted letters to trace on four-line guides with 1-inch lines for ages 4 to 5. 8.5 x 11. Made free with Trace Press.",
+  },
+  cursive: {
+    file: "cursive-letter-tracing-worksheets.pdf",
+    title: "Free Cursive Letter Tracing Worksheets A–Z, PDF · Trace Press",
+    subject: "26 printable cursive alphabet tracing pages, A to Z: the capital and lowercase letter in solid cursive, rows of grey cursive letters to trace on four-line handwriting guides, then rows to write alone. 8.5 x 11. Made free with Trace Press.",
   },
 };
 
@@ -114,8 +123,8 @@ function meta(doc, { title, subject }) {
 // `from` keeps only the pages from that index on (the number worksheets are
 // the digit pages of a book with numbers on, without A–Z in front), and `to`
 // stops before that index (the line worksheets are the four pages before A).
-async function book(sample, { words = [], numbers = false, lines = false, cases = "both", guideIn = GUIDE_IN, from = 0, to } = {}) {
-  const opts = { trim: TRIM, guideIn, words, numbers, lines, cases };
+async function book(sample, { words = [], numbers = false, lines = false, cases = "both", guideIn = GUIDE_IN, from = 0, to, script = "print" } = {}) {
+  const opts = { trim: TRIM, guideIn, words, numbers, lines, cases, script, measure };
   let doc = await PDFDocument.load(await renderBook(opts, fonts));
   if (from || to) {
     const whole = doc;
@@ -129,7 +138,7 @@ async function book(sample, { words = [], numbers = false, lines = false, cases 
   const { geom } = planBook(opts);
   const pages = planBook(opts).pages.slice(from, to);
   pages.forEach((layout, i) => {
-    const f = pageInk(layout).find((s) => s.kind === "text" && /Trace Press/.test(s.text));
+    const f = pageInk(layout, { cursive: cursiveFont }).find((s) => s.kind === "text" && /Trace Press/.test(s.text));
     if (!f) throw new Error(`page ${i + 1}: no footer line to link`);
     const half = regular.widthOfTextAtSize(f.text, f.size) / 2 + 4;
     link(doc, doc.getPage(i), [f.x - half, f.y - 4, f.x + half, f.y + f.size + 2]);
@@ -153,6 +162,7 @@ await book(SAMPLES.numbers, { numbers: true, guideIn: 1, from: 26 });
 await book(SAMPLES.lines, { lines: true, guideIn: 1, to: 4 });
 await book(SAMPLES.upper, { cases: "upper", guideIn: 1 });
 await book(SAMPLES.lower, { cases: "lower", guideIn: 1 });
+await book(SAMPLES.cursive, { script: "cursive", guideIn: 1 });
 
 // The cover, sized for that book. The link sits on the free cover's own
 // back-panel note (cover.js drawPreviewMark puts it at the barcode margin).

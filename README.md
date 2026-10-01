@@ -50,6 +50,8 @@ A to Z, or one case alone as
 [uppercase](https://tracepress.bananafest-destiny.com/uppercase-letter-tracing) or
 [lowercase](https://tracepress.bananafest-destiny.com/lowercase-letter-tracing)
 letter tracing,
+[cursive letter tracing worksheets](https://tracepress.bananafest-destiny.com/cursive-letter-tracing)
+A to Z,
 [number tracing worksheets](https://tracepress.bananafest-destiny.com/number-tracing)
 0 to 9,
 [tracing lines worksheets](https://tracepress.bananafest-destiny.com/tracing-lines)
