@@ -44,8 +44,19 @@ down to 0.45". Every letter is drawn as the strokes a pencil makes, not as a
 font outline. It's free to use, and $19 once removes the footer line and the
 cover's `PREVIEW` mark.
 
-Free, no sign-up: a
-[name tracing worksheet](https://tracepress.bananafest-destiny.com/name-tracing)
+Free, no sign-up:
+[letter tracing worksheets](https://tracepress.bananafest-destiny.com/letter-tracing)
+A to Z, or one case alone as
+[uppercase](https://tracepress.bananafest-destiny.com/uppercase-letter-tracing) or
+[lowercase](https://tracepress.bananafest-destiny.com/lowercase-letter-tracing)
+letter tracing,
+[number tracing worksheets](https://tracepress.bananafest-destiny.com/number-tracing)
+0 to 9,
+[tracing lines worksheets](https://tracepress.bananafest-destiny.com/tracing-lines)
+for pre-writing, a
+["This book belongs to" page](https://tracepress.bananafest-destiny.com/this-book-belongs-to-page)
+in all six KDP trims, a
+[name tracing worksheet generator](https://tracepress.bananafest-destiny.com/name-tracing)
 (type a child's name, print one page), blank
 [handwriting paper](https://tracepress.bananafest-destiny.com/handwriting-paper)
 for a KDP practice notebook, a

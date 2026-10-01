@@ -15,10 +15,15 @@
 // not prove a page is *in* the index, but zero crawl requests proves it is not,
 // and the shape of the crawl is the earliest signal either way.
 //
-// Usage: node scripts/crawlers.mjs [hoursBack]     (npm run crawlers)
+// Usage: node scripts/crawlers.mjs [hoursBack] [tracepress]     (npm run crawlers)
+//
+// 2026-10-01: the same question for Trace Press, the second app on the zone.
+// Add `tracepress` to read its host and its sitemap instead.
 import { readFileSync } from "node:fs";
 
 const hours = Number(process.argv[2] || 24);
+const TP = process.argv.includes("tracepress");
+const HOST = TP ? "tracepress" : "puzzle";
 const creds = readFileSync(new URL("../../.git-credentials", import.meta.url), "utf8");
 const CF = (creds.match(/^CLOUDFLARE_API_TOKEN=(.*)$/m) || [])[1]?.trim();
 const ZONE = "4169ea6b92a0920d72f9ebc5f7653e9d";
@@ -38,7 +43,7 @@ const r = await fetch("https://api.cloudflare.com/client/v4/graphql", {
   headers: { authorization: `Bearer ${CF}`, "content-type": "application/json" },
   body: JSON.stringify({
     query: `query { viewer { zones(filter: {zoneTag: "${ZONE}"}) {
-      httpRequestsAdaptiveGroups(limit: 2000, filter: {datetime_geq: "${since}", clientRequestHTTPHost_like: "%puzzle%"}, orderBy: [count_DESC]) {
+      httpRequestsAdaptiveGroups(limit: 2000, filter: {datetime_geq: "${since}", clientRequestHTTPHost_like: "%${HOST}%"}, orderBy: [count_DESC]) {
         count dimensions { userAgent clientRequestPath }
       } } } }`,
   }),
@@ -57,7 +62,7 @@ for (const row of d.data.viewer.zones[0].httpRequestsAdaptiveGroups) {
   e.paths.set(row.dimensions.clientRequestPath, (e.paths.get(row.dimensions.clientRequestPath) ?? 0) + row.count);
 }
 
-console.log(`\nSearch engines on puzzlepress — last ${hours}h\n`);
+console.log(`\nSearch engines on ${TP ? "tracepress" : "puzzlepress"} — last ${hours}h\n`);
 const line = (name) => {
   const e = tally.get(name);
   if (!e) return console.log(`  ${"0".padStart(6)}  ${name.padEnd(20)}  never came`);
@@ -86,9 +91,13 @@ if (rest.length) {
 // have not been crawled" are the same zero on a dashboard and opposite
 // instructions about what to do next — the same confusion as a silent beacon,
 // one layer further out. Grouped, because 91 individual lines is not a finding.
-const sitemapPaths = [...readFileSync(new URL("../public/sitemap.xml", import.meta.url), "utf8")
+const sitemapPaths = [...readFileSync(new URL(TP ? "../../tracepress/public/sitemap.xml" : "../public/sitemap.xml", import.meta.url), "utf8")
   .matchAll(/<loc>(.*?)<\/loc>/g)].map((m) => new URL(m[1]).pathname);
-const GROUPS = [
+const GROUPS = TP ? [
+  ["the landing page", (p) => p === "/"],
+  ["the pages", (p) => p !== "/" && !p.startsWith("/samples/")],
+  ["the sample PDFs", (p) => p.startsWith("/samples/")],
+] : [
   ["the landing page", (p) => p === "/"],
   ["the 3 calculators", (p) => /-calculator$/.test(p)],
   ["the 2 articles", (p) => p === "/how-to-make-a-puzzle-book" || p === "/compare"],
