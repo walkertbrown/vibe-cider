@@ -7,6 +7,10 @@ import { pageSvg } from "./preview.js";
 import { px } from "./px.js";
 
 const SUPPORT = "support@bananafest-destiny.com";
+// The same tool runs on /tracing-worksheet-generator, framed for words: that
+// page says so on <body>, for its own page-load beacon and file name.
+const PAGE = document.body.dataset.px ?? "name";
+const FILE = document.body.dataset.file ?? "name-tracing";
 const $ = (id) => document.getElementById(id);
 const el = { name: $("name"), trim: $("trim"), age: $("age"), preview: $("preview"), note: $("nameNote"), download: $("download"), status: $("status") };
 
@@ -49,7 +53,7 @@ el.download.addEventListener("click", async () => {
     const url = URL.createObjectURL(new Blob([bytes], { type: "application/pdf" }));
     const a = document.createElement("a");
     a.href = url;
-    a.download = `name-tracing-${name.replace(/ /g, "-").toLowerCase()}-${o.trim}.pdf`;
+    a.download = `${FILE}-${name.replace(/ /g, "-").toLowerCase()}-${o.trim}.pdf`;
     document.body.append(a); a.click(); a.remove();
     setTimeout(() => URL.revokeObjectURL(url), 60000);
     px("namemade");
@@ -62,5 +66,5 @@ el.download.addEventListener("click", async () => {
   }
 });
 
-px("name");
+px(PAGE);
 show();

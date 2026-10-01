@@ -57,7 +57,9 @@ for pre-writing, a
 ["This book belongs to" page](https://tracepress.bananafest-destiny.com/this-book-belongs-to-page)
 in all six KDP trims, a
 [name tracing worksheet generator](https://tracepress.bananafest-destiny.com/name-tracing)
-(type a child's name, print one page), blank
+(type a child's name, print one page), a
+[tracing worksheet generator](https://tracepress.bananafest-destiny.com/tracing-worksheet-generator)
+for a few words on handwriting lines, blank
 [handwriting paper](https://tracepress.bananafest-destiny.com/handwriting-paper)
 for a KDP practice notebook, a
 [sight word tracing workbook](https://tracepress.bananafest-destiny.com/sight-word-tracing-workbook)

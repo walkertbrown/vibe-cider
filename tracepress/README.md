@@ -44,6 +44,7 @@ Made by this code with the free version, footer line and PREVIEW mark included:
 - [Tracing lines worksheets](https://tracepress.bananafest-destiny.com/tracing-lines): lines, slants, zigzags, waves, circles, crosses
 - ["This book belongs to" page](https://tracepress.bananafest-destiny.com/this-book-belongs-to-page): one page, in all six KDP trim sizes, unmarked
 - [Name tracing worksheet](https://tracepress.bananafest-destiny.com/name-tracing): type a name, print one page
+- [Tracing worksheet generator](https://tracepress.bananafest-destiny.com/tracing-worksheet-generator): type a few words, print one page on handwriting lines
 - [Sight word tracing workbook](https://tracepress.bananafest-destiny.com/sight-word-tracing-workbook)
 - [Handwriting practice paper](https://tracepress.bananafest-destiny.com/handwriting-paper): blank four-line guides
 - [How to make a tracing book (handwriting workbook) for KDP](https://tracepress.bananafest-destiny.com/how-to-make-a-handwriting-workbook), step by step

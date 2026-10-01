@@ -203,6 +203,19 @@ try {
   const nameW = await phone.goto(`${base}/name-tracing`).then(() => phone.evaluate(() => document.documentElement.scrollWidth));
   check(nameW <= 390, `name: no sideways scroll on a phone (${nameW}px)`);
 
+  // The same tool framed for words: its own beacon and file name.
+  const beacons = [];
+  nm.on("request", (r) => { const m = r.url().match(/\/px\/(\w+)\.gif/); if (m) beacons.push(m[1]); });
+  await nm.goto(`${base}/tracing-worksheet-generator`);
+  await nm.waitForSelector("#preview svg circle");
+  check(await nm.inputValue("#name") === "cat sun dog", "words: starts with cat sun dog");
+  [dl] = await Promise.all([nm.waitForEvent("download"), nm.click("#download")]);
+  check(dl.suggestedFilename() === "tracing-worksheet-cat-sun-dog-8.5x11.pdf", `words: file name ${dl.suggestedFilename()}`);
+  check(beacons.includes("words") && !beacons.includes("name"), `words: own page beacon (${beacons})`);
+  check((await (await nm.request.get(`${base}/sitemap.xml`)).text()).includes("/tracing-worksheet-generator"), "words: in the sitemap");
+  const wordsW = await phone.goto(`${base}/tracing-worksheet-generator`).then(() => phone.evaluate(() => document.documentElement.scrollWidth));
+  check(wordsW <= 390, `words: no sideways scroll on a phone (${wordsW}px)`);
+
   // The sight word page: its buttons open the tool with the list filled in,
   // and the book grows by that many pages.
   const sw = "/sight-word-tracing-workbook";

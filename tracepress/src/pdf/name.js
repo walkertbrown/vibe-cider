@@ -91,7 +91,7 @@ export function planName({ trim = "8.5x11", guideIn = 0.75, name = "" } = {}) {
 }
 
 // The one line of text on the sheet, in the footer band every page keeps free.
-export const NAME_FOOTER = "Free name tracing sheet from tracepress.bananafest-destiny.com";
+export const NAME_FOOTER = "Free tracing sheet from tracepress.bananafest-destiny.com";
 
 export function nameInk(layout) {
   const { box } = layout;

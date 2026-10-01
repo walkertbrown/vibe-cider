@@ -196,3 +196,17 @@ for (const trim of Object.keys(TRIMS)) {
   writeFileSync(new URL(sample.file, out), bytes);
   console.log(`wrote public/samples/${sample.file}: ${bytes.length} bytes`);
 }
+
+// The same for /tracing-worksheet-generator, at its default words.
+{
+  const sample = {
+    file: "tracing-worksheet-cat-sun-dog.pdf",
+    title: "Free Tracing Worksheet with Lines and Arrows, cat sun dog (PDF)",
+    subject: "A one-page word tracing worksheet: the words large with numbered start dots and stroke-order arrows, rows of dotted letters to trace on four-line handwriting guides, then blank lines. 8.5 x 11. Make one for any words, free, with Trace Press.",
+  };
+  const doc = await PDFDocument.load(await renderName({ name: "cat sun dog", trim: TRIM, guideIn: GUIDE_IN }, fonts));
+  meta(doc, sample);
+  const bytes = await doc.save();
+  writeFileSync(new URL(sample.file, out), bytes);
+  console.log(`wrote public/samples/${sample.file}: ${bytes.length} bytes`);
+}
