@@ -5,7 +5,8 @@
 // The front is the buyer's title, a subtitle, and the book's own model row
 // drawn big: a dotted "Aa" with its numbered starts and stroke arrows, from
 // the same shapes as the interior pages. The back is left plain, with KDP's
-// barcode area clear. A 26-page book is under KDP's 79-page floor for spine
+// barcode area clear. A cursive book (`cursive`, the loaded fontkit font)
+// gets its model in cursive instead: "Aa" joined, solid, on the guides. A 26-page book is under KDP's 79-page floor for spine
 // text, so the spine is blank.
 //
 // `layoutCover` returns plain shapes (the ink.js kinds, plus `rect`), so a
@@ -18,6 +19,8 @@ import { pageInk, WHITE } from "./ink.js";
 import { drawShapes } from "./draw.js";
 import { PRINT } from "../glyphs/print.js";
 import { reach, labelRadius, MARK_PAD, LETTER_GAP } from "./page.js";
+import { cursiveWidth } from "./cursive.js";
+import { CURSIVE_REACH } from "./cursive-page.js";
 
 export { PAPER, coverGeometry, SPINE_TEXT_MIN_PAGES } from "./cover-geometry.js";
 
@@ -50,7 +53,7 @@ function fitLines(font, text, maxWidth, start, min, maxLines) {
 }
 
 // `fonts` are embedded pdf-lib fonts (only widthOfTextAtSize is used).
-export function layoutCover({ title = "My Letter Tracing Book", subtitle = "", author = "", trim = "8.5x11", pageCount = 26, paper = "white" } = {}, fonts) {
+export function layoutCover({ title = "My Letter Tracing Book", subtitle = "", author = "", trim = "8.5x11", pageCount = 26, paper = "white", cursive } = {}, fonts) {
   const g = coverGeometry({ trim, pageCount, paper });
   const shapes = [{ kind: "rect", x: 0, y: 0, w: g.width, h: g.height, color: GROUND }];
   const inset = TEXT_INSET_IN * PT;
@@ -80,6 +83,16 @@ export function layoutCover({ title = "My Letter Tracing Book", subtitle = "", a
   const gap = inset * 0.6;
   const card = { x: g.frontX + inset * 0.7, y: floor + gap * 0.5, w: g.panelW - inset * 1.4, h: top - gap - floor - gap * 0.5 };
   shapes.push({ kind: "rect", ...card, color: CARD });
+  if (cursive) {
+    const text = "Aa", { above, below, side } = CURSIVE_REACH;
+    const across = cursiveWidth(cursive, text, 1) + 2 * side;
+    const unit = Math.min((card.w * 0.84) / across, (card.h * 0.84) / (above - below));
+    const baseY = card.y + card.h / 2 - ((above + below) / 2) * unit;
+    const x = card.x + (card.w - across * unit) / 2 + side * unit;
+    const row = { kind: "model", unit, baseY, left: card.x + card.w * 0.04, right: card.x + card.w * 0.96, letters: [], runs: [{ text, x }] };
+    shapes.push(...pageInk({ rows: [row] }, { licensed: true, cursive }));
+    return { g, shapes, card, unit };
+  }
   const letters = ["A", "a"];
   // Size the unit so the pair fits the card both ways. reach() depends on the
   // unit only through the label radius and mark padding, so solve twice.
@@ -128,7 +141,8 @@ function drawPreviewMark(page, g, fonts) {
   lines.forEach(([t, f], i) => page.drawText(t, { x: x + 10, y: y + 9 + (lines.length - 1 - i) * ns * 1.3, size: ns, font: f, color: rgb(0.7, 0.2, 0.2) }));
 }
 
-// `fontBytes.bold` / `.regular` are TTF bytes. `opts.licensed` is true only
+// `fontBytes.bold` / `.regular` are TTF bytes, and `.cursive` too for a
+// cursive book (`opts.script === "cursive"`). `opts.licensed` is true only
 // after /api/verify has found a payment.
 export async function renderCover(opts, fontBytes) {
   const doc = await PDFDocument.create();
@@ -139,7 +153,8 @@ export async function renderCover(opts, fontBytes) {
   };
   doc.setTitle(`${opts.title || "Letter tracing book"} — cover`);
   if (opts.author) doc.setAuthor(opts.author);
-  const { g, shapes } = layoutCover(opts, fonts);
+  const cursive = opts.script === "cursive" && fontBytes.cursive ? fontkit.create(new Uint8Array(fontBytes.cursive)) : undefined;
+  const { g, shapes } = layoutCover({ ...opts, cursive }, fonts);
   const page = doc.addPage([g.width, g.height]);
   for (const s of shapes) {
     if (s.kind === "rect") page.drawRectangle({ x: s.x, y: s.y, width: s.w, height: s.h, color: rgb(...s.color) });

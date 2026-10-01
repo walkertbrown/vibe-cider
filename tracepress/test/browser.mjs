@@ -116,6 +116,8 @@ try {
   got = pdfText(await (await dl.createReadStream()).toArray().then(Buffer.concat));
   check(got.pages === 26 && /-cursive\.pdf$/.test(dl.suggestedFilename()), `cursive: 26 pages, ${dl.suggestedFilename()}`);
   check(mainBeacons.includes("cursive"), `cursive: its beacon (${mainBeacons})`);
+  [dl] = await Promise.all([page.waitForEvent("download"), page.click("#downloadCover")]);
+  check(/^trace-press-cover-.*-cursive\.pdf$/.test(dl.suggestedFilename()), `cursive: its cover, ${dl.suggestedFilename()}`);
   await page.selectOption("#script", "print");
   check(await page.$$eval("#preview svg circle", (c) => c.length) > 20, "print again: dots are back");
   // "This book belongs to": first page, 27 in the download.

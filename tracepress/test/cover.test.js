@@ -79,3 +79,28 @@ test("a free cover says PREVIEW and a paid one doesn't", async () => {
   assert.match(paid.text, /Tracing Fun/);
   assert.match(paid.info, /Pages:\s+1\b/);
 });
+
+// A cursive book's cover: the card holds "Aa" in joined cursive (glyph paths,
+// no tracing dots or arrows), and all of it stays inside the card, so inside
+// the trim like the rest of the front.
+test("a cursive book's cover has a cursive model, inside the card", async () => {
+  const cursiveBytes = readFileSync(new URL("../public/fonts/PlaywriteUSTrad.ttf", import.meta.url));
+  const cursive = fontkit.create(cursiveBytes);
+  for (const trim of Object.keys(TRIMS)) for (const t of TITLES) {
+    const { shapes, card } = layoutCover({ ...t, trim, pageCount, cursive }, fonts);
+    const what = `${trim} "${t.title.slice(0, 20)}"`;
+    assert.equal(shapes.filter((s) => s.kind === "dot" || s.kind === "tri").length, 0, `${what}: print marks on a cursive cover`);
+    const paths = shapes.filter((s) => s.kind === "path");
+    assert.ok(paths.length >= 2, `${what}: ${paths.length} cursive paths`);
+    const xs = [], ys = [];
+    for (const s of paths) {
+      const nums = s.d.match(/-?[\d.]+(e-?\d+)?/g).map(Number);
+      for (let k = 0; k + 1 < nums.length; k += 2) { xs.push(s.x + nums[k] * s.scale); ys.push(s.y - nums[k + 1] * s.scale); }
+    }
+    assert.ok(Math.min(...xs) >= card.x && Math.max(...xs) <= card.x + card.w && Math.min(...ys) >= card.y && Math.max(...ys) <= card.y + card.h, `${what}: cursive outside the card`);
+    // Big enough to read as the book's letters: at least half the card's width.
+    assert.ok(Math.max(...xs) - Math.min(...xs) >= card.w * 0.5 || Math.max(...ys) - Math.min(...ys) >= card.h * 0.5, `${what}: cursive too small`);
+  }
+  const free = await PDFDocument.load(await renderCover({ title: "Cursive Fun", trim: "8.5x11", pageCount, script: "cursive" }, { ...bytes, cursive: cursiveBytes }));
+  assert.equal(free.getPageCount(), 1);
+});
