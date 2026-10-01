@@ -77,7 +77,7 @@ el.download.addEventListener("click", async () => {
     const url = URL.createObjectURL(new Blob([bytes], { type: "application/pdf" }));
     const a = document.createElement("a");
     a.href = url;
-    a.download = `${FILE}-${name.replace(/ /g, "-").toLowerCase()}-${o.trim}${o.script === "cursive" ? "-cursive" : ""}.pdf`;
+    a.download = `${FILE}-${name.replace(/ /g, "-").toLowerCase()}-${o.trim}${o.script === "cursive" && !FILE.includes("cursive") ? "-cursive" : ""}.pdf`;
     document.body.append(a); a.click(); a.remove();
     setTimeout(() => URL.revokeObjectURL(url), 60000);
     px("namemade");
@@ -91,6 +91,7 @@ el.download.addEventListener("click", async () => {
 });
 
 px(PAGE);
-if (new URLSearchParams(location.search).get("script") === "cursive") el.script.value = "cursive";
+const START = new URLSearchParams(location.search).get("script") ?? document.body.dataset.script;
+if (START in SCRIPTS) el.script.value = START;
 show();
 if (wantsCursive()) loadCursive().then(show, () => {});

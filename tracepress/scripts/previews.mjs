@@ -16,6 +16,7 @@ const PREVIEWS = [
   ["lowercase-letter-tracing-worksheets.pdf", 1, "lowercase-letter-tracing-worksheet-a"],
   ["this-book-belongs-to-page-8.5x11.pdf", 1, "this-book-belongs-to-page"],
   ["name-tracing-worksheet-maya.pdf", 1, "name-tracing-worksheet-maya"],
+  ["cursive-name-tracing-worksheet-maya.pdf", 1, "cursive-name-tracing-worksheet-maya"],
   ["tracing-worksheet-cat-sun-dog.pdf", 1, "tracing-worksheet-cat-sun-dog"],
   ["cursive-letter-tracing-worksheets.pdf", 2, "cursive-letter-tracing-worksheet-b"],
 ];

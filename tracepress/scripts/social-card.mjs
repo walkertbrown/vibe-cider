@@ -42,6 +42,7 @@ try {
     ["cursive-letter-tracing", "cursive-letter-tracing-worksheet-b", "Free cursive letter tracing worksheets", "26 pages, A to Z, capital and lowercase cursive to trace."],
     ["uppercase-letter-tracing", "uppercase-letter-tracing-worksheet-a", "Free uppercase letter tracing worksheets", "26 pages, A to Z, one capital a page, with start dots and stroke arrows."],
     ["lowercase-letter-tracing", "lowercase-letter-tracing-worksheet-a", "Free lowercase letter tracing worksheets", "26 pages, a to z, one letter a page, with start dots and stroke arrows."],
+    ["cursive-name-tracing", "cursive-name-tracing-worksheet-maya", "Free cursive name tracing worksheet", "Type a name, print it in joined cursive to trace."],
     ["name-tracing", "name-tracing-worksheet-maya", "Free name tracing worksheet generator", "Type a name, print a page: start dots, stroke arrows, rows to trace."],
     ["tracing-worksheet-generator", "tracing-worksheet-cat-sun-dog", "Free tracing worksheet generator", "Type words, print a page on handwriting lines, with start dots and arrows."],
     ["this-book-belongs-to-page", "this-book-belongs-to-page", "Free “This book belongs to” page", "A name page for the front of a children’s book, in every KDP size."],

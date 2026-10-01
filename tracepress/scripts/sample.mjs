@@ -207,6 +207,20 @@ for (const trim of Object.keys(TRIMS)) {
   console.log(`wrote public/samples/${sample.file}: ${bytes.length} bytes`);
 }
 
+// The same in cursive, for /cursive-name-tracing.
+{
+  const sample = {
+    file: "cursive-name-tracing-worksheet-maya.pdf",
+    title: "Free Cursive Name Tracing Worksheet, Example for Maya (PDF)",
+    subject: "A one-page cursive name tracing worksheet: the name in solid joined cursive, rows of it in light grey to trace over on four-line handwriting guides, then blank lines. 8.5 x 11. Make one for any name, free, with Trace Press.",
+  };
+  const doc = await PDFDocument.load(await renderName({ name: "Maya", trim: TRIM, guideIn: GUIDE_IN, script: "cursive" }, fonts));
+  meta(doc, sample);
+  const bytes = await doc.save();
+  writeFileSync(new URL(sample.file, out), bytes);
+  console.log(`wrote public/samples/${sample.file}: ${bytes.length} bytes`);
+}
+
 // The same for /tracing-worksheet-generator, at its default words.
 {
   const sample = {

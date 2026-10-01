@@ -242,6 +242,13 @@ try {
   await nm.goto(`${base}/name-tracing?script=cursive`);
   await nm.waitForFunction(() => document.querySelectorAll("#preview svg circle").length === 0 && document.querySelectorAll("#preview svg path").length >= 4);
   check(await nm.inputValue("#script") === "cursive", "name: ?script=cursive opens on Cursive");
+  // /cursive-name-tracing: the same tool opening on Cursive, its own beacon and file name.
+  beacons.length = 0;
+  await nm.goto(`${base}/cursive-name-tracing`);
+  await nm.waitForFunction(() => document.querySelectorAll("#preview svg circle").length === 0 && document.querySelectorAll("#preview svg path").length >= 4);
+  [dl] = await Promise.all([nm.waitForEvent("download"), nm.click("#download")]);
+  check(await nm.inputValue("#script") === "cursive" && dl.suggestedFilename() === "cursive-name-tracing-maya-8.5x11.pdf", `cursive names: opens on Cursive, ${dl.suggestedFilename()}`);
+  check(beacons.includes("cursivename") && !beacons.includes("name"), `cursive names: own page beacon (${beacons})`);
   check((await (await nm.request.get(`${base}/sitemap.xml`)).text()).includes("/tracing-worksheet-generator"), "words: in the sitemap");
   const wordsW = await phone.goto(`${base}/tracing-worksheet-generator`).then(() => phone.evaluate(() => document.documentElement.scrollWidth));
   check(wordsW <= 390, `words: no sideways scroll on a phone (${wordsW}px)`);
