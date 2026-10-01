@@ -6,14 +6,12 @@
 // is answered by page.route, because the Trace Press Payment Link is live.
 //
 // Run: node test/browser.mjs [baseUrl] [chromium|firefox|webkit]
-// (Playwright comes from app/node_modules.)
-import { createRequire } from "node:module";
+// (Playwright is a dev dependency; `npx playwright install chromium` once.)
 import { execFileSync } from "node:child_process";
 import { mkdtempSync, writeFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-
-const playwright = createRequire(new URL("../../app/package.json", import.meta.url))("playwright");
+import * as playwright from "playwright";
 const args = process.argv.slice(2);
 const ENGINE = args.find((a) => ["chromium", "firefox", "webkit"].includes(a)) || "chromium";
 const base = args.find((a) => /^https?:\/\//.test(a)) || "https://tracepress.bananafest-destiny.com";

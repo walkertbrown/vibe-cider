@@ -20,8 +20,11 @@ import { readFileSync } from "node:fs";
 const args = process.argv.slice(2);
 const hours = Number(args.find((a) => /^\d+$/.test(a)) || 24);
 const showIps = args.includes("--ips");
-const creds = readFileSync(new URL("../../.git-credentials", import.meta.url), "utf8");
-const get = (k) => (creds.match(new RegExp(`^${k}=(.*)$`, "m")) || [])[1]?.trim();
+// The keys live in the parent build repo's .git-credentials; in a standalone
+// clone, set them in the environment instead.
+let creds = "";
+try { creds = readFileSync(new URL("../../.git-credentials", import.meta.url), "utf8"); } catch {}
+const get = (k) => process.env[k] || (creds.match(new RegExp(`^${k}=(.*)$`, "m")) || [])[1]?.trim();
 const CF = get("CLOUDFLARE_API_TOKEN");
 const ACCOUNT = get("CLOUDFLARE_ACCOUNT_ID");
 const STRIPE = get("STRIPE_KEY");

@@ -7,12 +7,11 @@
 //
 //   node scripts/video-short.mjs [base]  → public/video/trace-press-short.webm (1080x1920)
 import { execFileSync } from "node:child_process";
-import { createRequire } from "node:module";
 import { mkdirSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-const { chromium } = createRequire(new URL("../../app/package.json", import.meta.url))("playwright");
+import { chromium } from "playwright";
 const base = process.argv.find((a) => a.startsWith("http")) || "https://tracepress.bananafest-destiny.com";
 const [W, H] = [1080, 1920];
 const outName = "trace-press-short.webm";

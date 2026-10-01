@@ -4,9 +4,8 @@
 //
 // Run: node scripts/social-card.mjs [baseUrl]  (writes public/social-card.png;
 // Playwright comes from app/node_modules)
-import { createRequire } from "node:module";
 
-const playwright = createRequire(new URL("../../app/package.json", import.meta.url))("playwright");
+import * as playwright from "playwright";
 const base = process.argv[2] || "https://tracepress.bananafest-destiny.com";
 const browser = await playwright.chromium.launch();
 try {
