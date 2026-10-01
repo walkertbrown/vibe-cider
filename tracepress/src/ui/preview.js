@@ -27,6 +27,8 @@ export function pageSvg(geom, layout, { licensed = false, shapes } = {}) {
       add("circle", { cx: s.x, cy: H - s.y, r: s.r, fill: css(s.color) });
     } else if (s.kind === "tri") {
       add("polygon", { points: s.pts.map(([x, y]) => `${x},${H - y}`).join(" "), fill: css(s.color) });
+    } else if (s.kind === "path") {
+      add("path", { d: s.d, transform: `translate(${s.x} ${H - s.y}) scale(${s.scale})`, fill: css(s.color) });
     } else if (s.kind === "text") {
       add("text", { x: s.x, y: H - s.y, "font-size": s.size, "font-family": "Liberation Sans, Arial, Helvetica, sans-serif", "font-weight": s.font === "bold" ? 700 : 400, fill: css(s.color), "text-anchor": "middle" }, s.text);
     }

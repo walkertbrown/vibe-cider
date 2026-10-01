@@ -54,6 +54,8 @@ export function drawShapes(page, shapes, fonts) {
     } else if (s.kind === "tri") {
       const [a, b, c] = s.pts;
       page.drawSvgPath(`M ${a[0]} ${-a[1]} L ${b[0]} ${-b[1]} L ${c[0]} ${-c[1]} Z`, { x: 0, y: 0, color: colour(s.color) });
+    } else if (s.kind === "path") {
+      page.drawSvgPath(s.d, { x: s.x, y: s.y, scale: s.scale, color: colour(s.color) });
     } else if (s.kind === "text") {
       const font = fonts[s.font];
       page.drawText(s.text, { x: s.x - font.widthOfTextAtSize(s.text, s.size) / 2, y: s.y, size: s.size, font, color: colour(s.color) });

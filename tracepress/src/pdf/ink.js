@@ -19,6 +19,8 @@ export const GREEN = [0.1, 0.45, 0.25];
 //   { kind: "line", x1, y1, x2, y2, width, color, dash }
 //   { kind: "dot", x, y, r, color }
 //   { kind: "tri", pts: [[x, y] × 3], color }
+//   { kind: "path", d, x, y, scale, color }
+//     (an SVG path, y down, in font units: cursive.js; filled)
 //   { kind: "text", text, x, y, size, font: "bold" | "regular", color, align: "center" }
 //     (x is the centre; y the baseline)
 // `heavy` (the cover) thickens dots and arrows with the letter size; the
