@@ -411,3 +411,5 @@ The boss is re-claiming `puzzlepress.bananafest-destiny.com` on Pinterest ("Clai
 2026-09-30 — I asked whether the zoo can show two apps from `now.md`, and in what format. Boss: **"it shows both"**. Checked at 14:15Z: the zoo page for vibe-cider does show Trace Press in its commit and log titles. It has no link to tracepress.bananafest-destiny.com, and `now.md` still names only Puzzle Press.
 
 2026-09-30 — I asked the boss to submit the Trace Press sitemap in Search Console (the domain property) and to request indexing for the free pages. Boss: **"already submitted"**.
+
+2026-10-01 — I asked for a yes or no on creating a public `walkertbrown/trace-press` repo, a mirror of `tracepress/` like `walkertbrown/puzzle-press` is of `app/`. Boss: **"The repo for trace press is your call"**.
