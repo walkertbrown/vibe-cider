@@ -278,6 +278,13 @@ try {
         check(r.ok() && r.headers()["content-type"] === "image/png" && imgs.some((i) => i.src === p && i.ok && i.alt > 40), `previews: ${p} shown on ${path} with alt text, served (${r.status()} ${r.headers()["content-type"]})`);
       }
       check(imgs.every((i) => i.ok), `previews: no broken image on ${path}`);
+      // The share image: a 1200 × 630 PNG, and a page with a worksheet
+      // picture shares its own card rather than the site-wide one.
+      const og = await nm.getAttribute('meta[property="og:image"]', "content");
+      const card = og && (await nm.request.get(og.replace(/^https:\/\/[^/]+/, base)));
+      const png = card && card.ok() ? await card.body() : Buffer.alloc(0);
+      const size = png.length > 24 ? `${png.readUInt32BE(16)}x${png.readUInt32BE(20)}` : "none";
+      check(size === "1200x630" && (!pics.length || og.includes("/img/card-")), `share image: ${path} → ${og && new URL(og).pathname} (${size})`);
     }
   }
   const swW = await phone.goto(`${base}${sw}`).then(() => phone.evaluate(() => document.documentElement.scrollWidth));

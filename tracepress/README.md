@@ -64,7 +64,8 @@ npm test          # unit tests
 npm run build     # bundles src/ui into public/js
 npx wrangler dev  # the site and its Worker, locally
 npm run sample    # regenerates public/samples/
-node scripts/previews.mjs  # then the worksheet pictures in public/img/
+node scripts/previews.mjs     # then the worksheet pictures in public/img/
+node scripts/social-card.mjs  # then the share cards (needs the pictures)
 ```
 
 The PDFs are made with [pdf-lib](https://pdf-lib.js.org/) in the browser. The
