@@ -78,3 +78,21 @@ test("the tracing lines worksheets: the four line pages only, a link on every pa
   for (let n = 1; n <= 4; n++) assert.match(page(n), /Made with Trace Press, free preview/);
   assert.match(page(5), /Made with Trace Press/);
 });
+
+// The free "This book belongs to" pages: one per KDP trim, exactly that size,
+// one page, and nothing on it but the words and the line, since a seller puts
+// it into their own book.
+test("the 'this book belongs to' pages: every trim, exact size, no marks", async () => {
+  const { TRIMS, PT } = await import("../src/pdf/kdp.js");
+  for (const [trim, t] of Object.entries(TRIMS)) {
+    const f = path(`this-book-belongs-to-page-${trim}.pdf`);
+    const doc = await PDFDocument.load(readFileSync(f));
+    assert.equal(doc.getPageCount(), 1, trim);
+    assert.ok(doc.getTitle().length <= 70 && doc.getTitle().includes(trim), doc.getTitle());
+    const { width, height } = doc.getPage(0).getSize();
+    assert.deepEqual([width, height], [t.w * PT, t.h * PT], trim);
+    const text = execFileSync("pdftotext", [f, "-"], { encoding: "utf8" }).trim();
+    assert.equal(text, "This book belongs to", `${trim}: ${text}`);
+    assert.deepEqual(links(doc, doc.getPage(0)), [], `${trim} has a link`);
+  }
+});

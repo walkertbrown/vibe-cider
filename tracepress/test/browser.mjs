@@ -307,6 +307,10 @@ try {
   await nm.goto(`${base}/?letters=lower`);
   await nm.waitForSelector("#preview svg circle");
   check(/Page 1 of 26 · a$/.test(await nm.textContent("#pageNo")), `?letters=lower: page 1 is a alone (${await nm.textContent("#pageNo")})`);
+  // The "this book belongs to" page links the tool with the name page on.
+  await nm.goto(`${base}/?belongs=1`);
+  await nm.waitForSelector("#preview svg");
+  check(/Page 1 of 27 · This book belongs to$/.test(await nm.textContent("#pageNo")), `?belongs=1: page 1 is the name page (${await nm.textContent("#pageNo")})`);
   const swW = await phone.goto(`${base}${sw}`).then(() => phone.evaluate(() => document.documentElement.scrollWidth));
   check(swW <= 390, `sight words: no sideways scroll on a phone (${swW}px)`);
 

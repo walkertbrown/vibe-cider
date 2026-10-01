@@ -22,7 +22,8 @@ import { renderBook, planBook } from "../src/pdf/book.js";
 import { renderCover, coverGeometry } from "../src/pdf/cover.js";
 import { BARCODE_IN } from "../src/pdf/cover-geometry.js";
 import { pageInk } from "../src/pdf/ink.js";
-import { PT } from "../src/pdf/kdp.js";
+import { PT, TRIMS } from "../src/pdf/kdp.js";
+import { drawLetterPage } from "../src/pdf/draw.js";
 
 const SITE = "https://tracepress.bananafest-destiny.com/";
 const TRIM = "8.5x11";
@@ -71,6 +72,17 @@ export const SAMPLES = {
     subject: "26 printable lowercase letter tracing pages, a to z: each letter large with numbered start dots and stroke-order arrows, then rows of dotted letters to trace on four-line guides with 1-inch lines for ages 4 to 5. 8.5 x 11. Made free with Trace Press.",
   },
 };
+
+// "This book belongs to" pages, one PDF per KDP trim, for /this-book-belongs-to-page.
+// Free and unmarked, like the handwriting paper: a seller drops the page into
+// their own interior, so a footer would make it useless. The brand is in the
+// file's metadata only.
+export const BELONGS_FILE = (trim) => `this-book-belongs-to-page-${trim}.pdf`;
+const belongsSample = (trim) => ({
+  file: BELONGS_FILE(trim),
+  title: `Free This Book Belongs To Page, ${trim} PDF for KDP · Trace Press`,
+  subject: `A printable "This book belongs to" page for a children's book, with a large handwriting line for the child's name. ${trim} inches, inside Amazon KDP's margins, no bleed, no marks. Made free with Trace Press.`,
+});
 
 // The pre-primer list, read from the button on /sight-word-tracing-workbook
 // rather than typed out a second time, so the sample and the page that links
@@ -155,4 +167,17 @@ await book(SAMPLES.lower, { cases: "lower", guideIn: 1 });
   const bytes = await doc.save();
   writeFileSync(new URL(SAMPLES.cover.file, out), bytes);
   console.log(`wrote public/samples/${SAMPLES.cover.file}: ${bytes.length} bytes`);
+}
+
+for (const trim of Object.keys(TRIMS)) {
+  const sample = belongsSample(trim);
+  const { geom, pages } = planBook({ trim, guideIn: 1, belongs: true });
+  const doc = await PDFDocument.create();
+  doc.registerFontkit(fontkit);
+  meta(doc, sample);
+  const embedded = { bold: await doc.embedFont(fonts.bold, { subset: true }), regular: await doc.embedFont(fonts.regular, { subset: true }) };
+  drawLetterPage(doc.addPage([geom.width, geom.height]), pages[0], embedded, { licensed: true });
+  const bytes = await doc.save();
+  writeFileSync(new URL(sample.file, out), bytes);
+  console.log(`wrote public/samples/${sample.file}: ${bytes.length} bytes`);
 }

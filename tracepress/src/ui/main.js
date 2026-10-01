@@ -255,6 +255,7 @@ const linkedWords = new URLSearchParams(location.search).get("words");
 if (linkedWords) el.words.value = cleanWords(linkedWords).join(", ");
 if (new URLSearchParams(location.search).get("numbers") === "1") el.numbers.checked = true;
 if (new URLSearchParams(location.search).get("lines") === "1") el.lines.checked = true;
+if (new URLSearchParams(location.search).get("belongs") === "1") el.belongs.checked = true;
 const linkedCases = new URLSearchParams(location.search).get("letters");
 if (CASES[linkedCases]) el.cases.value = linkedCases;
 showPage();
