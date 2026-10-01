@@ -96,3 +96,11 @@ test("the 'this book belongs to' pages: every trim, exact size, no marks", async
     assert.deepEqual(links(doc, doc.getPage(0)), [], `${trim} has a link`);
   }
 });
+
+test("the name tracing example: one page for Maya, titled for search, the footer line", async () => {
+  const f = path("name-tracing-worksheet-maya.pdf");
+  const doc = await PDFDocument.load(readFileSync(f));
+  assert.ok(doc.getTitle().length <= 70 && /Name Tracing/.test(doc.getTitle()), doc.getTitle());
+  assert.equal(doc.getPageCount(), 1);
+  assert.match(execFileSync("pdftotext", [f, "-"], { encoding: "utf8" }), /tracepress\.bananafest-destiny\.com/);
+});

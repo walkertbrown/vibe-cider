@@ -18,7 +18,7 @@
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { PDFDocument, PDFName, PDFString, rgb } from "pdf-lib";
 import fontkit from "@pdf-lib/fontkit";
-import { renderBook, planBook } from "../src/pdf/book.js";
+import { renderBook, planBook, renderName } from "../src/pdf/book.js";
 import { renderCover, coverGeometry } from "../src/pdf/cover.js";
 import { BARCODE_IN } from "../src/pdf/cover-geometry.js";
 import { pageInk } from "../src/pdf/ink.js";
@@ -177,6 +177,21 @@ for (const trim of Object.keys(TRIMS)) {
   meta(doc, sample);
   const embedded = { bold: await doc.embedFont(fonts.bold, { subset: true }), regular: await doc.embedFont(fonts.regular, { subset: true }) };
   drawLetterPage(doc.addPage([geom.width, geom.height]), pages[0], embedded, { licensed: true });
+  const bytes = await doc.save();
+  writeFileSync(new URL(sample.file, out), bytes);
+  console.log(`wrote public/samples/${sample.file}: ${bytes.length} bytes`);
+}
+
+// An example name sheet, for the picture on /name-tracing (previews.mjs).
+// Exactly what the page makes for "Maya" at its default settings.
+{
+  const sample = {
+    file: "name-tracing-worksheet-maya.pdf",
+    title: "Free Name Tracing Worksheet, Example for Maya (PDF) · Trace Press",
+    subject: "A one-page name tracing worksheet: the name large with numbered start dots and stroke-order arrows, rows of the name in dotted letters to trace, then blank four-line guides. 8.5 x 11. Make one for any name, free, with Trace Press.",
+  };
+  const doc = await PDFDocument.load(await renderName({ name: "Maya", trim: TRIM, guideIn: GUIDE_IN }, fonts));
+  meta(doc, sample);
   const bytes = await doc.save();
   writeFileSync(new URL(sample.file, out), bytes);
   console.log(`wrote public/samples/${sample.file}: ${bytes.length} bytes`);
