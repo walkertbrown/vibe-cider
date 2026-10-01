@@ -12,6 +12,8 @@ const PREVIEWS = [
   ["number-tracing-worksheets-0-9.pdf", 4, "number-tracing-worksheet-3"],
   ["tracing-lines-worksheets.pdf", 3, "tracing-lines-worksheet-zigzag-wave"],
   ["sight-word-tracing-workbook-sample-8.5x11.pdf", 28, "sight-word-tracing-worksheet"],
+  ["uppercase-letter-tracing-worksheets.pdf", 1, "uppercase-letter-tracing-worksheet-a"],
+  ["lowercase-letter-tracing-worksheets.pdf", 1, "lowercase-letter-tracing-worksheet-a"],
 ];
 const pub = new URL("../public/", import.meta.url).pathname;
 mkdirSync(`${pub}img`, { recursive: true });

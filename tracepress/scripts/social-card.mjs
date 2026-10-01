@@ -39,6 +39,8 @@ try {
     ["letter-tracing", "letter-tracing-worksheet-a", "Free letter tracing worksheets, A to Z", "26 pages, capital and lowercase, with start dots and stroke arrows."],
     ["number-tracing", "number-tracing-worksheet-3", "Free number tracing worksheets, 0 to 9", "A page per digit, with start dots and stroke arrows."],
     ["tracing-lines", "tracing-lines-worksheet-zigzag-wave", "Free tracing lines worksheets", "Lines, slants, zigzags, waves, circles and crosses, before A."],
+    ["uppercase-letter-tracing", "uppercase-letter-tracing-worksheet-a", "Free uppercase letter tracing worksheets", "26 pages, A to Z, one capital a page, with start dots and stroke arrows."],
+    ["lowercase-letter-tracing", "lowercase-letter-tracing-worksheet-a", "Free lowercase letter tracing worksheets", "26 pages, a to z, one letter a page, with start dots and stroke arrows."],
     ["sight-word-tracing-workbook", "sight-word-tracing-worksheet", "Sight word tracing workbook for KDP", "The Dolch lists, a page per word, with start dots and arrows."],
   ];
   for (const [slug, img, title, line] of CARDS) {

@@ -6,10 +6,13 @@ import { pageGeometry } from "./kdp.js";
 import { letterPage } from "./page.js";
 import { namePage, cleanName } from "./name.js";
 
-// The letter pairs, in order. A letter with no strokes in PRINT is left off
-// its page rather than drawn wrong.
-export function letterPairs() {
-  return [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ"].map((U) => [U, U.toLowerCase()].filter((ch) => PRINT[ch]));
+// The letter pages, in order: each capital with its lowercase, or one case
+// alone ("upper" or "lower"), 26 pages either way. A letter with no strokes in
+// PRINT is left off its page rather than drawn wrong.
+export const CASES = { both: "Capital and lowercase", upper: "Capitals only", lower: "Lowercase only" };
+export function letterPairs(cases = "both") {
+  return [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ"].map((U) =>
+    [cases !== "lower" && U, cases !== "upper" && U.toLowerCase()].filter((ch) => ch && PRINT[ch]));
 }
 
 // Guide heights on offer, headline to baseline, in inches.
@@ -33,8 +36,8 @@ export function cleanWords(words, max = WORDS_MAX) {
   return list.map(cleanName).filter(Boolean).slice(0, max);
 }
 
-export function planBook({ trim = "8.5x11", bleed = false, guideIn = 0.75, numbers = false, lines = false, words = [] } = {}) {
-  const singles = [...(lines ? LINE_PAGES : []), ...letterPairs(), ...(numbers ? DIGITS.map((d) => [d]) : [])];
+export function planBook({ trim = "8.5x11", bleed = false, guideIn = 0.75, numbers = false, lines = false, words = [], cases = "both" } = {}) {
+  const singles = [...(lines ? LINE_PAGES : []), ...letterPairs(CASES[cases] ? cases : "both"), ...(numbers ? DIGITS.map((d) => [d]) : [])];
   const extra = cleanWords(words, wordsMax(numbers, lines));
   const geom = pageGeometry({ trim, bleed, pageCount: singles.length + extra.length });
   return {

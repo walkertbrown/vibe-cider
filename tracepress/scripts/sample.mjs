@@ -60,6 +60,16 @@ export const SAMPLES = {
     title: "Free Tracing Lines Worksheets, Pre-Writing Printable PDF · Trace Press",
     subject: "Four printable pre-writing pages: down and across lines, slants, zigzags and waves, circles and crosses, each with numbered start dots and direction arrows, then rows to trace on four-line guides with 1-inch lines for ages 4 to 5. 8.5 x 11. Made free with Trace Press.",
   },
+  upper: {
+    file: "uppercase-letter-tracing-worksheets.pdf",
+    title: "Free Uppercase Letter Tracing Worksheets A–Z, PDF · Trace Press",
+    subject: "26 printable capital letter tracing pages, A to Z: each letter large with numbered start dots and stroke-order arrows, then rows of dotted capitals to trace on four-line guides with 1-inch lines for ages 4 to 5. 8.5 x 11. Made free with Trace Press.",
+  },
+  lower: {
+    file: "lowercase-letter-tracing-worksheets.pdf",
+    title: "Free Lowercase Letter Tracing Worksheets a–z, PDF · Trace Press",
+    subject: "26 printable lowercase letter tracing pages, a to z: each letter large with numbered start dots and stroke-order arrows, then rows of dotted letters to trace on four-line guides with 1-inch lines for ages 4 to 5. 8.5 x 11. Made free with Trace Press.",
+  },
 };
 
 // The pre-primer list, read from the button on /sight-word-tracing-workbook
@@ -92,8 +102,8 @@ function meta(doc, { title, subject }) {
 // `from` keeps only the pages from that index on (the number worksheets are
 // the digit pages of a book with numbers on, without A–Z in front), and `to`
 // stops before that index (the line worksheets are the four pages before A).
-async function book(sample, { words = [], numbers = false, lines = false, guideIn = GUIDE_IN, from = 0, to } = {}) {
-  const opts = { trim: TRIM, guideIn, words, numbers, lines };
+async function book(sample, { words = [], numbers = false, lines = false, cases = "both", guideIn = GUIDE_IN, from = 0, to } = {}) {
+  const opts = { trim: TRIM, guideIn, words, numbers, lines, cases };
   let doc = await PDFDocument.load(await renderBook(opts, fonts));
   if (from || to) {
     const whole = doc;
@@ -129,6 +139,8 @@ await book(SAMPLES.book);
 await book(SAMPLES.sightWords, { words: PRE_PRIMER });
 await book(SAMPLES.numbers, { numbers: true, guideIn: 1, from: 26 });
 await book(SAMPLES.lines, { lines: true, guideIn: 1, to: 4 });
+await book(SAMPLES.upper, { cases: "upper", guideIn: 1 });
+await book(SAMPLES.lower, { cases: "lower", guideIn: 1 });
 
 // The cover, sized for that book. The link sits on the free cover's own
 // back-panel note (cover.js drawPreviewMark puts it at the barcode margin).

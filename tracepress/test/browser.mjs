@@ -94,6 +94,14 @@ try {
   got = pdfText(await (await dl.createReadStream()).toArray().then(Buffer.concat));
   check(got.pages === 30, `lines: the download has 30 pages (${got.pages})`);
   await page.uncheck("#lines");
+  // One case: capitals alone, still 26 pages, and the download matches.
+  await page.selectOption("#cases", "upper");
+  for (let i = 0; i < 40; i++) if (!(await page.isDisabled("#prev"))) await page.click("#prev");
+  check(/Page 1 of 26 · A$/.test(await page.textContent("#pageNo")), `capitals: page 1 is A alone (${await page.textContent("#pageNo")})`);
+  [dl] = await Promise.all([page.waitForEvent("download"), page.click("#download")]);
+  got = pdfText(await (await dl.createReadStream()).toArray().then(Buffer.concat));
+  check(got.pages === 26, `capitals: the download has 26 pages (${got.pages})`);
+  await page.selectOption("#cases", "both");
 
   await page.click("#tier .linkish");
   check(await page.isVisible("#unlockDialog"), "the tier button opens the unlock dialog");
@@ -287,6 +295,10 @@ try {
       check(size === "1200x630" && (!pics.length || og.includes("/img/card-")), `share image: ${path} → ${og && new URL(og).pathname} (${size})`);
     }
   }
+  // The lowercase page links the tool with lowercase chosen.
+  await nm.goto(`${base}/?letters=lower`);
+  await nm.waitForSelector("#preview svg circle");
+  check(/Page 1 of 26 · a$/.test(await nm.textContent("#pageNo")), `?letters=lower: page 1 is a alone (${await nm.textContent("#pageNo")})`);
   const swW = await phone.goto(`${base}${sw}`).then(() => phone.evaluate(() => document.documentElement.scrollWidth));
   check(swW <= 390, `sight words: no sideways scroll on a phone (${swW}px)`);
 

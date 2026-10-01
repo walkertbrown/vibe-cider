@@ -6,7 +6,7 @@ import { planPaper } from "./paper.js";
 import { planName, nameInk } from "./name.js";
 import { drawLetterPage, drawShapes } from "./draw.js";
 
-export { letterPairs, GUIDES, planBook } from "./plan.js";
+export { letterPairs, CASES, GUIDES, planBook } from "./plan.js";
 
 // `fonts.bold` and `fonts.regular` are the bytes of embeddable TTFs (KDP needs
 // fonts embedded). `opts.licensed` is true only after /api/verify has found a

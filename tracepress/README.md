@@ -8,7 +8,7 @@ is uploaded.
 
 [![Trace Press: letter tracing workbooks for Amazon KDP](public/social-card.png)](https://tracepress.bananafest-destiny.com/)
 
-One page for each letter, A to Z, capital and lowercase. Each page has a model
+One page for each letter, A to Z, capital and lowercase (or one case alone). Each page has a model
 letter with numbered start dots and arrows showing stroke order, rows of dotted
 letters to trace, and rows for writing the letter alone. Then, if you want them:
 
@@ -38,6 +38,7 @@ Made by this code with the free version, footer line and PREVIEW mark included:
 ## Free pages
 
 - [Letter tracing worksheets, A to Z](https://tracepress.bananafest-destiny.com/letter-tracing)
+- [Uppercase letter tracing worksheets](https://tracepress.bananafest-destiny.com/uppercase-letter-tracing) and [lowercase](https://tracepress.bananafest-destiny.com/lowercase-letter-tracing): one letter to a page
 - [Number tracing worksheets, 0 to 9](https://tracepress.bananafest-destiny.com/number-tracing)
 - [Tracing lines worksheets](https://tracepress.bananafest-destiny.com/tracing-lines): lines, slants, zigzags, waves, circles, crosses
 - [Name tracing worksheet](https://tracepress.bananafest-destiny.com/name-tracing): type a name, print one page
