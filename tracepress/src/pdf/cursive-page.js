@@ -37,7 +37,10 @@ export function cursivePage({ geom, pageNumber, model, trace, guideIn, measure, 
   // size gets a smaller one, as on the name sheet.
   const widest = Math.max(...trace.map((t) => measure(t, 1)));
   const unit = Math.min((guideIn * PT) / 2, ((box.right - box.left) / (widest + 2 * pad)) * 0.999);
-  const pitch = (CURSIVE_REACH.above - CURSIVE_REACH.below + GAP_UNITS) * unit;
+  // Rows are spaced like print rows, guide to guide. The little the ink
+  // reaches past the guides (0.2 above, 0.1 below) comes out of the gap, so
+  // two rows' ink still can't meet (test/cursive.test.js).
+  const pitch = (3 + GAP_UNITS) * unit;
   // As many copies as fit, measured as one string so the spacing is the font's.
   const copies = (t) => {
     let text = t;

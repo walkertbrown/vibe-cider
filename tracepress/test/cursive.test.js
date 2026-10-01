@@ -78,6 +78,7 @@ test("no glyph reaches past CURSIVE_REACH, in any letter, digit or pair", async 
 
 test("a cursive book: same pages as print, lines stay print, every mark inside KDP's margins", async () => {
   const { planBook, GUIDES } = await import("../src/pdf/plan.js");
+  const { CURSIVE_REACH } = await import("../src/pdf/cursive-page.js");
   const { TRIMS, marginsForPage } = await import("../src/pdf/kdp.js");
   const { pageInk } = await import("../src/pdf/ink.js");
   const measure = (text, unit) => cursiveWidth(font, text, unit);
@@ -92,6 +93,11 @@ test("a cursive book: same pages as print, lines stay print, every mark inside K
       const runs = page.rows.flatMap((r) => r.runs ?? []);
       if (i >= 1 && i <= 4) assert.equal(runs.length, 0, `${where}: a line page in cursive`);
       if (i >= 5) assert.ok(runs.length > 0 && page.rows.every((r) => r.letters.length === 0), `${where}: not cursive`);
+      // Rows share the page's height without their ink meeting.
+      for (let r = 1; r < page.rows.length; r++) {
+        const up = page.rows[r - 1], dn = page.rows[r];
+        assert.ok(up.baseY + CURSIVE_REACH.below * up.unit > dn.baseY + CURSIVE_REACH.above * dn.unit, `${where}: rows ${r - 1} and ${r} can touch`);
+      }
       const m = marginsForPage(geom, i + 1);
       for (const s of pageInk(page, { cursive: font })) {
         if (s.kind !== "path") continue;
