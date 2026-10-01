@@ -44,7 +44,7 @@ Made by this code with the free version, footer line and PREVIEW mark included:
 - [Name tracing worksheet](https://tracepress.bananafest-destiny.com/name-tracing): type a name, print one page
 - [Sight word tracing workbook](https://tracepress.bananafest-destiny.com/sight-word-tracing-workbook)
 - [Handwriting practice paper](https://tracepress.bananafest-destiny.com/handwriting-paper): blank four-line guides
-- [How to make a handwriting workbook for KDP](https://tracepress.bananafest-destiny.com/how-to-make-a-handwriting-workbook), step by step
+- [How to make a tracing book (handwriting workbook) for KDP](https://tracepress.bananafest-destiny.com/how-to-make-a-handwriting-workbook), step by step
 
 ## KDP's rules, and where the code keeps them
 
