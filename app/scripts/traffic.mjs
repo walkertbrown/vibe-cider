@@ -585,7 +585,13 @@ try {
   // calculator HTML counted crawlers as users, and now the render module counts
   // clicks as books. Every time, the thing I keyed on sat one step upstream of
   // the act I was claiming.
-  const clickedDownload = people(/^\/js\/render-/);
+  //
+  // 2026-09-30 23:08Z, fourth: one address read all three sites in two minutes,
+  // every page and every chunk — render-* and cover-* included, no font, no
+  // beacon. A script-parser, not a click. A real click either fires a beacon or,
+  // behind an ad blocker, renders and so fetches the fonts.
+  const clicked = (re) => peopleWhere((paths) => [...paths].some((p) => re.test(p)) && [...paths].some((p) => /^\/px\/|^\/fonts\/.*\.ttf$/.test(p)));
+  const clickedDownload = clicked(/^\/js\/render-/);
   // .ttf only: /fonts/ also holds LICENSE.txt now, and a crawler fetching a
   // licence file is not a person making a book.
   //
@@ -593,7 +599,7 @@ try {
   // fonts. So fonts>0 proves a PDF was built, fonts==0 alongside a click proves
   // one was not, and the count itself is a floor rather than a tally of books.
   const fonts = people(/^\/fonts\/.*\.ttf$/);
-  const covers = people(/^\/js\/cover-/);
+  const covers = clicked(/^\/js\/cover-/);
   // Samples, counted only for addresses that ran the app — see the note above
   // the appIps query. The crawler total is kept and printed beside it, because
   // "0 people and 6 robots" is a different sentence from "0".
@@ -686,6 +692,8 @@ try {
   const realPeople = peopleWhere(RAN);
   if (realPeople !== null) {
     console.log(`    REAL PEOPLE (ran any page)  ${realPeople}   <-- everything else on this report is a stage of these ${realPeople}, or a robot`);
+    const silent = peopleWhere((paths) => RAN(paths) && ![...paths].some((p) => /^\/px\//.test(p)));
+    if (silent) console.log(`      ${silent} of them sent no beacon: an ad blocker, or something that fetches scripts without running them`);
   }
   console.log(`    Requests for the page       ${requested}`);
   const nobody = ranTheApp === null;
