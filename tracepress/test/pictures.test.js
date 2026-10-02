@@ -13,6 +13,7 @@ import { pictureFor, PICTURES } from "../src/pdf/pictures.js";
 import { PRINT } from "../src/glyphs/print.js";
 import { reach, labelRadius, MARK_PAD } from "../src/pdf/page.js";
 import { pageInk } from "../src/pdf/ink.js";
+import { PDFDocument } from "pdf-lib";
 
 const holiday = (slug) => {
   const page = readFileSync(new URL(`../public/${slug}-tracing-worksheets.html`, import.meta.url), "utf8");
@@ -77,4 +78,15 @@ test("pictures are outlines: stroked, never filled", () => {
   const draw = readFileSync(new URL("../src/pdf/draw.js", import.meta.url), "utf8");
   const branch = draw.slice(draw.indexOf('s.kind === "outline"'), draw.indexOf("}", draw.indexOf('s.kind === "outline"')));
   assert.ok(branch.includes("borderColor") && !/[^r]color:/.test(branch), "draw.js outline must not set a fill colour");
+});
+
+test("pdf-lib can draw every picture's paths", async () => {
+  const page = (await PDFDocument.create()).addPage();
+  const broken = [];
+  for (const [word, paths] of Object.entries(PICTURES)) {
+    for (const d of paths) {
+      try { page.drawSvgPath(d, { x: 10, y: 500, scale: 2, borderWidth: 1 }); } catch { broken.push(word); }
+    }
+  }
+  assert.deepEqual(broken, []);
 });

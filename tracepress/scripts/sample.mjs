@@ -111,6 +111,11 @@ export const SAMPLES = {
     title: "Free Transportation Tracing Worksheets: 20 Vehicle Words (PDF)",
     subject: "20 printable transportation word tracing worksheets: car, bus, train, tractor, firetruck, helicopter and more, each with a picture to colour, numbered start dots, stroke-order arrows and dotted rows to trace on four-line guides. 8.5 x 11. Made free with Trace Press.",
   },
+  animals: {
+    file: "animal-tracing-worksheets.pdf",
+    title: "Free Animal Tracing Worksheets: 20 Animal Words to Trace (PDF)",
+    subject: "20 printable animal word tracing worksheets: cat, dog, fish, rabbit, turtle, butterfly and more, each with a picture to colour, numbered start dots, stroke-order arrows and dotted rows to trace on four-line guides. 8.5 x 11. Made free with Trace Press.",
+  },
   christmas: {
     file: "christmas-tracing-worksheets.pdf",
     title: "Free Christmas Tracing Worksheets: 20 Words to Trace (PDF)",
@@ -215,7 +220,7 @@ await book(SAMPLES.preschool, { guideIn: 1, lines: true, cases: "upper", numbers
 // Holiday words are read from the button on each holiday page, like PRE_PRIMER.
 const holidayWords = (slug, label) => {
   const page = readFileSync(new URL(`../public/${slug}-tracing-worksheets.html`, import.meta.url), "utf8");
-  const words = decodeURIComponent(page.match(new RegExp(`href="/\\?words=([^"]+)">Make a ${label} tracing book`))[1]).split(",");
+  const words = decodeURIComponent(page.match(new RegExp(`href="/\\?words=([^"]+)">Make an? ${label} tracing book`))[1]).split(",");
   if (words.length !== 20) throw new Error(`${slug} list has ${words.length} words, expected 20`);
   return words;
 };
@@ -224,6 +229,7 @@ await book(SAMPLES.thanksgiving, { words: holidayWords("thanksgiving", "Thanksgi
 await book(SAMPLES.christmas, { words: holidayWords("christmas", "Christmas"), from: 26 });
 await book(SAMPLES.pictureWords, { words: holidayWords("picture-word", "picture word"), from: 26 });
 await book(SAMPLES.transportation, { words: holidayWords("transportation", "transportation"), from: 26 });
+await book(SAMPLES.animals, { words: holidayWords("animal", "animal"), from: 26 });
 await book(SAMPLES.cursiveBook, { script: "cursive", numbers: true, words: PRE_PRIMER });
 
 // The cover, sized for that book. The link sits on the free cover's own

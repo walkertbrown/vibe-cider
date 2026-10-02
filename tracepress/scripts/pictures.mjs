@@ -1,5 +1,7 @@
 // Writes src/pdf/pictures.js: the outline pictures a word page can carry,
-// copied out of Tabler Icons (MIT, in node_modules/@tabler/icons). Only the
+// copied out of Tabler Icons (MIT, in node_modules/@tabler/icons), and, for
+// animals Tabler doesn't draw, Lucide (ISC, node_modules/lucide-static), which
+// uses the same grid and stroke. Only the
 // words listed here ship, so the browser bundle stays small. Every Tabler
 // outline icon is a 24 × 24 grid of <path> elements with a 2-unit round
 // stroke; the paths are kept as they are.
@@ -32,14 +34,46 @@ const WORDS = {
   // Transportation
   ship: "ship", kayak: "kayak", caravan: "caravan", forklift: "forklift", ambulance: "ambulance", motorbike: "motorbike",
   submarine: "submarine", bulldozer: "bulldozer", firetruck: "firetruck", skateboard: "skateboard", parachute: "parachute",
+  dragon: "dragon",
+  // Animals from Lucide
+  bird: "lucide:bird", rabbit: "lucide:rabbit", bunny: "lucide:rabbit", turtle: "lucide:turtle", snail: "lucide:snail",
+  squirrel: "lucide:squirrel", rat: "lucide:rat", mouse: "lucide:rat", worm: "lucide:worm", panda: "lucide:panda",
+  shrimp: "lucide:shrimp",
 };
 
 const dir = new URL("../node_modules/@tabler/icons/icons/outline/", import.meta.url);
+const lucideDir = new URL("../node_modules/lucide-static/icons/", import.meta.url);
 const pkg = JSON.parse(readFileSync(new URL("../node_modules/@tabler/icons/package.json", import.meta.url), "utf8"));
+const lucidePkg = JSON.parse(readFileSync(new URL("../node_modules/lucide-static/package.json", import.meta.url), "utf8"));
+// A <circle> as a path: two half-circle arcs.
+const circle = (cx, cy, r) => `M${cx - r} ${cy}a${r} ${r} 0 1 0 ${2 * r} 0a${r} ${r} 0 1 0 ${-2 * r} 0`;
+// Lucide packs arc flags against the next number ("a3 3 0 003.2 1.8"), which
+// pdf-lib's path parser can't read. Rewrite a path with every argument
+// spaced and every command letter written out.
+const ARGS = { m: 2, l: 2, h: 1, v: 1, c: 6, s: 4, q: 4, t: 2, a: 7, z: 0 };
+function spaced(d) {
+  const out = [];
+  let i = 0, cmd = null;
+  const ws = () => { while (i < d.length && /[\s,]/.test(d[i])) i++; };
+  const num = () => { ws(); const m = /^[-+]?(\d*\.\d+|\d+\.?)(e[-+]?\d+)?/i.exec(d.slice(i)); if (!m) throw new Error(`bad path ${d} at ${i}`); i += m[0].length; return +m[0]; };
+  const flag = () => { ws(); const f = d[i++]; if (f !== "0" && f !== "1") throw new Error(`bad arc flag in ${d}`); return +f; };
+  for (ws(); i < d.length; ws()) {
+    if (/[a-z]/i.test(d[i])) cmd = d[i++];
+    else if (!cmd) throw new Error(`bad path ${d}`);
+    const n = ARGS[cmd.toLowerCase()];
+    const args = cmd.toLowerCase() === "a" ? [num(), num(), num(), flag(), flag(), num(), num()] : Array.from({ length: n }, num);
+    out.push(cmd + args.join(" "));
+    if (cmd === "m") cmd = "l"; else if (cmd === "M") cmd = "L";
+  }
+  return out.join("");
+}
+
 const out = {};
 for (const [word, icon] of Object.entries(WORDS)) {
-  const svg = readFileSync(new URL(`${icon}.svg`, dir), "utf8");
-  const paths = [...svg.matchAll(/<path d="([^"]+)"/g)].map((m) => m[1]);
+  const lucide = icon.startsWith("lucide:");
+  let svg = readFileSync(lucide ? new URL(`${icon.slice(7)}.svg`, lucideDir) : new URL(`${icon}.svg`, dir), "utf8");
+  if (lucide) svg = svg.replace(/<circle cx="([\d.]+)" cy="([\d.]+)" r="([\d.]+)"\s*\/>/g, (_, cx, cy, r) => `<path d="${circle(+cx, +cy, +r)}" />`);
+  const paths = [...svg.matchAll(/<path d="([^"]+)"/g)].map((m) => (lucide ? spaced(m[1]) : m[1]));
   if (!paths.length || /<(circle|rect|line|polyline|ellipse|polygon)\b/.test(svg)) throw new Error(`${icon}: not plain paths`);
   out[word] = paths;
 }
@@ -51,6 +85,9 @@ writeFileSync(new URL("../src/pdf/pictures.js", import.meta.url), `// Generated 
 // Tabler Icons, https://tabler.io/icons
 // MIT License. Copyright (c) 2020-2026 Paweł Kuna.
 // The full licence text is public/licenses/tabler-icons.txt.
+// Animals Tabler lacks are from Lucide ${lucidePkg.version}, https://lucide.dev
+// ISC License. Copyright (c) 2026 Lucide Icons and Contributors.
+// The full licence text is public/licenses/lucide.txt.
 export const PICTURES = {
 ${lines.join("\n")}
 };
