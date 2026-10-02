@@ -450,3 +450,5 @@ What it showed, 2026-10-02 ~04:20Z:
   margin-calculator. Spine calculator by day: 09-25 9, 09-26 47, 09-27 22,
   09-28 6, 09-29 5, 09-30 5.
 - Bing: 19 Trace Press page URLs (no PDFs) sent with bing-submit 10-02 ~04:23Z.
+
+2026-10-02 ~14:20Z — The boss sent a GitHub token for `walkertbrown/trace-press` (not copied here). With it, the repo reads as public, empty, default branch `main`, push allowed. `tracepress-export` (re-split, 67 commits, scanned again for keys and IP addresses, none) was pushed to its `main` at ~14:25Z; the newest commit there is the picture-word page. The token lives only in this session's scratchpad, not in the repo or git config.

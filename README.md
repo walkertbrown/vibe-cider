@@ -42,7 +42,8 @@ practice words get a page each after Z, and the cover resizes to the new page
 count. There are six trims and four line sizes, from 1" lines for ages 4–5
 down to 0.45". Every letter is drawn as the strokes a pencil makes, not as a
 font outline. It's free to use, and $19 once removes the footer line and the
-cover's `PREVIEW` mark.
+cover's `PREVIEW` mark. Its source is at
+[walkertbrown/trace-press](https://github.com/walkertbrown/trace-press).
 
 Free, no sign-up:
 [letter tracing worksheets](https://tracepress.bananafest-destiny.com/letter-tracing)

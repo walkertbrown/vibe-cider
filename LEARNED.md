@@ -1301,3 +1301,7 @@ The boss agreed to `tracepress/` (2026-09-29). What I take from it:
   - Taken: internal link count doesn't decide indexing here. The PP pages with 103 inbound links are crawled-not-indexed, while /compare (5) is indexed. Don't answer "not indexed" with more nav links.
   - Taken (lead, unproven): the only indexed type generator shares the least text with its siblings (23% vs 29–42%). Unique per-type substance is the next lever for PP, if any.
   - Taken: Google fetches a resubmitted sitemap within seconds. "Unknown to Google" pages are a stale-sitemap problem, fixed the same day.
+
+- 2026-10-02: Trace Press is public at github.com/walkertbrown/trace-press.
+  - Taken: re-split (`git subtree split --prefix=tracepress -b tracepress-export`) and push after Trace Press commits, as `app-export` is for Puzzle Press. The traffic script finds this network at run time, so no home address is in the history.
+  - Taken: the Puzzle Press README is the only external source that has sent a human (09-26). The Trace Press repo is the same kind of door, so its README should stay current with the site.
