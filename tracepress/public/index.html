@@ -53,6 +53,12 @@
   .pager button { font: inherit; padding: 8px 14px; border: 1px solid var(--line); border-radius: 8px; background: #fff; cursor: pointer; }
   .pager button:disabled { opacity: 0.4; cursor: default; }
   #pageNo { color: var(--muted); font-size: 14px; }
+  section.pages { max-width: 1100px; margin: 0 auto; padding: 8px 24px 8px; }
+  section.pages h3 { margin: 0 0 10px; font-size: 17px; }
+  section.pages .row { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 16px; }
+  section.pages figure { margin: 0; }
+  section.pages img { display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: 6px; background: #fff; }
+  section.pages figcaption { color: var(--muted); font-size: 13px; margin-top: 6px; line-height: 1.4; }
   section.info { max-width: 1100px; margin: 0 auto; padding: 8px 24px 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
   section.info h3 { margin: 0 0 6px; font-size: 17px; }
   section.info p, section.info li { color: var(--muted); }
@@ -135,6 +141,17 @@
     </div>
   </div>
 </main>
+
+<section class="pages" aria-label="Sample pages">
+  <h3>What the pages look like</h3>
+  <div class="row">
+    <figure><img src="/img/letter-tracing-worksheet-a.png" width="720" height="932" loading="lazy" alt="A letter tracing page for A: a large model A and a with numbered start dots and stroke arrows, then rows of dotted letters to trace on four-line guides"><figcaption>A letter page: start dots, arrows, rows to trace. <a href="/letter-tracing">Free A–Z worksheets</a></figcaption></figure>
+    <figure><img src="/img/animal-tracing-worksheet-rabbit.png" width="720" height="932" loading="lazy" alt="A word tracing page for rabbit, with a rabbit outline to colour beside the word, then dotted rows of the word to trace"><figcaption>A practice word with its picture to colour. <a href="/animal-tracing-worksheets">Free animal worksheets</a></figcaption></figure>
+    <figure><img src="/img/number-tracing-worksheet-3.png" width="720" height="932" loading="lazy" alt="A number tracing page for 3, with start dots and arrows, then rows of dotted 3s to trace"><figcaption>A number page, 0 to 9. <a href="/number-tracing">Free number worksheets</a></figcaption></figure>
+    <figure><img src="/img/cursive-letter-tracing-worksheet-b.png" width="720" height="932" loading="lazy" alt="A cursive letter tracing page for B and b, solid cursive letters then grey rows to trace"><figcaption>The same book in cursive. <a href="/cursive-letter-tracing">Free cursive worksheets</a></figcaption></figure>
+    <figure><img src="/img/tracing-book-cover-sample.png" width="720" height="468" loading="lazy" alt="A full-wrap paperback cover for a letter tracing workbook: back, spine and front on one page, with a traced Aa on the front"><figcaption>The full-wrap cover, sized to the book. <a href="/tracing-book-cover-size">Cover sizes</a></figcaption></figure>
+  </div>
+</section>
 
 <section class="info">
   <div>
