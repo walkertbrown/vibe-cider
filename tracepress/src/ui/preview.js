@@ -30,6 +30,8 @@ export function pageSvg(geom, layout, { licensed = false, shapes, cursive } = {}
       add("polygon", { points: s.pts.map(([x, y]) => `${x},${H - y}`).join(" "), fill: css(s.color) });
     } else if (s.kind === "path") {
       add("path", { d: s.d, transform: `translate(${s.x} ${H - s.y}) scale(${s.scale})`, fill: css(s.color) });
+    } else if (s.kind === "outline") {
+      for (const d of s.paths) add("path", { d, transform: `translate(${s.x} ${H - s.y}) scale(${s.scale})`, fill: "none", stroke: css(s.color), "stroke-width": s.width / s.scale, "stroke-linecap": "round", "stroke-linejoin": "round" });
     } else if (s.kind === "text") {
       add("text", { x: s.x, y: H - s.y, "font-size": s.size, "font-family": "Liberation Sans, Arial, Helvetica, sans-serif", "font-weight": s.font === "bold" ? 700 : 400, fill: css(s.color), "text-anchor": "middle" }, s.text);
     }

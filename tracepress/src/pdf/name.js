@@ -13,6 +13,10 @@ const MODEL_SCALE = 1.5; // as in page.js
 const PAD = 0.5; // as in page.js: room left of the first letter
 const SPACE = 1.2; // a space between words, in guide units
 const REPEAT_GAP = 2.5; // between copies of the name on a trace row, in guide units
+const PICTURE_MAX = 0.24; // a picture is at most this share of the content width
+const PICTURE_GAP = 0.15; // between the model word and its picture, in picture widths
+const PICTURE_MIN = 0.6; // the smallest picture, as a share of the largest
+const PICTURE_SHRINK = 0.9; // the word may shrink this far to sit beside its picture
 
 // Only the letters there are strokes for (A–Z, a–z) and single spaces.
 export function cleanName(s) {
@@ -36,28 +40,49 @@ function place(name, x0, unit, ext) {
 
 const plain = (ch) => ({ minX: 0, maxX: PRINT[ch].width });
 
-export function namePage({ geom, pageNumber = 1, name, guideIn }) {
+// `picture` (pictures.js paths) puts an outline picture of the word at the
+// right end of the model row, or above it for a long word, for a child to
+// colour. The trace rows start below whichever is lower.
+export function namePage({ geom, pageNumber = 1, name, guideIn, picture = null }) {
   const box = contentBox(geom, pageNumber);
   const width = box.right - box.left;
   const rows = [];
   let top = box.top;
+  const maxPic = picture ? Math.min(3 * (guideIn * MODEL_SCALE * PT) / 2, PICTURE_MAX * width) : 0;
 
-  // The model row, shrunk until the name fits the width with its marks.
-  let mUnit = (guideIn * MODEL_SCALE * PT) / 2, model;
-  for (;;) {
-    const labelR = labelRadius(mUnit) / mUnit;
-    const reaches = new Map([...new Set(name.replace(/ /g, ""))].map((ch) => [ch, reach(PRINT[ch], labelR, MARK_PAD / mUnit)]));
-    const p = place(name, box.left + PAD * mUnit, mUnit, (ch) => reaches.get(ch));
-    if (p.end <= box.right || mUnit < 4) {
-      const all = [...reaches.values()];
-      model = { p, above: Math.max(2, ...all.map((r) => r.maxY)), below: Math.min(-1, ...all.map((r) => r.minY)) };
-      break;
+  // The model row, shrunk until the name fits up to `right` with its marks.
+  const fit = (right) => {
+    for (let mUnit = (guideIn * MODEL_SCALE * PT) / 2; ; mUnit *= 0.95) {
+      const labelR = labelRadius(mUnit) / mUnit;
+      const reaches = new Map([...new Set(name.replace(/ /g, ""))].map((ch) => [ch, reach(PRINT[ch], labelR, MARK_PAD / mUnit)]));
+      const p = place(name, box.left + PAD * mUnit, mUnit, (ch) => reaches.get(ch));
+      if (p.end <= right || mUnit < 4) {
+        const all = [...reaches.values()];
+        return { mUnit, p, above: Math.max(2, ...all.map((r) => r.maxY)), below: Math.min(-1, ...all.map((r) => r.minY)) };
+      }
     }
-    mUnit *= 0.95;
+  };
+  let model = fit(box.right);
+  const pictures = [];
+  if (picture) {
+    // Beside the word when that costs the word little of its size; a long
+    // word keeps its size and the picture goes above it instead.
+    const beside = fit(box.right - PICTURE_MIN * maxPic * (1 + PICTURE_GAP));
+    if (beside.mUnit >= PICTURE_SHRINK * model.mUnit) {
+      model = beside;
+      const size = Math.min(maxPic, (box.right - model.p.end) / (1 + PICTURE_GAP));
+      pictures.push({ paths: picture, x: box.right - size, y: top, size });
+    } else {
+      const size = maxPic;
+      pictures.push({ paths: picture, x: (box.left + box.right - size) / 2, y: top, size });
+      top -= size + GAP_UNITS * model.mUnit;
+    }
   }
+  const { mUnit } = model;
   const mBase = top - model.above * mUnit;
   rows.push({ kind: "model", unit: mUnit, baseY: mBase, left: box.left, right: box.right, letters: model.p.letters.map((l) => ({ ...l, marks: true })) });
   top = mBase + model.below * mUnit - GAP_UNITS * mUnit;
+  for (const pic of pictures) top = Math.min(top, pic.y - pic.size - GAP_UNITS * mUnit);
 
   // Trace rows: as many whole copies of the name as fit. A name too long for
   // one copy at this guide size gets a smaller guide on these rows.
@@ -82,7 +107,7 @@ export function namePage({ geom, pageNumber = 1, name, guideIn }) {
   for (let i = 0; i < n; i++, top -= pitch) {
     rows.push({ kind: i < n - free ? "trace" : "free", unit, baseY: top - 2 * unit, left: box.left, right: box.right, letters: i < n - free ? trace : [] });
   }
-  return { box, rows };
+  return { box, rows, pictures };
 }
 
 // In cursive (`script: "cursive"`, with `measure` as for planBook) the sheet

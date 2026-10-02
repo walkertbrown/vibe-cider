@@ -15,6 +15,8 @@ export const BLACK = [0, 0, 0];
 export const WHITE = [1, 1, 1];
 export const RED = [0.8, 0.15, 0.1];
 export const GREEN = [0.1, 0.45, 0.25];
+// A picture's outline, in points: well above KDP's 0.75 pt minimum line.
+export const PICTURE_W = 2.5;
 export const TRACE = [0.7, 0.7, 0.7]; // cursive to write over: a 30% tint, KDP's floor is 10%
 
 // Shapes:
@@ -23,6 +25,9 @@ export const TRACE = [0.7, 0.7, 0.7]; // cursive to write over: a 30% tint, KDP'
 //   { kind: "tri", pts: [[x, y] × 3], color }
 //   { kind: "path", d, x, y, scale, color }
 //     (an SVG path, y down, in font units: cursive.js; filled)
+//   { kind: "outline", paths, x, y, scale, width, color }
+//     (SVG paths, y down, on a 24-unit grid with (x, y) its top left: a
+//     picture from pictures.js; stroked `width` pt with round ends, not filled)
 //   { kind: "text", text, x, y, size, font: "bold" | "regular", color, align: "center" }
 //     (x is the centre; y the baseline)
 // `heavy` (the cover) thickens dots and arrows with the letter size; the
@@ -45,6 +50,7 @@ export function pageInk(layout, { licensed = false, heavy = false, cursive } = {
     for (const r of row.runs ?? []) out.push(...cursiveRun(cursive, r.text, { x: r.x, baseY, unit, color: row.kind === "model" ? BASE : TRACE }).shapes);
   }
   for (const t of layout.text ?? []) out.push({ kind: "text", color: BLACK, ...t });
+  for (const p of layout.pictures ?? []) out.push({ kind: "outline", paths: p.paths, x: p.x, y: p.y, scale: p.size / 24, width: PICTURE_W, color: BLACK });
   return out;
 }
 

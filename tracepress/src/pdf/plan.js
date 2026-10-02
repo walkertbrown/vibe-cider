@@ -6,6 +6,7 @@ import { pageGeometry } from "./kdp.js";
 import { letterPage, belongsPage } from "./page.js";
 import { namePage, cleanName } from "./name.js";
 import { cursivePage } from "./cursive-page.js";
+import { pictureFor } from "./pictures.js";
 
 // Print is drawn as dotted strokes with start dots and arrows; cursive as
 // joined letters to trace over (cursive-page.js), which needs `measure`.
@@ -61,7 +62,7 @@ export function planBook({ trim = "8.5x11", bleed = false, guideIn = 0.75, numbe
       }),
       ...extra.map((word, i) => {
         const pageNumber = first + singles.length + i + 1;
-        return { ...(cursive ? cursivePage({ geom, pageNumber, model: word, trace: [word], guideIn, measure, word: true }) : namePage({ geom, pageNumber, name: word, guideIn })), word };
+        return { ...(cursive ? cursivePage({ geom, pageNumber, model: word, trace: [word], guideIn, measure, word: true }) : namePage({ geom, pageNumber, name: word, guideIn, picture: pictureFor(word) })), word };
       }),
     ],
   };

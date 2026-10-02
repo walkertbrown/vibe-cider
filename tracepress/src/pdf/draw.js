@@ -1,7 +1,7 @@
 // Drawing into a PDF with pdf-lib, from the shapes in ink.js.
 import {
   rgb, drawEllipsePath, fill, setFillingColor, pushGraphicsState, popGraphicsState,
-  concatTransformationMatrix, drawObject,
+  concatTransformationMatrix, drawObject, LineCapStyle,
 } from "pdf-lib";
 import { pageInk } from "./ink.js";
 
@@ -56,6 +56,9 @@ export function drawShapes(page, shapes, fonts) {
       page.drawSvgPath(`M ${a[0]} ${-a[1]} L ${b[0]} ${-b[1]} L ${c[0]} ${-c[1]} Z`, { x: 0, y: 0, color: colour(s.color) });
     } else if (s.kind === "path") {
       page.drawSvgPath(s.d, { x: s.x, y: s.y, scale: s.scale, color: colour(s.color) });
+    } else if (s.kind === "outline") {
+      // pdf-lib scales the stroke with the path, so the width is divided back.
+      for (const d of s.paths) page.drawSvgPath(d, { x: s.x, y: s.y, scale: s.scale, borderColor: colour(s.color), borderWidth: s.width / s.scale, borderLineCap: LineCapStyle.Round });
     } else if (s.kind === "text") {
       const font = fonts[s.font];
       page.drawText(s.text, { x: s.x - font.widthOfTextAtSize(s.text, s.size) / 2, y: s.y, size: s.size, font, color: colour(s.color) });

@@ -94,17 +94,17 @@ export const SAMPLES = {
   halloween: {
     file: "halloween-tracing-worksheets.pdf",
     title: "Free Halloween Tracing Worksheets: 20 Words to Trace (PDF)",
-    subject: "20 printable Halloween word tracing worksheets: bat, moon, witch, pumpkin, skeleton and more, each with numbered start dots, stroke-order arrows and dotted rows to trace on four-line guides. 8.5 x 11. Made free with Trace Press.",
+    subject: "20 printable Halloween word tracing worksheets: bat, moon, ghost, pumpkin, spider and more, each with a picture to colour, numbered start dots, stroke-order arrows and dotted rows to trace on four-line guides. 8.5 x 11. Made free with Trace Press.",
   },
   thanksgiving: {
     file: "thanksgiving-tracing-worksheets.pdf",
     title: "Free Thanksgiving Tracing Worksheets: 20 Words to Trace (PDF)",
-    subject: "20 printable Thanksgiving word tracing worksheets: pie, corn, turkey, harvest, cranberry and more, each with numbered start dots, stroke-order arrows and dotted rows to trace on four-line guides. 8.5 x 11. Made free with Trace Press.",
+    subject: "20 printable Thanksgiving word tracing worksheets: cake, bread, apple, pumpkin, feather and more, each with a picture to colour, numbered start dots, stroke-order arrows and dotted rows to trace on four-line guides. 8.5 x 11. Made free with Trace Press.",
   },
   christmas: {
     file: "christmas-tracing-worksheets.pdf",
     title: "Free Christmas Tracing Worksheets: 20 Words to Trace (PDF)",
-    subject: "20 printable Christmas word tracing worksheets: tree, star, snowman, reindeer and more, each with numbered start dots, stroke-order arrows and dotted rows to trace on four-line guides. 8.5 x 11. Made free with Trace Press.",
+    subject: "20 printable Christmas word tracing worksheets: star, bell, snowman, reindeer, gingerbread and more, each with a picture to colour, numbered start dots, stroke-order arrows and dotted rows to trace on four-line guides. 8.5 x 11. Made free with Trace Press.",
   },
   cursiveBook: {
     file: "cursive-handwriting-workbook-sample-8.5x11.pdf",
