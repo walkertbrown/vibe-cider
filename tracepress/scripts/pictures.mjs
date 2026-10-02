@@ -39,6 +39,11 @@ const WORDS = {
   bird: "lucide:bird", rabbit: "lucide:rabbit", bunny: "lucide:rabbit", turtle: "lucide:turtle", snail: "lucide:snail",
   squirrel: "lucide:squirrel", rat: "lucide:rat", mouse: "lucide:rat", worm: "lucide:worm", panda: "lucide:panda",
   shrimp: "lucide:shrimp",
+  // Food
+  nut: "lucide:nut", soup: "soup", grape: "grape", cheese: "cheese", banana: "banana", burger: "burger", hamburger: "burger",
+  melon: "melon", avocado: "avocado", sausage: "sausage", coffee: "coffee", salad: "salad",
+  bean: "lucide:bean", donut: "lucide:donut", cupcake: "lucide:cupcake", broccoli: "lucide:broccoli",
+  popcorn: "lucide:popcorn", croissant: "lucide:croissant",
 };
 
 const dir = new URL("../node_modules/@tabler/icons/icons/outline/", import.meta.url);

@@ -116,6 +116,11 @@ export const SAMPLES = {
     title: "Free Animal Tracing Worksheets: 20 Animal Words to Trace (PDF)",
     subject: "20 printable animal word tracing worksheets: cat, dog, fish, rabbit, turtle, butterfly and more, each with a picture to colour, numbered start dots, stroke-order arrows and dotted rows to trace on four-line guides. 8.5 x 11. Made free with Trace Press.",
   },
+  food: {
+    file: "food-tracing-worksheets.pdf",
+    title: "Free Food Tracing Worksheets: 20 Food Words to Trace (PDF)",
+    subject: "20 printable food word tracing worksheets: egg, apple, pizza, banana, carrot, broccoli and more, each with a picture to colour, numbered start dots, stroke-order arrows and dotted rows to trace on four-line guides. 8.5 x 11. Made free with Trace Press.",
+  },
   christmas: {
     file: "christmas-tracing-worksheets.pdf",
     title: "Free Christmas Tracing Worksheets: 20 Words to Trace (PDF)",
@@ -230,6 +235,7 @@ await book(SAMPLES.christmas, { words: holidayWords("christmas", "Christmas"), f
 await book(SAMPLES.pictureWords, { words: holidayWords("picture-word", "picture word"), from: 26 });
 await book(SAMPLES.transportation, { words: holidayWords("transportation", "transportation"), from: 26 });
 await book(SAMPLES.animals, { words: holidayWords("animal", "animal"), from: 26 });
+await book(SAMPLES.food, { words: holidayWords("food", "food"), from: 26 });
 await book(SAMPLES.cursiveBook, { script: "cursive", numbers: true, words: PRE_PRIMER });
 
 // The cover, sized for that book. The link sits on the free cover's own

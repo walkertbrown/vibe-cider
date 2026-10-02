@@ -74,7 +74,9 @@ for pre-writing,
 [transportation tracing worksheets](https://tracepress.bananafest-destiny.com/transportation-tracing-worksheets)
 (20 vehicles, car to helicopter),
 [animal tracing worksheets](https://tracepress.bananafest-destiny.com/animal-tracing-worksheets)
-(20 animals, cat to butterfly), a
+(20 animals, cat to butterfly),
+[food tracing worksheets](https://tracepress.bananafest-destiny.com/food-tracing-worksheets)
+(20 foods, egg to broccoli), a
 ["This book belongs to" page](https://tracepress.bananafest-destiny.com/this-book-belongs-to-page)
 in all six KDP trims, a
 [name tracing worksheet generator](https://tracepress.bananafest-destiny.com/name-tracing)
