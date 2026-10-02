@@ -54,6 +54,7 @@ letter tracing,
 A to Z, a
 [cursive name tracing worksheet](https://tracepress.bananafest-destiny.com/cursive-name-tracing),
 a [cursive alphabet chart](https://tracepress.bananafest-destiny.com/cursive-alphabet-chart),
+[cursive practice sheets for adults](https://tracepress.bananafest-destiny.com/cursive-practice-sheets-for-adults),
 a [cursive handwriting workbook guide](https://tracepress.bananafest-destiny.com/cursive-handwriting-workbook)
 for KDP,
 [number tracing worksheets](https://tracepress.bananafest-destiny.com/number-tracing)

@@ -290,6 +290,9 @@ if (new URLSearchParams(location.search).get("belongs") === "1") el.belongs.chec
 const linkedCases = new URLSearchParams(location.search).get("letters");
 if (CASES[linkedCases]) el.cases.value = linkedCases;
 if (new URLSearchParams(location.search).get("script") === "cursive") el.script.value = "cursive";
+// ?guide=0.45 opens on that line size, if it is one of the sizes offered.
+const linkedGuide = new URLSearchParams(location.search).get("guide");
+if (Object.values(GUIDES).map(String).includes(linkedGuide)) el.age.value = linkedGuide;
 showScript();
 if (new URLSearchParams(location.search).get("paid") === "1" && !getLicense()) {
   history.replaceState(null, "", location.pathname);

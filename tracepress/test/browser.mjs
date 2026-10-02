@@ -362,6 +362,14 @@ try {
   await nm.goto(`${base}/?script=cursive`);
   await nm.waitForFunction(() => document.querySelectorAll("#preview svg path").length >= 10);
   check(await nm.inputValue("#script") === "cursive", "?script=cursive: Cursive chosen");
+  // The adult cursive page links the tool on the smallest lines; a size not
+  // offered is ignored.
+  await nm.goto(`${base}/?script=cursive&guide=0.45`);
+  await nm.waitForFunction(() => document.querySelectorAll("#preview svg path").length >= 10);
+  check(await nm.inputValue("#age") === "0.45" && await nm.inputValue("#script") === "cursive", `?guide=0.45: 0.45" lines in cursive (${await nm.inputValue("#age")})`);
+  await nm.goto(`${base}/?guide=3`);
+  await nm.waitForSelector("#preview svg");
+  check(await nm.inputValue("#age") === "0.75", `?guide=3: ignored, stays 0.75" (${await nm.inputValue("#age")})`);
   // The "this book belongs to" page links the tool with the name page on.
   await nm.goto(`${base}/?belongs=1`);
   await nm.waitForSelector("#preview svg");
