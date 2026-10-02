@@ -25,6 +25,11 @@ const MODEL_SCALE = 1.5; // model row guide height against the trace rows'
 export const GAP_UNITS = 0.6; // clear space between rows, in guide units
 export const LETTER_GAP = 0.8; // space between letters, in guide units
 const PAD = 0.5; // room left of a letter for marks that overhang it (arrows, numbers)
+// A word page's picture (pictures.js), print (name.js) or cursive (cursive-page.js).
+export const PICTURE_MAX = 0.24; // a picture is at most this share of the content width
+export const PICTURE_GAP = 0.15; // between the model word and its picture, in picture widths
+export const PICTURE_MIN = 0.6; // the smallest picture, as a share of the largest
+export const PICTURE_SHRINK = 0.9; // the word may shrink this far to sit beside its picture
 export const MARK_PAD = 2.5; // points: half an arrow's line and its head's spread past its tip
 
 // How far a glyph's marks reach, in guide units, beyond the four-line guide

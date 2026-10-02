@@ -14,6 +14,9 @@ import { PRINT } from "../src/glyphs/print.js";
 import { reach, labelRadius, MARK_PAD } from "../src/pdf/page.js";
 import { pageInk } from "../src/pdf/ink.js";
 import { PDFDocument } from "pdf-lib";
+import fontkit from "@pdf-lib/fontkit";
+import { cursivePage, CURSIVE_REACH } from "../src/pdf/cursive-page.js";
+import { cursiveWidth } from "../src/pdf/cursive.js";
 
 const holiday = (slug) => {
   const page = readFileSync(new URL(`../public/${slug}-tracing-worksheets.html`, import.meta.url), "utf8");
@@ -60,6 +63,33 @@ test("a picture is inside the margins and clear of the model word and the trace 
     if (beside) assert.ok(pic.y - pic.size >= first.baseY + 2 * first.unit, `${at}: overlaps the first trace row`);
     assert.ok(bottom > first.baseY + 2 * first.unit, `${at}: word overlaps the first trace row`);
   }
+});
+
+test("in cursive too, a picture is inside the margins and clear of the model word and the trace rows", () => {
+  const font = fontkit.create(readFileSync(new URL("../public/fonts/PlaywriteUSTrad.ttf", import.meta.url)));
+  const measure = (text, unit) => cursiveWidth(font, text, unit);
+  const words = [...new Set([...HOLIDAY, "gingerbread", "snowflake", "bat"])];
+  const { above: up, below: down, side } = CURSIVE_REACH;
+  let besides = 0, aboves = 0;
+  for (const trim of Object.keys(TRIMS)) for (const guideIn of Object.values(GUIDES)) for (const word of words) {
+    const geom = pageGeometry({ trim, bleed: false });
+    const m = marginsForPage(geom, 1);
+    const layout = cursivePage({ geom, pageNumber: 1, model: word, trace: [word], guideIn, measure, word: true, picture: pictureFor(word) });
+    const [pic] = layout.pictures;
+    const at = `${trim} ${guideIn} ${word}`;
+    assert.ok(pic, at);
+    assert.ok(pic.x >= m.left - 0.01 && pic.x + pic.size <= geom.width - m.right + 0.01, `${at}: across`);
+    assert.ok(pic.y <= geom.height - m.top + 0.01, `${at}: top`);
+    const [model, first] = layout.rows;
+    const u = model.unit, run = model.runs[0];
+    const right = run.x + measure(run.text, u) + side * u;
+    const beside = right <= pic.x, above = model.baseY + up * u <= pic.y - pic.size;
+    assert.ok(beside || above, `${at}: overlaps the word`);
+    beside ? besides++ : aboves++;
+    if (beside) assert.ok(pic.y - pic.size >= first.baseY + up * first.unit, `${at}: overlaps the first trace row`);
+    assert.ok(model.baseY + down * u > first.baseY + up * first.unit, `${at}: word overlaps the first trace row`);
+  }
+  assert.ok(besides > 0 && aboves > 0, `both placements tested: ${besides} beside, ${aboves} above`);
 });
 
 test("a word with no picture gets the page it always had", () => {

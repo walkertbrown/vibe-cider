@@ -4,7 +4,7 @@
 // plan.js, so the page can preview it without pdf-lib.
 import { PRINT } from "../glyphs/print.js";
 import { pageGeometry, PT } from "./kdp.js";
-import { contentBox, reach, labelRadius, GAP_UNITS, LETTER_GAP, MARK_PAD, FOOTER_PT, LABEL_PT } from "./page.js";
+import { contentBox, reach, labelRadius, GAP_UNITS, LETTER_GAP, MARK_PAD, FOOTER_PT, LABEL_PT, PICTURE_MAX, PICTURE_GAP, PICTURE_MIN, PICTURE_SHRINK } from "./page.js";
 import { pageInk, GREY } from "./ink.js";
 import { cursivePage } from "./cursive-page.js";
 import { pictureFor } from "./pictures.js";
@@ -14,10 +14,6 @@ const MODEL_SCALE = 1.5; // as in page.js
 const PAD = 0.5; // as in page.js: room left of the first letter
 const SPACE = 1.2; // a space between words, in guide units
 const REPEAT_GAP = 2.5; // between copies of the name on a trace row, in guide units
-const PICTURE_MAX = 0.24; // a picture is at most this share of the content width
-const PICTURE_GAP = 0.15; // between the model word and its picture, in picture widths
-const PICTURE_MIN = 0.6; // the smallest picture, as a share of the largest
-const PICTURE_SHRINK = 0.9; // the word may shrink this far to sit beside its picture
 
 // Only the letters there are strokes for (A–Z, a–z) and single spaces.
 export function cleanName(s) {
@@ -114,14 +110,14 @@ export function namePage({ geom, pageNumber = 1, name, guideIn, picture = null }
 // In cursive (`script: "cursive"`, with `measure` as for planBook) the sheet
 // is a cursive word page: the name solid, rows of it in grey to write over,
 // then empty rows, as in a cursive book.
-// `pictures`: draw the word's picture, if it has one (print only), as a
-// workbook's word page does. The words tool asks for it; the name tool doesn't.
+// `pictures`: draw the word's picture, if it has one, as a workbook's word
+// page does. The words tool asks for it; the name tool doesn't.
 export function planName({ trim = "8.5x11", guideIn = 0.75, name = "", script = "print", measure, pictures = false } = {}) {
   if (script === "cursive" && !measure) throw new Error("cursive needs measure()");
   const geom = pageGeometry({ trim, bleed: false });
   const clean = cleanName(name) || "Name";
   const page = script === "cursive"
-    ? cursivePage({ geom, pageNumber: 1, model: clean, trace: [clean], guideIn, measure, word: true })
+    ? cursivePage({ geom, pageNumber: 1, model: clean, trace: [clean], guideIn, measure, word: true, picture: pictures ? pictureFor(clean) : null })
     : namePage({ geom, name: clean, guideIn, picture: pictures ? pictureFor(clean) : null });
   return { geom, name: clean, page };
 }

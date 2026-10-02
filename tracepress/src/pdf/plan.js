@@ -62,7 +62,7 @@ export function planBook({ trim = "8.5x11", bleed = false, guideIn = 0.75, numbe
       }),
       ...extra.map((word, i) => {
         const pageNumber = first + singles.length + i + 1;
-        return { ...(cursive ? cursivePage({ geom, pageNumber, model: word, trace: [word], guideIn, measure, word: true }) : namePage({ geom, pageNumber, name: word, guideIn, picture: pictureFor(word) })), word };
+        return { ...(cursive ? cursivePage({ geom, pageNumber, model: word, trace: [word], guideIn, measure, word: true, picture: pictureFor(word) }) : namePage({ geom, pageNumber, name: word, guideIn, picture: pictureFor(word) })), word };
       }),
     ],
   };
