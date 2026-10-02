@@ -51,6 +51,7 @@ try {
     ["tracing-font-for-kdp", "letter-tracing-worksheet-a", "Tracing fonts and KDP", "Print letters drawn as pencil strokes: no dotted font to license.", "For KDP sellers"],
     ["christmas-tracing-worksheets", "christmas-tracing-worksheet-tree", "Free Christmas tracing worksheets", "Twenty Christmas words to trace, from tree and star to reindeer."],
     ["halloween-tracing-worksheets", "halloween-tracing-worksheet-bat", "Free Halloween tracing worksheets", "Twenty Halloween words to trace, from bat and moon to skeleton."],
+    ["thanksgiving-tracing-worksheets", "thanksgiving-tracing-worksheet-pie", "Free Thanksgiving tracing worksheets", "Twenty Thanksgiving words to trace, from pie and corn to turkey."],
     ["handwriting-practice-sheets-for-adults", "handwriting-practice-sheet-for-adults-g", "Free handwriting practice sheets for adults", "A to Z and 0 to 9 on smaller lines, to trace and copy."],
     ["cursive-practice-sheets-for-adults", "cursive-practice-sheet-for-adults-m", "Free cursive practice sheets for adults", "A to Z in cursive on smaller lines, solid then grey to trace."],
     ["cursive-alphabet-chart", "cursive-alphabet-chart", "Free cursive alphabet chart", "A to Z, capital and lowercase, and 0 to 9, on one printable page."],

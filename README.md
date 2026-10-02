@@ -64,7 +64,8 @@ for KDP,
 for pre-writing,
 [preschool tracing worksheets](https://tracepress.bananafest-destiny.com/preschool-tracing-worksheets)
 (lines, A–Z capitals and 0–9 in one pack),
-[Halloween](https://tracepress.bananafest-destiny.com/halloween-tracing-worksheets) and
+[Halloween](https://tracepress.bananafest-destiny.com/halloween-tracing-worksheets),
+[Thanksgiving](https://tracepress.bananafest-destiny.com/thanksgiving-tracing-worksheets) and
 [Christmas tracing worksheets](https://tracepress.bananafest-destiny.com/christmas-tracing-worksheets)
 (20 words), a
 ["This book belongs to" page](https://tracepress.bananafest-destiny.com/this-book-belongs-to-page)
