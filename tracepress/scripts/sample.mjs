@@ -91,6 +91,11 @@ export const SAMPLES = {
     title: "Free Preschool Tracing Worksheets: Lines, A–Z, 0–9 (PDF)",
     subject: "40 printable preschool tracing worksheets on big 1-inch lines: 4 pages of pre-writing lines, the capital letters A to Z, and the numbers 0 to 9, each with a start dot and arrows. 8.5 x 11. Made free with Trace Press.",
   },
+  halloween: {
+    file: "halloween-tracing-worksheets.pdf",
+    title: "Free Halloween Tracing Worksheets: 20 Words to Trace (PDF)",
+    subject: "20 printable Halloween word tracing worksheets: bat, moon, witch, pumpkin, skeleton and more, each with numbered start dots, stroke-order arrows and dotted rows to trace on four-line guides. 8.5 x 11. Made free with Trace Press.",
+  },
   christmas: {
     file: "christmas-tracing-worksheets.pdf",
     title: "Free Christmas Tracing Worksheets: 20 Words to Trace (PDF)",
@@ -192,11 +197,15 @@ await book(SAMPLES.cursive, { script: "cursive", guideIn: 1 });
 await book(SAMPLES.cursiveAdult, { script: "cursive", guideIn: 0.45 });
 await book(SAMPLES.printAdult, { guideIn: 0.45, numbers: true });
 await book(SAMPLES.preschool, { guideIn: 1, lines: true, cases: "upper", numbers: true });
-// The words are read from the button on /christmas-tracing-worksheets, like PRE_PRIMER.
-const xmasPage = readFileSync(new URL("../public/christmas-tracing-worksheets.html", import.meta.url), "utf8");
-const CHRISTMAS = decodeURIComponent(xmasPage.match(/href="\/\?words=([^"]+)">Make a Christmas tracing book/)[1]).split(",");
-if (CHRISTMAS.length !== 20) throw new Error(`christmas list has ${CHRISTMAS.length} words, expected 20`);
-await book(SAMPLES.christmas, { words: CHRISTMAS, from: 26 });
+// Holiday words are read from the button on each holiday page, like PRE_PRIMER.
+const holidayWords = (slug, label) => {
+  const page = readFileSync(new URL(`../public/${slug}-tracing-worksheets.html`, import.meta.url), "utf8");
+  const words = decodeURIComponent(page.match(new RegExp(`href="/\\?words=([^"]+)">Make a ${label} tracing book`))[1]).split(",");
+  if (words.length !== 20) throw new Error(`${slug} list has ${words.length} words, expected 20`);
+  return words;
+};
+await book(SAMPLES.halloween, { words: holidayWords("halloween", "Halloween"), from: 26 });
+await book(SAMPLES.christmas, { words: holidayWords("christmas", "Christmas"), from: 26 });
 await book(SAMPLES.cursiveBook, { script: "cursive", numbers: true, words: PRE_PRIMER });
 
 // The cover, sized for that book. The link sits on the free cover's own
