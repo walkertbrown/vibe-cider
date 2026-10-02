@@ -67,7 +67,9 @@ for pre-writing,
 [Halloween](https://tracepress.bananafest-destiny.com/halloween-tracing-worksheets),
 [Thanksgiving](https://tracepress.bananafest-destiny.com/thanksgiving-tracing-worksheets) and
 [Christmas tracing worksheets](https://tracepress.bananafest-destiny.com/christmas-tracing-worksheets)
-(20 words), a
+(20 words, each with a picture to colour),
+[word tracing worksheets with pictures](https://tracepress.bananafest-destiny.com/picture-word-tracing-worksheets)
+(20 first words, cat to apple), a
 ["This book belongs to" page](https://tracepress.bananafest-destiny.com/this-book-belongs-to-page)
 in all six KDP trims, a
 [name tracing worksheet generator](https://tracepress.bananafest-destiny.com/name-tracing)

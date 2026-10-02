@@ -18,10 +18,10 @@ const holiday = (slug) => {
   const page = readFileSync(new URL(`../public/${slug}-tracing-worksheets.html`, import.meta.url), "utf8");
   return decodeURIComponent(page.match(/href="\/\?words=([^"]+)">Make a/)[1]).split(",");
 };
-const HOLIDAY = ["halloween", "thanksgiving", "christmas"].flatMap(holiday);
+const HOLIDAY = ["halloween", "thanksgiving", "christmas", "picture-word"].flatMap(holiday);
 
-test("every holiday page's word has a picture", () => {
-  assert.equal(HOLIDAY.length, 60);
+test("every word on the picture pages has a picture", () => {
+  assert.equal(HOLIDAY.length, 80);
   assert.deepEqual(HOLIDAY.filter((w) => !pictureFor(w)), []);
 });
 
