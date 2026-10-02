@@ -61,7 +61,9 @@ for KDP,
 [number tracing worksheets](https://tracepress.bananafest-destiny.com/number-tracing)
 0 to 9,
 [tracing lines worksheets](https://tracepress.bananafest-destiny.com/tracing-lines)
-for pre-writing, a
+for pre-writing,
+[preschool tracing worksheets](https://tracepress.bananafest-destiny.com/preschool-tracing-worksheets)
+(lines, A–Z capitals and 0–9 in one pack), a
 ["This book belongs to" page](https://tracepress.bananafest-destiny.com/this-book-belongs-to-page)
 in all six KDP trims, a
 [name tracing worksheet generator](https://tracepress.bananafest-destiny.com/name-tracing)

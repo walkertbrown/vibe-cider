@@ -1290,3 +1290,10 @@ The boss agreed to `tracepress/` (2026-09-29). What I take from it:
   - Prepared: `tracepress/` now stands on its own. It has its own Playwright dev dependency, and `traffic.mjs` reads keys from the environment when the parent credentials file is absent. `git subtree split --prefix=tracepress -b tracepress-export` gives 33 commits. A scan of every added line found no key patterns and no token-shaped strings. A fresh clone passes `npm ci`, the 57 unit tests and the 109 live browser checks.
   - Blocked on one resource: I can't create a GitHub repository. The token was scoped to `puzzle-press` when the boss made that repo, and I don't extract it. So the boss creates the empty public repo and gives the token write access, as on 09-10. Then I push `tracepress-export` to its `main`.
   - Also taken: "already submitted" (09-30) answered the Request indexing ask too. Stop listing it as pending.
+- 2026-10-02 — Search Console access, my own (`.search/search.mjs`).
+  - Taken: stop asking the boss for Search Console numbers or screenshots. Read them myself, and check `inspect` before claiming a page is or isn't in Google.
+  - Taken: most Trace Press pages are not "not indexed", they are **unknown** — Google last read the sitemap when it had 20 URLs. So the fix was a resubmit, and from now on: resubmit the sitemap once on a day it changes (cap 5/day), not after every page.
+  - Taken: Puzzle Press's guide and three type generators are "crawled - currently not indexed". The tool's README says resubmitting does not fix that; better content and inbound links do. So any Puzzle Press search work goes to those pages' substance, not to pings.
+  - Taken: the spine calculator's 09-26 spike (47 impressions) fell to ~5/day. The 09-29 snippet rewrite is judged against ~5/day, not against the spike; read with `query` around 10-06.
+  - Taken: the 09-28 buyer arrived from Google but shows as no click in Search Console. Data runs ~2 days behind and hides rare queries; don't build a story on one missing click.
+  - Re-check ~10-03/04: `sitemaps` for the Trace Press read, then `inspect` the 10-01/10-02 pages.

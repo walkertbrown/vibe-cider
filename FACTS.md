@@ -415,3 +415,38 @@ The boss is re-claiming `puzzlepress.bananafest-destiny.com` on Pinterest ("Clai
 2026-10-01 — I asked for a yes or no on creating a public `walkertbrown/trace-press` repo, a mirror of `tracepress/` like `walkertbrown/puzzle-press` is of `app/`. Boss: **"The repo for trace press is your call"**.
 
 2026-10-01 — `walkertbrown/trace-press` exists: public, empty, created 02:46Z with a description (seen 03:16Z). A dry-run push at 03:18Z was refused with 403 ("Permission … denied to walkertbrown"): the token git uses can't write to it yet. The export branch has been re-split (35 commits) and scanned again: no key-shaped strings in the tree or its history.
+
+2026-10-02 03:11Z — Boss: **"you have access to search console now"**. As of
+03:25Z, this session has no Search Console tool, Google credential, gcloud, or key
+file. Asked how the access was given (a claude.ai connector would probably
+need a new session).
+
+2026-10-02 (boss, relayed by OptiServer-Claude) — **"you can now read your own
+Google Search Console data, inspect whether pages are indexed, resubmit sitemaps
+and submit URLs to Bing yourself. Read .search/README.md, run `node
+.search/search.mjs sites`, and use it in place of asking the boss for Search
+Console screenshots."** This supersedes the 03:25Z "no tool" note above: the
+tool is `.search/search.mjs` (git-ignored; the token stays out of the repo and
+out of anything published). Daily caps, reset at midnight Central: inspect 200,
+submit-sitemap 5, bing-submit 20 URLs. Both domains are listed by `sites`.
+
+What it showed, 2026-10-02 ~04:20Z:
+- Trace Press sitemap last read by Google 10-01 08:20Z, when it held 20 URLs
+  (it now has 36). Resubmitted 04:22Z; pending.
+- Trace Press inspection: home page "Crawled - currently not indexed"
+  (crawled 09-30); handwriting-paper, how-to-make-a-handwriting-workbook,
+  name-tracing and 3 PDFs "Discovered - currently not indexed"; every other
+  page, including all of 10-01 and 10-02, "URL is unknown to Google".
+  Performance: no rows.
+- Puzzle Press inspection: indexed — /, spine-, margin-, royalty-calculator,
+  compare, large-print-word-search-generator, /word-lists/. Crawled, not
+  indexed — how-to-make-a-puzzle-book, sudoku- and word-search-book-generator.
+  Discovered only — criss-cross, crossword and maze generators, llms.txt, most
+  sample PDFs. The sitemap report's "0 indexed" lags the inspections.
+- Puzzle Press performance 09-01 → 10-02: 0 clicks. Impressions: spine-calculator
+  96 (pos 7.3), / 13 (pos 2.9), margin-calculator 6 (pos 24), royalty-calculator
+  5 (pos 6.2), three pages 1 each. Visible queries: "print bleed calculator" 3
+  impr pos 10.7 and "bleed calculator print" 1 impr pos 92, both on
+  margin-calculator. Spine calculator by day: 09-25 9, 09-26 47, 09-27 22,
+  09-28 6, 09-29 5, 09-30 5.
+- Bing: 19 Trace Press page URLs (no PDFs) sent with bing-submit 10-02 ~04:23Z.
