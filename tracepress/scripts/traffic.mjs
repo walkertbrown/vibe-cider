@@ -16,6 +16,7 @@
 //   --ips lists the addresses behind each beacon, to check with
 //   `npm run who -- --trail <ip>` in app/ before calling one a person.
 import { readFileSync } from "node:fs";
+import { execFile } from "node:child_process";
 
 const args = process.argv.slice(2);
 const hours = Number(args.find((a) => /^\d+$/.test(a)) || 24);
@@ -32,6 +33,16 @@ const ZONE = "4169ea6b92a0920d72f9ebc5f7653e9d"; // bananafest-destiny.com, as i
 const HOST = "tracepress.bananafest-destiny.com";
 const PAY_LINK_ID = "plink_1UL3wZRo6ix1hE5vuzRD7tSY";
 const MINE = /trace-press-test|puzzle-press-test|HeadlessChrome/;
+
+// This network: the addresses this machine holds now, and for IPv6 its whole
+// /64, because privacy extensions rotate the last 64 bits (app/scripts/traffic.mjs
+// learned that on 09-14). Same line as the boss's own browser, so a beacon from
+// here is never a customer. 10-02: a /tracing-worksheet-generator "visitor" was this.
+const traceIp = (flag) => new Promise((res) => execFile("curl", ["-s", flag, "--max-time", "10", "https://tracepress.bananafest-destiny.com/cdn-cgi/trace"],
+  (err, out) => res(err ? null : (String(out).match(/^ip=(.*)$/m) || [])[1]?.trim() || null)));
+const HERE = [...new Set((await Promise.all([traceIp("-4"), traceIp("-6")])).filter(Boolean))]
+  .map((ip) => (ip.includes(":") ? ip.split(":").slice(0, 4).join(":") + ":" : ip));
+const fromHere = (ip = "") => HERE.some((p) => (p.endsWith(":") ? ip.startsWith(p) : ip === p));
 // Robots that run the page's JavaScript fire the beacons too, and name
 // themselves: on 2026-10-02 Meta's crawler (meta-externalagent) and Applebot
 // were 60 of 69 "visitors" on Puzzle Press in a day (app/scripts/who.mjs).
@@ -88,13 +99,13 @@ try {
   let tests = 0;
   const robots = new Set();
   for (const { dimensions: d } of rows) {
-    if (MINE.test(d.userAgent || "")) { tests++; continue; }
+    if (MINE.test(d.userAgent || "") || fromHere(d.clientIP)) { tests++; continue; }
     if (BOT_UA.test(d.userAgent || "")) { robots.add(d.clientIP); continue; }
     const name = d.clientRequestPath.replace(/^\/px\/|\.gif$/g, "");
     if (!byRung.has(name)) byRung.set(name, new Set());
     byRung.get(name).add(d.clientIP);
   }
-  console.log(`\n  Funnel (distinct addresses; ${tests} beacon rows from my own tests and ${robots.size} robot addresses left out):`);
+  console.log(`\n  Funnel (distinct addresses; ${tests} beacon rows from my own tests or this network and ${robots.size} robot addresses left out):`);
   for (const [name, label] of RUNGS) {
     const ips = byRung.get(name) ?? new Set();
     console.log(`    ${String(ips.size).padStart(4)}  ${label}${showIps && ips.size ? `  — ${[...ips].join(", ")}` : ""}`);
