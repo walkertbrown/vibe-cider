@@ -53,6 +53,7 @@ try {
     ["halloween-tracing-worksheets", "halloween-tracing-worksheet-bat", "Free Halloween tracing worksheets", "Twenty Halloween words to trace, each with a picture to colour."],
     ["thanksgiving-tracing-worksheets", "thanksgiving-tracing-worksheet-pumpkin", "Free Thanksgiving tracing worksheets", "Twenty Thanksgiving words to trace, each with a picture to colour."],
     ["picture-word-tracing-worksheets", "picture-word-tracing-worksheet-fish", "Word tracing worksheets with pictures", "Twenty first words to trace, each with a picture to colour."],
+    ["transportation-tracing-worksheets", "transportation-tracing-worksheet-tractor", "Transportation tracing worksheets", "Twenty vehicle words to trace, car to helicopter, each with a picture to colour."],
     ["handwriting-practice-sheets-for-adults", "handwriting-practice-sheet-for-adults-g", "Free handwriting practice sheets for adults", "A to Z and 0 to 9 on smaller lines, to trace and copy."],
     ["cursive-practice-sheets-for-adults", "cursive-practice-sheet-for-adults-m", "Free cursive practice sheets for adults", "A to Z in cursive on smaller lines, solid then grey to trace."],
     ["cursive-alphabet-chart", "cursive-alphabet-chart", "Free cursive alphabet chart", "A to Z, capital and lowercase, and 0 to 9, on one printable page."],

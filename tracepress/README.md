@@ -17,7 +17,7 @@ letters to trace, and rows for writing the letter alone. Then, if you want them:
 - **Numbers 0–9**, a page each after Z, with start dots and arrows like the letters.
 - **Your own practice words** (sight words, names, a theme), a page each after
   that, up to 52 words (42 with numbers on).
-  A word Trace Press has a picture for (112 everyday words, such as dog, train
+  A word Trace Press has a picture for (123 everyday words, such as dog, train
   and umbrella) gets an outline of it to colour, beside the word or, for a
   long word, above it. The outlines are [Tabler Icons](https://tabler.io/icons)
   (MIT, `public/licenses/tabler-icons.txt`), mapped in `scripts/pictures.mjs`.
@@ -49,6 +49,7 @@ Made by this code with the free version, footer line and PREVIEW mark included:
 - [Tracing lines worksheets](https://tracepress.bananafest-destiny.com/tracing-lines): lines, slants, zigzags, waves, circles, crosses
 - [Preschool tracing worksheets](https://tracepress.bananafest-destiny.com/preschool-tracing-worksheets): lines, A–Z capitals and 0–9 in one pack
 - [Word tracing worksheets with pictures](https://tracepress.bananafest-destiny.com/picture-word-tracing-worksheets): 20 first words, cat to apple
+- [Transportation tracing worksheets](https://tracepress.bananafest-destiny.com/transportation-tracing-worksheets): 20 vehicle words, car to helicopter, each with a picture
 - [Halloween tracing worksheets](https://tracepress.bananafest-destiny.com/halloween-tracing-worksheets), 20 words with pictures
 - [Thanksgiving tracing worksheets](https://tracepress.bananafest-destiny.com/thanksgiving-tracing-worksheets), 20 words with pictures
 - [Christmas tracing worksheets](https://tracepress.bananafest-destiny.com/christmas-tracing-worksheets), 20 words with pictures

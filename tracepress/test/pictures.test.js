@@ -5,7 +5,7 @@
 // strokes only, so a child can colour them in.
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { TRIMS, pageGeometry, marginsForPage } from "../src/pdf/kdp.js";
 import { GUIDES } from "../src/pdf/plan.js";
 import { namePage } from "../src/pdf/name.js";
@@ -18,10 +18,15 @@ const holiday = (slug) => {
   const page = readFileSync(new URL(`../public/${slug}-tracing-worksheets.html`, import.meta.url), "utf8");
   return decodeURIComponent(page.match(/href="\/\?words=([^"]+)">Make a/)[1]).split(",");
 };
-const HOLIDAY = ["halloween", "thanksgiving", "christmas", "picture-word"].flatMap(holiday);
+// Every "-tracing-worksheets" page whose button opens a word book.
+const SLUGS = readdirSync(new URL("../public/", import.meta.url))
+  .map((f) => f.match(/^(.+)-tracing-worksheets\.html$/)?.[1])
+  .filter((slug) => slug && /href="\/\?words=/.test(readFileSync(new URL(`../public/${slug}-tracing-worksheets.html`, import.meta.url), "utf8")));
+const HOLIDAY = SLUGS.flatMap(holiday);
 
 test("every word on the picture pages has a picture", () => {
-  assert.equal(HOLIDAY.length, 80);
+  assert.ok(SLUGS.length >= 5, SLUGS.join());
+  assert.equal(HOLIDAY.length, 20 * SLUGS.length);
   assert.deepEqual(HOLIDAY.filter((w) => !pictureFor(w)), []);
 });
 

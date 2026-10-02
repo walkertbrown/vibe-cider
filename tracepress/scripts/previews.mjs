@@ -28,6 +28,7 @@ const PREVIEWS = [
   ["halloween-tracing-worksheets.pdf", 1, "halloween-tracing-worksheet-bat"],
   ["thanksgiving-tracing-worksheets.pdf", 18, "thanksgiving-tracing-worksheet-pumpkin"],
   ["picture-word-tracing-worksheets.pdf", 11, "picture-word-tracing-worksheet-fish"],
+  ["transportation-tracing-worksheets.pdf", 11, "transportation-tracing-worksheet-tractor"],
   ["cursive-handwriting-workbook-sample-8.5x11.pdf", 47, "cursive-handwriting-workbook-word"],
 ];
 const pub = new URL("../public/", import.meta.url).pathname;

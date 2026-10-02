@@ -29,6 +29,9 @@ const WORDS = {
   plant: "plant", tractor: "tractor", truck: "truck", helicopter: "helicopter", scooter: "scooter", rainbow: "rainbow",
   camera: "camera", phone: "phone", backpack: "backpack", school: "school", globe: "globe", map: "map", dice: "dice",
   bucket: "bucket", shovel: "shovel", hammer: "hammer", ladder: "ladder", bottle: "bottle", flame: "flame", fire: "flame",
+  // Transportation
+  ship: "ship", kayak: "kayak", caravan: "caravan", forklift: "forklift", ambulance: "ambulance", motorbike: "motorbike",
+  submarine: "submarine", bulldozer: "bulldozer", firetruck: "firetruck", skateboard: "skateboard", parachute: "parachute",
 };
 
 const dir = new URL("../node_modules/@tabler/icons/icons/outline/", import.meta.url);
