@@ -33,7 +33,8 @@ const loadCursive = () => (cursiveLoading ??= Promise.all([
 }).catch((err) => { cursiveLoading = null; throw err; }));
 const wantsCursive = () => el.script.value === "cursive";
 const measure = (text, unit) => cursiveWidth(cursive, text, unit);
-const opts = () => ({ name: el.name.value, trim: el.trim.value, guideIn: Number(el.age.value), script: wantsCursive() && cursive ? "cursive" : "print" });
+const PICTURES = document.body.dataset.pictures === "1";
+const opts = () => ({ name: el.name.value, trim: el.trim.value, guideIn: Number(el.age.value), script: wantsCursive() && cursive ? "cursive" : "print", pictures: PICTURES });
 
 function show() {
   const o = opts();

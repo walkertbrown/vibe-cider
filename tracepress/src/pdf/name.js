@@ -7,6 +7,7 @@ import { pageGeometry, PT } from "./kdp.js";
 import { contentBox, reach, labelRadius, GAP_UNITS, LETTER_GAP, MARK_PAD, FOOTER_PT, LABEL_PT } from "./page.js";
 import { pageInk, GREY } from "./ink.js";
 import { cursivePage } from "./cursive-page.js";
+import { pictureFor } from "./pictures.js";
 
 export const NAME_MAX = 16;
 const MODEL_SCALE = 1.5; // as in page.js
@@ -113,13 +114,15 @@ export function namePage({ geom, pageNumber = 1, name, guideIn, picture = null }
 // In cursive (`script: "cursive"`, with `measure` as for planBook) the sheet
 // is a cursive word page: the name solid, rows of it in grey to write over,
 // then empty rows, as in a cursive book.
-export function planName({ trim = "8.5x11", guideIn = 0.75, name = "", script = "print", measure } = {}) {
+// `pictures`: draw the word's picture, if it has one (print only), as a
+// workbook's word page does. The words tool asks for it; the name tool doesn't.
+export function planName({ trim = "8.5x11", guideIn = 0.75, name = "", script = "print", measure, pictures = false } = {}) {
   if (script === "cursive" && !measure) throw new Error("cursive needs measure()");
   const geom = pageGeometry({ trim, bleed: false });
   const clean = cleanName(name) || "Name";
   const page = script === "cursive"
     ? cursivePage({ geom, pageNumber: 1, model: clean, trace: [clean], guideIn, measure, word: true })
-    : namePage({ geom, name: clean, guideIn });
+    : namePage({ geom, name: clean, guideIn, picture: pictures ? pictureFor(clean) : null });
   return { geom, name: clean, page };
 }
 

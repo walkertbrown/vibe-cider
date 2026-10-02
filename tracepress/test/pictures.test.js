@@ -8,7 +8,7 @@ import assert from "node:assert/strict";
 import { readFileSync, readdirSync } from "node:fs";
 import { TRIMS, pageGeometry, marginsForPage } from "../src/pdf/kdp.js";
 import { GUIDES } from "../src/pdf/plan.js";
-import { namePage } from "../src/pdf/name.js";
+import { namePage, planName } from "../src/pdf/name.js";
 import { pictureFor, PICTURES } from "../src/pdf/pictures.js";
 import { PRINT } from "../src/glyphs/print.js";
 import { reach, labelRadius, MARK_PAD } from "../src/pdf/page.js";
@@ -89,4 +89,13 @@ test("pdf-lib can draw every picture's paths", async () => {
     }
   }
   assert.deepEqual(broken, []);
+});
+
+test("the free words tool draws a word's picture; the name tools don't", () => {
+  assert.equal(planName({ name: "cat", pictures: true }).page.pictures.length, 1);
+  assert.equal(planName({ name: "cat dog", pictures: true }).page.pictures.length, 0);
+  assert.equal(planName({ name: "cat" }).page.pictures.length, 0);
+  const body = (f) => readFileSync(new URL(`../public/${f}.html`, import.meta.url), "utf8").match(/<body[^>]*>/)[0];
+  assert.match(body("tracing-worksheet-generator"), /data-pictures="1"/);
+  for (const f of ["name-tracing", "cursive-name-tracing"]) assert.doesNotMatch(body(f), /data-pictures/);
 });
