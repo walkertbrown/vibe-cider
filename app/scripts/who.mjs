@@ -250,15 +250,34 @@ const isMine = (ip) => nowIps.includes(ip) || myPrefixes.some((p) => ip.startsWi
 const visitors = [...by].sort((a, b) => b[1].n - a[1].n);
 const ranTheApp = visitors.filter(([, e]) => did(e.paths).ranApp);
 
-const strangers = ranTheApp.filter(([ip]) => !isMine(ip));
+// A robot that runs the page's JavaScript fires the same beacons a person
+// does. On 2026-10-02 Meta's AI crawler (meta-externalagent) was 44 of the 69
+// "not this machine" rows for the past 24h, 26 of them "touched a control",
+// listed between a real iPhone that went to Stripe and everyone else. An
+// address whose every user agent names itself a robot is counted on one line
+// and left out of the rows. Names only, never an owner: a cloud address is not
+// proof of a crawler (see the note at the end).
+const BOT_UA = /bot\b|bot\/|crawler|spider|externalagent|externalhit/i;
+const declaresBot = (e) => e.uas.size > 0 && [...e.uas].every((u) => BOT_UA.test(u));
+const robots = ranTheApp.filter(([ip, e]) => !isMine(ip) && declaresBot(e));
+const strangers = ranTheApp.filter(([ip, e]) => !isMine(ip) && !declaresBot(e));
 console.log(`\nWho ran the app — last ${hours}h   ${new Date().toLocaleString("en-US", { timeZone: "America/Chicago" })} CT`);
-console.log(`  ${visitors.length} addresses touched the site; ${ranTheApp.length} loaded main.js; ${strangers.length} of those were not this machine.\n`);
+console.log(`  ${visitors.length} addresses touched the site; ${ranTheApp.length} loaded main.js; ${strangers.length} of those were not this machine or a robot that named itself.\n`);
+if (robots.length) {
+  const names = new Map();
+  for (const [, e] of robots) {
+    const n = [...e.uas][0].match(/[\w.-]*(bot|crawler|spider|externalagent|externalhit)[\w.-]*/i)?.[0] ?? "robot";
+    names.set(n, (names.get(n) ?? 0) + 1);
+  }
+  console.log(`  Ran the JavaScript but named itself a robot (not listed below): ${robots.length} addresses — ${[...names].map(([n, c]) => `${n} ×${c}`).join(", ")}.\n`);
+}
 
 if (!strangers.length) {
   console.log("  Nobody but me ran the app in this window. Everything else was a crawler.\n");
 }
 
 for (const [ip, e] of ranTheApp) {
+  if (!isMine(ip) && declaresBot(e)) continue;
   const d = did(e.paths);
   const mine = isMine(ip);
   const org = mine ? null : await orgOf(ip);

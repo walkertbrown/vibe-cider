@@ -272,7 +272,9 @@ try {
 // them at their word — a self-identified bot is the cheapest honest exclusion
 // available on this plan, and the ones that lie (the Aceville fleet's fake
 // "iPhone OS 13_2_3") are caught by the scanner rule or by who.mjs instead.
-const BOT_UA = /bot|crawl|spider|slurp|Lightpanda|HeadlessChrome|python-requests|curl\//i;
+// externalagent/externalhit: Meta's crawlers, which run the JavaScript and
+// never say "bot" (2026-10-02: 44 addresses in a day, read as people).
+const BOT_UA = /bot|crawl|spider|slurp|externalagent|externalhit|Lightpanda|HeadlessChrome|python-requests|curl\//i;
 let appIps = [];
 let botAppIps = [];
 // Every address that is not a self-identified bot, whether or not it ever ran

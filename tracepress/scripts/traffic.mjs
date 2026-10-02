@@ -32,6 +32,10 @@ const ZONE = "4169ea6b92a0920d72f9ebc5f7653e9d"; // bananafest-destiny.com, as i
 const HOST = "tracepress.bananafest-destiny.com";
 const PAY_LINK_ID = "plink_1UL3wZRo6ix1hE5vuzRD7tSY";
 const MINE = /trace-press-test|puzzle-press-test|HeadlessChrome/;
+// Robots that run the page's JavaScript fire the beacons too, and name
+// themselves: on 2026-10-02 Meta's crawler (meta-externalagent) and Applebot
+// were 60 of 69 "visitors" on Puzzle Press in a day (app/scripts/who.mjs).
+const BOT_UA = /bot\b|bot\/|crawler|spider|externalagent|externalhit/i;
 // The funnel, in order. Each is a real file in public/px/.
 const RUNGS = [
   ["ran", "ran the page"],
@@ -82,13 +86,15 @@ try {
   const rows = z.viewer.zones[0].httpRequestsAdaptiveGroups;
   const byRung = new Map();
   let tests = 0;
+  const robots = new Set();
   for (const { dimensions: d } of rows) {
     if (MINE.test(d.userAgent || "")) { tests++; continue; }
+    if (BOT_UA.test(d.userAgent || "")) { robots.add(d.clientIP); continue; }
     const name = d.clientRequestPath.replace(/^\/px\/|\.gif$/g, "");
     if (!byRung.has(name)) byRung.set(name, new Set());
     byRung.get(name).add(d.clientIP);
   }
-  console.log(`\n  Funnel (distinct addresses; ${tests} beacon rows from my own tests left out):`);
+  console.log(`\n  Funnel (distinct addresses; ${tests} beacon rows from my own tests and ${robots.size} robot addresses left out):`);
   for (const [name, label] of RUNGS) {
     const ips = byRung.get(name) ?? new Set();
     console.log(`    ${String(ips.size).padStart(4)}  ${label}${showIps && ips.size ? `  — ${[...ips].join(", ")}` : ""}`);
