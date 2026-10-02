@@ -23,6 +23,8 @@ const PREVIEWS = [
   ["cursive-practice-sheets-for-adults.pdf", 13, "cursive-practice-sheet-for-adults-m"],
   ["handwriting-practice-sheets-for-adults.pdf", 7, "handwriting-practice-sheet-for-adults-g"],
   ["preschool-tracing-worksheets.pdf", 5, "preschool-tracing-worksheet-a"],
+  ["letter-tracing-cover-sample-8.5x11.pdf", 1, "tracing-book-cover-sample"],
+  ["letter-tracing-cover-sample-8.5x11.pdf", 1, "tracing-book-cover-sample"],
   ["cursive-handwriting-workbook-sample-8.5x11.pdf", 47, "cursive-handwriting-workbook-word"],
 ];
 const pub = new URL("../public/", import.meta.url).pathname;

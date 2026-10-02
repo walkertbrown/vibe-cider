@@ -75,7 +75,9 @@ for a KDP practice notebook, a
 [sight word tracing workbook](https://tracepress.bananafest-destiny.com/sight-word-tracing-workbook)
 with the Dolch pre-primer and primer lists typed in for you, and a
 [guide to making a handwriting workbook for KDP](https://tracepress.bananafest-destiny.com/how-to-make-a-handwriting-workbook)
-with the printing cost and royalty worked out.
+with the printing cost and royalty worked out, and the
+[tracing book cover size](https://tracepress.bananafest-destiny.com/tracing-book-cover-size)
+for every trim and page count.
 
 [![A Trace Press page: the letter A with numbered start dots and arrows, then rows of dotted letters](tracepress/public/social-card.png)](https://tracepress.bananafest-destiny.com/)
 

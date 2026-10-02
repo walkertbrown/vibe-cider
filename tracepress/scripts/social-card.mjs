@@ -47,13 +47,15 @@ try {
     ["tracing-worksheet-generator", "tracing-worksheet-cat-sun-dog", "Free tracing worksheet generator", "Type words, print a page on handwriting lines, with start dots and arrows."],
     ["this-book-belongs-to-page", "this-book-belongs-to-page", "Free “This book belongs to” page", "A name page for the front of a children’s book, in every KDP size."],
     ["preschool-tracing-worksheets", "preschool-tracing-worksheet-a", "Free preschool tracing worksheets", "Lines, capital letters A to Z and numbers 0 to 9, on big lines."],
+    ["tracing-book-cover-size", "tracing-book-cover-sample", "Tracing book cover size for KDP", "Cover width, height and spine for 26 to 78 pages, every trim.", "Checked against KDP’s calculator"],
+    ["tracing-book-cover-size", "tracing-book-cover-sample", "Tracing book cover size for KDP", "Cover width, height and spine for 26 to 78 pages, every trim.", "Checked against KDP’s calculator"],
     ["handwriting-practice-sheets-for-adults", "handwriting-practice-sheet-for-adults-g", "Free handwriting practice sheets for adults", "A to Z and 0 to 9 on smaller lines, to trace and copy."],
     ["cursive-practice-sheets-for-adults", "cursive-practice-sheet-for-adults-m", "Free cursive practice sheets for adults", "A to Z in cursive on smaller lines, solid then grey to trace."],
     ["cursive-alphabet-chart", "cursive-alphabet-chart", "Free cursive alphabet chart", "A to Z, capital and lowercase, and 0 to 9, on one printable page."],
     ["cursive-handwriting-workbook", "cursive-handwriting-workbook-word", "Cursive handwriting workbook for KDP", "A to Z, 0 to 9 and words in joined cursive, with its cover."],
     ["sight-word-tracing-workbook", "sight-word-tracing-worksheet", "Sight word tracing workbook for KDP", "The Dolch lists, a page per word, with start dots and arrows."],
   ];
-  for (const [slug, img, title, line] of CARDS) {
+  for (const [slug, img, title, line, pill = "Printable PDF · no sign-up"] of CARDS) {
     const src = `data:image/png;base64,${readFileSync(new URL(`../public/img/${img}.png`, import.meta.url)).toString("base64")}`;
     await page.setContent(`<!doctype html><html><head><style>
       html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; background: #234e3a; font-family: "Liberation Sans", Arial, sans-serif; }
@@ -64,7 +66,7 @@ try {
       .free { margin-top: 30px; display: inline-block; background: #fff; color: #234e3a; font-size: 26px; font-weight: 700; padding: 10px 18px; border-radius: 10px; }
       img { position: absolute; right: 70px; top: 36px; width: 420px; transform: rotate(2deg); box-shadow: 0 12px 40px rgba(0,0,0,0.35); background: #fff; }
     </style></head><body>
-      <div class="text"><div class="brand">Trace Press</div><h1>${title}</h1><p>${line}</p><div class="free">Printable PDF · no sign-up</div></div>
+      <div class="text"><div class="brand">Trace Press</div><h1>${title}</h1><p>${line}</p><div class="free">${pill}</div></div>
       <img src="${src}">
     </body></html>`);
     await page.screenshot({ path: new URL(`../public/img/card-${slug}.png`, import.meta.url).pathname });
