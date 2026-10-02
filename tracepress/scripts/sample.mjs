@@ -25,6 +25,7 @@ import { pageInk } from "../src/pdf/ink.js";
 import { PT, TRIMS } from "../src/pdf/kdp.js";
 import { drawLetterPage } from "../src/pdf/draw.js";
 import { cursiveWidth } from "../src/pdf/cursive.js";
+import { cursiveChart } from "../src/pdf/chart.js";
 
 const SITE = "https://tracepress.bananafest-destiny.com/";
 const TRIM = "8.5x11";
@@ -236,6 +237,30 @@ for (const trim of Object.keys(TRIMS)) {
   };
   const doc = await PDFDocument.load(await renderName({ name: "cat sun dog", trim: TRIM, guideIn: GUIDE_IN }, fonts));
   meta(doc, sample);
+  const bytes = await doc.save();
+  writeFileSync(new URL(sample.file, out), bytes);
+  console.log(`wrote public/samples/${sample.file}: ${bytes.length} bytes`);
+}
+
+// The cursive alphabet chart, for /cursive-alphabet-chart: one page, A–Z and
+// 0–9, with the free footer line as a link.
+{
+  const sample = {
+    file: "cursive-alphabet-chart.pdf",
+    title: "Free Printable Cursive Alphabet Chart, A–Z and 0–9 (PDF)",
+    subject: "A one-page cursive alphabet chart: every capital and lowercase letter, A to Z, and the numbers 0 to 9 in traditional American cursive on four-line handwriting guides. 8.5 x 11. Free from Trace Press.",
+  };
+  const { geom } = planBook({ trim: TRIM, guideIn: GUIDE_IN });
+  const layout = cursiveChart({ geom, measure });
+  const doc = await PDFDocument.create();
+  doc.registerFontkit(fontkit);
+  meta(doc, sample);
+  const embedded = { bold: await doc.embedFont(fonts.bold, { subset: true }), regular: await doc.embedFont(fonts.regular, { subset: true }) };
+  const page = doc.addPage([geom.width, geom.height]);
+  drawLetterPage(page, layout, embedded, { cursive: cursiveFont });
+  const f = pageInk(layout, { cursive: cursiveFont }).find((s) => s.kind === "text" && /Trace Press/.test(s.text));
+  const half = embedded.regular.widthOfTextAtSize(f.text, f.size) / 2 + 4;
+  link(doc, page, [f.x - half, f.y - 4, f.x + half, f.y + f.size + 2]);
   const bytes = await doc.save();
   writeFileSync(new URL(sample.file, out), bytes);
   console.log(`wrote public/samples/${sample.file}: ${bytes.length} bytes`);
