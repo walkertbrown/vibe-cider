@@ -81,6 +81,11 @@ export const SAMPLES = {
     title: "Free Cursive Practice Sheets for Adults, A–Z (PDF) · Trace Press",
     subject: "26 printable cursive handwriting practice pages for adults and older students: each capital and lowercase letter in solid cursive, then rows in grey to trace, on 0.45-inch four-line guides. 8.5 x 11. Made free with Trace Press.",
   },
+  printAdult: {
+    file: "handwriting-practice-sheets-for-adults.pdf",
+    title: "Free Handwriting Practice Sheets for Adults, A–Z, 0–9 (PDF)",
+    subject: "36 printable handwriting practice pages for adults and older students: each letter A to Z, capital and lowercase, and each number 0 to 9, to trace on 0.45-inch four-line guides. 8.5 x 11. Made free with Trace Press.",
+  },
   cursiveBook: {
     file: "cursive-handwriting-workbook-sample-8.5x11.pdf",
     title: "Free Cursive Handwriting Workbook PDF, A–Z, 0–9, Words · Trace Press",
@@ -175,6 +180,7 @@ await book(SAMPLES.upper, { cases: "upper", guideIn: 1 });
 await book(SAMPLES.lower, { cases: "lower", guideIn: 1 });
 await book(SAMPLES.cursive, { script: "cursive", guideIn: 1 });
 await book(SAMPLES.cursiveAdult, { script: "cursive", guideIn: 0.45 });
+await book(SAMPLES.printAdult, { guideIn: 0.45, numbers: true });
 await book(SAMPLES.cursiveBook, { script: "cursive", numbers: true, words: PRE_PRIMER });
 
 // The cover, sized for that book. The link sits on the free cover's own

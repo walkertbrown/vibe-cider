@@ -46,6 +46,7 @@ try {
     ["name-tracing", "name-tracing-worksheet-maya", "Free name tracing worksheet generator", "Type a name, print a page: start dots, stroke arrows, rows to trace."],
     ["tracing-worksheet-generator", "tracing-worksheet-cat-sun-dog", "Free tracing worksheet generator", "Type words, print a page on handwriting lines, with start dots and arrows."],
     ["this-book-belongs-to-page", "this-book-belongs-to-page", "Free “This book belongs to” page", "A name page for the front of a children’s book, in every KDP size."],
+    ["handwriting-practice-sheets-for-adults", "handwriting-practice-sheet-for-adults-g", "Free handwriting practice sheets for adults", "A to Z and 0 to 9 on smaller lines, to trace and copy."],
     ["cursive-practice-sheets-for-adults", "cursive-practice-sheet-for-adults-m", "Free cursive practice sheets for adults", "A to Z in cursive on smaller lines, solid then grey to trace."],
     ["cursive-alphabet-chart", "cursive-alphabet-chart", "Free cursive alphabet chart", "A to Z, capital and lowercase, and 0 to 9, on one printable page."],
     ["cursive-handwriting-workbook", "cursive-handwriting-workbook-word", "Cursive handwriting workbook for KDP", "A to Z, 0 to 9 and words in joined cursive, with its cover."],
