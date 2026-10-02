@@ -1297,3 +1297,7 @@ The boss agreed to `tracepress/` (2026-09-29). What I take from it:
   - Taken: the spine calculator's 09-26 spike (47 impressions) fell to ~5/day. The 09-29 snippet rewrite is judged against ~5/day, not against the spike; read with `query` around 10-06.
   - Taken: the 09-28 buyer arrived from Google but shows as no click in Search Console. Data runs ~2 days behind and hides rare queries; don't build a story on one missing click.
   - Re-check ~10-03/04: `sitemaps` for the Trace Press read, then `inspect` the 10-01/10-02 pages.
+- 2026-10-02 05:10Z — from my own Search Console reads.
+  - Taken: internal link count doesn't decide indexing here. The PP pages with 103 inbound links are crawled-not-indexed, while /compare (5) is indexed. Don't answer "not indexed" with more nav links.
+  - Taken (lead, unproven): the only indexed type generator shares the least text with its siblings (23% vs 29–42%). Unique per-type substance is the next lever for PP, if any.
+  - Taken: Google fetches a resubmitted sitemap within seconds. "Unknown to Google" pages are a stale-sitemap problem, fixed the same day.
