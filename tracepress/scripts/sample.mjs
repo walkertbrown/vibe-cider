@@ -103,8 +103,8 @@ export const SAMPLES = {
   },
   preschool: {
     file: "preschool-tracing-worksheets.pdf",
-    title: "Free Preschool Tracing Worksheets: Lines, A–Z, 0–9 (PDF)",
-    subject: "40 printable preschool tracing worksheets on big 1-inch lines: 4 pages of pre-writing lines, the capital letters A to Z, and the numbers 0 to 9, each with a start dot and arrows. 8.5 x 11. Made free with Trace Press.",
+    title: "Free Preschool Tracing Worksheets: Lines, Shapes, A–Z, 0–9 (PDF)",
+    subject: "46 printable preschool tracing worksheets on big 1-inch lines: 4 pages of pre-writing lines, 6 shapes, the capital letters A to Z, and the numbers 0 to 9, each with a start dot and arrows. 8.5 x 11. Made free with Trace Press.",
   },
   halloween: {
     file: "halloween-tracing-worksheets.pdf",
@@ -239,7 +239,7 @@ await book(SAMPLES.lower, { cases: "lower", guideIn: 1 });
 await book(SAMPLES.cursive, { script: "cursive", guideIn: 1 });
 await book(SAMPLES.cursiveAdult, { script: "cursive", guideIn: 0.45 });
 await book(SAMPLES.printAdult, { guideIn: 0.45, numbers: true });
-await book(SAMPLES.preschool, { guideIn: 1, lines: true, cases: "upper", numbers: true });
+await book(SAMPLES.preschool, { guideIn: 1, lines: true, shapes: true, cases: "upper", numbers: true });
 // Holiday words are read from the button on each holiday page, like PRE_PRIMER.
 const holidayWords = (slug, label) => {
   const page = readFileSync(new URL(`../public/${slug}-tracing-worksheets.html`, import.meta.url), "utf8");

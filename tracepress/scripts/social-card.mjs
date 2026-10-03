@@ -49,7 +49,7 @@ try {
     ["name-tracing", "name-tracing-worksheet-maya", "Free name tracing worksheet generator", "Type a name, print a page: start dots, stroke arrows, rows to trace."],
     ["tracing-worksheet-generator", "tracing-worksheet-cat-sun-dog", "Free tracing worksheet generator", "Type words, print a page on handwriting lines, with start dots and arrows."],
     ["this-book-belongs-to-page", "this-book-belongs-to-page", "Free “This book belongs to” page", "A name page for the front of a children’s book, in every KDP size."],
-    ["preschool-tracing-worksheets", "preschool-tracing-worksheet-a", "Free preschool tracing worksheets", "Lines, capital letters A to Z and numbers 0 to 9, on big lines."],
+    ["preschool-tracing-worksheets", "preschool-tracing-worksheet-a", "Free preschool tracing worksheets", "Lines, shapes, capital letters A to Z and numbers 0 to 9, on big lines."],
     ["tracing-book-cover-size", "tracing-book-cover-sample", "Tracing book cover size for KDP", "Cover width, height and spine for 26 to 78 pages, every trim.", "Checked against KDP’s calculator"],
     ["tracing-font-for-kdp", "letter-tracing-worksheet-a", "Tracing fonts and KDP", "Print letters drawn as pencil strokes: no dotted font to license.", "For KDP sellers"],
     ["christmas-tracing-worksheets", "christmas-tracing-worksheet-snowman", "Free Christmas tracing worksheets", "Twenty Christmas words to trace, each with a picture to colour."],

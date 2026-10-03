@@ -25,7 +25,7 @@ const PREVIEWS = [
   ["cursive-alphabet-chart.pdf", 1, "cursive-alphabet-chart"],
   ["cursive-practice-sheets-for-adults.pdf", 13, "cursive-practice-sheet-for-adults-m"],
   ["handwriting-practice-sheets-for-adults.pdf", 7, "handwriting-practice-sheet-for-adults-g"],
-  ["preschool-tracing-worksheets.pdf", 5, "preschool-tracing-worksheet-a"],
+  ["preschool-tracing-worksheets.pdf", 11, "preschool-tracing-worksheet-a"],
   ["letter-tracing-cover-sample-8.5x11.pdf", 1, "tracing-book-cover-sample"],
   ["christmas-tracing-worksheets.pdf", 15, "christmas-tracing-worksheet-snowman"],
   ["halloween-tracing-worksheets.pdf", 1, "halloween-tracing-worksheet-bat"],
