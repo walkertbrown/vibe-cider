@@ -57,7 +57,6 @@ const related = (id) => {
   return [...new Set([...overlap, ...ring])].filter((x) => x !== id);
 };
 
-const favicon = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231d3557'/%3E%3Ctext x='16' y='22' font-family='sans-serif' font-weight='700' font-size='18' fill='white' text-anchor='middle'%3EP%3C/text%3E%3C/svg%3E`;
 const css = `
   :root { --ink:#1a1a1a; --muted:#5c6470; --line:#d9dde3; --bg:#f6f7f9; --card:#fff; --accent:#1d3557; }
   * { box-sizing: border-box; }
@@ -105,7 +104,8 @@ const shell = ({ title, description, path, ogImage, body, jsonld }) => `<!doctyp
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="${favicon}">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <style>${css}</style>
 <script type="application/ld+json">
 ${JSON.stringify(jsonld, null, 2)}
