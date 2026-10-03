@@ -18,9 +18,10 @@ test("every page has a title and a description Google shows whole", () => {
   }
 });
 
-// Google shows a site's icon beside its results, and fetches it like a page:
-// a data: URI can't be fetched, and /favicon.ico was a 404 until 10-03.
-// Its rule is a square, a multiple of 48px, at a URL it can crawl.
+// Google shows a site's icon beside its results. Its favicon page (Search
+// Central, read 10-03) asks for a square file Googlebot-Image can crawl, at
+// least 8px and ideally over 48px. Until 10-03 every page had a data: URI,
+// which is no file to crawl, and /favicon.ico was a 404. The .svg scales.
 test("every page names an icon file that exists, and favicon.ico has a 48px one", async () => {
   for (const f of [...pages, "404.html"]) {
     const html = readFileSync(new URL(f, dir), "utf8");
