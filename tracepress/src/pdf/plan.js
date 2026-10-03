@@ -1,7 +1,7 @@
 // What a book is, before anything is drawn: its pages laid out. Pure, so the
 // web preview can plan a book without loading pdf-lib.
 import { PRINT } from "../glyphs/print.js";
-import { LINE_PAGES } from "../glyphs/lines.js";
+import { LINE_PAGES, SHAPE_PAGES } from "../glyphs/lines.js";
 import { pageGeometry } from "./kdp.js";
 import { letterPage, belongsPage } from "./page.js";
 import { namePage, cleanName } from "./name.js";
@@ -37,18 +37,18 @@ export const WORDS_MAX = EXTRA_MAX;
 // Pre-writing line pages, if chosen, come before A and count toward the same
 // 52: 4 line pages, 10 numbers and 38 words at the most. So does the "This
 // book belongs to" page, first of all.
-export const wordsMax = (numbers, lines = false, belongs = false) => EXTRA_MAX - (numbers ? DIGITS.length : 0) - (lines ? LINE_PAGES.length : 0) - (belongs ? 1 : 0);
+export const wordsMax = (numbers, lines = false, belongs = false, shapes = false) => EXTRA_MAX - (numbers ? DIGITS.length : 0) - (lines ? LINE_PAGES.length : 0) - (belongs ? 1 : 0) - (shapes ? SHAPE_PAGES.length : 0);
 export function cleanWords(words, max = WORDS_MAX) {
   const list = typeof words === "string" ? words.split(/[,\n;]+/) : words ?? [];
   return list.map(cleanName).filter(Boolean).slice(0, max);
 }
 
-export function planBook({ trim = "8.5x11", bleed = false, guideIn = 0.75, numbers = false, lines = false, words = [], cases = "both", belongs = false, script = "print", measure, abc = false } = {}) {
+export function planBook({ trim = "8.5x11", bleed = false, guideIn = 0.75, numbers = false, lines = false, shapes = false, words = [], cases = "both", belongs = false, script = "print", measure, abc = false } = {}) {
   if (script === "cursive" && !measure) throw new Error("cursive needs measure()");
   const cursive = script === "cursive";
   const first = belongs ? 1 : 0;
-  const singles = [...(lines ? LINE_PAGES : []), ...letterPairs(CASES[cases] ? cases : "both"), ...(numbers ? DIGITS.map((d) => [d]) : [])];
-  const extra = cleanWords(words, wordsMax(numbers, lines, belongs));
+  const singles = [...(lines ? LINE_PAGES : []), ...(shapes ? SHAPE_PAGES : []), ...letterPairs(CASES[cases] ? cases : "both"), ...(numbers ? DIGITS.map((d) => [d]) : [])];
+  const extra = cleanWords(words, wordsMax(numbers, lines, belongs, shapes));
   const geom = pageGeometry({ trim, bleed, pageCount: first + singles.length + extra.length });
   return {
     geom,
@@ -56,7 +56,7 @@ export function planBook({ trim = "8.5x11", bleed = false, guideIn = 0.75, numbe
       ...(belongs ? [belongsPage({ geom, pageNumber: 1, guideIn })] : []),
       ...singles.map((letters, i) => {
         const pageNumber = first + i + 1;
-        // Pre-writing lines are strokes, not letters: print-drawn either way.
+        // Pre-writing lines and shapes are strokes, not letters: print-drawn either way.
         if (!cursive || !PRINT[letters[0]] || !/[A-Za-z0-9]/.test(letters[0])) return letterPage({ geom, pageNumber, letters, guideIn, picture: abc });
         return cursivePage({ geom, pageNumber, model: letters.join("   "), trace: [...letters, ...letters], guideIn, measure });
       }),

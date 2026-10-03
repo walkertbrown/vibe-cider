@@ -32,5 +32,36 @@ export const LINES = {
 // The pages, two shapes each, easiest first.
 export const LINE_PAGES = [["~down", "~across"], ["~slant-right", "~slant-left"], ["~zigzag", "~wave"], ["~circle", "~cross"]];
 
+// Shapes, for the pages after the lines: each from the baseline to the
+// headline, starting at the top and, where it's one stroke, going round
+// anticlockwise like the circle. The heart is two strokes, a half each, from
+// the dip at the top down to the point.
+const path = (pts) => pts.slice(1).map((p, i) => line(...pts[i], ...p));
+// The star's top point is on the headline and its two bottom points on the
+// baseline, so its radius is 2 / (1 + sin 54°).
+const STAR_R = 2 / (1 + Math.sin((54 * Math.PI) / 180));
+const STAR_W = 2 * STAR_R * Math.cos((18 * Math.PI) / 180);
+const star = (() => {
+  const pts = [];
+  for (let i = 0; i <= 10; i++) {
+    const a = ((90 + 36 * i) * Math.PI) / 180, r = (i % 2 ? 0.42 : 1) * STAR_R;
+    pts.push([+(STAR_W / 2 + r * Math.cos(a)).toFixed(4), +(2 - STAR_R + r * Math.sin(a)).toFixed(4)]);
+  }
+  return pts;
+})();
+export const SHAPES = {
+  "~square": { width: 2, strokes: [path([[0, 2], [0, 0], [2, 0], [2, 2], [0, 2]])] },
+  "~triangle": { width: 2.2, strokes: [path([[1.1, 2], [0, 0], [2.2, 0], [1.1, 2]])] },
+  "~rectangle": { width: 3.2, strokes: [path([[0, 2], [0, 0], [3.2, 0], [3.2, 2], [0, 2]])] },
+  "~diamond": { width: 1.6, strokes: [path([[0.8, 2], [0, 1], [0.8, 0], [1.6, 1], [0.8, 2]])] },
+  "~star": { width: +STAR_W.toFixed(4), strokes: [path(star)] },
+  "~heart": { width: 2, strokes: [[arc(0.5, 1.5, 0.5, 0.5, 0, 200), line(0.0302, 1.329, 1, 0)], [arc(1.5, 1.5, 0.5, 0.5, 180, -20), line(1.9698, 1.329, 1, 0)]] },
+};
+
+// The pages, after the lines and before A: one shape each, since two side by
+// side (4.1 to 4.8 units) are wider than the widest letter pair, W w (3.6),
+// and leave a 5x8 page at 1" lines.
+export const SHAPE_PAGES = [["~square"], ["~triangle"], ["~rectangle"], ["~diamond"], ["~star"], ["~heart"]];
+
 // Everything a page can draw: the alphabet and digits, and these shapes.
-export const GLYPHS = { ...PRINT, ...LINES };
+export const GLYPHS = { ...PRINT, ...LINES, ...SHAPES };
