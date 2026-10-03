@@ -11,7 +11,8 @@ import { GUIDES } from "../src/pdf/plan.js";
 import { namePage, planName } from "../src/pdf/name.js";
 import { pictureFor, PICTURES } from "../src/pdf/pictures.js";
 import { PRINT } from "../src/glyphs/print.js";
-import { reach, labelRadius, MARK_PAD } from "../src/pdf/page.js";
+import { reach, labelRadius, MARK_PAD, letterPage, LETTER_WORDS, PICTURE_GAP } from "../src/pdf/page.js";
+import { GLYPHS } from "../src/glyphs/lines.js";
 import { pageInk } from "../src/pdf/ink.js";
 import { PDFDocument } from "pdf-lib";
 import fontkit from "@pdf-lib/fontkit";
@@ -90,6 +91,41 @@ test("in cursive too, a picture is inside the margins and clear of the model wor
     assert.ok(model.baseY + down * u > first.baseY + up * first.unit, `${at}: word overlaps the first trace row`);
   }
   assert.ok(besides > 0 && aboves > 0, `both placements tested: ${besides} beside, ${aboves} above`);
+});
+
+test("A is for apple: every letter but Q has a picture, inside the margins, clear of the letters and the trace rows", () => {
+  const ABC = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  for (const ch of ABC) assert.equal(!!pictureFor(LETTER_WORDS[ch] ?? ""), ch !== "Q", ch);
+  for (const [ch, w] of Object.entries(LETTER_WORDS)) assert.ok(w.startsWith(ch.toLowerCase()) || (ch === "X" && w.endsWith("x")), `${ch}: ${w}`);
+  let besides = 0, aboves = 0;
+  for (const trim of Object.keys(TRIMS)) for (const guideIn of Object.values(GUIDES)) for (const ch of ABC) for (const letters of [[ch, ch.toLowerCase()], [ch], [ch.toLowerCase()]]) {
+    const geom = pageGeometry({ trim, bleed: false });
+    const m = marginsForPage(geom, 1);
+    const at = `${trim} ${guideIn} ${letters.join("")}`;
+    const layout = letterPage({ geom, pageNumber: 1, letters, guideIn, picture: true });
+    if (ch === "Q") { assert.equal(layout.pictures, undefined, at); continue; }
+    const [pic] = layout.pictures, [label] = layout.text;
+    const half = (label.text.length * 0.62 * label.size) / 2; // as page.js estimates it
+    const L = Math.min(pic.x, label.x - half), R = Math.max(pic.x + pic.size, label.x + half);
+    const T = pic.y, B = label.y - 0.25 * label.size; // descenders
+    assert.ok(label.size >= 7, `${at}: word under 7pt`);
+    assert.ok(L >= m.left - 0.01 && R <= geom.width - m.right + 0.01 && T <= geom.height - m.top + 0.01, `${at}: outside the margins`);
+    const [model, first] = layout.rows;
+    const u = model.unit, labelR = labelRadius(u) / u;
+    const ext = model.letters.map((l) => ({ l, r: reach(GLYPHS[l.ch], labelR, MARK_PAD / u) }));
+    const right = Math.max(...ext.map(({ l, r }) => l.x + r.maxX * u));
+    const top = Math.max(...ext.map(({ r }) => model.baseY + r.maxY * u));
+    const beside = right + PICTURE_GAP * pic.size <= L + 0.02, above = top <= B;
+    assert.ok(beside || above, `${at}: picture or word overlaps the letters, or crowds them`);
+    beside ? besides++ : aboves++;
+    assert.ok(B > first.baseY + 2 * first.unit, `${at}: word reaches the first trace row`);
+  }
+  assert.ok(besides > 0 && aboves > 0, `both placements tested: ${besides} beside, ${aboves} above`);
+});
+
+test("letter pages have no picture unless asked", () => {
+  const geom = pageGeometry({ trim: "8.5x11", bleed: false });
+  assert.equal(letterPage({ geom, pageNumber: 1, letters: ["A", "a"], guideIn: 0.75 }).pictures, undefined);
 });
 
 test("a word with no picture gets the page it always had", () => {

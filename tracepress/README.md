@@ -12,12 +12,15 @@ One page for each letter, A to Z, capital and lowercase (or one case alone). Eac
 letter with numbered start dots and arrows showing stroke order, rows of dotted
 letters to trace, and rows for writing the letter alone. Then, if you want them:
 
+- **A picture on each letter page**, "A is for apple": an outline of a word
+  that starts with the letter (apple, ball, cat…), the word under it, to colour.
+  Print letters; Q has none yet.
 - **A "This book belongs to" page** first, with a big writing line for the child's name.
 - **Pre-writing lines**, four pages before A: lines, slants, zigzags, waves, circles and crosses.
 - **Numbers 0–9**, a page each after Z, with start dots and arrows like the letters.
 - **Your own practice words** (sight words, names, a theme), a page each after
   that, up to 52 words (42 with numbers on).
-  A word Trace Press has a picture for (153 everyday words, such as dog, train
+  A word Trace Press has a picture for (162 everyday words, such as dog, train
   and umbrella) gets an outline of it to colour, beside the word or, for a
   long word, above it. The outlines are [Tabler Icons](https://tabler.io/icons)
   (MIT, `public/licenses/tabler-icons.txt`), plus some animals and foods from

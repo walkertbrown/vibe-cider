@@ -20,8 +20,9 @@ const tmp = mkdtempSync(join(tmpdir(), "tp-ink-"));
 // Free books: they carry everything a paid book does plus the watermark line.
 const fonts = { bold: readFileSync(new URL("../fonts/LiberationSans-Bold.ttf", import.meta.url)), regular: readFileSync(new URL("../fonts/LiberationSans-Regular.ttf", import.meta.url)), cursive: readFileSync(new URL("../public/fonts/PlaywriteUSTrad.ttf", import.meta.url)) };
 const cursiveFont = fontkit.create(fonts.cursive);
-// Cursive books too, with digits and long words, whose rows are fitted to the width.
-const SCRIPTS = { print: {}, cursive: { script: "cursive", numbers: true, words: "butterfly,Grandma", measure: (t, u) => cursiveWidth(cursiveFont, t, u) } };
+// Cursive books too, with digits and long words, whose rows are fitted to the width,
+// and print books with a picture on each letter page ("A is for apple").
+const SCRIPTS = { print: {}, abc: { abc: true }, cursive: { script: "cursive", numbers: true, words: "butterfly,Grandma", measure: (t, u) => cursiveWidth(cursiveFont, t, u) } };
 let failed = 0, pages = 0;
 
 for (const trim of (process.env.TRIMS?.split(",") ?? Object.keys(TRIMS))) for (const bleed of [false, true]) {
@@ -58,4 +59,4 @@ for (const trim of (process.env.TRIMS?.split(",") ?? Object.keys(TRIMS))) for (c
 
 rmSync(tmp, { recursive: true, force: true });
 if (failed) { console.log(`\n${failed} margin problem(s)`); process.exit(1); }
-console.log(`INK OK: ${pages} pages, ${Object.keys(TRIMS).length} trims × bleed on and off × ${Object.keys(GUIDES).length} guide sizes × print and cursive, every pixel of ink inside KDP's margins`);
+console.log(`INK OK: ${pages} pages, ${Object.keys(TRIMS).length} trims × bleed on and off × ${Object.keys(GUIDES).length} guide sizes × print, print with pictures and cursive, every pixel of ink inside KDP's margins`);

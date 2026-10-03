@@ -44,6 +44,9 @@ const WORDS = {
   melon: "melon", avocado: "avocado", sausage: "sausage", coffee: "coffee", salad: "salad",
   bean: "lucide:bean", donut: "lucide:donut", cupcake: "lucide:cupcake", broccoli: "lucide:broccoli",
   popcorn: "lucide:popcorn", croissant: "lucide:croissant",
+  // A–Z letter pages ("A is for apple"): words for the letters nothing above starts
+  "ice cream": "ice-cream", jacket: "jacket", octagon: "octagon", van: "lucide:van", watch: "lucide:watch",
+  box: "box", yarn: "yarn", zeppelin: "zeppelin", volcano: "volcano",
 };
 
 const dir = new URL("../node_modules/@tabler/icons/icons/outline/", import.meta.url);

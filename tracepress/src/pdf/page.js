@@ -14,6 +14,7 @@ import { sample } from "../glyphs/print.js";
 import { GLYPHS } from "../glyphs/lines.js";
 import { strokeArrows, strokeStarts } from "./arrows.js";
 import { PT, SAFETY_IN, marginsForPage } from "./kdp.js";
+import { pictureFor } from "./pictures.js";
 
 // Sizes of marks in points. KDP's floors: lines 0.75pt, type 7pt, and the
 // numbers are type (reference_kdp_interior_print_rules in the Puzzle Press
@@ -68,7 +69,18 @@ export const WATERMARK = "Made with Trace Press, free preview — tracepress.ban
 // `guideIn` is the trace rows' headline-to-baseline height in inches. Returns rows top to bottom:
 //   { kind, unit, baseY, left, right, letters: [{ ch, x, marks }] }
 // in points, with `unit` the size of one guide unit.
-export function letterPage({ geom, pageNumber, letters, guideIn }) {
+// "A is for apple": with `picture` on, a letter's page also has a picture of
+// a word that starts with it, the word printed under it, for a child to
+// colour. X has "box" (x at the end, as many alphabet books do it); Q has no
+// picture yet, so its page is the plain one.
+export const LETTER_WORDS = {
+  A: "apple", B: "ball", C: "cat", D: "dog", E: "egg", F: "fish", G: "grape", H: "horse", I: "ice cream",
+  J: "jacket", K: "key", L: "lemon", M: "moon", N: "nut", O: "octagon", P: "pig", R: "rabbit", S: "sun",
+  T: "tree", U: "umbrella", V: "van", W: "watch", X: "box", Y: "yarn", Z: "zeppelin",
+};
+const WORD_EM = 0.62; // Liberation Sans Bold, about this many ems a character, loosely (as BELONGS)
+
+export function letterPage({ geom, pageNumber, letters, guideIn, picture = false }) {
   const box = contentBox(geom, pageNumber);
   const rows = [];
   let top = box.top;
@@ -78,17 +90,40 @@ export function letterPage({ geom, pageNumber, letters, guideIn }) {
   const labelR = labelRadius(mUnit) / mUnit;
   const reaches = letters.map((ch) => reach(GLYPHS[ch], labelR, MARK_PAD / mUnit));
   const above = Math.max(...reaches.map((r) => r.maxY)), below = Math.min(...reaches.map((r) => r.minY));
-  const mBase = top - above * mUnit;
   let x = box.left + PAD * mUnit;
-  const model = { kind: "model", unit: mUnit, baseY: mBase, left: box.left, right: box.right, letters: [] };
+  const placed = [];
   for (const [i, ch] of letters.entries()) {
     const r = reaches[i];
     x += -r.minX * mUnit; // a mark overhanging the left edge pushes the letter right
-    model.letters.push({ ch, x, marks: true });
+    placed.push({ ch, x, marks: true });
     x += (r.maxX + LETTER_GAP) * mUnit;
   }
-  rows.push(model);
+  const modelEnd = x - LETTER_GAP * mUnit;
+
+  // The picture, beside the pair if there's room for a fair-sized one, else
+  // above it. Its word sits under it, no wider than the picture.
+  const word = picture && /^[A-Za-z]$/.test(letters[0]) ? LETTER_WORDS[letters[0].toUpperCase()] : undefined;
+  const paths = word ? pictureFor(word) : null;
+  const pictures = [], text = [];
+  if (paths) {
+    const maxPic = Math.min(3 * mUnit, PICTURE_MAX * (box.right - box.left));
+    const labelFor = (size) => Math.max(LABEL_PT, Math.min(size * 0.2, size / (word.length * WORD_EM)));
+    const tall = (size) => size + 0.5 * labelFor(size) + 1.2 * labelFor(size); // picture, gap, label to its descenders
+    const wide = (size) => Math.max(size, word.length * WORD_EM * labelFor(size)); // the picture or its word
+    const besideSize = Math.min(maxPic, (box.right - modelEnd) / (1 + PICTURE_GAP));
+    const beside = besideSize >= PICTURE_MIN * maxPic && box.right - besideSize / 2 - wide(besideSize) / 2 >= modelEnd + PICTURE_GAP * besideSize - 0.01; // a hair's slack: besideSize is often exactly the room
+    const size = beside ? besideSize : maxPic;
+    const cx = beside ? box.right - size / 2 : (box.left + box.right) / 2;
+    const ls = labelFor(size);
+    pictures.push({ paths, x: cx - size / 2, y: top, size });
+    text.push({ text: word, x: cx, y: top - size - 0.5 * ls - ls * 0.9, size: ls, font: "bold" });
+    if (!beside) top -= tall(size) + GAP_UNITS * mUnit;
+    pictures[0].bottom = box.top - tall(size); // the label's lowest ink, for the rows below
+  }
+  const mBase = top - above * mUnit;
+  rows.push({ kind: "model", unit: mUnit, baseY: mBase, left: box.left, right: box.right, letters: placed });
   top = mBase + below * mUnit - GAP_UNITS * mUnit;
+  for (const pic of pictures) top = Math.min(top, pic.bottom - GAP_UNITS * mUnit);
 
   // Trace rows, two per letter, alternating (A, a, A, a) so that a big guide
   // on a small trim, with room for only two rows, still gives each letter
@@ -110,7 +145,7 @@ export function letterPage({ geom, pageNumber, letters, guideIn }) {
     rows.push({ kind: want.kind, unit, baseY, left: box.left, right: box.right, letters: want.kind === "trace" ? all : all.slice(0, 1) });
     top -= pitch;
   }
-  return { box, rows };
+  return { box, rows, ...(pictures.length ? { pictures, text } : {}) };
 }
 
 export function labelRadius(unit) {

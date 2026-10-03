@@ -43,7 +43,7 @@ export function cleanWords(words, max = WORDS_MAX) {
   return list.map(cleanName).filter(Boolean).slice(0, max);
 }
 
-export function planBook({ trim = "8.5x11", bleed = false, guideIn = 0.75, numbers = false, lines = false, words = [], cases = "both", belongs = false, script = "print", measure } = {}) {
+export function planBook({ trim = "8.5x11", bleed = false, guideIn = 0.75, numbers = false, lines = false, words = [], cases = "both", belongs = false, script = "print", measure, abc = false } = {}) {
   if (script === "cursive" && !measure) throw new Error("cursive needs measure()");
   const cursive = script === "cursive";
   const first = belongs ? 1 : 0;
@@ -57,7 +57,7 @@ export function planBook({ trim = "8.5x11", bleed = false, guideIn = 0.75, numbe
       ...singles.map((letters, i) => {
         const pageNumber = first + i + 1;
         // Pre-writing lines are strokes, not letters: print-drawn either way.
-        if (!cursive || !PRINT[letters[0]] || !/[A-Za-z0-9]/.test(letters[0])) return letterPage({ geom, pageNumber, letters, guideIn });
+        if (!cursive || !PRINT[letters[0]] || !/[A-Za-z0-9]/.test(letters[0])) return letterPage({ geom, pageNumber, letters, guideIn, picture: abc });
         return cursivePage({ geom, pageNumber, model: letters.join("   "), trace: [...letters, ...letters], guideIn, measure });
       }),
       ...extra.map((word, i) => {

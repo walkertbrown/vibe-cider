@@ -20,7 +20,7 @@ const getLicense = () => storedLicense() ?? sessionLicense;
 
 const $ = (id) => document.getElementById(id);
 const el = {
-  trim: $("trim"), script: $("script"), bleed: $("bleed"), age: $("age"), cases: $("cases"), numbers: $("numbers"), lines: $("lines"), belongs: $("belongs"), words: $("words"), wordsNote: $("wordsNote"),
+  trim: $("trim"), script: $("script"), bleed: $("bleed"), age: $("age"), cases: $("cases"), numbers: $("numbers"), lines: $("lines"), belongs: $("belongs"), abc: $("abc"), words: $("words"), wordsNote: $("wordsNote"),
   preview: $("preview"), prev: $("prev"), next: $("next"), pageNo: $("pageNo"),
   download: $("download"), status: $("status"), tier: $("tier"),
   dialog: $("unlockDialog"), dialogTitle: $("dialogTitle"), dialogLede: $("dialogLede"), buyLine: $("buyLine"),
@@ -49,7 +49,7 @@ const wantsCursive = () => el.script.value === "cursive";
 const script = () => (wantsCursive() && cursive ? "cursive" : "print");
 
 let pageIndex = 0;
-const opts = () => ({ script: script(), measure: cursive ? (text, unit) => cursiveWidth(cursive, text, unit) : undefined, trim: el.trim.value, bleed: el.bleed.checked, guideIn: Number(el.age.value), cases: el.cases.value, numbers: el.numbers.checked, lines: el.lines.checked, belongs: el.belongs.checked, words: el.words.value });
+const opts = () => ({ script: script(), measure: cursive ? (text, unit) => cursiveWidth(cursive, text, unit) : undefined, trim: el.trim.value, bleed: el.bleed.checked, guideIn: Number(el.age.value), cases: el.cases.value, numbers: el.numbers.checked, lines: el.lines.checked, belongs: el.belongs.checked, abc: el.abc.checked, words: el.words.value });
 
 // The cover's size, before it's made: what to type into KDP's cover
 // calculator to check it.
@@ -92,7 +92,7 @@ function showScript() {
   loadCursive().then(showPage, (err) => { el.pageNo.textContent = `Could not load the cursive font: ${err.message}. Reload the page to try again.`; });
 }
 
-for (const c of [el.trim, el.bleed, el.age, el.cases, el.belongs, el.numbers, el.lines, el.paper]) c.addEventListener("change", (e) => {
+for (const c of [el.trim, el.bleed, el.age, el.cases, el.belongs, el.abc, el.numbers, el.lines, el.paper]) c.addEventListener("change", (e) => {
   if (e.isTrusted) px("touched");
   showPage();
 });
@@ -287,6 +287,7 @@ if (linkedWords) el.words.value = cleanWords(linkedWords).join(", ");
 if (new URLSearchParams(location.search).get("numbers") === "1") el.numbers.checked = true;
 if (new URLSearchParams(location.search).get("lines") === "1") el.lines.checked = true;
 if (new URLSearchParams(location.search).get("belongs") === "1") el.belongs.checked = true;
+if (new URLSearchParams(location.search).get("abc") === "1") el.abc.checked = true;
 const linkedCases = new URLSearchParams(location.search).get("letters");
 if (CASES[linkedCases]) el.cases.value = linkedCases;
 if (new URLSearchParams(location.search).get("script") === "cursive") el.script.value = "cursive";
