@@ -54,6 +54,8 @@
   section.info h3 { margin: 0 0 6px; font-size: 17px; }
   section.info p, section.info li { color: var(--muted); }
   section.info ul { padding-left: 18px; margin: 0; }
+  table.words { border-collapse: collapse; margin: 8px 0 0; }
+  table.words th, table.words td { text-align: left; padding: 3px 14px 3px 0; border-bottom: 1px solid var(--line); }
   footer { text-align: center; color: var(--muted); font-size: 13px; padding: 24px; border-top: 1px solid var(--line); }
   dialog { border: 1px solid var(--line); border-radius: 12px; padding: 22px; max-width: 420px; width: calc(100% - 32px); }
   dialog::backdrop { background: rgba(0,0,0,0.35); }
@@ -109,6 +111,15 @@
     <p>One page, like this one for Maya. The name once, big, with start dots and arrows on every letter, in the same print letters as the Trace Press workbook. Then the name in dotted letters, repeated across each row as many times as it fits. The last rows are blank four-line guides: a solid top line, a dashed midline, a solid baseline and a dotted line for tails. Pick Cursive under Handwriting and the name is joined instead (see a <a href="/cursive-name-tracing">cursive name tracing worksheet</a>), in the <a href="/cursive-letter-tracing">same cursive as the cursive worksheets</a>: once in solid letters, then rows in light grey to write over.</p>
   </div>
   <div>
+    <h3>How a name fills the sheet</h3>
+    <p>The line size sets how many rows fit on the page, and the name's length sets how many times it fits across a row. Here are Maya (four letters) and Christopher (eleven) in print on a US Letter sheet. The last column is the size of the big name at the top, against Maya's.</p>
+    <table class="words"><thead><tr><th>Line size</th><th>Rows to trace</th><th>Rows to write</th><th>Maya, a row</th><th>Christopher, a row</th><th>Christopher at the top</th></tr></thead><tbody>
+      <tr><td>1" (ages 4–5)</td><td>3</td><td>1</td><td>1</td><td>1</td><td>44%</td></tr>
+      <tr><td>0.75" (ages 5–7)</td><td>4</td><td>2</td><td>2</td><td>1</td><td>57%</td></tr>
+      <tr><td>0.6" (ages 7–9)</td><td>6</td><td>2</td><td>2</td><td>1</td><td>74%</td></tr>
+      <tr><td>0.45" (older)</td><td>9</td><td>2</td><td>3</td><td>1</td><td>95%</td></tr>
+    </tbody></table>
+    <p>At 1" lines one copy of Christopher doesn't fit across a row, so its tracing rows use 0.8" lines instead, which leaves room for four rows to trace and two to write. The big name at the top carries the start dots and arrows, and a long name shrinks most there: Christopher's is drawn at 44% of Maya's size on 1" lines and at 95% on 0.45" lines. For a long name, a smaller line size keeps the big name close to full size.</p>
     <h3>Letters it draws</h3>
     <p>Capitals A–Z, lowercase a–z and the numbers 0–9, up to 16 characters and spaces. Accented letters, hyphens and apostrophes aren't drawn yet, so "Mary-Kate" comes out as "MaryKate". The note under the name box says when something was left out.</p>
   </div>
