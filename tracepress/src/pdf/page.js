@@ -195,3 +195,20 @@ export function belongsPage({ geom, pageNumber, guideIn }) {
     text: [{ text: BELONGS, x: (box.left + box.right) / 2, y: headY, size, font: "bold" }],
   };
 }
+
+// The "Well done!" page, last in the book if chosen: the heading, the same
+// empty name line as the first page, then "finished this book." under it,
+// sized the same way.
+export const DONE = "Well done!";
+export const DONE_LINE = "finished this book.";
+export function donePage({ geom, pageNumber, guideIn }) {
+  const page = belongsPage({ geom, pageNumber, guideIn });
+  const { box } = page, row = page.rows[0], head = page.text[0];
+  const size = Math.max(LABEL_PT, head.size * 0.7);
+  return {
+    ...page,
+    belongs: undefined,
+    done: true,
+    text: [{ ...head, text: DONE }, { text: DONE_LINE, x: head.x, y: row.baseY - row.unit - size * 1.6, size, font: "regular" }],
+  };
+}

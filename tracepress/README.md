@@ -18,6 +18,7 @@ letters to trace, and rows for writing the letter alone. Then, if you want them:
   on, pages 1–9 get that many stars to count, the number word under them.
   The cover then shows the apple beside its "A a".
 - **A "This book belongs to" page** first, with a big writing line for the child's name.
+- **A "Well done!" page** last, with the same name line and "finished this book." under it.
 - **Print or cursive.** Cursive letters are joined the way the font
   ([Playwrite US Trad](https://fonts.google.com/specimen/Playwrite+US+Trad), OFL)
   joins them and drawn as outlines, so the preview is what prints; a cursive
@@ -28,7 +29,7 @@ letters to trace, and rows for writing the letter alone. Then, if you want them:
 - **Numbers 0–9**, a page each after Z, with start dots and arrows like the letters.
 - **Your own practice words** (sight words, names, a theme), a page each after
   that, up to 52 words. The other extra pages count against the 52: numbers
-  take 10, lines 4, shapes 6 and the name page 1.
+  take 10, lines 4, shapes 6, and the name page and the well-done page 1 each.
   A word Trace Press has a picture for (163 everyday words, such as dog, train
   and umbrella) gets an outline of it to colour, beside the word or, for a
   long word, above it. The outlines are [Tabler Icons](https://tabler.io/icons)
