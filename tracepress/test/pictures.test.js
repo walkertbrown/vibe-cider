@@ -96,9 +96,9 @@ test("in cursive too, a picture is inside the margins and clear of the model wor
   assert.ok(besides > 0 && aboves > 0, `both placements tested: ${besides} beside, ${aboves} above`);
 });
 
-test("A is for apple: every letter but Q has a picture, inside the margins, clear of the letters and the trace rows", () => {
+test("A is for apple: every letter has a picture, inside the margins, clear of the letters and the trace rows", () => {
   const ABC = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  for (const ch of ABC) assert.equal(!!pictureFor(LETTER_WORDS[ch] ?? ""), ch !== "Q", ch);
+  for (const ch of ABC) assert.ok(pictureFor(LETTER_WORDS[ch] ?? ""), ch);
   for (const [ch, w] of Object.entries(LETTER_WORDS)) assert.ok(w.startsWith(ch.toLowerCase()) || (ch === "X" && w.endsWith("x")), `${ch}: ${w}`);
   let besides = 0, aboves = 0;
   for (const trim of Object.keys(TRIMS)) for (const guideIn of Object.values(GUIDES)) for (const ch of ABC) for (const letters of [[ch, ch.toLowerCase()], [ch], [ch.toLowerCase()]]) {
@@ -106,7 +106,6 @@ test("A is for apple: every letter but Q has a picture, inside the margins, clea
     const m = marginsForPage(geom, 1);
     const at = `${trim} ${guideIn} ${letters.join("")}`;
     const layout = letterPage({ geom, pageNumber: 1, letters, guideIn, picture: true });
-    if (ch === "Q") { assert.equal(layout.pictures, undefined, at); continue; }
     const [pic] = layout.pictures, [label] = layout.text;
     const half = (label.text.length * 0.62 * label.size) / 2; // as page.js estimates it
     const L = Math.min(pic.x, label.x - half), R = Math.max(pic.x + pic.size, label.x + half);

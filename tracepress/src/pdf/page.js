@@ -71,11 +71,11 @@ export const WATERMARK = "Made with Trace Press, free preview — tracepress.ban
 // in points, with `unit` the size of one guide unit.
 // "A is for apple": with `picture` on, a letter's page also has a picture of
 // a word that starts with it, the word printed under it, for a child to
-// colour. X has "box" (x at the end, as many alphabet books do it); Q has no
-// picture yet, so its page is the plain one.
+// colour. X has "box" (x at the end, as many alphabet books do it); Q has
+// "quilt", drawn for Trace Press, since no icon set has a child's Q picture.
 export const LETTER_WORDS = {
   A: "apple", B: "ball", C: "cat", D: "dog", E: "egg", F: "fish", G: "grape", H: "horse", I: "ice cream",
-  J: "jacket", K: "key", L: "lemon", M: "moon", N: "nut", O: "octagon", P: "pig", R: "rabbit", S: "sun",
+  J: "jacket", K: "key", L: "lemon", M: "moon", N: "nut", O: "octagon", P: "pig", Q: "quilt", R: "rabbit", S: "sun",
   T: "tree", U: "umbrella", V: "van", W: "watch", X: "box", Y: "yarn", Z: "zeppelin",
 };
 const WORD_EM = 0.62; // Liberation Sans Bold, about this many ems a character, loosely (as BELONGS)
