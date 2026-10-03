@@ -13,13 +13,13 @@ const dir = new URL("../public/", import.meta.url);
 const pages = readdirSync(dir).filter((f) => f.endsWith(".html"))
   .map((f) => [f, readFileSync(new URL(f, dir), "utf8")])
   .filter(([, html]) => html.includes("Which letters the words practise"));
-const NUM = ["zero", "one", "two", "three", "four", "five", "six"];
+const NUM = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve"];
 const list = (a) => (a.length === 1 ? a[0] : a.slice(0, -1).join(", ") + " and " + a.at(-1));
 const letters = (w) => [...w.replace(/ /g, "")];
 const strokes = (w) => letters(w).reduce((n, c) => n + GLYPHS[c].strokes.length, 0);
 
-test("the holiday pages carry the word facts", () => {
-  for (const h of ["christmas", "halloween", "thanksgiving"])
+test("the holiday and themed word pages carry the word facts", () => {
+  for (const h of ["christmas", "halloween", "thanksgiving", "animal", "food", "transportation", "picture-word"])
     assert.ok(pages.some(([f]) => f === `${h}-tracing-worksheets.html`), h);
 });
 
