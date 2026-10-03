@@ -44,7 +44,9 @@ await page.route("https://static.cloudflareinsights.com/**", (route) => route.ab
 const errors = [];
 page.on("pageerror", (e) => errors.push(String(e)));
 // Expected: /api/verify answers 4xx/5xx for unknown emails; that is not a page error.
-page.on("console", (m) => { if (m.type() === "error" && !/Failed to load resource/.test(m.text())) errors.push(m.text()); });
+// Cloudflare's own analytics script (static.cloudflareinsights.com) is blocked
+// as a tracker by Playwright's Firefox; that is Cloudflare's, not the page's.
+page.on("console", (m) => { if (m.type() === "error" && !/Failed to load resource|cloudflareinsights/.test(m.text())) errors.push(m.text()); });
 
 await page.goto(base, { waitUntil: "networkidle" });
 await page.waitForSelector(".grid div");
