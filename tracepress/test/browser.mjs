@@ -339,6 +339,8 @@ try {
       const path = new URL(u.match(/<loc>(.*?)<\/loc>/)[1]).pathname;
       if (path.endsWith(".pdf")) continue;
       await nm.goto(`${base}${path}`, { waitUntil: "load" });
+      // A lazy image off screen hasn't loaded yet; that isn't broken. Load it, then judge.
+      await nm.$$eval("img[loading=lazy]", (els) => Promise.all(els.map((e) => { e.loading = "eager"; return e.decode().catch(() => {}); })));
       const imgs = await nm.$$eval("img", (els) => els.map((e) => ({ src: e.getAttribute("src"), ok: e.complete && e.naturalWidth > 0, alt: e.alt.length })));
       const pics = [...u.matchAll(/<image:loc>(.*?)<\/image:loc>/g)].map((m) => new URL(m[1]).pathname);
       for (const p of pics) {
