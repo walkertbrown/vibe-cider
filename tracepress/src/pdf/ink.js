@@ -50,7 +50,7 @@ export function pageInk(layout, { licensed = false, heavy = false, cursive } = {
     for (const r of row.runs ?? []) out.push(...cursiveRun(cursive, r.text, { x: r.x, baseY, unit, color: row.kind === "model" ? BASE : TRACE }).shapes);
   }
   for (const t of layout.text ?? []) out.push({ kind: "text", color: BLACK, ...t });
-  for (const p of layout.pictures ?? []) out.push({ kind: "outline", paths: p.paths, x: p.x, y: p.y, scale: p.size / 24, width: PICTURE_W, color: BLACK });
+  for (const p of layout.pictures ?? []) out.push({ kind: "outline", paths: p.paths, x: p.x, y: p.y, scale: p.size / 24, width: p.width ?? PICTURE_W, color: BLACK });
   return out;
 }
 

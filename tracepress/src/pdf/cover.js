@@ -6,8 +6,10 @@
 // drawn big: a dotted "Aa" with its numbered starts and stroke arrows, from
 // the same shapes as the interior pages. The back is left plain, with KDP's
 // barcode area clear. A cursive book (`cursive`, the loaded fontkit font)
-// gets its model in cursive instead: "Aa" joined, solid, on the guides. A 26-page book is under KDP's 79-page floor for spine
-// text, so the spine is blank.
+// gets its model in cursive instead: "Aa" joined, solid, on the guides. A
+// print book with pictures (`abc`, "A is for apple") gets the apple beside
+// the letters, its word under it, as the first page has it. A 26-page book
+// is under KDP's 79-page floor for spine text, so the spine is blank.
 //
 // `layoutCover` returns plain shapes (the ink.js kinds, plus `rect`), so a
 // test can check every word sits inside the safe area without rendering.
@@ -15,10 +17,11 @@ import { PDFDocument, rgb } from "pdf-lib";
 import fontkit from "@pdf-lib/fontkit";
 import { PT } from "./kdp.js";
 import { coverGeometry, BARCODE_IN } from "./cover-geometry.js";
-import { pageInk, WHITE } from "./ink.js";
+import { pageInk, WHITE, PICTURE_W } from "./ink.js";
 import { drawShapes } from "./draw.js";
 import { PRINT } from "../glyphs/print.js";
-import { reach, labelRadius, MARK_PAD, LETTER_GAP } from "./page.js";
+import { reach, labelRadius, MARK_PAD, LETTER_GAP, LETTER_WORDS, PICTURE_GAP, LABEL_PT } from "./page.js";
+import { pictureFor } from "./pictures.js";
 import { cursiveWidth } from "./cursive.js";
 import { CURSIVE_REACH } from "./cursive-page.js";
 
@@ -53,7 +56,7 @@ function fitLines(font, text, maxWidth, start, min, maxLines) {
 }
 
 // `fonts` are embedded pdf-lib fonts (only widthOfTextAtSize is used).
-export function layoutCover({ title = "My Letter Tracing Book", subtitle = "", author = "", trim = "8.5x11", pageCount = 26, paper = "white", cursive } = {}, fonts) {
+export function layoutCover({ title = "My Letter Tracing Book", subtitle = "", author = "", trim = "8.5x11", pageCount = 26, paper = "white", cursive, abc = false } = {}, fonts) {
   const g = coverGeometry({ trim, pageCount, paper });
   const shapes = [{ kind: "rect", x: 0, y: 0, w: g.width, h: g.height, color: GROUND }];
   const inset = TEXT_INSET_IN * PT;
@@ -94,6 +97,20 @@ export function layoutCover({ title = "My Letter Tracing Book", subtitle = "", a
     return { g, shapes, card, unit };
   }
   const letters = ["A", "a"];
+  // With pictures, the apple takes the card's right side: the picture, a
+  // gap, and its word under it, centred up and down. The letters get the rest.
+  const word = abc ? LETTER_WORDS.A : null;
+  const pictures = [], words = [];
+  let lettersRight = card.x + card.w, lineEnd = card.x + card.w * 0.96;
+  if (word) {
+    const size = Math.min(card.h * 0.5, card.w * 0.24), ls = Math.max(LABEL_PT, size * 0.2);
+    const px = card.x + card.w * 0.94 - size, py = card.y + card.h / 2 + (size + 1.5 * ls) / 2;
+    pictures.push({ paths: pictureFor(word), x: px, y: py, size, width: Math.max(PICTURE_W, size / 16) });
+    words.push({ text: word, x: px + size / 2, y: py - size - 0.5 * ls - 0.9 * ls, size: ls, font: "bold" });
+    lettersRight = px - PICTURE_GAP * size;
+    lineEnd = px - (PICTURE_GAP / 2) * size;
+  }
+  const room = lettersRight - card.x;
   // Size the unit so the pair fits the card both ways. reach() depends on the
   // unit only through the label radius and mark padding, so solve twice.
   let unit = 60;
@@ -101,21 +118,21 @@ export function layoutCover({ title = "My Letter Tracing Book", subtitle = "", a
     const rs = letters.map((ch) => reach(PRINT[ch], labelRadius(unit) / unit, MARK_PAD / unit));
     const across = rs.reduce((a, r) => a + r.maxX - r.minX, 0) + LETTER_GAP;
     const up = Math.max(...rs.map((r) => r.maxY)) - Math.min(...rs.map((r) => r.minY));
-    unit = Math.min((card.w * 0.84) / across, (card.h * 0.84) / up);
+    unit = Math.min(((word ? room - card.w * 0.04 : room * 0.84)) / across, (card.h * 0.84) / up);
   }
   const rs = letters.map((ch) => reach(PRINT[ch], labelRadius(unit) / unit, MARK_PAD / unit));
   const across = (rs.reduce((a, r) => a + r.maxX - r.minX, 0) + LETTER_GAP) * unit;
   const maxY = Math.max(...rs.map((r) => r.maxY)), minY = Math.min(...rs.map((r) => r.minY));
   const baseY = card.y + card.h / 2 - ((maxY + minY) / 2) * unit;
-  let x = card.x + (card.w - across) / 2;
-  const row = { unit, baseY, left: card.x + card.w * 0.04, right: card.x + card.w * 0.96, letters: [] };
+  let x = word ? card.x + card.w * 0.04 + (room - card.w * 0.04 - across) / 2 : card.x + (card.w - across) / 2;
+  const row = { unit, baseY, left: card.x + card.w * 0.04, right: lineEnd, letters: [] };
   rs.forEach((r, i) => {
     x += -r.minX * unit;
     row.letters.push({ ch: letters[i], x, marks: true });
     x += (r.maxX + LETTER_GAP) * unit;
   });
-  shapes.push(...pageInk({ rows: [row] }, { licensed: true, heavy: true }));
-  return { g, shapes, card, unit };
+  shapes.push(...pageInk({ rows: [row], pictures, text: words }, { licensed: true, heavy: true }));
+  return { g, shapes, card, unit, ...(word ? { pictures, row } : {}) };
 }
 
 // A free cover is a real cover of the buyer's own book, marked so it can't be

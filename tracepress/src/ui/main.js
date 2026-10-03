@@ -174,7 +174,7 @@ el.downloadCover.addEventListener("click", async (e) => {
     const o = opts();
     const bytes = await renderCover({
       title: el.title.value.trim() || "My Letter Tracing Book", subtitle: el.subtitle.value.trim(), author: el.author.value.trim(),
-      trim: o.trim, paper: el.paper.value, pageCount: planBook(o).pages.length, licensed: !!getLicense(), script: o.script,
+      trim: o.trim, paper: el.paper.value, pageCount: planBook(o).pages.length, licensed: !!getLicense(), script: o.script, abc: o.abc,
     }, { bold, regular, cursive: cursiveBytes });
     save(bytes, `trace-press-cover-${o.trim}-${el.paper.value}${o.script === "cursive" ? "-cursive" : ""}.pdf`);
     px("covermade");

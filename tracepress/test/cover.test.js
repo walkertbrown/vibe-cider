@@ -39,8 +39,8 @@ test("the cover is KDP's size: bleed + back + spine + front + bleed", () => {
 });
 
 test("every word and mark on the front is inside the trim by more than 0.125\"", () => {
-  for (const trim of Object.keys(TRIMS)) for (const t of TITLES) {
-    const { g, shapes } = layoutCover({ ...t, trim, pageCount }, fonts);
+  for (const trim of Object.keys(TRIMS)) for (const t of TITLES) for (const abc of [false, true]) {
+    const { g, shapes } = layoutCover({ ...t, trim, pageCount, abc }, fonts);
     const x0 = g.frontX + SAFE, x1 = g.frontX + g.panelW - SAFE, y0 = g.panelY + SAFE, y1 = g.panelY + g.panelH - SAFE;
     const words = shapes.filter((s) => s.kind === "text");
     assert.ok(words.some((s) => s.size >= 16), `${trim}: a title at 16pt or more`);
@@ -51,6 +51,7 @@ test("every word and mark on the front is inside the trim by more than 0.125\"",
         : s.kind === "rect" ? [s.x, s.y, s.x + s.w, s.y + s.h]
         : s.kind === "dot" ? [s.x - s.r, s.y - s.r, s.x + s.r, s.y + s.r]
         : s.kind === "line" ? [Math.min(s.x1, s.x2), Math.min(s.y1, s.y2), Math.max(s.x1, s.x2), Math.max(s.y1, s.y2)]
+        : s.kind === "outline" ? [s.x, s.y - 24 * s.scale, s.x + 24 * s.scale, s.y]
         : [Math.min(...s.pts.map((p) => p[0])), Math.min(...s.pts.map((p) => p[1])), Math.max(...s.pts.map((p) => p[0])), Math.max(...s.pts.map((p) => p[1]))];
       const what = `${trim} "${t.title.slice(0, 20)}" ${s.kind} ${s.text ?? ""}`;
       assert.ok(box[0] >= x0 && box[2] <= x1 && box[1] >= y0 && box[3] <= y1, `${what} at ${box.map(Math.round)} outside ${[x0, y0, x1, y1].map(Math.round)}`);
@@ -83,6 +84,30 @@ test("a free cover says PREVIEW and a paid one doesn't", async () => {
 // A cursive book's cover: the card holds "Aa" in joined cursive (glyph paths,
 // no tracing dots or arrows), and all of it stays inside the card, so inside
 // the trim like the rest of the front.
+test("a picture book's cover has the apple beside the letters, inside the card and clear of them", () => {
+  for (const trim of Object.keys(TRIMS)) for (const t of TITLES) {
+    const plain = layoutCover({ ...t, trim, pageCount }, fonts);
+    const { shapes, card, unit } = layoutCover({ ...t, trim, pageCount, abc: true }, fonts);
+    const what = `${trim} "${t.title.slice(0, 20)}"`;
+    const pics = shapes.filter((s) => s.kind === "outline");
+    assert.equal(pics.length, 1, `${what}: ${pics.length} pictures`);
+    const p = pics[0], size = 24 * p.scale;
+    const word = shapes.find((s) => s.kind === "text" && s.text === "apple");
+    assert.ok(word && word.size >= 7, `${what}: the word under the apple, at 7pt or more`);
+    const ww = fonts.bold.widthOfTextAtSize(word.text, word.size);
+    const right = { x: Math.min(p.x, word.x - ww / 2), top: p.y, bottom: word.y - word.size * 0.25 };
+    assert.ok(right.x >= card.x && p.x + size <= card.x + card.w && word.x + ww / 2 <= card.x + card.w && right.bottom >= card.y && right.top <= card.y + card.h, `${what}: apple outside the card`);
+    assert.ok(word.y + word.size * 0.8 < p.y - size, `${what}: the word runs into the apple`);
+    // Every letter mark (dots, arrows, start numbers) and the guide lines stop left of it.
+    for (const s of shapes) {
+      const x = s.kind === "dot" ? s.x + s.r : s.kind === "tri" ? Math.max(...s.pts.map((q) => q[0])) : s.kind === "line" && s.y1 > card.y && s.y1 < card.y + card.h ? Math.max(s.x1, s.x2) : null;
+      if (x !== null) assert.ok(x < right.x, `${what}: ${s.kind} at ${Math.round(x)} reaches the apple at ${Math.round(right.x)}`);
+    }
+    // The letters stay the cover's main thing: no less than 60% of their size without the apple.
+    assert.ok(unit >= 0.6 * plain.unit, `${what}: letters ${Math.round(unit)} vs ${Math.round(plain.unit)}`);
+  }
+});
+
 test("a cursive book's cover has a cursive model, inside the card", async () => {
   const cursiveBytes = readFileSync(new URL("../public/fonts/PlaywriteUSTrad.ttf", import.meta.url));
   const cursive = fontkit.create(cursiveBytes);
