@@ -33,6 +33,10 @@ test("print name page: the table and its sentences match the layout", () => {
   assert.ok(text.includes(`tracing rows use ${(c1.trace[0].unit / 36).toFixed(1)}" lines instead, which leaves room for four rows to trace and two to write`));
   assert.deepEqual([c1.trace.length, c1.free.length], [4, 2]);
   assert.ok(text.includes(`drawn at ${top(1, "print")}% of Maya's size on 1" lines and at ${top(0.45, "print")}% on 0.45" lines`));
+  // "the same at every line size": Christopher's big name, in inches, within 5%
+  const inches = Object.values(GUIDES).map((g) => sheet("Christopher", g, "print").model.unit);
+  assert.ok(Math.max(...inches) / Math.min(...inches) < 1.05, String(inches));
+  assert.ok(text.includes("comes out the same at every line size"));
 });
 
 test("cursive name page: the table and its sentences match the layout", () => {
