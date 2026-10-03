@@ -76,7 +76,9 @@ for pre-writing,
 [animal tracing worksheets](https://tracepress.bananafest-destiny.com/animal-tracing-worksheets)
 (20 animals, cat to butterfly),
 [food tracing worksheets](https://tracepress.bananafest-destiny.com/food-tracing-worksheets)
-(20 foods, egg to broccoli), a
+(20 foods, egg to broccoli),
+[alphabet tracing worksheets with pictures](https://tracepress.bananafest-destiny.com/alphabet-tracing-worksheets-with-pictures)
+(A is for apple to Z is for zeppelin), a
 ["This book belongs to" page](https://tracepress.bananafest-destiny.com/this-book-belongs-to-page)
 in all six KDP trims, a
 [name tracing worksheet generator](https://tracepress.bananafest-destiny.com/name-tracing)

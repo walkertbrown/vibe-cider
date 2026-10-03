@@ -48,6 +48,7 @@ Made by this code with the free version, footer line and PREVIEW mark included:
 ## Free pages
 
 - [Letter tracing worksheets, A to Z](https://tracepress.bananafest-destiny.com/letter-tracing)
+- [Alphabet tracing worksheets with pictures](https://tracepress.bananafest-destiny.com/alphabet-tracing-worksheets-with-pictures): A is for apple to Z is for zeppelin
 - [Uppercase letter tracing worksheets](https://tracepress.bananafest-destiny.com/uppercase-letter-tracing)
 - [Lowercase letter tracing worksheets](https://tracepress.bananafest-destiny.com/lowercase-letter-tracing)
 - [Number tracing worksheets, 0 to 9](https://tracepress.bananafest-destiny.com/number-tracing)

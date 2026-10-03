@@ -66,6 +66,11 @@ export const SAMPLES = {
     title: "Free Tracing Lines Worksheets, Pre-Writing Printable PDF · Trace Press",
     subject: "Four printable pre-writing pages: down and across lines, slants, zigzags and waves, circles and crosses, each with numbered start dots and direction arrows, then rows to trace on four-line guides with 1-inch lines for ages 4 to 5. 8.5 x 11. Made free with Trace Press.",
   },
+  abc: {
+    file: "alphabet-tracing-worksheets-with-pictures.pdf",
+    title: "Free Alphabet Tracing Worksheets with Pictures, A–Z (PDF)",
+    subject: "26 printable alphabet tracing pages, A is for apple to Z is for zeppelin: each letter large with numbered start dots and stroke-order arrows, a picture to colour with its word, then rows of dotted letters to trace on four-line guides with 1-inch lines for ages 4 to 5. 8.5 x 11. Made free with Trace Press.",
+  },
   upper: {
     file: "uppercase-letter-tracing-worksheets.pdf",
     title: "Free Uppercase Letter Tracing Worksheets A–Z, PDF · Trace Press",
@@ -179,8 +184,8 @@ function meta(doc, { title, subject }) {
 // `from` keeps only the pages from that index on (the number worksheets are
 // the digit pages of a book with numbers on, without A–Z in front), and `to`
 // stops before that index (the line worksheets are the four pages before A).
-async function book(sample, { words = [], numbers = false, lines = false, cases = "both", guideIn = GUIDE_IN, from = 0, to, script = "print" } = {}) {
-  const opts = { trim: TRIM, guideIn, words, numbers, lines, cases, script, measure };
+async function book(sample, { words = [], numbers = false, lines = false, cases = "both", guideIn = GUIDE_IN, from = 0, to, script = "print", abc = false } = {}) {
+  const opts = { trim: TRIM, guideIn, words, numbers, lines, cases, script, measure, abc };
   let doc = await PDFDocument.load(await renderBook(opts, fonts));
   if (from || to) {
     const whole = doc;
@@ -217,6 +222,7 @@ await book(SAMPLES.sightWords, { words: PRE_PRIMER });
 await book(SAMPLES.numbers, { numbers: true, guideIn: 1, from: 26 });
 await book(SAMPLES.lines, { lines: true, guideIn: 1, to: 4 });
 await book(SAMPLES.upper, { cases: "upper", guideIn: 1 });
+await book(SAMPLES.abc, { abc: true, guideIn: 1 });
 await book(SAMPLES.lower, { cases: "lower", guideIn: 1 });
 await book(SAMPLES.cursive, { script: "cursive", guideIn: 1 });
 await book(SAMPLES.cursiveAdult, { script: "cursive", guideIn: 0.45 });

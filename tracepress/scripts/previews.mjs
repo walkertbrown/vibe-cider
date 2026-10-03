@@ -13,6 +13,7 @@ const PREVIEWS = [
   ["tracing-lines-worksheets.pdf", 3, "tracing-lines-worksheet-zigzag-wave"],
   ["sight-word-tracing-workbook-sample-8.5x11.pdf", 28, "sight-word-tracing-worksheet"],
   ["uppercase-letter-tracing-worksheets.pdf", 1, "uppercase-letter-tracing-worksheet-a"],
+  ["alphabet-tracing-worksheets-with-pictures.pdf", 1, "alphabet-tracing-worksheet-apple"],
   ["lowercase-letter-tracing-worksheets.pdf", 1, "lowercase-letter-tracing-worksheet-a"],
   ["this-book-belongs-to-page-8.5x11.pdf", 1, "this-book-belongs-to-page"],
   ["name-tracing-worksheet-maya.pdf", 1, "name-tracing-worksheet-maya"],

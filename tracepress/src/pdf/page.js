@@ -105,6 +105,7 @@ export function letterPage({ geom, pageNumber, letters, guideIn, picture = false
   const word = picture && /^[A-Za-z]$/.test(letters[0]) ? LETTER_WORDS[letters[0].toUpperCase()] : undefined;
   const paths = word ? pictureFor(word) : null;
   const pictures = [], text = [];
+  let lineEnd = box.right; // the model row's guide lines stop short of a picture beside them
   if (paths) {
     const maxPic = Math.min(3 * mUnit, PICTURE_MAX * (box.right - box.left));
     const labelFor = (size) => Math.max(LABEL_PT, Math.min(size * 0.2, size / (word.length * WORD_EM)));
@@ -118,10 +119,11 @@ export function letterPage({ geom, pageNumber, letters, guideIn, picture = false
     pictures.push({ paths, x: cx - size / 2, y: top, size });
     text.push({ text: word, x: cx, y: top - size - 0.5 * ls - ls * 0.9, size: ls, font: "bold" });
     if (!beside) top -= tall(size) + GAP_UNITS * mUnit;
+    else lineEnd = cx - wide(size) / 2 - (PICTURE_GAP / 2) * size;
     pictures[0].bottom = box.top - tall(size); // the label's lowest ink, for the rows below
   }
   const mBase = top - above * mUnit;
-  rows.push({ kind: "model", unit: mUnit, baseY: mBase, left: box.left, right: box.right, letters: placed });
+  rows.push({ kind: "model", unit: mUnit, baseY: mBase, left: box.left, right: lineEnd, letters: placed });
   top = mBase + below * mUnit - GAP_UNITS * mUnit;
   for (const pic of pictures) top = Math.min(top, pic.bottom - GAP_UNITS * mUnit);
 

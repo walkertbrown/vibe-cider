@@ -61,6 +61,7 @@ export function namePage({ geom, pageNumber = 1, name, guideIn, picture = null }
   };
   let model = fit(box.right);
   const pictures = [];
+  let lineEnd = box.right; // the model row's guide lines stop short of a picture beside them
   if (picture) {
     // Beside the word when that costs the word little of its size; a long
     // word keeps its size and the picture goes above it instead.
@@ -69,6 +70,7 @@ export function namePage({ geom, pageNumber = 1, name, guideIn, picture = null }
       model = beside;
       const size = Math.min(maxPic, (box.right - model.p.end) / (1 + PICTURE_GAP));
       pictures.push({ paths: picture, x: box.right - size, y: top, size });
+      lineEnd = box.right - size - (PICTURE_GAP / 2) * size;
     } else {
       const size = maxPic;
       pictures.push({ paths: picture, x: (box.left + box.right - size) / 2, y: top, size });
@@ -77,7 +79,7 @@ export function namePage({ geom, pageNumber = 1, name, guideIn, picture = null }
   }
   const { mUnit } = model;
   const mBase = top - model.above * mUnit;
-  rows.push({ kind: "model", unit: mUnit, baseY: mBase, left: box.left, right: box.right, letters: model.p.letters.map((l) => ({ ...l, marks: true })) });
+  rows.push({ kind: "model", unit: mUnit, baseY: mBase, left: box.left, right: lineEnd, letters: model.p.letters.map((l) => ({ ...l, marks: true })) });
   top = mBase + model.below * mUnit - GAP_UNITS * mUnit;
   for (const pic of pictures) top = Math.min(top, pic.y - pic.size - GAP_UNITS * mUnit);
 

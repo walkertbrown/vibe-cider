@@ -36,6 +36,7 @@ export function cursivePage({ geom, pageNumber, model, trace, guideIn, measure, 
   let mUnit = fit();
   let top = box.top;
   const pictures = [];
+  let lineEnd = box.right; // the model row's guide lines stop short of a picture beside them
   if (picture) {
     const maxPic = Math.min(3 * (guideIn * MODEL_SCALE * PT) / 2, PICTURE_MAX * (box.right - box.left));
     const beside = fit(PICTURE_MIN * maxPic * (1 + PICTURE_GAP));
@@ -44,13 +45,14 @@ export function cursivePage({ geom, pageNumber, model, trace, guideIn, measure, 
       const end = box.left + pad * mUnit + measure(model, mUnit) + pad * mUnit;
       const size = Math.min(maxPic, (box.right - end) / (1 + PICTURE_GAP));
       pictures.push({ paths: picture, x: box.right - size, y: top, size });
+      lineEnd = box.right - size - (PICTURE_GAP / 2) * size;
     } else {
       pictures.push({ paths: picture, x: (box.left + box.right - maxPic) / 2, y: top, size: maxPic });
       top -= maxPic + GAP_UNITS * mUnit;
     }
   }
   const mBase = top - CURSIVE_REACH.above * mUnit;
-  rows.push({ kind: "model", unit: mUnit, baseY: mBase, left: box.left, right: box.right, letters: [], runs: [{ text: model, x: box.left + pad * mUnit }] });
+  rows.push({ kind: "model", unit: mUnit, baseY: mBase, left: box.left, right: lineEnd, letters: [], runs: [{ text: model, x: box.left + pad * mUnit }] });
   top = mBase + CURSIVE_REACH.below * mUnit - GAP_UNITS * mUnit;
   for (const pic of pictures) top = Math.min(top, pic.y - pic.size - GAP_UNITS * mUnit);
 

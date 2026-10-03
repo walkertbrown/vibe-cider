@@ -1,7 +1,8 @@
 // Pictures on word pages: every holiday page's words have one; a picture
 // stays inside KDP's margins and clear of the model word (with its start
 // dots and arrows) and of the first trace row, at every trim and guide size;
-// a word with no picture gets the same page as before; and the outlines are
+// the model row's guide lines stop short of a picture beside it; a word with
+// no picture gets the same page as before; and the outlines are
 // strokes only, so a child can colour them in.
 import { test } from "node:test";
 import assert from "node:assert/strict";
@@ -62,6 +63,7 @@ test("a picture is inside the margins and clear of the model word and the trace 
     const beside = right <= pic.x, above = top <= pic.y - pic.size;
     assert.ok(beside || above, `${at}: overlaps the word`);
     if (beside) assert.ok(pic.y - pic.size >= first.baseY + 2 * first.unit, `${at}: overlaps the first trace row`);
+    assert.ok(beside ? model.right <= pic.x && model.right >= right : model.right === first.right, `${at}: model guide lines run into the picture, or stop short of the word`);
     assert.ok(bottom > first.baseY + 2 * first.unit, `${at}: word overlaps the first trace row`);
   }
 });
@@ -88,6 +90,7 @@ test("in cursive too, a picture is inside the margins and clear of the model wor
     assert.ok(beside || above, `${at}: overlaps the word`);
     beside ? besides++ : aboves++;
     if (beside) assert.ok(pic.y - pic.size >= first.baseY + up * first.unit, `${at}: overlaps the first trace row`);
+    assert.ok(beside ? model.right <= pic.x && model.right >= right : model.right === first.right, `${at}: model guide lines run into the picture, or stop short of the word`);
     assert.ok(model.baseY + down * u > first.baseY + up * first.unit, `${at}: word overlaps the first trace row`);
   }
   assert.ok(besides > 0 && aboves > 0, `both placements tested: ${besides} beside, ${aboves} above`);
@@ -118,6 +121,7 @@ test("A is for apple: every letter but Q has a picture, inside the margins, clea
     const beside = right + PICTURE_GAP * pic.size <= L + 0.02, above = top <= B;
     assert.ok(beside || above, `${at}: picture or word overlaps the letters, or crowds them`);
     beside ? besides++ : aboves++;
+    assert.ok(beside ? model.right <= L && model.right >= right : model.right === first.right, `${at}: model guide lines run into the picture, or stop short of the letters`);
     assert.ok(B > first.baseY + 2 * first.unit, `${at}: word reaches the first trace row`);
   }
   assert.ok(besides > 0 && aboves > 0, `both placements tested: ${besides} beside, ${aboves} above`);
