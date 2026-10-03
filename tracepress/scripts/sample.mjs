@@ -71,6 +71,11 @@ export const SAMPLES = {
     title: "Free Alphabet Tracing Worksheets with Pictures, A–Z (PDF)",
     subject: "26 printable alphabet tracing pages, A is for apple to Z is for zeppelin: each letter large with numbered start dots and stroke-order arrows, a picture to colour with its word, then rows of dotted letters to trace on four-line guides with 1-inch lines for ages 4 to 5. 8.5 x 11. Made free with Trace Press.",
   },
+  counting: {
+    file: "number-tracing-worksheets-with-pictures.pdf",
+    title: "Free Number Tracing Worksheets with Pictures, 0–9 (PDF)",
+    subject: "Ten printable number tracing pages, 0 to 9: each digit large with a numbered start dot and stroke-order arrows, stars to count and colour on pages 1 to 9 with the number word, then rows of dotted digits to trace on four-line guides with 1-inch lines for ages 4 to 5. 8.5 x 11. Made free with Trace Press.",
+  },
   upper: {
     file: "uppercase-letter-tracing-worksheets.pdf",
     title: "Free Uppercase Letter Tracing Worksheets A–Z, PDF · Trace Press",
@@ -223,6 +228,7 @@ await book(SAMPLES.numbers, { numbers: true, guideIn: 1, from: 26 });
 await book(SAMPLES.lines, { lines: true, guideIn: 1, to: 4 });
 await book(SAMPLES.upper, { cases: "upper", guideIn: 1 });
 await book(SAMPLES.abc, { abc: true, guideIn: 1 });
+await book(SAMPLES.counting, { numbers: true, abc: true, guideIn: 1, from: 26 });
 await book(SAMPLES.lower, { cases: "lower", guideIn: 1 });
 await book(SAMPLES.cursive, { script: "cursive", guideIn: 1 });
 await book(SAMPLES.cursiveAdult, { script: "cursive", guideIn: 0.45 });

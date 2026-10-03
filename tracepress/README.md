@@ -53,6 +53,7 @@ Made by this code with the free version, footer line and PREVIEW mark included:
 - [Uppercase letter tracing worksheets](https://tracepress.bananafest-destiny.com/uppercase-letter-tracing)
 - [Lowercase letter tracing worksheets](https://tracepress.bananafest-destiny.com/lowercase-letter-tracing)
 - [Number tracing worksheets, 0 to 9](https://tracepress.bananafest-destiny.com/number-tracing)
+- [Number tracing worksheets with pictures](https://tracepress.bananafest-destiny.com/number-tracing-worksheets-with-pictures): 0 to 9, with stars to count
 - [Tracing lines worksheets](https://tracepress.bananafest-destiny.com/tracing-lines): lines, slants, zigzags, waves, circles, crosses
 - [Preschool tracing worksheets](https://tracepress.bananafest-destiny.com/preschool-tracing-worksheets): lines, A–Z capitals and 0–9 in one pack
 - [Word tracing worksheets with pictures](https://tracepress.bananafest-destiny.com/picture-word-tracing-worksheets): 20 first words, cat to apple

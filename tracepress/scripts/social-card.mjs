@@ -41,6 +41,7 @@ try {
     ["tracing-lines", "tracing-lines-worksheet-zigzag-wave", "Free tracing lines worksheets", "Lines, slants, zigzags, waves, circles and crosses, before A."],
     ["cursive-letter-tracing", "cursive-letter-tracing-worksheet-b", "Free cursive letter tracing worksheets", "26 pages, A to Z, capital and lowercase cursive to trace."],
     ["alphabet-tracing-worksheets-with-pictures", "alphabet-tracing-worksheet-apple", "Free alphabet tracing worksheets with pictures", "26 pages, A is for apple to Z is for zeppelin, each with a picture to colour."],
+    ["number-tracing-worksheets-with-pictures", "number-tracing-worksheet-5-stars", "Free number tracing worksheets with pictures", "0 to 9: trace each number, count its stars and colour them in."],
     ["uppercase-letter-tracing", "uppercase-letter-tracing-worksheet-a", "Free uppercase letter tracing worksheets", "26 pages, A to Z, one capital a page, with start dots and stroke arrows."],
     ["lowercase-letter-tracing", "lowercase-letter-tracing-worksheet-a", "Free lowercase letter tracing worksheets", "26 pages, a to z, one letter a page, with start dots and stroke arrows."],
     ["cursive-name-tracing", "cursive-name-tracing-worksheet-maya", "Free cursive name tracing worksheet", "Type a name, print it in joined cursive to trace."],
