@@ -21,8 +21,9 @@ const tmp = mkdtempSync(join(tmpdir(), "tp-ink-"));
 const fonts = { bold: readFileSync(new URL("../fonts/LiberationSans-Bold.ttf", import.meta.url)), regular: readFileSync(new URL("../fonts/LiberationSans-Regular.ttf", import.meta.url)), cursive: readFileSync(new URL("../public/fonts/PlaywriteUSTrad.ttf", import.meta.url)) };
 const cursiveFont = fontkit.create(fonts.cursive);
 // Cursive books too, with digits and long words, whose rows are fitted to the width,
-// and print books with a picture on each letter page ("A is for apple").
-const SCRIPTS = { print: {}, abc: { abc: true }, cursive: { script: "cursive", numbers: true, words: "butterfly,Grandma", measure: (t, u) => cursiveWidth(cursiveFont, t, u) } };
+// and print books with a picture on each letter page ("A is for apple") and
+// stars to count on number pages 1–9.
+const SCRIPTS = { print: {}, abc: { abc: true, numbers: true }, cursive: { script: "cursive", numbers: true, words: "butterfly,Grandma", measure: (t, u) => cursiveWidth(cursiveFont, t, u) } };
 let failed = 0, pages = 0;
 
 for (const trim of (process.env.TRIMS?.split(",") ?? Object.keys(TRIMS))) for (const bleed of [false, true]) {

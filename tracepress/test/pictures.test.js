@@ -12,7 +12,7 @@ import { GUIDES } from "../src/pdf/plan.js";
 import { namePage, planName } from "../src/pdf/name.js";
 import { pictureFor, PICTURES } from "../src/pdf/pictures.js";
 import { PRINT } from "../src/glyphs/print.js";
-import { reach, labelRadius, MARK_PAD, letterPage, LETTER_WORDS, PICTURE_GAP } from "../src/pdf/page.js";
+import { reach, labelRadius, MARK_PAD, letterPage, LETTER_WORDS, NUMBER_WORDS, PICTURE_GAP } from "../src/pdf/page.js";
 import { GLYPHS } from "../src/glyphs/lines.js";
 import { pageInk } from "../src/pdf/ink.js";
 import { PDFDocument } from "pdf-lib";
@@ -124,6 +124,40 @@ test("A is for apple: every letter has a picture, inside the margins, clear of t
     assert.ok(B > first.baseY + 2 * first.unit, `${at}: word reaches the first trace row`);
   }
   assert.ok(besides > 0 && aboves > 0, `both placements tested: ${besides} beside, ${aboves} above`);
+});
+
+test("counting pictures: a number page 1–9 has that many stars, inside the margins, apart, clear of the digit and the trace rows; 0 has none", () => {
+  let besides = 0, aboves = 0;
+  for (const trim of Object.keys(TRIMS)) for (const guideIn of Object.values(GUIDES)) for (let n = 0; n <= 9; n++) {
+    const geom = pageGeometry({ trim, bleed: false });
+    const m = marginsForPage(geom, 1);
+    const at = `${trim} ${guideIn} ${n}`;
+    const layout = letterPage({ geom, pageNumber: 1, letters: [String(n)], guideIn, picture: true });
+    if (n === 0) { assert.equal(layout.pictures, undefined, at); continue; }
+    const pics = layout.pictures, [label] = layout.text;
+    assert.equal(pics.length, n, `${at}: count`);
+    assert.equal(label.text, NUMBER_WORDS[n], at);
+    assert.ok(label.size >= 7, `${at}: word under 7pt`);
+    for (const [i, a] of pics.entries()) for (const b of pics.slice(i + 1)) {
+      assert.ok(a.x + a.size <= b.x + 0.01 || b.x + b.size <= a.x + 0.01 || a.y - a.size >= b.y - 0.01 || b.y - b.size >= a.y - 0.01, `${at}: stars overlap`);
+    }
+    const half = (label.text.length * 0.62 * label.size) / 2;
+    const L = Math.min(label.x - half, ...pics.map((p) => p.x)), R = Math.max(label.x + half, ...pics.map((p) => p.x + p.size));
+    const T = Math.max(...pics.map((p) => p.y)), B = label.y - 0.25 * label.size;
+    assert.ok(Math.min(...pics.map((p) => p.y - p.size)) > label.y + 0.75 * label.size, `${at}: stars run into their word`);
+    assert.ok(L >= m.left - 0.01 && R <= geom.width - m.right + 0.01 && T <= geom.height - m.top + 0.01, `${at}: outside the margins`);
+    const [model, first] = layout.rows;
+    const u = model.unit, labelR = labelRadius(u) / u;
+    const ext = model.letters.map((l) => ({ l, r: reach(GLYPHS[l.ch], labelR, MARK_PAD / u) }));
+    const right = Math.max(...ext.map(({ l, r }) => l.x + r.maxX * u));
+    const top = Math.max(...ext.map(({ r }) => model.baseY + r.maxY * u));
+    const beside = right + PICTURE_GAP * (R - L) <= L + 0.02 || right <= L, above = top <= B;
+    assert.ok(beside || above, `${at}: stars or word overlap the digit`);
+    beside ? besides++ : aboves++;
+    assert.ok(beside ? model.right <= L && model.right >= right : model.right === first.right, `${at}: model guide lines run into the stars`);
+    assert.ok(B > first.baseY + 2 * first.unit, `${at}: word reaches the first trace row`);
+  }
+  assert.ok(besides > 0, `stars beside the digit somewhere: ${besides} beside, ${aboves} above`);
 });
 
 test("letter pages have no picture unless asked", () => {

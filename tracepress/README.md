@@ -14,7 +14,8 @@ letters to trace, and rows for writing the letter alone. Then, if you want them:
 
 - **A picture on each letter page**, "A is for apple": an outline of a word
   that starts with the letter (apple, ball, cat…), the word under it, to colour.
-  Print letters; Q is a patchwork quilt drawn for Trace Press.
+  Print letters; Q is a patchwork quilt drawn for Trace Press. With numbers
+  on, pages 1–9 get that many stars to count, the number word under them.
 - **A "This book belongs to" page** first, with a big writing line for the child's name.
 - **Pre-writing lines**, four pages before A: lines, slants, zigzags, waves, circles and crosses.
 - **Numbers 0–9**, a page each after Z, with start dots and arrows like the letters.

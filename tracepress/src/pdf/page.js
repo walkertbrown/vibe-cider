@@ -78,6 +78,13 @@ export const LETTER_WORDS = {
   J: "jacket", K: "key", L: "lemon", M: "moon", N: "nut", O: "octagon", P: "pig", Q: "quilt", R: "rabbit", S: "sun",
   T: "tree", U: "umbrella", V: "van", W: "watch", X: "box", Y: "yarn", Z: "zeppelin",
 };
+// Counting pictures: with `picture` on, a number page 1–9 has that many stars
+// to count and colour, its number word under them. 0 has none, so its page is
+// the plain one.
+export const NUMBER_WORDS = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
+export const COUNT_PICTURE = "star";
+// Columns for n pictures: a row up to 3, then 2 × 2, then rows of 3.
+const countCols = (n) => (n <= 3 ? n : n === 4 ? 2 : 3);
 const WORD_EM = 0.62; // Liberation Sans Bold, about this many ems a character, loosely (as BELONGS)
 
 export function letterPage({ geom, pageNumber, letters, guideIn, picture = false }) {
@@ -102,10 +109,12 @@ export function letterPage({ geom, pageNumber, letters, guideIn, picture = false
 
   // The picture, beside the pair if there's room for a fair-sized one, else
   // above it. Its word sits under it, no wider than the picture.
-  const word = picture && /^[A-Za-z]$/.test(letters[0]) ? LETTER_WORDS[letters[0].toUpperCase()] : undefined;
-  const paths = word ? pictureFor(word) : null;
+  const count = picture && /^[1-9]$/.test(letters[0]) ? +letters[0] : 0;
+  const word = count ? NUMBER_WORDS[count] : picture && /^[A-Za-z]$/.test(letters[0]) ? LETTER_WORDS[letters[0].toUpperCase()] : undefined;
+  const paths = word ? pictureFor(count ? COUNT_PICTURE : word) : null;
   const pictures = [], text = [];
   let lineEnd = box.right; // the model row's guide lines stop short of a picture beside them
+  let pictureBottom = null;
   if (paths) {
     const maxPic = Math.min(3 * mUnit, PICTURE_MAX * (box.right - box.left));
     const labelFor = (size) => Math.max(LABEL_PT, Math.min(size * 0.2, size / (word.length * WORD_EM)));
@@ -116,16 +125,27 @@ export function letterPage({ geom, pageNumber, letters, guideIn, picture = false
     const size = beside ? besideSize : maxPic;
     const cx = beside ? box.right - size / 2 : (box.left + box.right) / 2;
     const ls = labelFor(size);
-    pictures.push({ paths, x: cx - size / 2, y: top, size });
+    if (!count) pictures.push({ paths, x: cx - size / 2, y: top, size });
+    else {
+      // n pictures on a grid inside the same size × size square, centred in it.
+      const cols = countCols(count), rowsN = Math.ceil(count / cols), cell = size / Math.max(cols, rowsN);
+      const y0 = top - (size - rowsN * cell) / 2;
+      for (let i = 0; i < count; i++) {
+        const r = Math.floor(i / cols), inRow = Math.min(cols, count - r * cols);
+        const x0 = cx - (inRow * cell) / 2; // a short last row is centred
+        const c = i - r * cols;
+        pictures.push({ paths, x: x0 + c * cell + 0.1 * cell, y: y0 - r * cell - 0.1 * cell, size: 0.8 * cell });
+      }
+    }
     text.push({ text: word, x: cx, y: top - size - 0.5 * ls - ls * 0.9, size: ls, font: "bold" });
     if (!beside) top -= tall(size) + GAP_UNITS * mUnit;
     else lineEnd = cx - wide(size) / 2 - (PICTURE_GAP / 2) * size;
-    pictures[0].bottom = box.top - tall(size); // the label's lowest ink, for the rows below
+    pictureBottom = box.top - tall(size); // the label's lowest ink, for the rows below
   }
   const mBase = top - above * mUnit;
   rows.push({ kind: "model", unit: mUnit, baseY: mBase, left: box.left, right: lineEnd, letters: placed });
   top = mBase + below * mUnit - GAP_UNITS * mUnit;
-  for (const pic of pictures) top = Math.min(top, pic.bottom - GAP_UNITS * mUnit);
+  if (pictureBottom !== null) top = Math.min(top, pictureBottom - GAP_UNITS * mUnit);
 
   // Trace rows, two per letter, alternating (A, a, A, a) so that a big guide
   // on a small trim, with room for only two rows, still gives each letter
