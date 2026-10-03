@@ -50,6 +50,9 @@
   .pager button { font: inherit; padding: 8px 14px; border: 1px solid var(--line); border-radius: 8px; background: #fff; cursor: pointer; }
   .pager button:disabled { opacity: 0.4; cursor: default; }
   #pageNo { color: var(--muted); font-size: 14px; }
+  .scroll { overflow-x: auto; max-width: 100%; }
+  table.rows { border-collapse: collapse; margin: 8px 0 0; font-size: 14px; }
+  table.rows th, table.rows td { text-align: left; padding: 3px 12px 3px 0; border-bottom: 1px solid var(--line); }
   section.info { max-width: 1100px; margin: 0 auto; padding: 8px 24px 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
   section.info h3 { margin: 0 0 6px; font-size: 17px; }
   section.info p, section.info li { color: var(--muted); }
@@ -109,6 +112,22 @@
   <div>
     <h3>The four lines</h3>
     <p>The same four lines as every page of the Trace Press workbook. Tall letters (b, d, h, capitals) reach the top line. Small letters (a, c, e) stop at the dashed midline. Every letter sits on the solid baseline, and tails (g, j, p, q, y) drop to the dotted line below it. The line size is the distance from the top line to the baseline: 1" for ages 4–5, down to 0.45" for older children.</p>
+  </div>
+  <div>
+    <h3>How many lines fit on a page</h3>
+    <p>Writing lines on each page, by page size and line size, without bleed:</p>
+    <div class="scroll"><table class="rows" id="rowsTable">
+      <thead><tr><th>Page</th><th>1"</th><th>0.75"</th><th>0.6"</th><th>0.45"</th></tr></thead>
+      <tbody>
+        <tr><td>5" × 8"</td><td>4</td><td>5</td><td>6</td><td>9</td></tr>
+        <tr><td>5.5" × 8.5"</td><td>4</td><td>5</td><td>7</td><td>9</td></tr>
+        <tr><td>6" × 9"</td><td>4</td><td>6</td><td>7</td><td>10</td></tr>
+        <tr><td>7" × 10"</td><td>5</td><td>7</td><td>8</td><td>11</td></tr>
+        <tr><td>8" × 10"</td><td>5</td><td>7</td><td>8</td><td>11</td></tr>
+        <tr><td>8.5" × 11"</td><td>5</td><td>7</td><td>9</td><td>12</td></tr>
+      </tbody>
+    </table></div>
+    <p>The page count doesn't change these: KDP's wider inside margin for thicker books takes width, not height. Bleed costs one line in three places: 5" × 8" at 0.45" (8), and 7" × 10" and 8" × 10" at 0.75" (6). A 100-page 8.5" × 11" notebook at 0.45" lines has 1,200 lines to write on.</p>
   </div>
   <div>
     <h3>Built to KDP's manuscript rules</h3>

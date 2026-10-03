@@ -5,7 +5,7 @@
 // text on them.
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { writeFileSync, mkdtempSync, rmSync } from "node:fs";
+import { writeFileSync, mkdtempSync, rmSync, readFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -55,4 +55,14 @@ test("the PDF has the pages asked for and no text", async () => {
   assert.match(info, /Pages:\s+40\b/);
   assert.match(info, /432 x 648 pts/);
   assert.equal(text.replace(/\s/g, ""), "");
+});
+
+// The "How many lines fit on a page" table on /handwriting-paper is typed out;
+// it must match planPaper on every trim and line size.
+test("the lines-per-page table on /handwriting-paper matches planPaper", () => {
+  const html = readFileSync(new URL("../public/handwriting-paper.html", import.meta.url), "utf8");
+  const body = html.match(/id="rowsTable">[\s\S]*?<tbody>([\s\S]*?)<\/tbody>/)[1];
+  const got = [...body.matchAll(/<tr>(.*?)<\/tr>/g)].map((m) => [...m[1].matchAll(/<td>(.*?)<\/td>/g)].map((c) => c[1]));
+  const want = Object.keys(TRIMS).map((trim) => [trim.replace("x", '" × ') + '"', ...Object.values(GUIDES).map((guideIn) => String(planPaper({ trim, guideIn }).pages[0].rows.length))]);
+  assert.deepEqual(got, want);
 });
