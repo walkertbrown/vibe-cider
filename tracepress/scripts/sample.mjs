@@ -66,6 +66,11 @@ export const SAMPLES = {
     title: "Free Tracing Lines Worksheets, Pre-Writing Printable PDF · Trace Press",
     subject: "Four printable pre-writing pages: down and across lines, slants, zigzags and waves, circles and crosses, each with numbered start dots and direction arrows, then rows to trace on four-line guides with 1-inch lines for ages 4 to 5. 8.5 x 11. Made free with Trace Press.",
   },
+  shapes: {
+    file: "shape-tracing-worksheets.pdf",
+    title: "Free Shape Tracing Worksheets, Printable PDF · Trace Press",
+    subject: "Six printable shape tracing pages: square, triangle, rectangle, diamond, star and heart, each large with a numbered start dot and direction arrows, then rows to trace on four-line guides with 1-inch lines for ages 4 to 5. 8.5 x 11. Made free with Trace Press.",
+  },
   abc: {
     file: "alphabet-tracing-worksheets-with-pictures.pdf",
     title: "Free Alphabet Tracing Worksheets with Pictures, A–Z (PDF)",
@@ -189,8 +194,8 @@ function meta(doc, { title, subject }) {
 // `from` keeps only the pages from that index on (the number worksheets are
 // the digit pages of a book with numbers on, without A–Z in front), and `to`
 // stops before that index (the line worksheets are the four pages before A).
-async function book(sample, { words = [], numbers = false, lines = false, cases = "both", guideIn = GUIDE_IN, from = 0, to, script = "print", abc = false } = {}) {
-  const opts = { trim: TRIM, guideIn, words, numbers, lines, cases, script, measure, abc };
+async function book(sample, { words = [], numbers = false, lines = false, shapes = false, cases = "both", guideIn = GUIDE_IN, from = 0, to, script = "print", abc = false } = {}) {
+  const opts = { trim: TRIM, guideIn, words, numbers, lines, shapes, cases, script, measure, abc };
   let doc = await PDFDocument.load(await renderBook(opts, fonts));
   if (from || to) {
     const whole = doc;
@@ -226,6 +231,7 @@ await book(SAMPLES.book);
 await book(SAMPLES.sightWords, { words: PRE_PRIMER });
 await book(SAMPLES.numbers, { numbers: true, guideIn: 1, from: 26 });
 await book(SAMPLES.lines, { lines: true, guideIn: 1, to: 4 });
+await book(SAMPLES.shapes, { shapes: true, guideIn: 1, to: 6 });
 await book(SAMPLES.upper, { cases: "upper", guideIn: 1 });
 await book(SAMPLES.abc, { abc: true, guideIn: 1 });
 await book(SAMPLES.counting, { numbers: true, abc: true, guideIn: 1, from: 26 });
