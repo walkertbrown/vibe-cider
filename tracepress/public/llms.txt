@@ -1,0 +1,63 @@
+# Trace Press
+
+> Browser-based generator for Amazon KDP handwriting and letter tracing
+> workbooks: an A–Z tracing interior in print (numbered start dots and
+> stroke-order arrows on every letter) or joined cursive, with optional
+> pre-writing lines, shapes, numbers 0–9, up to 52 practice words, a "This
+> book belongs to" page and a "Well done!" page, plus the full-wrap cover,
+> laid out to KDP's trim, bleed, margin and 0.75pt line rules. Six trims,
+> four line sizes (1", 0.75", 0.6", 0.45"). Runs in the browser with no
+> account. Free to use; free books carry one footer line and a cover
+> marked PREVIEW, and $19 once removes both. Not affiliated with Amazon;
+> KDP is a trademark of Amazon.com, Inc.
+
+## Tools for KDP sellers
+
+- [Handwriting Tracing Workbook Generator for Amazon KDP](https://tracepress.bananafest-destiny.com/): Make an A–Z letter tracing workbook for Amazon KDP in your browser: stroke arrows, start dots, KDP trims and a full-wrap cover. Free to try; $19 once.
+- [Sight Word Tracing Workbook for KDP: Dolch Lists](https://tracepress.bananafest-destiny.com/sight-word-tracing-workbook): Dolch sight word tracing workbook for Amazon KDP: A–Z letter pages plus a page per word (40 pre-primer or 52 primer), printing cost worked out. Free.
+- [Cursive Handwriting Workbook for KDP: Make One Free](https://tracepress.bananafest-destiny.com/cursive-handwriting-workbook): Make a cursive handwriting workbook for Amazon KDP: joined A–Z tracing pages, numbers and words, its cover, and the KDP print cost worked out. Free to try.
+- [Free Handwriting Practice Paper PDF, KDP-Ready](https://tracepress.bananafest-destiny.com/handwriting-paper): Free printable handwriting paper: four-line guides, four line sizes, 24 to 300 pages, on KDP trims and margins for a practice notebook. No sign-up.
+
+## Guides for KDP sellers
+
+- [How to Make a Tracing Book or Handwriting Workbook for KDP](https://tracepress.bananafest-destiny.com/how-to-make-a-handwriting-workbook): How to make a KDP tracing book step by step: size, lines, bleed, interior, cover and price, plus the KDP checks if you make it in Canva or Word.
+- [Tracing Book Cover Size for KDP, Every Trim and Page Count](https://tracepress.bananafest-destiny.com/tracing-book-cover-size): Full-wrap KDP cover sizes for a tracing book of 26 to 78 pages, on white or cream paper, in all six trims: cover width, height and spine, with bleed.
+- [Tracing Font for KDP: Commercial Use, Licences and No Font at All](https://tracepress.bananafest-destiny.com/tracing-font-for-kdp): Selling a tracing book on KDP? Check the dotted font's licence first. Trace Press draws its print letters as strokes, with no tracing font to license.
+
+## Free worksheet makers
+
+- [Free Name Tracing Worksheet Generator, Printable PDF](https://tracepress.bananafest-destiny.com/name-tracing): Type a child's name and print a tracing worksheet: the name large with start dots and stroke arrows, dotted rows to trace, then lines to write it. Free.
+- [Free Cursive Name Tracing Worksheet, Printable PDF](https://tracepress.bananafest-destiny.com/cursive-name-tracing): Type a child's name and print a cursive name tracing worksheet: the name in joined cursive, grey rows to trace over, then lines to write it. Free PDF.
+- [Free Tracing Worksheet Generator with Lines and Arrows (PDF)](https://tracepress.bananafest-destiny.com/tracing-worksheet-generator): Type a word and print a tracing worksheet: the word large with start dots and stroke arrows, dotted rows to trace on handwriting lines. Free PDF.
+
+## Free printable worksheets (PDF)
+
+- [Free Letter Tracing Worksheets with Arrows, A–Z (PDF)](https://tracepress.bananafest-destiny.com/letter-tracing): Free printable alphabet tracing worksheets A to Z: one page per letter, capital and lowercase, with start dots and stroke arrows. 8.5 x 11 PDF, no sign-up.
+- [Free Number Tracing Worksheets 0–9 (Printable PDF)](https://tracepress.bananafest-destiny.com/number-tracing): Free printable number tracing worksheets 0 to 9: one page per digit with a start dot and stroke arrows, then rows to trace. 8.5 x 11 PDF, no sign-up.
+- [Free Tracing Lines Worksheets (Pre-Writing, Printable PDF)](https://tracepress.bananafest-destiny.com/tracing-lines): Free printable tracing lines worksheets: straight lines, slants, zigzags, waves, circles and crosses, with start dots and arrows. PDF, no sign-up.
+- [Free Shape Tracing Worksheets (Printable PDF)](https://tracepress.bananafest-destiny.com/shape-tracing-worksheets): Free printable shape tracing worksheets: square, triangle, rectangle, diamond, star and heart, each with a start dot and arrows. 6-page PDF, no sign-up.
+- [Free Uppercase Letter Tracing Worksheets with Arrows, A–Z (PDF)](https://tracepress.bananafest-destiny.com/uppercase-letter-tracing): Free printable uppercase letter tracing worksheets: 26 pages, A to Z, one capital per page with start dots and stroke arrows. 8.5 x 11 PDF, no sign-up.
+- [Free Cursive Letter Tracing Worksheets, A–Z (PDF)](https://tracepress.bananafest-destiny.com/cursive-letter-tracing): Free printable cursive letter tracing worksheets: 26 pages, A to Z, capital and lowercase cursive to trace on handwriting lines. 8.5 x 11 PDF, no sign-up.
+- [Free Printable Cursive Alphabet Chart, A–Z (PDF)](https://tracepress.bananafest-destiny.com/cursive-alphabet-chart): Free printable cursive alphabet chart: every capital and lowercase letter, A to Z, plus 0 to 9, in traditional cursive on handwriting lines. One-page PDF.
+- [Free Lowercase Letter Tracing Worksheets with Arrows, a–z (PDF)](https://tracepress.bananafest-destiny.com/lowercase-letter-tracing): Free printable lowercase letter tracing worksheets with arrows: 26 pages, a to z, one letter per page with numbered start dots. 8.5 x 11 PDF, no sign-up.
+- [Free “This Book Belongs To” Page, Printable PDF for Every KDP Size](https://tracepress.bananafest-destiny.com/this-book-belongs-to-page): A free printable “This book belongs to” page with a big writing line for the child’s name. PDF in all six KDP trim sizes, no marks, no sign-up.
+- [Free Cursive Practice Sheets for Adults, A–Z (PDF)](https://tracepress.bananafest-destiny.com/cursive-practice-sheets-for-adults): Free cursive practice sheets for adults: A to Z, one letter a page, in traditional cursive on smaller 0.45-inch handwriting lines to trace. 26-page PDF.
+- [Free Handwriting Practice Sheets for Adults (PDF)](https://tracepress.bananafest-destiny.com/handwriting-practice-sheets-for-adults): Free handwriting practice sheets for adults: A to Z and 0 to 9, one a page, in neat print on smaller 0.45-inch lines to trace and copy. 36-page PDF.
+- [Free Preschool Tracing Worksheets: Lines, Shapes, A–Z, 0–9 (PDF)](https://tracepress.bananafest-destiny.com/preschool-tracing-worksheets): Free preschool tracing worksheets: pre-writing lines, shapes, capitals A to Z and numbers 0 to 9 on big 1-inch lines, with stroke order. 46-page PDF.
+- [Free Halloween Tracing Worksheets: 20 Words to Trace (PDF)](https://tracepress.bananafest-destiny.com/halloween-tracing-worksheets): Free printable Halloween tracing worksheets: 20 words, bat to pumpkin, each with a picture to colour, start dots and arrows. One PDF, no sign-up.
+- [Free Thanksgiving Tracing Worksheets: 20 Words to Trace (PDF)](https://tracepress.bananafest-destiny.com/thanksgiving-tracing-worksheets): Free printable Thanksgiving tracing worksheets: 20 words, mug to pumpkin, each with a picture to colour, start dots and arrows. One PDF, no sign-up.
+- [Free Christmas Tracing Worksheets: 20 Words to Trace (PDF)](https://tracepress.bananafest-destiny.com/christmas-tracing-worksheets): Free printable Christmas tracing worksheets: 20 words, mug to gingerbread, each with a picture to colour, start dots and arrows. One PDF, no sign-up.
+- [Word Tracing Worksheets with Pictures: 20 First Words (Free PDF)](https://tracepress.bananafest-destiny.com/picture-word-tracing-worksheets): Free printable word tracing worksheets with pictures: 20 first words, cat to apple, each with a picture to colour, start dots and arrows. No sign-up.
+- [Transportation Tracing Worksheets: 20 Vehicle Words (Free PDF)](https://tracepress.bananafest-destiny.com/transportation-tracing-worksheets): Free printable transportation tracing worksheets: 20 vehicle words, car to helicopter, each with a picture to colour, start dots and arrows. No sign-up.
+- [Animal Tracing Worksheets: 20 Animal Words (Free PDF)](https://tracepress.bananafest-destiny.com/animal-tracing-worksheets): Free printable animal tracing worksheets: 20 animal words, cat to butterfly, each with a picture to colour, start dots and arrows. No sign-up.
+- [Food Tracing Worksheets: 20 Food Words (Free PDF)](https://tracepress.bananafest-destiny.com/food-tracing-worksheets): Free printable food tracing worksheets: 20 food words, egg to broccoli, each with a picture to colour, start dots and arrows. No sign-up.
+- [Free Alphabet Tracing Worksheets with Pictures, A–Z (PDF)](https://tracepress.bananafest-destiny.com/alphabet-tracing-worksheets-with-pictures): Free printable alphabet tracing worksheets with pictures: 26 pages, A is for apple to Z is for zeppelin, with start dots and stroke arrows. 8.5 x 11 PDF.
+- [Free Number Tracing Worksheets with Pictures, 0–9 (PDF)](https://tracepress.bananafest-destiny.com/number-tracing-worksheets-with-pictures): Free printable number tracing worksheets with pictures: 0 to 9, a star to count for each, start dots and stroke arrows. 10 pages, 8.5 x 11 PDF.
+
+## About
+
+Trace Press is the second app built and run by an autonomous agent; the
+build log of what was planned and what actually happened is public at
+[github.com/walkertbrown/vibe-cider](https://github.com/walkertbrown/vibe-cider).
+Source for the app: [github.com/walkertbrown/trace-press](https://github.com/walkertbrown/trace-press).
+Made by the maker of [Puzzle Press](https://puzzlepress.bananafest-destiny.com/), the KDP puzzle book generator.

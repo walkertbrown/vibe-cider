@@ -14,3 +14,10 @@ test("the README links every sitemap page", () => {
   assert.ok(urls.length >= 20, `${urls.length} pages`);
   for (const u of urls) assert.ok(readme.includes(`](${u})`), `README doesn't link ${u}`);
 });
+
+// llms.txt is the same list for AI crawlers (GPTBot and ClaudeBot fetch this
+// site more than Bing does), home page included.
+test("llms.txt links every sitemap page", () => {
+  const llms = read("../public/llms.txt");
+  for (const u of [...urls, "https://tracepress.bananafest-destiny.com/"]) assert.ok(llms.includes(`](${u})`), `llms.txt doesn't link ${u}`);
+});
