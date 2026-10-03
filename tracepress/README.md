@@ -18,10 +18,17 @@ letters to trace, and rows for writing the letter alone. Then, if you want them:
   on, pages 1–9 get that many stars to count, the number word under them.
   The cover then shows the apple beside its "A a".
 - **A "This book belongs to" page** first, with a big writing line for the child's name.
+- **Print or cursive.** Cursive letters are joined the way the font
+  ([Playwrite US Trad](https://fonts.google.com/specimen/Playwrite+US+Trad), OFL)
+  joins them and drawn as outlines, so the preview is what prints; a cursive
+  book gets a cursive cover.
 - **Pre-writing lines**, four pages before A: lines, slants, zigzags, waves, circles and crosses.
+- **Shapes**, six pages before A and after the lines: square, triangle,
+  rectangle, diamond, star and heart, each with a start dot and arrows.
 - **Numbers 0–9**, a page each after Z, with start dots and arrows like the letters.
 - **Your own practice words** (sight words, names, a theme), a page each after
-  that, up to 52 words (42 with numbers on).
+  that, up to 52 words. The other extra pages count against the 52: numbers
+  take 10, lines 4, shapes 6 and the name page 1.
   A word Trace Press has a picture for (163 everyday words, such as dog, train
   and umbrella) gets an outline of it to colour, beside the word or, for a
   long word, above it. The outlines are [Tabler Icons](https://tabler.io/icons)
@@ -56,7 +63,8 @@ Made by this code with the free version, footer line and PREVIEW mark included:
 - [Number tracing worksheets, 0 to 9](https://tracepress.bananafest-destiny.com/number-tracing)
 - [Number tracing worksheets with pictures](https://tracepress.bananafest-destiny.com/number-tracing-worksheets-with-pictures): 0 to 9, with stars to count
 - [Tracing lines worksheets](https://tracepress.bananafest-destiny.com/tracing-lines): lines, slants, zigzags, waves, circles, crosses
-- [Preschool tracing worksheets](https://tracepress.bananafest-destiny.com/preschool-tracing-worksheets): lines, A–Z capitals and 0–9 in one pack
+- [Shape tracing worksheets](https://tracepress.bananafest-destiny.com/shape-tracing-worksheets): square, triangle, rectangle, diamond, star, heart
+- [Preschool tracing worksheets](https://tracepress.bananafest-destiny.com/preschool-tracing-worksheets): lines, shapes, A–Z capitals and 0–9 in one pack
 - [Word tracing worksheets with pictures](https://tracepress.bananafest-destiny.com/picture-word-tracing-worksheets): 20 first words, cat to apple
 - [Transportation tracing worksheets](https://tracepress.bananafest-destiny.com/transportation-tracing-worksheets): 20 vehicle words, car to helicopter, each with a picture
 - [Animal tracing worksheets](https://tracepress.bananafest-destiny.com/animal-tracing-worksheets): 20 animal words, cat to butterfly, each with a picture

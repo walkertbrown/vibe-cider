@@ -37,7 +37,8 @@ live since 2026-09-29) makes an A–Z letter tracing workbook for Amazon KDP, bo
 the interior and the full-wrap cover, in the browser. Each page has a
 model letter with numbered start dots and stroke-order arrows, rows of dotted
 letters to trace, and rows for writing the letter alone. Numbers 0–9 can add
-ten more pages drawn the same way. Up to 52 of your own
+ten more pages drawn the same way, and four pages of pre-writing lines and six
+of shapes can go before A. The letters come in print or cursive. Up to 52 of your own
 practice words get a page each after Z, and the cover resizes to the new page
 count. There are six trims and four line sizes, from 1" lines for ages 4–5
 down to 0.45". Every letter is drawn as the strokes a pencil makes, not as a
@@ -63,8 +64,10 @@ for KDP,
 0 to 9,
 [tracing lines worksheets](https://tracepress.bananafest-destiny.com/tracing-lines)
 for pre-writing,
+[shape tracing worksheets](https://tracepress.bananafest-destiny.com/shape-tracing-worksheets)
+(square to heart, one shape a page),
 [preschool tracing worksheets](https://tracepress.bananafest-destiny.com/preschool-tracing-worksheets)
-(lines, A–Z capitals and 0–9 in one pack),
+(lines, shapes, A–Z capitals and 0–9 in one pack),
 [Halloween](https://tracepress.bananafest-destiny.com/halloween-tracing-worksheets),
 [Thanksgiving](https://tracepress.bananafest-destiny.com/thanksgiving-tracing-worksheets) and
 [Christmas tracing worksheets](https://tracepress.bananafest-destiny.com/christmas-tracing-worksheets)
