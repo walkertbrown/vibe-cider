@@ -19,7 +19,7 @@ import { readFileSync } from "node:fs";
 import { execFile } from "node:child_process";
 
 const args = process.argv.slice(2);
-const hours = Number(args.find((a) => /^\d+$/.test(a)) || 24);
+const hours = Number(args.find((a) => /^\d+(\.\d+)?$/.test(a)) || 24); // 1.5 is 1.5 hours, not the default
 const showIps = args.includes("--ips");
 // The keys live in the parent build repo's .git-credentials; in a standalone
 // clone, set them in the environment instead.
