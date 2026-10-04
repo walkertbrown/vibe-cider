@@ -49,6 +49,18 @@ const WORDS = {
   box: "box", yarn: "yarn", zeppelin: "zeppelin", volcano: "volcano",
 };
 
+// Paths taken out of an icon. The word is "pumpkin", and Tabler's only pumpkin
+// is a carved jack-o'-lantern, which put a Halloween face on the Thanksgiving
+// page and on any autumn book. Without its eyes and mouth it looked like an
+// apple, so it gets two ribs, drawn from where its lobes meet at the top to
+// where they meet at the bottom.
+const WITHOUT = {
+  pumpkin: ["M9 15l1.5 1l1.5 -1l1.5 1l1.5 -1", "M10 11h.01", "M14 11h.01"],
+};
+const WITH = {
+  pumpkin: ["M9.585 6.869c-1.2 3.5 -1.2 9.3 .825 12.769", "M14.415 6.87c1.2 3.5 1.2 9.3 -.825 12.768"],
+};
+
 // Drawn for Trace Press, in the same 24 × 24 grid and 2-unit stroke, for a
 // letter no icon set has a child's picture for. Q: a patchwork quilt, a square
 // of nine patches with a triangle in each corner and a diamond in the middle.
@@ -95,7 +107,9 @@ for (const [word, icon] of Object.entries(WORDS)) {
   if (lucide) svg = svg.replace(/<circle cx="([\d.]+)" cy="([\d.]+)" r="([\d.]+)"\s*\/>/g, (_, cx, cy, r) => `<path d="${circle(+cx, +cy, +r)}" />`);
   const paths = [...svg.matchAll(/<path d="([^"]+)"/g)].map((m) => (lucide ? spaced(m[1]) : m[1]));
   if (!paths.length || /<(circle|rect|line|polyline|ellipse|polygon)\b/.test(svg)) throw new Error(`${icon}: not plain paths`);
-  out[word] = paths;
+  const drop = WITHOUT[word] ?? [];
+  for (const d of drop) if (!paths.includes(d)) throw new Error(`${word}: no path ${d} in ${icon}`);
+  out[word] = [...paths.filter((d) => !drop.includes(d)), ...(WITH[word] ?? [])];
 }
 Object.assign(out, DRAWN);
 const lines = Object.entries(out).map(([w, p]) => `  ${JSON.stringify(w)}: ${JSON.stringify(p)},`);
@@ -110,6 +124,7 @@ writeFileSync(new URL("../src/pdf/pictures.js", import.meta.url), `// Generated 
 // ISC License. Copyright (c) 2026 Lucide Icons and Contributors.
 // The full licence text is public/licenses/lucide.txt.
 // ${Object.keys(DRAWN).join(", ")}: drawn for Trace Press (scripts/pictures.mjs).
+// ${Object.keys(WITHOUT).join(", ")}: the Tabler icon without its face, with two ribs (scripts/pictures.mjs WITHOUT, WITH).
 export const PICTURES = {
 ${lines.join("\n")}
 };
