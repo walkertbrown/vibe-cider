@@ -198,7 +198,7 @@ const kws = await page.$$eval("#keywords li", (l) => l.map((x) => x.firstChild.t
 if (kws.length !== 7 || kws.some((k) => "word search puzzle book".includes(k))) throw new Error(`KDP keywords: ${JSON.stringify(kws)}`);
 console.log(`seven KDP keywords: ${kws.join(" / ")}`);
 const desc = await page.inputValue("#listing");
-if (!/^Word Search Puzzle Book\n\d+ word search puzzles, one to a page\. \d+ pages/.test(desc) || !/Solutions to every puzzle at the back/.test(desc)) throw new Error(`KDP description: ${desc}`);
+if (!/^Word Search Puzzle Book(: [^\n]*)?\n\d+ word search puzzles, one to a page\. \d+ pages/.test(desc) || !/Solutions to every puzzle at the back/.test(desc)) throw new Error(`KDP description: ${desc}`);
 console.log(`KDP description: ${desc.split("\n").length} lines, ${desc.length} characters`);
 
 await browser.close();
