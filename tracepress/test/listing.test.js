@@ -39,3 +39,24 @@ test("only the words that fit are listed, and the largest book fits KDP's box", 
   assert.ok(t.includes(`${max} words to trace`));
   assert.ok(t.length < LISTING_MAX, `${t.length} chars`);
 });
+
+// Keywords: seven, from the contents, none already in the title, none of the
+// things KDP asks you to leave out (G201298500).
+import { keywordsFor, KEYWORDS } from "../src/pdf/listing.js";
+test("keywords: seven content phrases, none in the title, nothing KDP asks you to avoid", () => {
+  const books = [{}, { script: "cursive" }, { numbers: true, lines: true, shapes: true, chart: true, abc: true, words: "cat dog" }, { script: "cursive", numbers: true, chart: true, words: "cat", cases: "lower" }, { title: "Letter Tracing Book", subtitle: "Handwriting Practice Workbook" }, { script: "cursive", title: "Cursive Handwriting Workbook", subtitle: "Learn to write in cursive" }];
+  for (const o of books) {
+    const k = keywordsFor(o), at = JSON.stringify(o);
+    assert.equal(k.length, KEYWORDS, at);
+    assert.equal(new Set(k).size, k.length, `${at}: repeats`);
+    for (const p of k) {
+      assert.ok(p.length <= 50, `${at}: "${p}" is long`);
+      assert.doesNotMatch(p, /["“”]|\b(best|new|free|sale|kindle|kdp|amazon)\b/i, `${at}: "${p}"`);
+      if (o.title) assert.ok(!`${o.title} ${o.subtitle}`.toLowerCase().includes(p.toLowerCase()), `${at}: "${p}" is in the title`);
+    }
+  }
+  assert.ok(!keywordsFor({}).some((p) => /number|shape|word|chart|coloring/.test(p)), "only what's in the book");
+  assert.ok(keywordsFor({ numbers: true }).includes("number tracing 0 to 9"));
+  assert.ok(keywordsFor({ script: "cursive" }).every((p) => /cursive|joined/.test(p)), "a cursive book's keywords say cursive");
+  assert.ok(!keywordsFor({ title: "My Letter Tracing Book" }).includes("letter tracing book"));
+});

@@ -70,6 +70,8 @@ try {
   check(got.pages === 1 && /PREVIEW/.test(got.text) && /Tracing Fun For Test/.test(got.text.replace(/\s+/g, " ")), "free cover: one page, the title, PREVIEW");
   check(/Back cover words for the test\./.test(got.text.replace(/\s+/g, " ")), "the cover PDF has the back text");
   await page.fill("#back", "");
+  const kw = await page.$$eval("#keywords li", (n) => n.map((x) => x.textContent.replace(/ Copy$/, "")));
+  check(kw.length === 7 && !kw.some((k) => "tracing fun for test".includes(k.toLowerCase())), `seven keywords, none in the title (${kw.join(" | ")})`);
   check(/^trace-press-cover-6x9-white\.pdf$/.test(dl.suggestedFilename()), `cover file name ${dl.suggestedFilename()}`);
 
   // Practice words: two word pages after Z, the pager and the cover note follow.

@@ -5,7 +5,7 @@
 import { planBook, GUIDES, CASES, SCRIPTS, cleanWords, wordsMax } from "../pdf/plan.js";
 import { cursiveWidth } from "../pdf/cursive.js";
 import { TRIMS } from "../pdf/kdp.js";
-import { listingText } from "../pdf/listing.js";
+import { listingText, keywordsFor } from "../pdf/listing.js";
 import { SHAPES } from "../glyphs/lines.js";
 import { coverGeometry, PAPER } from "../pdf/cover-geometry.js";
 import { pageSvg } from "./preview.js";
@@ -27,7 +27,7 @@ const el = {
   download: $("download"), status: $("status"), tier: $("tier"),
   dialog: $("unlockDialog"), dialogTitle: $("dialogTitle"), dialogLede: $("dialogLede"), buyLine: $("buyLine"),
   title: $("title"), subtitle: $("subtitle"), author: $("author"), back: $("back"), paper: $("paper"), coverNote: $("coverNote"), coverPreview: $("coverPreview"),
-  downloadCover: $("downloadCover"), coverStatus: $("coverStatus"), listing: $("listing"), copyListing: $("copyListing"), listingStatus: $("listingStatus"),
+  downloadCover: $("downloadCover"), coverStatus: $("coverStatus"), listing: $("listing"), keywords: $("keywords"), copyListing: $("copyListing"), listingStatus: $("listingStatus"),
   email: $("email"), unlockErr: $("unlockErr"), verify: $("verify"), closeDialog: $("closeDialog"),
 };
 
@@ -88,6 +88,17 @@ function showPage() {
   showCover();
   el.listing.value = listingText(opts());
   el.listingStatus.textContent = "";
+  el.keywords.replaceChildren(...keywordsFor(opts()).map((k) => {
+    const li = document.createElement("li"), b = document.createElement("button");
+    li.append(k, " ");
+    b.type = "button"; b.style.cssText = "font-size:13px;padding:2px 8px"; b.textContent = "Copy";
+    b.addEventListener("click", async (e) => {
+      if (e.isTrusted) px("keyword");
+      try { await navigator.clipboard.writeText(k); b.textContent = "Copied"; } catch { b.textContent = "Select it to copy"; }
+    });
+    li.append(b);
+    return li;
+  }));
   const { geom, pages } = planBook(opts());
   pageIndex = Math.max(0, Math.min(pageIndex, pages.length - 1));
   const svg = pageSvg(geom, pages[pageIndex], { licensed: !!getLicense(), cursive });

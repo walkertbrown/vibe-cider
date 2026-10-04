@@ -40,3 +40,20 @@ export function listingText(o) {
   ];
   return lines.filter(Boolean).join("\n").slice(0, LISTING_MAX);
 }
+
+// Seven keyword phrases for KDP's seven keyword boxes ("Use up to seven
+// keywords or short phrases", help topic G201298500), from what's in the
+// book. KDP asks you to leave out what's already in the title and to avoid
+// quality claims, "new", quotation marks and brands, so these only name
+// contents, and a phrase already in the title or subtitle is dropped.
+export const KEYWORDS = 7;
+export function keywordsFor(o) {
+  const cursive = o.script === "cursive";
+  const words = cleanWords(o.words ?? "", wordsMax(o.numbers, o.lines, o.belongs, o.shapes, o.done, o.copyright, o.titled, o.chart));
+  const cases = { both: "uppercase and lowercase", upper: "uppercase", lower: "lowercase" }[o.cases ?? "both"];
+  const all = cursive
+    ? ["cursive handwriting workbook", "cursive letter tracing", "learn to write in cursive", `${cases} cursive alphabet practice`, o.numbers && "cursive number tracing", words.length && "cursive word tracing practice", o.chart && "cursive alphabet chart", "cursive writing practice book", "joined handwriting practice", "cursive trace and write", "cursive letters A to Z", "cursive alphabet tracing book"]
+    : ["letter tracing book", "handwriting practice workbook", "learn to write letters", `${cases} alphabet tracing`, o.abc && "alphabet coloring and tracing", o.numbers && "number tracing 0 to 9", words.length && "word tracing practice", o.lines && "pre-writing lines tracing", o.shapes && "shape tracing", o.chart && "alphabet chart", "ABC writing practice", "dotted letter tracing", "trace and write the alphabet", "tracing letters A to Z", "letter formation stroke order"];
+  const title = `${o.title ?? ""} ${o.subtitle ?? ""}`.toLowerCase().replace(/\s+/g, " ");
+  return all.filter(Boolean).filter((k) => !title.includes(k.toLowerCase())).slice(0, KEYWORDS);
+}
