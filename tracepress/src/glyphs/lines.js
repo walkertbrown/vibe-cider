@@ -9,7 +9,7 @@
 //
 // Keys start with "~" so no shape can be mistaken for a character.
 import { PRINT } from "./print.js";
-import { ACCENTED } from "./accents.js";
+import { ACCENTED, NAME_MARKS } from "./accents.js";
 
 const line = (x0, y0, x1, y1) => ({ type: "line", x0, y0, x1, y1 });
 const arc = (cx, cy, rx, ry, from, to) => ({ type: "arc", cx, cy, rx, ry, from, to });
@@ -66,4 +66,4 @@ export const SHAPE_PAGES = [["~square"], ["~triangle"], ["~rectangle"], ["~diamo
 
 // Everything a page can draw: the alphabet and digits, the accented letters
 // (accents.js), and these shapes.
-export const GLYPHS = { ...PRINT, ...ACCENTED, ...LINES, ...SHAPES };
+export const GLYPHS = { ...PRINT, ...ACCENTED, ...NAME_MARKS, ...LINES, ...SHAPES };

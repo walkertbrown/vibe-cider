@@ -44,7 +44,7 @@ function show() {
   el.preview.replaceChildren(svg);
   const typed = el.name.value.trim();
   el.note.textContent = typed && cleanName(typed) !== typed.replace(/\s+/g, " ")
-    ? `Showing “${name}”: only the letters A–Z and spaces are drawn so far, up to ${NAME_MAX}.`
+    ? `Showing “${name}”: only letters (accented ones too), hyphens, apostrophes and spaces are drawn so far, up to ${NAME_MAX}.`
     : "";
 }
 
@@ -78,7 +78,7 @@ el.download.addEventListener("click", async () => {
     const url = URL.createObjectURL(new Blob([bytes], { type: "application/pdf" }));
     const a = document.createElement("a");
     a.href = url;
-    a.download = `${FILE}-${name.replace(/ /g, "-").toLowerCase()}-${o.trim}${o.script === "cursive" && !FILE.includes("cursive") ? "-cursive" : ""}.pdf`;
+    a.download = `${FILE}-${name.replace(/'/g, "").replace(/ /g, "-").toLowerCase()}-${o.trim}${o.script === "cursive" && !FILE.includes("cursive") ? "-cursive" : ""}.pdf`;
     document.body.append(a); a.click(); a.remove();
     setTimeout(() => URL.revokeObjectURL(url), 60000);
     px("namemade");

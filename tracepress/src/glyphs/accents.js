@@ -1,4 +1,4 @@
-// Accented letters, so a name like Sofía, José, Zoë or Noël traces as it is
+// Accented letters, so a name like Sofía, José, Zoë, Noël or François traces as it is
 // spelled. Before these, the name tool dropped any letter it had no strokes
 // for: "Sofía" came out "Sofa".
 //
@@ -52,9 +52,30 @@ function compose(ch, accent) {
   return { width, strokes: [...strokes.map((s) => s.map((seg) => shift(seg, dx))), ...draw(width / 2, y0, h)] };
 }
 
-export const ACCENTED = Object.fromEntries(
-  Object.entries(MARKS).flatMap(([accent, chars]) => [...chars].map((ch) => [ch, compose(ch, accent)])),
-);
+// The cedilla hangs from the bottom of the c, written after it, top down:
+// a short drop, then a hook curling back to the left. The c's bowl bottoms
+// out at its centre, so the drop starts on the letter, as a cedilla does.
+function cedilla(ch) {
+  const g = PRINT[ch.normalize("NFD")[0]];
+  const c = g.width / 2;
+  const [cx, cy, rx, ry, from] = [c - 0.1, -0.45, 0.26, 0.18, 70];
+  const start = [cx + rx * Math.cos((from * Math.PI) / 180), cy + ry * Math.sin((from * Math.PI) / 180)];
+  return { width: g.width, strokes: [...g.strokes, [line(c, 0, start[0], start[1]), arc(cx, cy, rx, ry, from, -180)]] };
+}
 
-// Every letter a name or word can be traced in: A–Z, a–z and these.
-export const LETTERS = { ...PRINT, ...ACCENTED };
+export const ACCENTED = Object.fromEntries([
+  ...Object.entries(MARKS).flatMap(([accent, chars]) => [...chars].map((ch) => [ch, compose(ch, accent)])),
+  ...[..."çÇ"].map((ch) => [ch, cedilla(ch)]),
+]);
+
+// The two marks inside names: Mary-Kate, O'Brien. A hyphen is one stroke
+// left to right across the middle of the lowercase letters; an apostrophe one
+// short stroke down from the headline.
+export const NAME_MARKS = {
+  "-": { width: 0.5, strokes: [[line(0, 0.5, 0.5, 0.5)]] },
+  "'": { width: 0, strokes: [[line(0, 2, 0, 1.6)]] },
+};
+
+// Every letter a name or word can be traced in: A–Z, a–z, these and the two
+// marks.
+export const LETTERS = { ...PRINT, ...ACCENTED, ...NAME_MARKS };

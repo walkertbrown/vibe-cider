@@ -16,9 +16,11 @@ const SPACE = 1.2; // a space between words, in guide units
 const REPEAT_GAP = 2.5; // between copies of the name on a trace row, in guide units
 
 // Only the letters there are strokes for (A–Z, a–z, the accented ones in
-// accents.js) and single spaces.
+// accents.js), hyphens, apostrophes (a curly one is made straight) and
+// single spaces. Marks alone ("-'-") are not a name.
 export function cleanName(s) {
-  return [...String(s ?? "")].filter((ch) => PRINT[ch] || /\s/.test(ch)).join("").replace(/\s+/g, " ").trim().slice(0, NAME_MAX).trim();
+  const name = [...String(s ?? "").replace(/[‘’ʼ]/g, "'").replace(/[‐‑–]/g, "-")].filter((ch) => PRINT[ch] || /\s/.test(ch)).join("").replace(/\s+/g, " ").trim().slice(0, NAME_MAX).trim();
+  return /[\p{L}\p{N}]/u.test(name) ? name : ""; // marks alone are not a name
 }
 
 // Letters of `name` placed from x0, each with its extent in guide units.
