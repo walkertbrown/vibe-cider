@@ -63,7 +63,7 @@ try {
   await page.fill("#title", "Tracing Fun For Test");
   await page.fill("#back", "Back cover words for the test.");
   await page.waitForFunction(() => /Back cover words for the test\./.test(document.querySelector("#coverPreview svg")?.textContent ?? ""), null, { timeout: 15000 }).catch(() => {});
-  const cp = (await page.textContent("#coverPreview").catch(() => "")) ?? "";
+  const cp = (await page.$$eval("#coverPreview svg text", (n) => n.map((x) => x.textContent))).join(" "); // the title wraps onto lines
   check(/Tracing Fun For Test/.test(cp) && /Back cover words for the test\./.test(cp), "cover preview redraws with the title and back text as they're typed");
   [dl] = await Promise.all([page.waitForEvent("download"), page.click("#downloadCover")]);
   got = pdfText(await (await dl.createReadStream()).toArray().then(Buffer.concat));
