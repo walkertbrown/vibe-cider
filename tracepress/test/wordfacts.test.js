@@ -25,7 +25,7 @@ test("the holiday and themed word pages carry the word facts", () => {
 
 for (const [f, html] of pages) {
   test(`${f}: its word facts match its words and the glyphs`, () => {
-    const words = html.match(/\?words=([^"]+)"/)[1].split(",").map(decodeURIComponent);
+    const words = html.match(/class="cta" href="\/\?words=([^"]+)"/)[1].split(",").map(decodeURIComponent);
     const text = html.replace(/\s+/g, " ");
 
     const rows = [...html.matchAll(/<tr><td>([^<]+)<\/td><td>(\d+)<\/td><td>(\d+)<\/td><\/tr>/g)].map((m) => [m[1], +m[2], +m[3]]);
@@ -33,6 +33,23 @@ for (const [f, html] of pages) {
 
     const ks = words.map(strokes);
     assert.ok(text.includes(`run from ${Math.min(...ks)} to ${Math.max(...ks)} strokes, ${ks.reduce((a, b) => a + b, 0)} in all`), "the stroke range");
+
+    // In stroke order, ties keeping the button's order, with the word that
+    // moves furthest down and why, and a link that opens the book that way.
+    const ORD = ["first", "second", "third", "fourth", "fifth", "sixth", "seventh", "eighth", "ninth", "tenth", "eleventh", "twelfth", "thirteenth", "fourteenth", "fifteenth", "sixteenth", "seventeenth", "eighteenth", "nineteenth", "twentieth"];
+    const by = [...words].sort((a, b) => strokes(a) - strokes(b) || words.indexOf(a) - words.indexOf(b));
+    assert.ok(text.includes(`fewest first, the words go ${list(by)}.`), "the stroke order");
+    assert.ok(html.includes(`<a href="/?words=${by.join(",")}">open Trace Press with the words by strokes</a>`), "the stroke-order link");
+    const moved = words.map((w, i) => [w, i, by.indexOf(w), by.indexOf(w) - i]);
+    const top = Math.max(...moved.map((m) => m[3]));
+    const tops = moved.filter((m) => m[3] === top);
+    const said = text.match(/biggest changes? is (\w+): it has (\w+) letters but takes (\d+) strokes, as ([a-z, ]+?) takes? two(?: each)?, so it moves from (\w+) to (\w+)\./);
+    assert.ok(said, "the biggest change");
+    const m = tops.find((t) => t[0] === said[1]);
+    assert.ok(m, `${said[1]} moves ${top}`);
+    assert.ok(text.includes(tops.length > 1 ? "One of the biggest changes is" : "The biggest change is"), "tie wording");
+    assert.deepEqual([NUM.indexOf(said[2]), +said[3], said[5], said[6]], [letters(m[0]).length, strokes(m[0]), ORD[m[1]], ORD[m[2]]]);
+    assert.equal(said[4], list([...new Set(letters(m[0]).filter((c) => GLYPHS[c].strokes.length > 1))]));
 
     const used = new Set(words.flatMap(letters));
     const missing = [..."abcdefghijklmnopqrstuvwxyz"].filter((c) => !used.has(c));
