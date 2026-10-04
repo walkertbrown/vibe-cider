@@ -26,7 +26,7 @@ const el = {
   preview: $("preview"), prev: $("prev"), next: $("next"), pageNo: $("pageNo"),
   download: $("download"), status: $("status"), tier: $("tier"),
   dialog: $("unlockDialog"), dialogTitle: $("dialogTitle"), dialogLede: $("dialogLede"), buyLine: $("buyLine"),
-  title: $("title"), subtitle: $("subtitle"), author: $("author"), back: $("back"), paper: $("paper"), coverNote: $("coverNote"),
+  title: $("title"), subtitle: $("subtitle"), author: $("author"), back: $("back"), paper: $("paper"), coverNote: $("coverNote"), coverPreview: $("coverPreview"),
   downloadCover: $("downloadCover"), coverStatus: $("coverStatus"), listing: $("listing"), copyListing: $("copyListing"), listingStatus: $("listingStatus"),
   email: $("email"), unlockErr: $("unlockErr"), verify: $("verify"), closeDialog: $("closeDialog"),
 };
@@ -62,8 +62,30 @@ function showCoverNote() {
   el.coverNote.textContent = `${inch(g.width)} × ${inch(g.height)} with bleed, spine ${inch(g.spine)} for ${pageCount} pages. KDP allows spine text from 79 pages, so the spine is left blank.`;
 }
 
+// The cover as it will print (back, spine, front), redrawn a moment after
+// the last change. The free download adds PREVIEW across the front.
+let coverTimer = 0;
+function showCover() {
+  clearTimeout(coverTimer);
+  coverTimer = setTimeout(async () => {
+    try {
+      const [, bold, regular, { coverShapes }] = await loadRender();
+      const o = opts();
+      const { g, shapes } = await coverShapes({
+        title: el.title.value.trim() || "My Letter Tracing Book", subtitle: el.subtitle.value.trim(), author: el.author.value.trim(), back: el.back.value,
+        trim: o.trim, paper: el.paper.value, pageCount: planBook(o).pages.length, abc: o.abc, cursive: o.script === "cursive" ? cursive : undefined,
+      }, { bold, regular });
+      const svg = pageSvg({ width: g.width, height: g.height }, null, { shapes });
+      svg.setAttribute("aria-hidden", "true");
+      svg.style.cssText = "width:100%;height:auto;border:1px solid var(--line);border-radius:6px";
+      el.coverPreview.replaceChildren(svg);
+    } catch { el.coverPreview.replaceChildren(); }
+  }, 250);
+}
+
 function showPage() {
   showCoverNote();
+  showCover();
   el.listing.value = listingText(opts());
   el.listingStatus.textContent = "";
   const { geom, pages } = planBook(opts());
@@ -100,6 +122,7 @@ for (const c of [el.trim, el.bleed, el.age, el.cases, el.belongs, el.done, el.co
   if (e.isTrusted) px("touched");
   showPage();
 });
+for (const c of [el.title, el.subtitle, el.author, el.back]) c.addEventListener("input", showCover);
 el.words.addEventListener("input", (e) => {
   if (e.isTrusted) px("touched");
   showPage();

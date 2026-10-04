@@ -61,9 +61,15 @@ try {
 
   check(/spine 0\.059" for 26 pages/.test(await page.textContent("#coverNote")), `cover note gives the spine (${await page.textContent("#coverNote")})`);
   await page.fill("#title", "Tracing Fun For Test");
+  await page.fill("#back", "Back cover words for the test.");
+  await page.waitForFunction(() => /Back cover words for the test\./.test(document.querySelector("#coverPreview svg")?.textContent ?? ""), null, { timeout: 15000 }).catch(() => {});
+  const cp = (await page.textContent("#coverPreview").catch(() => "")) ?? "";
+  check(/Tracing Fun For Test/.test(cp) && /Back cover words for the test\./.test(cp), "cover preview redraws with the title and back text as they're typed");
   [dl] = await Promise.all([page.waitForEvent("download"), page.click("#downloadCover")]);
   got = pdfText(await (await dl.createReadStream()).toArray().then(Buffer.concat));
   check(got.pages === 1 && /PREVIEW/.test(got.text) && /Tracing Fun For Test/.test(got.text.replace(/\s+/g, " ")), "free cover: one page, the title, PREVIEW");
+  check(/Back cover words for the test\./.test(got.text.replace(/\s+/g, " ")), "the cover PDF has the back text");
+  await page.fill("#back", "");
   check(/^trace-press-cover-6x9-white\.pdf$/.test(dl.suggestedFilename()), `cover file name ${dl.suggestedFilename()}`);
 
   // Practice words: two word pages after Z, the pager and the cover note follow.

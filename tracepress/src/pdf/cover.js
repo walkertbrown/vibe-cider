@@ -197,10 +197,7 @@ function drawPreviewMark(page, g, fonts) {
 export async function renderCover(opts, fontBytes) {
   const doc = await PDFDocument.create();
   doc.registerFontkit(fontkit);
-  const fonts = {
-    bold: await doc.embedFont(fontBytes.bold, { subset: true }),
-    regular: await doc.embedFont(fontBytes.regular, { subset: true }),
-  };
+  const fonts = await embedFonts(doc, fontBytes);
   doc.setTitle(`${opts.title || "Letter tracing book"} — cover`);
   if (opts.author) doc.setAuthor(opts.author);
   const cursive = opts.script === "cursive" && fontBytes.cursive ? fontkit.create(new Uint8Array(fontBytes.cursive)) : undefined;
@@ -212,4 +209,20 @@ export async function renderCover(opts, fontBytes) {
   drawShapes(page, shapes.filter((s) => s.kind !== "rect"), fonts);
   if (opts.licensed !== true) drawPreviewMark(page, g, fonts);
   return doc.save();
+}
+
+async function embedFonts(doc, fontBytes) {
+  return {
+    bold: await doc.embedFont(fontBytes.bold, { subset: true }),
+    regular: await doc.embedFont(fontBytes.regular, { subset: true }),
+  };
+}
+
+// The cover's shapes for the on-screen preview: the same layout the PDF is
+// drawn from, measured with the same fonts (embedded once, in a document
+// that is never saved). `opts.cursive` is the loaded fontkit font.
+let previewFonts = null;
+export async function coverShapes(opts, fontBytes) {
+  previewFonts ??= PDFDocument.create().then((doc) => { doc.registerFontkit(fontkit); return embedFonts(doc, fontBytes); });
+  return layoutCover(opts, await previewFonts);
 }

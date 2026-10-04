@@ -22,7 +22,9 @@ export function pageSvg(geom, layout, { licensed = false, shapes, cursive } = {}
   };
   add("rect", { x: 0, y: 0, width: geom.width, height: H, fill: "#fff" });
   for (const s of shapes ?? pageInk(layout, { licensed, cursive })) {
-    if (s.kind === "line") {
+    if (s.kind === "rect") {
+      add("rect", { x: s.x, y: H - s.y - s.h, width: s.w, height: s.h, fill: css(s.color) });
+    } else if (s.kind === "line") {
       add("line", { x1: s.x1, y1: H - s.y1, x2: s.x2, y2: H - s.y2, stroke: css(s.color), "stroke-width": s.width, "stroke-dasharray": s.dash?.join(" ") });
     } else if (s.kind === "dot") {
       add("circle", { cx: s.x, cy: H - s.y, r: s.r, fill: css(s.color) });
