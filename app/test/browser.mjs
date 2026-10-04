@@ -189,6 +189,14 @@ await page.waitForTimeout(800);
 const emptyMeta = await page.textContent("#meta");
 const emptyCover = await page.textContent("#coverNote");
 if (!emptyMeta.startsWith("No book yet") || emptyCover) throw new Error(`no puzzles, but meta says "${emptyMeta}" and cover "${emptyCover}"`);
+if (await page.isVisible("#keywordsBox")) throw new Error("no puzzles, but KDP keywords are shown");
+
+// Seven KDP keyword phrases for the book on screen, none already in its title.
+await page.goto(`${base}/#tool`, { waitUntil: "networkidle" });
+await page.fill("#title", "Word Search Puzzle Book");
+const kws = await page.$$eval("#keywords li", (l) => l.map((x) => x.firstChild.textContent));
+if (kws.length !== 7 || kws.some((k) => "word search puzzle book".includes(k))) throw new Error(`KDP keywords: ${JSON.stringify(kws)}`);
+console.log(`seven KDP keywords: ${kws.join(" / ")}`);
 
 await browser.close();
 if (errors.length) {

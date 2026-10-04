@@ -39,6 +39,7 @@ async function loadCover() {
   return coverMod;
 }
 import { px } from "./px.js";
+import { keywordsFor } from "./keywords.js";
 import { PALETTE_HEX, paletteIndex } from "../pdf/palettes.js";
 import { coverGeometry, spineWidthInches, SPINE_TEXT_MIN_PAGES, PAPER } from "../pdf/cover-geometry.js";
 import { royalty } from "../pdf/kdp-cost.js";
@@ -70,7 +71,7 @@ const el = {
   title: $("title"), subtitle: $("subtitle"), author: $("author"), trim: $("trim"), count: $("count"), bleed: $("bleed"),
   themes: $("themes"), custom: $("custom"), customTitle: $("customTitle"),
   wpp: $("wpp"), difficulty: $("difficulty"), size: $("size"), seed: $("seed"), largePrint: $("largePrint"), kind: $("kind"), sudokuSize: $("sudokuSize"),
-  download: $("download"), downloadCover: $("downloadCover"), coverNote: $("coverNote"), moneyNote: $("moneyNote"), list: $("list"), ink: $("ink"), paper: $("paper"), coverColour: $("coverColour"), reshuffle: $("reshuffle"), status: $("status"), tier: $("tier"), warnings: $("warnings"),
+  download: $("download"), downloadCover: $("downloadCover"), coverNote: $("coverNote"), moneyNote: $("moneyNote"), keywordsBox: $("keywordsBox"), keywords: $("keywords"), list: $("list"), ink: $("ink"), paper: $("paper"), coverColour: $("coverColour"), reshuffle: $("reshuffle"), status: $("status"), tier: $("tier"), warnings: $("warnings"),
   meta: $("meta"), lengthWarn: $("lengthWarn"), page: $("page"), prev: $("prev"), next: $("next"), navLabel: $("navLabel"),
   dialog: $("unlockDialog"), dialogTitle: $("dialogTitle"), dialogLede: $("dialogLede"), buyLine: $("buyLine"), paidLead: $("paidLead"), email: $("email"), unlockErr: $("unlockErr"), verify: $("verify"), closeDialog: $("closeDialog"),
 };
@@ -147,6 +148,7 @@ let titleEdited = false;
 let subtitleEdited = false;
 el.title.addEventListener("input", () => { titleEdited = true; });
 el.subtitle.addEventListener("input", () => { subtitleEdited = true; });
+for (const f of [el.title, el.subtitle]) f.addEventListener("input", () => { if (book?.puzzles.length) showKeywords(settings()); });
 
 function refreshKind() {
   const kind = el.kind.value;
@@ -304,6 +306,23 @@ function answersPerPage(s, count) {
   return solutionsPerPageFor(count, solutionsThatFit(pageGeometry({ trim: s.trim, bleed: s.bleed }), s.largePrint, gridBound(s), count));
 }
 
+// The seven keyword boxes on KDP's Book Details page, from what is in this
+// book (src/ui/keywords.js), each with its own Copy button.
+function showKeywords(s) {
+  el.keywords.replaceChildren(...keywordsFor(s).map((k) => {
+    const li = document.createElement("li");
+    const b = document.createElement("button");
+    b.type = "button"; b.textContent = "Copy";
+    b.addEventListener("click", (e) => {
+      navigator.clipboard?.writeText(k).then(() => { b.textContent = "Copied"; }, () => {});
+      if (e.isTrusted) px("keyword");
+    });
+    li.append(k, b);
+    return li;
+  }));
+  el.keywordsBox.hidden = false;
+}
+
 function showMeta(s) {
   // A book with no puzzles in it has no pages, no spine and no royalty. It
   // used to promise "50 puzzles · 66 pages" above "No puzzle could be made"
@@ -313,8 +332,10 @@ function showMeta(s) {
     el.lengthWarn.hidden = true;
     el.coverNote.textContent = "";
     el.moneyNote.textContent = "";
+    el.keywordsBox.hidden = true;
     return;
   }
+  showKeywords(s);
   const effective = effectiveCount(s.count);
   const plan = planPages(effective, answersPerPage(s, effective));
   const pages = plan.total;

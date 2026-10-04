@@ -124,6 +124,11 @@
   .warnings { margin: 12px 0 0; padding: 10px 12px; background: var(--warn-bg); color: var(--warn); border-radius: 8px; font-size: 13px; white-space: pre-line; }
   .warnings:empty { display: none; }
   .status { color: var(--muted); font-size: 13px; min-height: 20px; }
+  .keywords { margin-top: 12px; }
+  .keywords h3 { font-size: 14px; margin: 0 0 4px; }
+  .keywords ol { margin: 6px 0 0; padding-left: 22px; font-size: 14px; }
+  .keywords li { margin: 3px 0; overflow-wrap: anywhere; }
+  .keywords li button { margin-left: 8px; padding: 1px 8px; font-size: 12px; min-height: 0; }
   .preview { display: flex; flex-direction: column; gap: 12px; }
   .preview-stick { display: flex; flex-direction: column; gap: 12px; }
   /* On a wide screen the form is taller than the window; keep the page you are
@@ -519,6 +524,11 @@ cherry"></textarea>
     </div>
     <div class="status" id="coverNote"></div>
     <div class="status" id="moneyNote"></div>
+    <div class="keywords" id="keywordsBox" hidden>
+      <h3>KDP keywords</h3>
+      <p class="status">KDP's Book Details page has seven keyword boxes. These name what is in this book, and leave out what the title already says.</p>
+      <ol id="keywords"></ol>
+    </div>
     <div class="status" id="status"></div>
     <div class="tier" id="tier"></div>
     <div class="warnings" id="lengthWarn" hidden></div>
