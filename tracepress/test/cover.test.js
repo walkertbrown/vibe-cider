@@ -129,3 +129,42 @@ test("a cursive book's cover has a cursive model, inside the card", async () => 
   const free = await PDFDocument.load(await renderCover({ title: "Cursive Fun", trim: "8.5x11", pageCount, script: "cursive" }, { ...bytes, cursive: cursiveBytes }));
   assert.equal(free.getPageCount(), 1);
 });
+
+// Back-cover text: inside the back panel's inset, above the barcode strip, at
+// 9pt or more, and the whole text kept up to BACK_MAX on every trim.
+import { backBox, BACK_MAX, BACK_MIN_PT } from "../src/pdf/cover.js";
+const BLURB = "Trace every letter from A to Z, capital and lowercase, with numbered start dots and arrows that show the order of the strokes. ";
+const BACKS = [
+  "Practice makes letters.",
+  "First paragraph here.\n\nSecond paragraph, after a blank line.",
+  BLURB.repeat(20).slice(0, BACK_MAX),
+  ("Short words fit here and there. ".repeat(50)).slice(0, BACK_MAX),
+  "W".repeat(BACK_MAX),
+];
+test("back-cover text stays on the back, clear of the barcode strip, and is all there", () => {
+  for (const trim of Object.keys(TRIMS)) for (const back of BACKS) {
+    const { g, shapes } = layoutCover({ trim, pageCount, back }, fonts);
+    const box = backBox(g);
+    assert.ok(box.bottom - g.panelY >= (0.25 + 1.2) * PT, `${trim}: strip under the barcode box`);
+    const lines = shapes.filter((s) => s.kind === "text" && s.x < g.backX + g.panelW);
+    const at = `${trim} "${back.slice(0, 16)}"`;
+    for (const s of lines) {
+      const w = fonts.regular.widthOfTextAtSize(s.text, s.size);
+      assert.ok(s.x - w / 2 >= box.left - 1e-6 && s.x + w / 2 <= box.right + 1e-6 && s.y - s.size * 0.25 >= box.bottom - 1e-6 && s.y + s.size * 0.8 <= box.top + 1e-6, `${at}: "${s.text.slice(0, 20)}" outside the back box`);
+      assert.ok(s.size >= BACK_MIN_PT, `${at}: ${s.size}pt`);
+    }
+    const kept = lines.map((s) => s.text).join("").replace(/\s/g, ""), all = back.replace(/\s/g, "");
+    // Prose up to 1,200 characters fits whole; only a 1,200-letter run of
+    // W's (no spaces) overruns the smallest back, and then it loses its end.
+    if (back.startsWith("WWW")) assert.ok(all.startsWith(kept) && kept.length > 400, `${at}: ${kept.length} kept`);
+    else assert.equal(kept, all, `${at}: text kept whole`);
+  }
+});
+
+test("back-cover text doesn't move anything on the front, and is in the PDF", async () => {
+  const front = (o) => { const { g, shapes } = layoutCover(o, fonts); return JSON.stringify(shapes.filter((s) => !(s.kind === "text" && s.x < g.backX + g.panelW))); };
+  assert.equal(front({ title: "T", pageCount, back: BLURB }), front({ title: "T", pageCount }));
+  assert.equal(layoutCover({ pageCount }, fonts).shapes.filter((s) => s.kind === "text" && s.x < layoutCover({ pageCount }, fonts).g.frontX).length, 0, "empty: plain back");
+  const { text } = await coverText({ title: "T", pageCount, back: "Trace every letter.\n\nThen write it alone.", licensed: true });
+  assert.match(text, /Trace every letter\./); assert.match(text, /Then write it alone\./);
+});

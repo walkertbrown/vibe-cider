@@ -4,8 +4,9 @@
 //
 // The front is the buyer's title, a subtitle, and the book's own model row
 // drawn big: a dotted "Aa" with its numbered starts and stroke arrows, from
-// the same shapes as the interior pages. The back is left plain, with KDP's
-// barcode area clear. A cursive book (`cursive`, the loaded fontkit font)
+// the same shapes as the interior pages. The back is plain unless the buyer
+// writes back-cover text (`back`), and its bottom strip is always left clear
+// for KDP's barcode. A cursive book (`cursive`, the loaded fontkit font)
 // gets its model in cursive instead: "Aa" joined, solid, on the guides. A
 // print book with pictures (`abc`, "A is for apple") gets the apple beside
 // the letters, its word under it, as the first page has it. A 26-page book
@@ -55,11 +56,43 @@ function fitLines(font, text, maxWidth, start, min, maxLines) {
   return { size: min, lines: wrap(font, text, maxWidth, min) };
 }
 
+// The back-cover text, if any: centred lines in the back panel, inside the
+// same inset as the front, from the top down, and never into the strip along
+// the bottom that holds KDP's barcode box (lower right, BARCODE_IN) and the
+// free cover's note (lower left). Blank lines start a new paragraph. It
+// shrinks from 14pt to fit, to BACK_MIN_PT at the least; BACK_MAX characters
+// fit every trim at that size (test/cover.test.js), and anything past the
+// box is left off rather than drawn outside it.
+export const BACK_MAX = 1200;
+export const BACK_MIN_PT = 9;
+export function backBox(g) {
+  const inset = TEXT_INSET_IN * PT;
+  return { left: g.backX + inset, right: g.backX + g.panelW - inset, top: g.panelY + g.panelH - inset, bottom: g.panelY + (BARCODE_IN.margin + BARCODE_IN.h) * PT + inset };
+}
+function backText(g, back, fonts) {
+  const paras = String(back ?? "").slice(0, BACK_MAX).split(/\n\s*\n/).map((p) => p.replace(/\s+/g, " ").replace(/\S{30}(?=\S)/g, "$& ").trim()).filter(Boolean); // a run of 30 W's fits the narrowest back at 9pt
+  if (!paras.length) return [];
+  const box = backBox(g), w = box.right - box.left, cx = (box.left + box.right) / 2;
+  const lay = (size) => {
+    const out = [];
+    let y = box.top;
+    paras.forEach((p, i) => {
+      if (i) y -= size * 0.7;
+      for (const line of wrap(fonts.regular, p, w, size)) { y -= size * 1.35; out.push({ kind: "text", text: line, x: cx, y: y + size * 0.35, size, font: "regular", color: WHITE }); }
+    });
+    return out;
+  };
+  const fits = (lines) => lines.every((l) => l.y - l.size * 0.25 >= box.bottom && fonts.regular.widthOfTextAtSize(l.text, l.size) <= w);
+  for (let size = 14; size > BACK_MIN_PT; size -= 0.5) { const lines = lay(size); if (fits(lines)) return lines; }
+  return lay(BACK_MIN_PT).filter((l) => fits([l]));
+}
+
 // `fonts` are embedded pdf-lib fonts (only widthOfTextAtSize is used).
-export function layoutCover({ title = "My Letter Tracing Book", subtitle = "", author = "", trim = "8.5x11", pageCount = 26, paper = "white", cursive, abc = false } = {}, fonts) {
+export function layoutCover({ title = "My Letter Tracing Book", subtitle = "", author = "", trim = "8.5x11", pageCount = 26, paper = "white", cursive, abc = false, back = "" } = {}, fonts) {
   const g = coverGeometry({ trim, pageCount, paper });
   const shapes = [{ kind: "rect", x: 0, y: 0, w: g.width, h: g.height, color: GROUND }];
   const inset = TEXT_INSET_IN * PT;
+  shapes.push(...backText(g, back, fonts));
   const left = g.frontX + inset, right = g.frontX + g.panelW - inset;
   const w = right - left, cx = (left + right) / 2;
   let top = g.panelY + g.panelH - inset;

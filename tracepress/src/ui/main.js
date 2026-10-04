@@ -26,7 +26,7 @@ const el = {
   preview: $("preview"), prev: $("prev"), next: $("next"), pageNo: $("pageNo"),
   download: $("download"), status: $("status"), tier: $("tier"),
   dialog: $("unlockDialog"), dialogTitle: $("dialogTitle"), dialogLede: $("dialogLede"), buyLine: $("buyLine"),
-  title: $("title"), subtitle: $("subtitle"), author: $("author"), paper: $("paper"), coverNote: $("coverNote"),
+  title: $("title"), subtitle: $("subtitle"), author: $("author"), back: $("back"), paper: $("paper"), coverNote: $("coverNote"),
   downloadCover: $("downloadCover"), coverStatus: $("coverStatus"), listing: $("listing"), copyListing: $("copyListing"), listingStatus: $("listingStatus"),
   email: $("email"), unlockErr: $("unlockErr"), verify: $("verify"), closeDialog: $("closeDialog"),
 };
@@ -188,7 +188,7 @@ el.downloadCover.addEventListener("click", async (e) => {
     if (wantsCursive()) await loadCursive();
     const o = opts();
     const bytes = await renderCover({
-      title: el.title.value.trim() || "My Letter Tracing Book", subtitle: el.subtitle.value.trim(), author: el.author.value.trim(),
+      title: el.title.value.trim() || "My Letter Tracing Book", subtitle: el.subtitle.value.trim(), author: el.author.value.trim(), back: el.back.value,
       trim: o.trim, paper: el.paper.value, pageCount: planBook(o).pages.length, licensed: !!getLicense(), script: o.script, abc: o.abc,
     }, { bold, regular, cursive: cursiveBytes });
     save(bytes, `trace-press-cover-${o.trim}-${el.paper.value}${o.script === "cursive" ? "-cursive" : ""}.pdf`);
