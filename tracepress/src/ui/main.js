@@ -21,7 +21,7 @@ const getLicense = () => storedLicense() ?? sessionLicense;
 
 const $ = (id) => document.getElementById(id);
 const el = {
-  trim: $("trim"), script: $("script"), bleed: $("bleed"), age: $("age"), cases: $("cases"), numbers: $("numbers"), lines: $("lines"), shapes: $("shapes"), belongs: $("belongs"), done: $("done"), copyright: $("copyright"), titled: $("titled"), abc: $("abc"), words: $("words"), wordsNote: $("wordsNote"),
+  trim: $("trim"), script: $("script"), bleed: $("bleed"), age: $("age"), cases: $("cases"), numbers: $("numbers"), lines: $("lines"), shapes: $("shapes"), belongs: $("belongs"), done: $("done"), copyright: $("copyright"), titled: $("titled"), folios: $("folios"), abc: $("abc"), words: $("words"), wordsNote: $("wordsNote"),
   preview: $("preview"), prev: $("prev"), next: $("next"), pageNo: $("pageNo"),
   download: $("download"), status: $("status"), tier: $("tier"),
   dialog: $("unlockDialog"), dialogTitle: $("dialogTitle"), dialogLede: $("dialogLede"), buyLine: $("buyLine"),
@@ -50,7 +50,7 @@ const wantsCursive = () => el.script.value === "cursive";
 const script = () => (wantsCursive() && cursive ? "cursive" : "print");
 
 let pageIndex = 0;
-const opts = () => ({ script: script(), measure: cursive ? (text, unit) => cursiveWidth(cursive, text, unit) : undefined, trim: el.trim.value, bleed: el.bleed.checked, guideIn: Number(el.age.value), cases: el.cases.value, numbers: el.numbers.checked, lines: el.lines.checked, shapes: el.shapes.checked, belongs: el.belongs.checked, done: el.done.checked, copyright: el.copyright.checked, titled: el.titled.checked, title: el.title.value.trim(), subtitle: el.subtitle.value.trim(), author: el.author.value.trim(), abc: el.abc.checked, words: el.words.value });
+const opts = () => ({ script: script(), measure: cursive ? (text, unit) => cursiveWidth(cursive, text, unit) : undefined, trim: el.trim.value, bleed: el.bleed.checked, guideIn: Number(el.age.value), cases: el.cases.value, numbers: el.numbers.checked, lines: el.lines.checked, shapes: el.shapes.checked, belongs: el.belongs.checked, done: el.done.checked, copyright: el.copyright.checked, titled: el.titled.checked, folios: el.folios.checked, title: el.title.value.trim(), subtitle: el.subtitle.value.trim(), author: el.author.value.trim(), abc: el.abc.checked, words: el.words.value });
 
 // The cover's size, before it's made: what to type into KDP's cover
 // calculator to check it.
@@ -93,7 +93,7 @@ function showScript() {
   loadCursive().then(showPage, (err) => { el.pageNo.textContent = `Could not load the cursive font: ${err.message}. Reload the page to try again.`; });
 }
 
-for (const c of [el.trim, el.bleed, el.age, el.cases, el.belongs, el.done, el.copyright, el.titled, el.title, el.subtitle, el.author, el.abc, el.numbers, el.lines, el.shapes, el.paper]) c.addEventListener("change", (e) => {
+for (const c of [el.trim, el.bleed, el.age, el.cases, el.belongs, el.done, el.copyright, el.titled, el.folios, el.title, el.subtitle, el.author, el.abc, el.numbers, el.lines, el.shapes, el.paper]) c.addEventListener("change", (e) => {
   if (e.isTrusted) px("touched");
   showPage();
 });
@@ -292,6 +292,7 @@ if (new URLSearchParams(location.search).get("belongs") === "1") el.belongs.chec
 if (new URLSearchParams(location.search).get("done") === "1") el.done.checked = true;
 if (new URLSearchParams(location.search).get("copyright") === "1") el.copyright.checked = true;
 if (new URLSearchParams(location.search).get("titlepage") === "1") el.titled.checked = true;
+if (new URLSearchParams(location.search).get("pagenumbers") === "1") el.folios.checked = true;
 if (new URLSearchParams(location.search).get("abc") === "1") el.abc.checked = true;
 const linkedCases = new URLSearchParams(location.search).get("letters");
 if (CASES[linkedCases]) el.cases.value = linkedCases;

@@ -19,6 +19,8 @@ letters to trace, and rows for writing the letter alone. Then, if you want them:
   The cover then shows the apple beside its "A a".
 - **A "This book belongs to" page** first, with a big writing line for the child's name.
 - **A "Well done!" page** last, with the same name line and "finished this book." under it.
+- **Page numbers** at the bottom outside corner, counting every page as KDP does; the title, copyright
+  and name pages go unnumbered.
 - **A title page** first: the cover's title, subtitle and author, with the copyright page on its back.
 - **A copyright page** after the name page: "Copyright ©", the year and the cover's author, then
   "All rights reserved.", small and low on the page.
