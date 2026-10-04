@@ -42,6 +42,9 @@ letters to trace, and rows for writing the letter alone. Then, if you want them:
   [Lucide](https://lucide.dev) (ISC, `public/licenses/lucide.txt`), mapped in
   `scripts/pictures.mjs`.
 
+A **listing description** sits under the cover: what's in the book you just made (page count, trim,
+line size, each part in order, the words), in plain text for KDP's Description box, with a copy button.
+
 Six KDP trim sizes (5×8, 5.5×8.5, 6×9, 7×10, 8×10, 8.5×11), with or without
 bleed, and four line sizes, from 1" lines for ages 4–5 down to 0.45" for older
 children. The cover is one full-wrap PDF with the spine sized from the page

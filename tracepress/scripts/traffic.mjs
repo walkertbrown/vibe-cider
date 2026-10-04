@@ -57,6 +57,7 @@ const RUNGS = [
   ["made", "got a PDF"],
   ["cover", "pressed Download cover"],
   ["covermade", "got a cover"],
+  ["listing", "copied the listing description"],
   ["paper", "ran /handwriting-paper"],
   ["papertouched", "changed a paper control"],
   ["paperdownload", "pressed Download paper"],

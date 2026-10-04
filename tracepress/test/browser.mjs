@@ -388,6 +388,10 @@ try {
   await nm.dispatchEvent("#title", "change");
   await nm.waitForFunction(() => /Zoo Letters/.test(document.querySelector("#preview svg")?.textContent ?? ""));
   check(/Page 1 of 27 · Title page$/.test(await nm.textContent("#pageNo")), `?titlepage=1: page 1 is the title page, and it takes the cover's title (${await nm.textContent("#pageNo")})`);
+  const lst = await nm.inputValue("#listing");
+  check(lst.startsWith("Zoo Letters\n") && /: 27 pages, 8\.5" × 11"/.test(lst) && lst.includes("Inside:"), `the listing description follows the book (${lst.slice(0, 80).replace(/\n/g, " / ")})`);
+  const phW = await phone.goto(`${base}/`).then(() => phone.evaluate(() => document.documentElement.scrollWidth));
+  check(phW <= 390, `home with the listing box: no sideways scroll on a phone (${phW}px)`);
   const swW = await phone.goto(`${base}${sw}`).then(() => phone.evaluate(() => document.documentElement.scrollWidth));
   check(swW <= 390, `sight words: no sideways scroll on a phone (${swW}px)`);
 

@@ -5,6 +5,7 @@
 import { planBook, GUIDES, CASES, SCRIPTS, cleanWords, wordsMax } from "../pdf/plan.js";
 import { cursiveWidth } from "../pdf/cursive.js";
 import { TRIMS } from "../pdf/kdp.js";
+import { listingText } from "../pdf/listing.js";
 import { SHAPES } from "../glyphs/lines.js";
 import { coverGeometry, PAPER } from "../pdf/cover-geometry.js";
 import { pageSvg } from "./preview.js";
@@ -26,7 +27,7 @@ const el = {
   download: $("download"), status: $("status"), tier: $("tier"),
   dialog: $("unlockDialog"), dialogTitle: $("dialogTitle"), dialogLede: $("dialogLede"), buyLine: $("buyLine"),
   title: $("title"), subtitle: $("subtitle"), author: $("author"), paper: $("paper"), coverNote: $("coverNote"),
-  downloadCover: $("downloadCover"), coverStatus: $("coverStatus"),
+  downloadCover: $("downloadCover"), coverStatus: $("coverStatus"), listing: $("listing"), copyListing: $("copyListing"), listingStatus: $("listingStatus"),
   email: $("email"), unlockErr: $("unlockErr"), verify: $("verify"), closeDialog: $("closeDialog"),
 };
 
@@ -63,6 +64,8 @@ function showCoverNote() {
 
 function showPage() {
   showCoverNote();
+  el.listing.value = listingText(opts());
+  el.listingStatus.textContent = "";
   const { geom, pages } = planBook(opts());
   pageIndex = Math.max(0, Math.min(pageIndex, pages.length - 1));
   const svg = pageSvg(geom, pages[pageIndex], { licensed: !!getLicense(), cursive });
@@ -103,6 +106,17 @@ el.words.addEventListener("input", (e) => {
 });
 el.prev.addEventListener("click", (e) => { if (e.isTrusted) px("pager"); pageIndex--; showPage(); });
 el.next.addEventListener("click", (e) => { if (e.isTrusted) px("pager"); pageIndex++; showPage(); });
+
+el.copyListing.addEventListener("click", async (e) => {
+  if (e.isTrusted) px("listing");
+  try {
+    await navigator.clipboard.writeText(el.listing.value);
+    el.listingStatus.textContent = "Copied.";
+  } catch {
+    el.listing.select();
+    el.listingStatus.textContent = "Selected: press Ctrl+C (or ⌘C) to copy.";
+  }
+});
 
 function refreshTier(note = "") {
   const lic = getLicense();
