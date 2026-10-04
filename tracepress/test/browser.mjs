@@ -382,6 +382,12 @@ try {
   await nm.click("#next");
   check(/Page 2 of 28 · Copyright page$/.test(await nm.textContent("#pageNo")), `?copyright=1: page 2 is the copyright page (${await nm.textContent("#pageNo")})`);
   check(/Copyright ©/.test(await nm.textContent("#preview svg")), "the copyright page's preview shows the © line");
+  await nm.goto(`${base}/?titlepage=1`);
+  await nm.waitForSelector("#preview svg");
+  await nm.fill("#title", "Zoo Letters");
+  await nm.dispatchEvent("#title", "change");
+  await nm.waitForFunction(() => /Zoo Letters/.test(document.querySelector("#preview svg")?.textContent ?? ""));
+  check(/Page 1 of 27 · Title page$/.test(await nm.textContent("#pageNo")), `?titlepage=1: page 1 is the title page, and it takes the cover's title (${await nm.textContent("#pageNo")})`);
   const swW = await phone.goto(`${base}${sw}`).then(() => phone.evaluate(() => document.documentElement.scrollWidth));
   check(swW <= 390, `sight words: no sideways scroll on a phone (${swW}px)`);
 

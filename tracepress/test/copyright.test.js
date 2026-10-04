@@ -53,3 +53,37 @@ test("it takes one of the extra pages: still under the spine-text floor", () => 
   assert.ok(n < SPINE_TEXT_MIN_PAGES, `${n} pages`);
   assert.equal(n, 78);
 });
+
+// The title page: first, with the copyright page on its back and the name
+// page after; its lines inside the box in the real fonts on every trim.
+import { TITLE_DEFAULT } from "../src/pdf/page.js";
+test("title page first, then copyright on its back, then the name page", () => {
+  const p = planBook({ titled: true, copyright: true, belongs: true, title: "ABC", author: "Ana", year: 2026 }).pages;
+  assert.ok(p[0].titlePage && p[1].copyright && p[2].belongs);
+  assert.equal(p.length, 29);
+  assert.equal(planBook({ titled: true }).pages[0].text[0].text, TITLE_DEFAULT, "a blank title falls back to the cover's default");
+  assert.equal(wordsMax(true, true, true, true, true, true, true), 28);
+  const many = Array(99).fill("go").join(",");
+  assert.equal(planBook({ titled: true, belongs: true, done: true, copyright: true, lines: true, shapes: true, numbers: true, words: many }).pages.length, 78);
+});
+
+test("title page lines fit on every trim and bleed", async () => {
+  const doc = await PDFDocument.create();
+  doc.registerFontkit(fontkit);
+  const f = (n) => readFileSync(new URL(`../public/fonts/LiberationSans-${n}.ttf`, import.meta.url));
+  const fonts = { bold: await doc.embedFont(f("Bold")), regular: await doc.embedFont(f("Regular")) };
+  const titles = ["My Letter Tracing Book", "ALPHABET TRACING WORKBOOK FOR PRESCHOOL KIDS AGES 3-5: LEARN TO WRITE LETTERS AND NUMBERS WITH ARROWS", "Supercalifragilisticexpialidocious Handwriting"];
+  const subtitle = "Practice A to Z with arrows and start dots, then sight words and numbers 0 to 9, for preschool and kindergarten kids aged three to six";
+  for (const trim of Object.keys(TRIMS)) for (const bleed of [false, true]) for (const title of titles) {
+    const page = planBook({ trim, bleed, titled: true, title, subtitle, author: LONG }).pages[0];
+    const { box } = page, text = pageInk(page, { licensed: true }).filter((s) => s.kind === "text");
+    const at = `${trim} bleed=${bleed} "${title.slice(0, 12)}"`;
+    for (const s of text) {
+      assert.ok(s.size >= 7, `${at}: ${s.size}pt`);
+      const w = fonts[s.font].widthOfTextAtSize(s.text, s.size);
+      assert.ok(s.x - w / 2 >= box.left && s.x + w / 2 <= box.right, `${at}: "${s.text}" ${w.toFixed(1)}pt wide`);
+      assert.ok(s.y - s.size * 0.25 >= box.bottom && s.y + s.size <= box.top, `${at}: "${s.text}" off the box`);
+    }
+    for (let i = 1; i < text.length; i++) assert.ok(text[i].y + text[i].size * 0.8 < text[i - 1].y - text[i - 1].size * 0.2, `${at}: "${text[i].text}" overlaps the line above`);
+  }
+});

@@ -223,12 +223,7 @@ export const COPYRIGHT_PT = 9;
 export function copyrightPage({ geom, pageNumber, author = "", year }) {
   const box = contentBox(geom, pageNumber);
   const size = COPYRIGHT_PT, per = Math.floor((box.right - box.left) / (size * 0.6));
-  const pieces = author.trim().split(/\s+/).filter(Boolean).flatMap((w) => w.match(new RegExp(`.{1,${per}}`, "gu")));
-  const wrap = [];
-  for (const p of pieces) {
-    if (wrap.length && wrap.at(-1).length + 1 + p.length <= per) wrap[wrap.length - 1] += ` ${p}`;
-    else wrap.push(p);
-  }
+  const wrap = wrapChars(author, per);
   const lines = [`Copyright © ${year}`, ...wrap, RIGHTS];
   const x = (box.left + box.right) / 2, lead = size * 1.5;
   return {
@@ -237,4 +232,47 @@ export function copyrightPage({ geom, pageNumber, author = "", year }) {
     rows: [],
     text: lines.map((text, i) => ({ text, x, y: box.bottom + size * 0.5 + (lines.length - 1 - i) * lead, size, font: "regular" })),
   };
+}
+
+// Greedy word wrap at `per` characters a line; a word longer than a line is
+// cut into pieces. The layout is pure (no fonts), so `per` comes from a
+// loose ems-a-character estimate, and the tests measure the real fonts.
+export function wrapChars(text, per) {
+  const pieces = String(text).trim().split(/\s+/).filter(Boolean).flatMap((w) => w.match(new RegExp(`.{1,${per}}`, "gu")));
+  const out = [];
+  for (const p of pieces) {
+    if (out.length && out.at(-1).length + 1 + p.length <= per) out[out.length - 1] += ` ${p}`;
+    else out.push(p);
+  }
+  return out;
+}
+
+// The title page, if chosen: first of all, the cover's title, subtitle and
+// author, so the inside matches the cover. Then the copyright page on its
+// back, then the name page. The title is bold, from 28pt down to 14 until it
+// takes 3 lines or fewer (0.72 em a character, wide enough for capitals),
+// a third of the way down; the subtitle under it, regular, 14pt down to 9;
+// the author low on the page at 12.
+export const TITLE_DEFAULT = "My Letter Tracing Book";
+function fit(text, width, em, start, min, maxLines) {
+  for (let size = start; size >= min; size--) {
+    const lines = wrapChars(text, Math.floor(width / (size * em)));
+    if (lines.length <= maxLines || size === min) return { size, lines };
+  }
+}
+export function titlePage({ geom, pageNumber, title = "", subtitle = "", author = "" }) {
+  const box = contentBox(geom, pageNumber);
+  const w = box.right - box.left, x = (box.left + box.right) / 2;
+  const t = fit(title.trim() || TITLE_DEFAULT, w, 0.72, 28, 14, 3);
+  const text = [];
+  let y = box.top - (box.top - box.bottom) * 0.3;
+  for (const line of t.lines) { text.push({ text: line, x, y, size: t.size, font: "bold" }); y -= t.size * 1.25; }
+  if (subtitle.trim()) {
+    const s = fit(subtitle, w, 0.62, 14, 9, 3);
+    y -= s.size * 0.6;
+    for (const line of s.lines) { text.push({ text: line, x, y, size: s.size, font: "regular" }); y -= s.size * 1.35; }
+  }
+  const a = wrapChars(author, Math.floor(w / (12 * 0.62)));
+  a.forEach((line, i) => text.push({ text: line, x, y: box.bottom + (box.top - box.bottom) * 0.15 + (a.length - 1 - i) * 12 * 1.4, size: 12, font: "regular" }));
+  return { box, titlePage: true, rows: [], text };
 }

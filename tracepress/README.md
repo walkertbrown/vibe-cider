@@ -19,6 +19,7 @@ letters to trace, and rows for writing the letter alone. Then, if you want them:
   The cover then shows the apple beside its "A a".
 - **A "This book belongs to" page** first, with a big writing line for the child's name.
 - **A "Well done!" page** last, with the same name line and "finished this book." under it.
+- **A title page** first: the cover's title, subtitle and author, with the copyright page on its back.
 - **A copyright page** after the name page: "Copyright ©", the year and the cover's author, then
   "All rights reserved.", small and low on the page.
 - **Print or cursive.** Cursive letters are joined the way the font
@@ -31,7 +32,7 @@ letters to trace, and rows for writing the letter alone. Then, if you want them:
 - **Numbers 0–9**, a page each after Z, with start dots and arrows like the letters.
 - **Your own practice words** (sight words, names, a theme), a page each after
   that, up to 52 words. The other extra pages count against the 52: numbers
-  take 10, lines 4, shapes 6, and the name page, the copyright page and the well-done page 1 each.
+  take 10, lines 4, shapes 6, and the title, copyright, name and well-done pages 1 each.
   A word Trace Press has a picture for (163 everyday words, such as dog, train
   and umbrella) gets an outline of it to colour, beside the word or, for a
   long word, above it. The outlines are [Tabler Icons](https://tabler.io/icons)
