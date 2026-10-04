@@ -68,6 +68,7 @@ const RUNGS = [
   ["namecursive", "picked Cursive on a name/words sheet"],
   ["namedownload", "pressed Download name/words sheet"],
   ["namemade", "got a name/words sheet"],
+  ["pdf", "clicked a free sample PDF link (any page)"],
   ["failed", "hit an error making any PDF"],
   ["pay", "opened the pay dialog"],
   ["checkout", "clicked through to Stripe"],

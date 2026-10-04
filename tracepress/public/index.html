@@ -208,5 +208,6 @@
 </dialog>
 
 <script type="module" src="/js/main.js"></script>
+<script>/* A beacon when a person (not a crawler) clicks a PDF link: /px/pdf.gif, nothing else sent. */addEventListener("click",function(e){var a=e.isTrusted&&e.target.closest&&e.target.closest('a[href$=".pdf"]');if(!a)return;var u="/px/pdf.gif?"+Date.now().toString(36);try{fetch(u,{keepalive:true,mode:"no-cors",cache:"no-store"}).catch(function(){})}catch(_){new Image().src=u}},true)</script>
 </body>
 </html>
