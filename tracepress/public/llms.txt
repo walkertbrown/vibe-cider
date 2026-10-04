@@ -4,7 +4,9 @@
 > workbooks: an A–Z tracing interior in print (numbered start dots and
 > stroke-order arrows on every letter) or joined cursive, with optional
 > pre-writing lines, shapes, numbers 0–9, up to 52 practice words, a "This
-> book belongs to" page and a "Well done!" page, plus the full-wrap cover,
+> book belongs to" page and a "Well done!" page, plus the full-wrap cover
+> (with optional back-cover text), a listing description and seven KDP
+> keyword phrases,
 > laid out to KDP's trim, bleed, margin and 0.75pt line rules. Six trims,
 > four line sizes (1", 0.75", 0.6", 0.45"). Runs in the browser with no
 > account. Free to use; free books carry one footer line and a cover
@@ -13,7 +15,7 @@
 
 ## Tools for KDP sellers
 
-- [Handwriting Tracing Workbook Generator for Amazon KDP](https://tracepress.bananafest-destiny.com/): Make an A–Z letter tracing workbook for Amazon KDP in your browser: stroke arrows, start dots, KDP trims and a full-wrap cover. Free to try; $19 once.
+- [Handwriting Tracing Workbook Generator for Amazon KDP](https://tracepress.bananafest-destiny.com/): Make an A–Z letter tracing workbook for Amazon KDP in your browser: stroke arrows, KDP trims, a full-wrap cover, listing text and keywords. Free; $19 once.
 - [Sight Word Tracing Workbook for KDP: Dolch Lists](https://tracepress.bananafest-destiny.com/sight-word-tracing-workbook): Dolch sight word tracing workbook for Amazon KDP: A–Z letter pages plus a page per word (40 pre-primer or 52 primer), printing cost worked out. Free.
 - [Cursive Handwriting Workbook for KDP: Make One Free](https://tracepress.bananafest-destiny.com/cursive-handwriting-workbook): Make a cursive handwriting workbook for Amazon KDP: joined A–Z tracing pages, numbers and words, its cover, and the KDP print cost worked out. Free to try.
 - [Free Handwriting Practice Paper PDF, KDP-Ready](https://tracepress.bananafest-destiny.com/handwriting-paper): Free printable handwriting paper: four-line guides, four line sizes, 24 to 300 pages, on KDP trims and margins for a practice notebook. No sign-up.

@@ -43,13 +43,16 @@ letters to trace, and rows for writing the letter alone. Then, if you want them:
   `scripts/pictures.mjs`.
 
 A **listing description** sits under the cover: what's in the book you just made (page count, trim,
-line size, each part in order, the words), in plain text for KDP's Description box, with a copy button.
+line size, each part in order, the words), in plain text for KDP's Description box, with a copy button. Under it, seven
+**keyword phrases** for KDP's seven keyword boxes, from what's in the book, leaving
+out any already in the title (KDP asks for that), each with its own copy button.
 
 Six KDP trim sizes (5×8, 5.5×8.5, 6×9, 7×10, 8×10, 8.5×11), with or without
 bleed, and four line sizes, from 1" lines for ages 4–5 down to 0.45" for older
 children. The cover is one full-wrap PDF with the spine sized from the page
 count of the book you just made and the paper you pick (white, cream,
-groundwood or colour).
+groundwood or colour). It's drawn on the page as you type, and takes optional
+back-cover text, centred on the back and kept above the barcode area.
 
 Free to use, and it makes the entire book. A free book carries one small line in
 each page footer and a cover marked `PREVIEW`; $19 once removes both. No
