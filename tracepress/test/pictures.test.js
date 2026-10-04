@@ -202,3 +202,41 @@ test("the free words tool draws a word's picture; the name tools don't", () => {
   assert.match(body("tracing-worksheet-generator"), /data-pictures="1"/);
   for (const f of ["name-tracing", "cursive-name-tracing"]) assert.doesNotMatch(body(f), /data-pictures/);
 });
+
+// Each word page says where its own twenty pictures come from. Those sentences
+// are read against the icon each word is built from in scripts/pictures.mjs.
+test("each word page names the sources of its own pictures", () => {
+  const src = readFileSync(new URL("../scripts/pictures.mjs", import.meta.url), "utf8");
+  const WORDS = Function(`return {${src.match(/const WORDS = \{([\s\S]*?)\n\};/)[1]}}`)();
+  const N = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen", "Twenty"];
+  const and = (a) => (a.length < 2 ? a.join("") : `${a.slice(0, -1).join(", ")} and ${a.at(-1)}`);
+  const AS = { "ball-basketball": "a basketball", sailboat: "a sailboat", deer: "a deer's head", "christmas-ball": "a Christmas bauble", "cookie-man": "a gingerbread man", "leaf-maple": "a maple leaf" };
+  const tabler = readdirSync(new URL("../node_modules/@tabler/icons/icons/outline/", import.meta.url));
+  const pages = readdirSync(new URL("../public/", import.meta.url)).filter((f) => f.endsWith("-tracing-worksheets.html"));
+  let checked = 0;
+  for (const f of pages) {
+    const html = readFileSync(new URL(`../public/${f}`, import.meta.url), "utf8").replace(/\s+/g, " ");
+    const cta = html.match(/class="cta" href="\/\?words=([^"&]*)/);
+    if (!cta || !html.includes("A word gets a picture")) continue;
+    const words = cta[1].split(",");
+    assert.equal(words.length, 20, f);
+    const lucide = words.filter((w) => WORDS[w].startsWith("lucide:"));
+    const said = lucide.length
+      ? `${N[20 - lucide.length]} of the twenty pictures on this page are from Tabler Icons, under the MIT licence, and ${N[lucide.length].toLowerCase()} are from Lucide, under the ISC licence: ${and(lucide)}.`
+      : "All twenty pictures on this page are from Tabler Icons, under the MIT licence.";
+    assert.ok(html.includes(said), `${f}: ${said}`);
+    if (html.includes("Tabler has no icon for any of those")) for (const w of lucide) assert.ok(!tabler.includes(`${w}.svg`), `${f}: Tabler has ${w}`);
+    if (lucide.includes("nut")) assert.ok(tabler.includes("nut.svg") && html.includes("Tabler has a nut, but it's the kind that goes on a bolt."), f);
+    const other = words.filter((w) => WORDS[w] !== w && !WORDS[w].startsWith("lucide:") && !/-\d$/.test(WORDS[w]) && w !== "pumpkin");
+    if (other.length) {
+      for (const w of other) assert.ok(AS[WORDS[w]], `${f}: ${w} is ${WORDS[w]}, not described`);
+      const s = `${N[other.length]} word${other.length > 1 ? "s use" : " uses"} a picture with another name: ${and(other.map((w) => `${w} is ${AS[WORDS[w]]}`))}.`;
+      assert.ok(html.includes(s), `${f}: ${s}`);
+    } else assert.ok(!html.includes("a picture with another name"), f);
+    assert.equal(html.includes("Pumpkin is Tabler's carved pumpkin with the face taken out"), words.includes("pumpkin"), f);
+    checked++;
+  }
+  assert.equal(checked, 7);
+  assert.ok(src.includes('pumpkin: "pumpkin-scary"') && /const WITHOUT = \{\s*pumpkin:/.test(src), "the pumpkin sentence describes WITHOUT/WITH");
+  assert.deepEqual(Object.keys(Function(`return {${src.match(/const DRAWN = \{([\s\S]*?)\n\};/)[1]}}`)()), ["quilt"], "\"except quilt, which Trace Press drew\"");
+});
