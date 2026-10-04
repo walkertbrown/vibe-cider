@@ -40,6 +40,7 @@ async function loadCover() {
 }
 import { px } from "./px.js";
 import { keywordsFor } from "./keywords.js";
+import { listingText } from "./listing.js";
 import { PALETTE_HEX, paletteIndex } from "../pdf/palettes.js";
 import { coverGeometry, spineWidthInches, SPINE_TEXT_MIN_PAGES, PAPER } from "../pdf/cover-geometry.js";
 import { royalty } from "../pdf/kdp-cost.js";
@@ -71,7 +72,7 @@ const el = {
   title: $("title"), subtitle: $("subtitle"), author: $("author"), trim: $("trim"), count: $("count"), bleed: $("bleed"),
   themes: $("themes"), custom: $("custom"), customTitle: $("customTitle"),
   wpp: $("wpp"), difficulty: $("difficulty"), size: $("size"), seed: $("seed"), largePrint: $("largePrint"), kind: $("kind"), sudokuSize: $("sudokuSize"),
-  download: $("download"), downloadCover: $("downloadCover"), coverNote: $("coverNote"), moneyNote: $("moneyNote"), keywordsBox: $("keywordsBox"), keywords: $("keywords"), list: $("list"), ink: $("ink"), paper: $("paper"), coverColour: $("coverColour"), reshuffle: $("reshuffle"), status: $("status"), tier: $("tier"), warnings: $("warnings"),
+  download: $("download"), downloadCover: $("downloadCover"), coverNote: $("coverNote"), moneyNote: $("moneyNote"), keywordsBox: $("keywordsBox"), keywords: $("keywords"), listing: $("listing"), copyListing: $("copyListing"), list: $("list"), ink: $("ink"), paper: $("paper"), coverColour: $("coverColour"), reshuffle: $("reshuffle"), status: $("status"), tier: $("tier"), warnings: $("warnings"),
   meta: $("meta"), lengthWarn: $("lengthWarn"), page: $("page"), prev: $("prev"), next: $("next"), navLabel: $("navLabel"),
   dialog: $("unlockDialog"), dialogTitle: $("dialogTitle"), dialogLede: $("dialogLede"), buyLine: $("buyLine"), paidLead: $("paidLead"), email: $("email"), unlockErr: $("unlockErr"), verify: $("verify"), closeDialog: $("closeDialog"),
 };
@@ -148,6 +149,10 @@ let titleEdited = false;
 let subtitleEdited = false;
 el.title.addEventListener("input", () => { titleEdited = true; });
 el.subtitle.addEventListener("input", () => { subtitleEdited = true; });
+el.copyListing.addEventListener("click", (e) => {
+  navigator.clipboard?.writeText(el.listing.value).then(() => { el.copyListing.textContent = "Copied"; }, () => {});
+  if (e.isTrusted) px("description");
+});
 for (const f of [el.title, el.subtitle]) f.addEventListener("input", () => { if (book?.puzzles.length) showKeywords(settings()); });
 
 function refreshKind() {
@@ -306,9 +311,15 @@ function answersPerPage(s, count) {
   return solutionsPerPageFor(count, solutionsThatFit(pageGeometry({ trim: s.trim, bleed: s.bleed }), s.largePrint, gridBound(s), count));
 }
 
-// The seven keyword boxes on KDP's Book Details page, from what is in this
-// book (src/ui/keywords.js), each with its own Copy button.
+// The listing for KDP's Book Details page, from what is in this book: the
+// description (src/ui/listing.js) and the seven keyword boxes
+// (src/ui/keywords.js), each with its own Copy button.
 function showKeywords(s) {
+  const effective = effectiveCount(s.count);
+  const perPage = answersPerPage(s, effective);
+  const plan = planPages(effective, perPage);
+  el.listing.value = listingText(s, { puzzles: effective, pages: plan.total, perPage, notes: plan.notes, trimLabel: TRIMS[s.trim].label });
+  el.copyListing.textContent = "Copy the description";
   el.keywords.replaceChildren(...keywordsFor(s).map((k) => {
     const li = document.createElement("li");
     const b = document.createElement("button");

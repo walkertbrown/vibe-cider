@@ -125,7 +125,8 @@
   .warnings:empty { display: none; }
   .status { color: var(--muted); font-size: 13px; min-height: 20px; }
   .keywords { margin-top: 12px; }
-  .keywords h3 { font-size: 14px; margin: 0 0 4px; }
+  .keywords h3 { font-size: 14px; margin: 12px 0 4px; }
+  .keywords textarea { width: 100%; box-sizing: border-box; font: inherit; font-size: 13px; padding: 8px; border: 1px solid var(--line, #ccc); border-radius: 8px; margin-bottom: 6px; }
   .keywords ol { margin: 6px 0 0; padding-left: 22px; font-size: 14px; }
   .keywords li { margin: 3px 0; overflow-wrap: anywhere; }
   .keywords li button { margin-left: 8px; padding: 4px 10px; font-size: 12px; }
@@ -525,6 +526,10 @@ cherry"></textarea>
     <div class="status" id="coverNote"></div>
     <div class="status" id="moneyNote"></div>
     <div class="keywords" id="keywordsBox" hidden>
+      <h3>KDP description</h3>
+      <p class="status">For the Description box on KDP's Book Details page: what is in this book, from the book itself. Plain text, so it pastes as it is.</p>
+      <textarea id="listing" rows="8" readonly></textarea>
+      <button type="button" id="copyListing">Copy the description</button>
       <h3>KDP keywords</h3>
       <p class="status">KDP's Book Details page has seven keyword boxes. These name what is in this book, and leave out what the title already says.</p>
       <ol id="keywords"></ol>
