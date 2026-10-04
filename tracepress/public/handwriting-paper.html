@@ -16,15 +16,17 @@
 <link rel="icon" href="/favicon.ico" sizes="48x48">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <style>
+  h1.t { font-size: 1.5em; margin: 0.83em 0; }
+  header .brand { font-weight: 700; color: inherit; }
   :root { --ink: #1a1a1a; --muted: #5c6470; --line: #d9dde3; --bg: #f6f7f9; --card: #fff; --accent: #234e3a; --accent-ink: #fff; }
   * { box-sizing: border-box; }
   html, body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
   a { color: var(--accent); }
   header { padding: 18px 24px; border-bottom: 1px solid var(--line); background: var(--card); display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; }
-  header h1 { margin: 0; font-size: 20px; }
+  header .brand { margin: 0; font-size: 20px; }
   header p { margin: 0; color: var(--muted); }
   .hero { max-width: 1100px; margin: 0 auto; padding: 28px 24px 8px; }
-  .hero h2 { font-size: clamp(24px, 4vw, 34px); line-height: 1.15; margin: 0 0 10px; letter-spacing: -0.01em; }
+  .hero h2, .hero h1.t { font-size: clamp(24px, 4vw, 34px); line-height: 1.15; margin: 0 0 10px; letter-spacing: -0.01em; }
   .hero p { margin: 0; color: var(--muted); max-width: 70ch; font-size: 16px; }
   main { display: grid; grid-template-columns: minmax(260px, 340px) 1fr; gap: 24px; padding: 24px; max-width: 1100px; margin: 0 auto; }
   @media (max-width: 760px) { main { grid-template-columns: 1fr; } .viewer { order: -1; } }
@@ -60,7 +62,7 @@
   footer { text-align: center; color: var(--muted); font-size: 13px; padding: 24px; border-top: 1px solid var(--line); }
   dialog { border: 1px solid var(--line); border-radius: 12px; padding: 22px; max-width: 420px; width: calc(100% - 32px); }
   dialog::backdrop { background: rgba(0,0,0,0.35); }
-  dialog h2 { margin: 0 0 8px; font-size: 18px; }
+  dialog h2, dialog h1.t { margin: 0 0 8px; font-size: 18px; }
   dialog p { margin: 6px 0; color: var(--muted); font-size: 14px; }
   dialog input { width: 100%; font: inherit; padding: 9px; border: 1px solid var(--line); border-radius: 8px; }
   dialog .buybtn { display: block; text-align: center; background: var(--accent); color: var(--accent-ink); border-radius: 8px; font-weight: 600; padding: 12px 18px; font-size: 16px; text-decoration: none; margin: 14px 0 6px; }
@@ -74,12 +76,12 @@
 </head>
 <body>
 <header>
-  <h1><a href="/" style="color:inherit;text-decoration:none">Trace Press</a></h1>
+  <p class="brand"><a href="/" style="color:inherit;text-decoration:none">Trace Press</a></p>
   <p>Letter tracing workbooks for Amazon KDP · <a href="/">A–Z tracing workbook</a> · Handwriting paper · <a href="/name-tracing">Name tracing</a></p>
 </header>
 
 <div class="hero">
-  <h2>Handwriting practice paper, as a free PDF</h2>
+  <h1 class="t">Handwriting practice paper, as a free PDF</h1>
   <p>Blank four-line handwriting guides on every page: a solid top line, a dashed midline, a solid baseline and a dotted descender line. Choose a page size, a line size and how many pages. Print it at home, or upload it to Amazon KDP as the interior of a blank handwriting notebook. The margins are already KDP's. It's free, with no footer, no sign-up, and nothing uploaded.</p>
 </div>
 

@@ -16,15 +16,17 @@
 <link rel="icon" href="/favicon.ico" sizes="48x48">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <style>
+  h1.t { font-size: 1.5em; margin: 0.83em 0; }
+  header .brand { font-weight: 700; color: inherit; }
   :root { --ink: #1a1a1a; --muted: #5c6470; --line: #d9dde3; --bg: #f6f7f9; --card: #fff; --accent: #234e3a; --accent-ink: #fff; }
   * { box-sizing: border-box; }
   html, body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
   a { color: var(--accent); }
   header { padding: 18px 24px; border-bottom: 1px solid var(--line); background: var(--card); display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; }
-  header h1 { margin: 0; font-size: 20px; }
+  header .brand { margin: 0; font-size: 20px; }
   header p { margin: 0; color: var(--muted); font-size: 15px; }
   article { max-width: 760px; margin: 0 auto; padding: 28px 24px 40px; }
-  article h2 { font-size: clamp(26px, 4vw, 34px); line-height: 1.15; margin: 0 0 12px; letter-spacing: -0.01em; }
+  article h2, article h1.t { font-size: clamp(26px, 4vw, 34px); line-height: 1.15; margin: 0 0 12px; letter-spacing: -0.01em; }
   article h3 { font-size: 20px; margin: 32px 0 8px; }
   article p, article li { color: #2c3138; }
   .lede { font-size: 17px; color: var(--muted); }
@@ -36,12 +38,12 @@
 </head>
 <body>
 <header>
-  <h1><a href="/" style="color:inherit;text-decoration:none">Trace Press</a></h1>
+  <p class="brand"><a href="/" style="color:inherit;text-decoration:none">Trace Press</a></p>
   <p>Letter tracing workbooks for Amazon KDP · <a href="/">A–Z tracing workbook</a> · <a href="/handwriting-paper">Handwriting paper</a> · <a href="/name-tracing">Name tracing</a></p>
 </header>
 
 <article>
-  <h2>Free handwriting practice sheets for adults</h2>
+  <h1 class="t">Free handwriting practice sheets for adults</h1>
   <p class="lede">Print handwriting practice at a grown-up size: one page for each letter, A to Z, and each number, 0 to 9, on 0.45" lines instead of the big lines made for small children. Each page shows the letter with where to start and which way to go, then rows of it in dots to trace, then rows with one letter to start you off.</p>
   <a href="/samples/handwriting-practice-sheets-for-adults.pdf" target="_blank" rel="noopener"><img src="/img/handwriting-practice-sheet-for-adults-g.png" width="720" height="932" alt="Handwriting practice sheet for the letter G: a capital and lowercase g with start dots and arrows, then rows of dotted G and g to trace and rows to write freely" style="display:block;width:100%;max-width:340px;height:auto;margin:8px 0 4px;border:1px solid var(--line);border-radius:6px;box-shadow:0 4px 14px rgba(20,30,20,.08);background:#fff"></a>
   <a class="cta" href="/samples/handwriting-practice-sheets-for-adults.pdf" target="_blank" rel="noopener">Download the sheets (PDF, 36 pages)</a>
