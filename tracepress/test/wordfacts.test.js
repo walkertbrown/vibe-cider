@@ -39,6 +39,19 @@ for (const [f, html] of pages) {
     const add = missing.map((c) => LETTER_WORDS[c.toUpperCase()]);
     assert.ok(text.includes(`the ${words.length === 20 ? "twenty" : words.length} words use ${26 - missing.length} of the 26 lowercase letters. The ${NUM[missing.length]} they leave out are ${list(missing)}.`), "the missing letters");
     assert.ok(text.includes(`add ${list(add)} to the words`), "the words to add");
+    // Tall letters and tails, read off the glyphs' own heights: above the
+    // midline (1) to the headline (2), or below the baseline (0).
+    const ys = (g) => g.type === "line" ? [g.y0, g.y1] : g.type === "arc" ? [g.cy - g.ry, g.cy + g.ry] : [];
+    const span = (c) => GLYPHS[c].strokes.flat().flatMap(ys);
+    const tall = (c) => Math.max(...span(c)) > 1.5, tail = (c) => Math.min(...span(c)) < -0.1;
+    assert.deepEqual([..."abcdefghijklmnopqrstuvwxyz"].filter(tall), [..."bdfhklt"]);
+    assert.deepEqual([..."abcdefghijklmnopqrstuvwxyz"].filter(tail), [..."gjpqy"]);
+    const tagged = (f) => words.filter((w) => letters(w).some(f)).map((w) => `${w} (${list([...new Set(letters(w).filter(f))])})`);
+    const flat = words.filter((w) => !letters(w).some((c) => tall(c) || tail(c)));
+    const sec = text.match(/<h3>Tall letters and tails<\/h3> <p>(.*?)<\/p>/)[1];
+    assert.ok(sec.includes(`reach up to the headline: ${list(tagged(tall))}.`) || sec.includes(`reaches up to the headline: ${list(tagged(tall))}.`), "the tall words");
+    assert.ok(tagged(tail).length ? sec.includes(`below the baseline: ${list(tagged(tail))}.`) : sec.includes("None of them drops"), "the tails");
+    assert.ok(flat.length ? sec.includes(`all the way: ${list(flat)}.`) : sec.includes("None of these words stays"), "the one-height words");
     for (const [i, w] of add.entries()) {
       assert.ok(w.includes(missing[i]), `${w} brings in ${missing[i]}`);
       assert.ok(pictureFor(w), `${w} has a picture`);
