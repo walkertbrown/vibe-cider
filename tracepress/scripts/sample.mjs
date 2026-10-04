@@ -25,7 +25,7 @@ import { pageInk } from "../src/pdf/ink.js";
 import { PT, TRIMS } from "../src/pdf/kdp.js";
 import { drawLetterPage } from "../src/pdf/draw.js";
 import { cursiveWidth } from "../src/pdf/cursive.js";
-import { cursiveChart } from "../src/pdf/chart.js";
+import { cursiveChart, printChart } from "../src/pdf/chart.js";
 
 const SITE = "https://tracepress.bananafest-destiny.com/";
 const TRIM = "8.5x11";
@@ -344,6 +344,30 @@ for (const trim of Object.keys(TRIMS)) {
   const page = doc.addPage([geom.width, geom.height]);
   drawLetterPage(page, layout, embedded, { cursive: cursiveFont });
   const f = pageInk(layout, { cursive: cursiveFont }).find((s) => s.kind === "text" && /Trace Press/.test(s.text));
+  const half = embedded.regular.widthOfTextAtSize(f.text, f.size) / 2 + 4;
+  link(doc, page, [f.x - half, f.y - 4, f.x + half, f.y + f.size + 2]);
+  const bytes = await doc.save();
+  writeFileSync(new URL(sample.file, out), bytes);
+  console.log(`wrote public/samples/${sample.file}: ${bytes.length} bytes`);
+}
+
+// The print alphabet chart, for /alphabet-chart: the same page in the print
+// letters of the tracing pages, solid, with the free footer line as a link.
+{
+  const sample = {
+    file: "alphabet-chart.pdf",
+    title: "Free Printable Alphabet Chart, A–Z and 0–9 (PDF)",
+    subject: "A one-page print alphabet chart: every capital and lowercase letter, A to Z, and the numbers 0 to 9 in solid print letters on four-line handwriting guides. 8.5 x 11. Free from Trace Press.",
+  };
+  const { geom } = planBook({ trim: TRIM, guideIn: GUIDE_IN });
+  const layout = printChart({ geom });
+  const doc = await PDFDocument.create();
+  doc.registerFontkit(fontkit);
+  meta(doc, sample);
+  const embedded = { bold: await doc.embedFont(fonts.bold, { subset: true }), regular: await doc.embedFont(fonts.regular, { subset: true }) };
+  const page = doc.addPage([geom.width, geom.height]);
+  drawLetterPage(page, layout, embedded);
+  const f = pageInk(layout).find((s) => s.kind === "text" && /Trace Press/.test(s.text));
   const half = embedded.regular.widthOfTextAtSize(f.text, f.size) / 2 + 4;
   link(doc, page, [f.x - half, f.y - 4, f.x + half, f.y + f.size + 2]);
   const bytes = await doc.save();

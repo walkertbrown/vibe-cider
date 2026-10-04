@@ -82,6 +82,7 @@ Made by this code with the free version, footer line and PREVIEW mark included:
 - [Thanksgiving tracing worksheets](https://tracepress.bananafest-destiny.com/thanksgiving-tracing-worksheets), 20 words with pictures
 - [Christmas tracing worksheets](https://tracepress.bananafest-destiny.com/christmas-tracing-worksheets), 20 words with pictures
 - [Cursive letter tracing worksheets](https://tracepress.bananafest-destiny.com/cursive-letter-tracing)
+- [Alphabet chart](https://tracepress.bananafest-destiny.com/alphabet-chart), print, one page
 - [Cursive alphabet chart](https://tracepress.bananafest-destiny.com/cursive-alphabet-chart), one page
 - [Cursive name tracing worksheet](https://tracepress.bananafest-destiny.com/cursive-name-tracing)
 - [Cursive practice sheets for adults](https://tracepress.bananafest-destiny.com/cursive-practice-sheets-for-adults)

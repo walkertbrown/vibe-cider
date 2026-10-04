@@ -23,6 +23,7 @@ const PREVIEWS = [
   ["tracing-worksheet-cat-sun-dog.pdf", 1, "tracing-worksheet-cat-sun-dog"],
   ["cursive-letter-tracing-worksheets.pdf", 2, "cursive-letter-tracing-worksheet-b"],
   ["cursive-alphabet-chart.pdf", 1, "cursive-alphabet-chart"],
+  ["alphabet-chart.pdf", 1, "alphabet-chart"],
   ["cursive-practice-sheets-for-adults.pdf", 13, "cursive-practice-sheet-for-adults-m"],
   ["handwriting-practice-sheets-for-adults.pdf", 7, "handwriting-practice-sheet-for-adults-g"],
   ["preschool-tracing-worksheets.pdf", 11, "preschool-tracing-worksheet-a"],
