@@ -214,7 +214,7 @@ export function donePage({ geom, pageNumber, guideIn }) {
 }
 
 // The copyright page, if chosen: after the name page, or first without one,
-// so it backs the name page the way it backs a title page in a printed book.
+// so in print it is on the back of the name page.
 // "Copyright © year", the author (the cover form's) wrapped to the box at
 // about 0.6 em a character, then "All rights reserved.", centred low on the
 // page. With no author the second line is left out.
