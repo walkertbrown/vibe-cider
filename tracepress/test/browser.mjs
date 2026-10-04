@@ -376,6 +376,12 @@ try {
   await nm.goto(`${base}/?belongs=1`);
   await nm.waitForSelector("#preview svg");
   check(/Page 1 of 27 · This book belongs to$/.test(await nm.textContent("#pageNo")), `?belongs=1: page 1 is the name page (${await nm.textContent("#pageNo")})`);
+  // The copyright page has no rows; the preview must still page onto it.
+  await nm.goto(`${base}/?belongs=1&copyright=1`);
+  await nm.waitForSelector("#preview svg");
+  await nm.click("#next");
+  check(/Page 2 of 28 · Copyright page$/.test(await nm.textContent("#pageNo")), `?copyright=1: page 2 is the copyright page (${await nm.textContent("#pageNo")})`);
+  check(/Copyright ©/.test(await nm.textContent("#preview svg")), "the copyright page's preview shows the © line");
   const swW = await phone.goto(`${base}${sw}`).then(() => phone.evaluate(() => document.documentElement.scrollWidth));
   check(swW <= 390, `sight words: no sideways scroll on a phone (${swW}px)`);
 

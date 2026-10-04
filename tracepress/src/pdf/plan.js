@@ -3,7 +3,7 @@
 import { PRINT } from "../glyphs/print.js";
 import { LINE_PAGES, SHAPE_PAGES } from "../glyphs/lines.js";
 import { pageGeometry } from "./kdp.js";
-import { letterPage, belongsPage, donePage } from "./page.js";
+import { letterPage, belongsPage, donePage, copyrightPage } from "./page.js";
 import { namePage, cleanName } from "./name.js";
 import { cursivePage } from "./cursive-page.js";
 import { pictureFor } from "./pictures.js";
@@ -36,25 +36,27 @@ export const EXTRA_MAX = 52;
 export const WORDS_MAX = EXTRA_MAX;
 // Pre-writing line pages, if chosen, come before A and count toward the same
 // 52: 4 line pages, 10 numbers and 38 words at the most. So does the "This
-// book belongs to" page, first of all, and the "Well done!" page, last.
-export const wordsMax = (numbers, lines = false, belongs = false, shapes = false, done = false) => EXTRA_MAX - (numbers ? DIGITS.length : 0) - (lines ? LINE_PAGES.length : 0) - (belongs ? 1 : 0) - (shapes ? SHAPE_PAGES.length : 0) - (done ? 1 : 0);
+// book belongs to" page, first of all, the copyright page after it, and the
+// "Well done!" page, last.
+export const wordsMax = (numbers, lines = false, belongs = false, shapes = false, done = false, copyright = false) => EXTRA_MAX - (copyright ? 1 : 0) - (numbers ? DIGITS.length : 0) - (lines ? LINE_PAGES.length : 0) - (belongs ? 1 : 0) - (shapes ? SHAPE_PAGES.length : 0) - (done ? 1 : 0);
 export function cleanWords(words, max = WORDS_MAX) {
   const list = typeof words === "string" ? words.split(/[,\n;]+/) : words ?? [];
   return list.map(cleanName).filter(Boolean).slice(0, max);
 }
 
-export function planBook({ trim = "8.5x11", bleed = false, guideIn = 0.75, numbers = false, lines = false, shapes = false, words = [], cases = "both", belongs = false, done = false, script = "print", measure, abc = false } = {}) {
+export function planBook({ trim = "8.5x11", bleed = false, guideIn = 0.75, numbers = false, lines = false, shapes = false, words = [], cases = "both", belongs = false, done = false, copyright = false, author = "", year = new Date().getFullYear(), script = "print", measure, abc = false } = {}) {
   if (script === "cursive" && !measure) throw new Error("cursive needs measure()");
   const cursive = script === "cursive";
-  const first = belongs ? 1 : 0;
+  const first = (belongs ? 1 : 0) + (copyright ? 1 : 0);
   const singles = [...(lines ? LINE_PAGES : []), ...(shapes ? SHAPE_PAGES : []), ...letterPairs(CASES[cases] ? cases : "both"), ...(numbers ? DIGITS.map((d) => [d]) : [])];
-  const extra = cleanWords(words, wordsMax(numbers, lines, belongs, shapes, done));
+  const extra = cleanWords(words, wordsMax(numbers, lines, belongs, shapes, done, copyright));
   const last = first + singles.length + extra.length;
   const geom = pageGeometry({ trim, bleed, pageCount: last + (done ? 1 : 0) });
   return {
     geom,
     pages: [
       ...(belongs ? [belongsPage({ geom, pageNumber: 1, guideIn })] : []),
+      ...(copyright ? [copyrightPage({ geom, pageNumber: first, author, year })] : []),
       ...singles.map((letters, i) => {
         const pageNumber = first + i + 1;
         // Pre-writing lines and shapes are strokes, not letters: print-drawn either way.

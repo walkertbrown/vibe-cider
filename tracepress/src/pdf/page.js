@@ -212,3 +212,29 @@ export function donePage({ geom, pageNumber, guideIn }) {
     text: [{ ...head, text: DONE }, { text: DONE_LINE, x: head.x, y: row.baseY - row.unit - size * 1.6, size, font: "regular" }],
   };
 }
+
+// The copyright page, if chosen: after the name page, or first without one,
+// so it backs the name page the way it backs a title page in a printed book.
+// "Copyright © year", the author (the cover form's) wrapped to the box at
+// about 0.6 em a character, then "All rights reserved.", centred low on the
+// page. With no author the second line is left out.
+export const RIGHTS = "All rights reserved.";
+export const COPYRIGHT_PT = 9;
+export function copyrightPage({ geom, pageNumber, author = "", year }) {
+  const box = contentBox(geom, pageNumber);
+  const size = COPYRIGHT_PT, per = Math.floor((box.right - box.left) / (size * 0.6));
+  const pieces = author.trim().split(/\s+/).filter(Boolean).flatMap((w) => w.match(new RegExp(`.{1,${per}}`, "gu")));
+  const wrap = [];
+  for (const p of pieces) {
+    if (wrap.length && wrap.at(-1).length + 1 + p.length <= per) wrap[wrap.length - 1] += ` ${p}`;
+    else wrap.push(p);
+  }
+  const lines = [`Copyright © ${year}`, ...wrap, RIGHTS];
+  const x = (box.left + box.right) / 2, lead = size * 1.5;
+  return {
+    box,
+    copyright: true,
+    rows: [],
+    text: lines.map((text, i) => ({ text, x, y: box.bottom + size * 0.5 + (lines.length - 1 - i) * lead, size, font: "regular" })),
+  };
+}

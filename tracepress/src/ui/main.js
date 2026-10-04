@@ -21,7 +21,7 @@ const getLicense = () => storedLicense() ?? sessionLicense;
 
 const $ = (id) => document.getElementById(id);
 const el = {
-  trim: $("trim"), script: $("script"), bleed: $("bleed"), age: $("age"), cases: $("cases"), numbers: $("numbers"), lines: $("lines"), shapes: $("shapes"), belongs: $("belongs"), done: $("done"), abc: $("abc"), words: $("words"), wordsNote: $("wordsNote"),
+  trim: $("trim"), script: $("script"), bleed: $("bleed"), age: $("age"), cases: $("cases"), numbers: $("numbers"), lines: $("lines"), shapes: $("shapes"), belongs: $("belongs"), done: $("done"), copyright: $("copyright"), abc: $("abc"), words: $("words"), wordsNote: $("wordsNote"),
   preview: $("preview"), prev: $("prev"), next: $("next"), pageNo: $("pageNo"),
   download: $("download"), status: $("status"), tier: $("tier"),
   dialog: $("unlockDialog"), dialogTitle: $("dialogTitle"), dialogLede: $("dialogLede"), buyLine: $("buyLine"),
@@ -50,7 +50,7 @@ const wantsCursive = () => el.script.value === "cursive";
 const script = () => (wantsCursive() && cursive ? "cursive" : "print");
 
 let pageIndex = 0;
-const opts = () => ({ script: script(), measure: cursive ? (text, unit) => cursiveWidth(cursive, text, unit) : undefined, trim: el.trim.value, bleed: el.bleed.checked, guideIn: Number(el.age.value), cases: el.cases.value, numbers: el.numbers.checked, lines: el.lines.checked, shapes: el.shapes.checked, belongs: el.belongs.checked, done: el.done.checked, abc: el.abc.checked, words: el.words.value });
+const opts = () => ({ script: script(), measure: cursive ? (text, unit) => cursiveWidth(cursive, text, unit) : undefined, trim: el.trim.value, bleed: el.bleed.checked, guideIn: Number(el.age.value), cases: el.cases.value, numbers: el.numbers.checked, lines: el.lines.checked, shapes: el.shapes.checked, belongs: el.belongs.checked, done: el.done.checked, copyright: el.copyright.checked, author: el.author.value.trim(), abc: el.abc.checked, words: el.words.value });
 
 // The cover's size, before it's made: what to type into KDP's cover
 // calculator to check it.
@@ -66,13 +66,13 @@ function showPage() {
   const { geom, pages } = planBook(opts());
   pageIndex = Math.max(0, Math.min(pageIndex, pages.length - 1));
   const svg = pageSvg(geom, pages[pageIndex], { licensed: !!getLicense(), cursive });
-  const { word, belongs, done } = pages[pageIndex];
-  const first = pages[pageIndex].rows[0];
+  const { word, belongs, done, copyright } = pages[pageIndex];
+  const first = pages[pageIndex].rows[0] ?? { letters: [] }; // the copyright page has no rows
   const chars = first.letters.length ? first.letters.map((l) => l.ch) : (first.runs?.[0]?.text.split(/\s+/) ?? []);
-  const letters = belongs ? "This book belongs to" : done ? "Well done!" : word ? `“${word}”` : chars[0].startsWith("~") ? `${SHAPES[chars[0]] ? "shape" : "lines"}: ${chars.map((c) => c.slice(1).replace("-", " ")).join(", ")}` : chars.join(" ");
-  const max = wordsMax(el.numbers.checked, el.lines.checked, el.belongs.checked, el.shapes.checked, el.done.checked), n = cleanWords(el.words.value, max).length;
+  const letters = belongs ? "This book belongs to" : copyright ? "Copyright page" : done ? "Well done!" : word ? `“${word}”` : chars[0].startsWith("~") ? `${SHAPES[chars[0]] ? "shape" : "lines"}: ${chars.map((c) => c.slice(1).replace("-", " ")).join(", ")}` : chars.join(" ");
+  const max = wordsMax(el.numbers.checked, el.lines.checked, el.belongs.checked, el.shapes.checked, el.done.checked, el.copyright.checked), n = cleanWords(el.words.value, max).length;
   const after = el.numbers.checked ? "after 9" : "after Z";
-  el.wordsNote.textContent = n ? `${n} word page${n === 1 ? "" : "s"} ${after}${n === max ? ` (the most: ${max}${el.numbers.checked || el.lines.checked || el.shapes.checked || el.belongs.checked || el.done.checked ? ` with ${[el.belongs.checked && "the name page", el.lines.checked && "lines", el.shapes.checked && "shapes", el.numbers.checked && "numbers", el.done.checked && "the well-done page"].filter(Boolean).join(" and ")} on` : ""})` : ""}.` : "";
+  el.wordsNote.textContent = n ? `${n} word page${n === 1 ? "" : "s"} ${after}${n === max ? ` (the most: ${max}${el.numbers.checked || el.lines.checked || el.shapes.checked || el.belongs.checked || el.done.checked || el.copyright.checked ? ` with ${[el.belongs.checked && "the name page", el.copyright.checked && "the copyright page", el.lines.checked && "lines", el.shapes.checked && "shapes", el.numbers.checked && "numbers", el.done.checked && "the well-done page"].filter(Boolean).join(" and ")} on` : ""})` : ""}.` : "";
   svg.setAttribute("aria-label", `Page ${pageIndex + 1} of ${pages.length}: tracing practice for ${letters}`);
   el.preview.replaceChildren(svg);
   el.pageNo.textContent = `Page ${pageIndex + 1} of ${pages.length} · ${letters}`;
@@ -93,7 +93,7 @@ function showScript() {
   loadCursive().then(showPage, (err) => { el.pageNo.textContent = `Could not load the cursive font: ${err.message}. Reload the page to try again.`; });
 }
 
-for (const c of [el.trim, el.bleed, el.age, el.cases, el.belongs, el.done, el.abc, el.numbers, el.lines, el.shapes, el.paper]) c.addEventListener("change", (e) => {
+for (const c of [el.trim, el.bleed, el.age, el.cases, el.belongs, el.done, el.copyright, el.author, el.abc, el.numbers, el.lines, el.shapes, el.paper]) c.addEventListener("change", (e) => {
   if (e.isTrusted) px("touched");
   showPage();
 });
@@ -290,6 +290,7 @@ if (new URLSearchParams(location.search).get("lines") === "1") el.lines.checked 
 if (new URLSearchParams(location.search).get("shapes") === "1") el.shapes.checked = true;
 if (new URLSearchParams(location.search).get("belongs") === "1") el.belongs.checked = true;
 if (new URLSearchParams(location.search).get("done") === "1") el.done.checked = true;
+if (new URLSearchParams(location.search).get("copyright") === "1") el.copyright.checked = true;
 if (new URLSearchParams(location.search).get("abc") === "1") el.abc.checked = true;
 const linkedCases = new URLSearchParams(location.search).get("letters");
 if (CASES[linkedCases]) el.cases.value = linkedCases;
