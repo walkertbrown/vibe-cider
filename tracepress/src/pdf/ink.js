@@ -3,6 +3,7 @@
 // (draw.js) and the web preview (ui/preview.js) both draw this one list, so
 // the preview can't drift from the book. No pdf-lib here.
 import { GLYPHS } from "../glyphs/lines.js";
+import { sample } from "../glyphs/print.js";
 import { traceDots } from "./trace.js";
 import { strokeArrows, strokeStarts } from "./arrows.js";
 import { cursiveRun } from "./cursive.js";
@@ -54,9 +55,22 @@ export function pageInk(layout, { licensed = false, heavy = false, cursive } = {
   return out;
 }
 
-function letterInk(out, { ch, x, marks }, { unit, baseY }, heavy) {
+// A solid letter (the alphabet chart: a model to copy, not to trace) is its
+// strokes drawn as one line, its joints and ends rounded with discs.
+export const solidWidth = (unit) => Math.max(1.5, unit * 0.07);
+function letterInk(out, { ch, x, marks, solid }, { unit, baseY }, heavy) {
   const glyph = GLYPHS[ch];
   const P = ([gx, gy]) => [x + gx * unit, baseY + gy * unit];
+  if (solid) {
+    const w = solidWidth(unit);
+    for (const seg of glyph.strokes.flat()) {
+      const pts = sample(seg, 24).map(P);
+      if (seg.type === "dot") { out.push({ kind: "dot", x: pts[0][0], y: pts[0][1], r: w, color: BASE }); continue; }
+      for (let i = 1; i < pts.length; i++) out.push({ kind: "line", x1: pts[i - 1][0], y1: pts[i - 1][1], x2: pts[i][0], y2: pts[i][1], width: w, color: BASE });
+      for (const [px, py] of pts) out.push({ kind: "dot", x: px, y: py, r: w / 2, color: BASE });
+    }
+    return;
+  }
   const r = heavy ? Math.max(DOT_R * 1.3, unit * 0.03) : marks ? DOT_R * 1.3 : DOT_R;
   const spacing = heavy ? Math.max(5.5, r * 3.4) : marks ? 5.5 : 4;
   for (const d of traceDots(glyph, spacing / unit).flat()) {

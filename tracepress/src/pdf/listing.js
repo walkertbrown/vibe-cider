@@ -14,7 +14,7 @@ const list = (a) => (a.length < 2 ? a.join("") : a.slice(0, -1).join(", ") + " a
 export function listingText(o) {
   const { pages } = planBook(o);
   const cursive = o.script === "cursive";
-  const words = cleanWords(o.words ?? "", wordsMax(o.numbers, o.lines, o.belongs, o.shapes, o.done, o.copyright, o.titled));
+  const words = cleanWords(o.words ?? "", wordsMax(o.numbers, o.lines, o.belongs, o.shapes, o.done, o.copyright, o.titled, o.chart));
   const pictured = words.filter((w) => pictureFor(w));
   const cases = { both: "capital and lowercase", upper: "capital", lower: "lowercase" }[o.cases ?? "both"];
   const how = cursive
@@ -23,6 +23,7 @@ export function listingText(o) {
 
   const inside = [];
   if (o.belongs) inside.push(`A "This book belongs to" page with a line for the child's name.`);
+  if (o.chart) inside.push(`An alphabet chart: every letter, A to Z, capital and lowercase, and the numbers 0 to 9 on one page, in solid ${cursive ? "cursive" : "print"} to copy from.`);
   if (o.lines) inside.push("Pre-writing lines to trace first: straight lines, slants, zigzags, waves, circles and crosses (4 pages).");
   if (o.shapes) inside.push("Six shapes to trace: square, triangle, rectangle, diamond, star and heart, each with a start dot and arrows.");
   inside.push(`The alphabet, A to Z, ${cases} letters, a page each, ${how}.${o.abc && !cursive ? ` Each letter page has a picture to colour, A is for ${LETTER_WORDS.A} to Z is for ${LETTER_WORDS.Z}.` : ""}`);

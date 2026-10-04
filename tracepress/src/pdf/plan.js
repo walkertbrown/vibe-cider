@@ -7,6 +7,7 @@ import { letterPage, belongsPage, donePage, copyrightPage, titlePage, FOOTER_PT 
 import { namePage, cleanName } from "./name.js";
 import { cursivePage } from "./cursive-page.js";
 import { pictureFor } from "./pictures.js";
+import { printChart, cursiveChart } from "./chart.js";
 
 // Print is drawn as dotted strokes with start dots and arrows; cursive as
 // joined letters to trace over (cursive-page.js), which needs `measure`.
@@ -37,19 +38,21 @@ export const WORDS_MAX = EXTRA_MAX;
 // Pre-writing line pages, if chosen, come before A and count toward the same
 // 52: 4 line pages, 10 numbers and 38 words at the most. So does the "This
 // book belongs to" page, first of all, the copyright page after it, and the
-// "Well done!" page, last; and the title page, before them all.
-export const wordsMax = (numbers, lines = false, belongs = false, shapes = false, done = false, copyright = false, titled = false) => EXTRA_MAX - (titled ? 1 : 0) - (copyright ? 1 : 0) - (numbers ? DIGITS.length : 0) - (lines ? LINE_PAGES.length : 0) - (belongs ? 1 : 0) - (shapes ? SHAPE_PAGES.length : 0) - (done ? 1 : 0);
+// "Well done!" page, last; and the title page, before them all; and the
+// alphabet chart, after the front matter.
+export const wordsMax = (numbers, lines = false, belongs = false, shapes = false, done = false, copyright = false, titled = false, chart = false) => EXTRA_MAX - (chart ? 1 : 0) - (titled ? 1 : 0) - (copyright ? 1 : 0) - (numbers ? DIGITS.length : 0) - (lines ? LINE_PAGES.length : 0) - (belongs ? 1 : 0) - (shapes ? SHAPE_PAGES.length : 0) - (done ? 1 : 0);
 export function cleanWords(words, max = WORDS_MAX) {
   const list = typeof words === "string" ? words.split(/[,\n;]+/) : words ?? [];
   return list.map(cleanName).filter(Boolean).slice(0, max);
 }
 
-export function planBook({ trim = "8.5x11", bleed = false, guideIn = 0.75, numbers = false, lines = false, shapes = false, words = [], cases = "both", belongs = false, done = false, copyright = false, titled = false, folios = false, title = "", subtitle = "", author = "", year = new Date().getFullYear(), script = "print", measure, abc = false } = {}) {
+export function planBook({ trim = "8.5x11", bleed = false, guideIn = 0.75, numbers = false, lines = false, shapes = false, words = [], cases = "both", belongs = false, done = false, copyright = false, titled = false, folios = false, chart = false, title = "", subtitle = "", author = "", year = new Date().getFullYear(), script = "print", measure, abc = false } = {}) {
   if (script === "cursive" && !measure) throw new Error("cursive needs measure()");
   const cursive = script === "cursive";
-  const first = (titled ? 1 : 0) + (belongs ? 1 : 0) + (copyright ? 1 : 0);
+  const front = (titled ? 1 : 0) + (belongs ? 1 : 0) + (copyright ? 1 : 0);
+  const first = front + (chart ? 1 : 0);
   const singles = [...(lines ? LINE_PAGES : []), ...(shapes ? SHAPE_PAGES : []), ...letterPairs(CASES[cases] ? cases : "both"), ...(numbers ? DIGITS.map((d) => [d]) : [])];
-  const extra = cleanWords(words, wordsMax(numbers, lines, belongs, shapes, done, copyright, titled));
+  const extra = cleanWords(words, wordsMax(numbers, lines, belongs, shapes, done, copyright, titled, chart));
   const last = first + singles.length + extra.length;
   const geom = pageGeometry({ trim, bleed, pageCount: last + (done ? 1 : 0) });
   const pages = [
@@ -60,6 +63,8 @@ export function planBook({ trim = "8.5x11", bleed = false, guideIn = 0.75, numbe
         ? [titlePage({ geom, pageNumber: 1, title, subtitle, author }), ...(copyright ? ["c"] : []), ...(belongs ? ["b"] : [])]
         : [...(belongs ? ["b"] : []), ...(copyright ? ["c"] : [])]
       ).map((p, i) => p === "b" ? belongsPage({ geom, pageNumber: i + 1, guideIn }) : p === "c" ? copyrightPage({ geom, pageNumber: i + 1, author, year }) : p),
+      // The alphabet chart, whole, before the practice: in the book's own script.
+      ...(chart ? [{ ...(cursive ? cursiveChart({ geom, measure, pageNumber: front + 1 }) : printChart({ geom, pageNumber: front + 1 })), chart: true }] : []),
       ...singles.map((letters, i) => {
         const pageNumber = first + i + 1;
         // Pre-writing lines and shapes are strokes, not letters: print-drawn either way.
