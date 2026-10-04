@@ -217,6 +217,9 @@ try {
   await nm.fill("#name", "Christopher-Lee");
   check(/Showing “ChristopherLee”/.test(await nm.textContent("#nameNote")), `name: dropped characters are reported (${await nm.textContent("#nameNote")})`);
   check((await nm.locator("#preview svg circle").count()) !== dotsMaya, "name: typing redraws the preview");
+  await nm.fill("#name", "Sofía Zoë");
+  check(!/Showing/.test(await nm.textContent("#nameNote")), `name: accented letters are drawn, not dropped (${await nm.textContent("#nameNote")})`);
+  await nm.fill("#name", "Christopher-Lee");
   [dl] = await Promise.all([nm.waitForEvent("download"), nm.click("#download")]);
   const nf = join(tmp, "n.pdf");
   writeFileSync(nf, await (await dl.createReadStream()).toArray().then(Buffer.concat));

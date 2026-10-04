@@ -12,6 +12,11 @@ import { contentBox, GAP_UNITS, PICTURE_MAX, PICTURE_GAP, PICTURE_MIN, PICTURE_S
 // How far any glyph reaches past the guide (-1..2) and past its text's
 // advance, in guide units. test/cursive.test.js holds the font to these.
 export const CURSIVE_REACH = { above: 2.2, below: -1.1, side: 0.65 };
+// An accented capital (É, Ñ, Å…) reaches 2.59 guide units in the font, past
+// `above`. Only text that has one gets this much headroom, so every other
+// page keeps its layout (test/name.test.js holds the ink inside the margins).
+export const ACCENT_CAP_ABOVE = 2.65;
+const TALL = /[ÀÁÂÃÄÅÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝÑ]/;
 const MODEL_SCALE = 1.5; // as in page.js
 const REPEAT = "  "; // between copies on a trace row: two spaces, so they don't join
 
@@ -51,7 +56,8 @@ export function cursivePage({ geom, pageNumber, model, trace, guideIn, measure, 
       top -= maxPic + GAP_UNITS * mUnit;
     }
   }
-  const mBase = top - CURSIVE_REACH.above * mUnit;
+  const above = TALL.test(model + trace.join("")) ? ACCENT_CAP_ABOVE : CURSIVE_REACH.above;
+  const mBase = top - above * mUnit;
   rows.push({ kind: "model", unit: mUnit, baseY: mBase, left: box.left, right: lineEnd, letters: [], runs: [{ text: model, x: box.left + pad * mUnit }] });
   top = mBase + CURSIVE_REACH.below * mUnit - GAP_UNITS * mUnit;
   for (const pic of pictures) top = Math.min(top, pic.y - pic.size - GAP_UNITS * mUnit);
@@ -63,7 +69,7 @@ export function cursivePage({ geom, pageNumber, model, trace, guideIn, measure, 
   // Rows are spaced like print rows, guide to guide. The little the ink
   // reaches past the guides (0.2 above, 0.1 below) comes out of the gap, so
   // two rows' ink still can't meet (test/cursive.test.js).
-  const pitch = (3 + GAP_UNITS) * unit;
+  const pitch = (3 + GAP_UNITS + above - CURSIVE_REACH.above) * unit;
   // As many copies as fit, measured as one string so the spacing is the font's.
   const copies = (t) => {
     let text = t;
@@ -71,10 +77,10 @@ export function cursivePage({ geom, pageNumber, model, trace, guideIn, measure, 
     return text;
   };
   let n = 0;
-  for (let t = top; t - (CURSIVE_REACH.above - CURSIVE_REACH.below) * unit >= box.bottom; t -= pitch) n++;
+  for (let t = top; t - (above - CURSIVE_REACH.below) * unit >= box.bottom; t -= pitch) n++;
   const blank = !word ? 0 : n >= 5 ? 2 : n >= 3 ? 1 : 0;
   for (let i = 0; i < n; i++, top -= pitch) {
-    const baseY = top - CURSIVE_REACH.above * unit;
+    const baseY = top - above * unit;
     const t = word ? (i < n - blank ? trace[0] : undefined) : trace[i];
     const runs = t !== undefined ? [{ text: copies(t), x: box.left + pad * unit }] : word ? [] : [{ text: trace[0], x: box.left + pad * unit }];
     rows.push({ kind: t !== undefined ? "trace" : "free", unit, baseY, left: box.left, right: box.right, letters: [], runs });

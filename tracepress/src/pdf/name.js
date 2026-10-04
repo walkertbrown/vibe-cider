@@ -2,7 +2,7 @@
 // numbered start dots and stroke arrows on every letter, then rows of the
 // name in dots to trace, then rows left empty to write it alone. Pure, like
 // plan.js, so the page can preview it without pdf-lib.
-import { PRINT } from "../glyphs/print.js";
+import { LETTERS as PRINT } from "../glyphs/accents.js";
 import { pageGeometry, PT } from "./kdp.js";
 import { contentBox, reach, labelRadius, GAP_UNITS, LETTER_GAP, MARK_PAD, FOOTER_PT, LABEL_PT, PICTURE_MAX, PICTURE_GAP, PICTURE_MIN, PICTURE_SHRINK } from "./page.js";
 import { pageInk, GREY } from "./ink.js";
@@ -15,7 +15,8 @@ const PAD = 0.5; // as in page.js: room left of the first letter
 const SPACE = 1.2; // a space between words, in guide units
 const REPEAT_GAP = 2.5; // between copies of the name on a trace row, in guide units
 
-// Only the letters there are strokes for (A–Z, a–z) and single spaces.
+// Only the letters there are strokes for (A–Z, a–z, the accented ones in
+// accents.js) and single spaces.
 export function cleanName(s) {
   return [...String(s ?? "")].filter((ch) => PRINT[ch] || /\s/.test(ch)).join("").replace(/\s+/g, " ").trim().slice(0, NAME_MAX).trim();
 }

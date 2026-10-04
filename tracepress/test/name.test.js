@@ -14,11 +14,13 @@ import { planName, cleanName, nameInk, NAME_FOOTER, NAME_MAX } from "../src/pdf/
 import { renderName } from "../src/pdf/book.js";
 import { LINE_W, WATERMARK } from "../src/pdf/page.js";
 
-const NAMES = ["Jo", "Maya", "Christopher Lee", "Wwwwwwwwwwwwwwww"];
+const NAMES = ["Jo", "Maya", "Christopher Lee", "Wwwwwwwwwwwwwwww", "Sofía Zoë", "ÉLODIE ÑÜÅ", "Ïñîgo"];
 
-test("cleanName keeps A–Z, a–z, 0–9 and single spaces, up to NAME_MAX", () => {
+test("cleanName keeps A–Z, a–z, accented letters, 0–9 and single spaces, up to NAME_MAX", () => {
   assert.equal(cleanName("  Mary-Kate  O'Brien "), "MaryKate OBrien");
-  assert.equal(cleanName("José"), "Jos");
+  assert.equal(cleanName("José"), "José");
+  assert.equal(cleanName("Sofía Noël Ñúñez"), "Sofía Noël Ñúñez");
+  assert.equal(cleanName("Łukasz"), "ukasz", "a letter with no strokes is still dropped");
   assert.equal(cleanName("a".repeat(40)).length, NAME_MAX);
   assert.equal(planName({ name: "123" }).name, "123");
   assert.equal(planName({ name: "-_-" }).name, "Name");
