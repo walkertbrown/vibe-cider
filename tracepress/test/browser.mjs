@@ -71,6 +71,10 @@ try {
   got = pdfText(await (await dl.createReadStream()).toArray().then(Buffer.concat));
   check(got.pages === 1 && /PREVIEW/.test(got.text) && /Tracing Fun For Test/.test(got.text.replace(/\s+/g, " ")), "free cover: one page, the title, PREVIEW");
   check(/Back cover words for the test\./.test(got.text.replace(/\s+/g, " ")), "the cover PDF has the back text");
+  await page.waitForSelector("dialog[open]", { timeout: 5000 }).catch(() => {});
+  const dt = await page.$eval("dialog", (d) => (d.open ? d.querySelector("h2, h3")?.textContent ?? d.textContent : ""));
+  check(/Your cover is downloaded/.test(dt), `a free cover opens the price dialog (${dt.trim().slice(0, 60)})`);
+  await page.click("#closeDialog").catch(() => {});
   await page.fill("#back", "");
   const kw = await page.$$eval("#keywords li", (n) => n.map((x) => x.textContent.replace(/ Copy$/, "")));
   check(kw.length === 7 && !kw.some((k) => "tracing fun for test".includes(k.toLowerCase())), `seven keywords, none in the title (${kw.join(" | ")})`);
@@ -128,6 +132,8 @@ try {
   check(mainBeacons.includes("cursive"), `cursive: its beacon (${mainBeacons})`);
   [dl] = await Promise.all([page.waitForEvent("download"), page.click("#downloadCover")]);
   check(/^trace-press-cover-.*-cursive\.pdf$/.test(dl.suggestedFilename()), `cursive: its cover, ${dl.suggestedFilename()}`);
+  await page.waitForSelector("dialog[open]", { timeout: 5000 }).catch(() => {});
+  await page.click("#closeDialog").catch(() => {});
   await page.selectOption("#script", "print");
   check(await page.$$eval("#preview svg circle", (c) => c.length) > 20, "print again: dots are back");
   // "This book belongs to": first page, 27 in the download.

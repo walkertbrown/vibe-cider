@@ -233,6 +233,7 @@ el.downloadCover.addEventListener("click", async (e) => {
     el.coverStatus.textContent = getLicense()
       ? "Downloaded. Upload it to KDP as the paperback cover."
       : "Downloaded, with PREVIEW across the front. Unlock to remove it.";
+    if (!getLicense() && e.isTrusted) openUnlock({ after: "cover" });
   } catch (err) {
     px("failed");
     el.coverStatus.textContent = `Could not make the cover: ${err.message}. Reload the page and try again, or email ${SUPPORT}.`;
@@ -255,14 +256,20 @@ function stopAutoRetry() {
   autoRetryTimer = null;
 }
 
-function openUnlock({ justPaid = false } = {}) {
-  if (!justPaid) px(PAY_URL ? "pay" : "unlock");
+// After a free cover the dialog opens by itself, as it does on Puzzle Press,
+// where the one sale so far came from. Shown the price is not asking for it,
+// so that is `coverpay`, not `pay`.
+function openUnlock({ justPaid = false, after = null } = {}) {
+  const afterCover = !justPaid && after === "cover" && !!PAY_URL;
+  if (!justPaid) px(!PAY_URL ? "unlock" : afterCover ? "coverpay" : "pay");
   autoRetryFirstFailAt = 0;
   el.unlockErr.textContent = "";
-  el.dialogTitle.textContent = justPaid ? "Thanks — one step left" : "Unlock clean books and covers";
+  el.dialogTitle.textContent = justPaid ? "Thanks — one step left" : afterCover ? "Your cover is downloaded" : "Unlock clean books and covers";
   el.dialogLede.textContent = justPaid
     ? "Enter the email you used at checkout and this browser is unlocked."
-    : `${PRICE_LABEL}, then every book you make has no Trace Press footer and every cover has no PREVIEW mark. After paying, enter the email you used at checkout here.`;
+    : afterCover
+      ? `It has PREVIEW across the front, and the interior has a Trace Press line in every footer. ${PRICE_LABEL} removes both from every book and cover you make. After paying, enter the email you used at checkout here.`
+      : `${PRICE_LABEL}, then every book you make has no Trace Press footer and every cover has no PREVIEW mark. After paying, enter the email you used at checkout here.`;
   el.buyLine.replaceChildren();
   if (!justPaid && PAY_URL) {
     const a = document.createElement("a");

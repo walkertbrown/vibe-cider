@@ -72,6 +72,7 @@ const RUNGS = [
   ["namemade", "got a name/words sheet"],
   ["pdf", "clicked a free sample PDF link (any page)"],
   ["failed", "hit an error making any PDF"],
+  ["coverpay", "shown the price after a free cover (opens by itself)"],
   ["pay", "opened the pay dialog"],
   ["checkout", "clicked through to Stripe"],
   ["verified", "unlocked"],
