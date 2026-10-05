@@ -106,8 +106,14 @@ async function finishSample(bytes, meta) {
     // three of five people who opened a sample straight from search on
     // 2026-09-24 opened a cover and had no way back. So the sample alone gets a
     // publisher line at the foot of the back panel, left of the barcode box
-    // where a real back cover would carry an imprint, and that line is the
-    // link. Added here, never in cover.js, which customers' covers go through.
+    // where a real back cover would carry an imprint. Added here, never in
+    // cover.js, which customers' covers go through.
+    //
+    // The link is the whole sheet, not just that line (2026-10-05): the line is
+    // 7.5pt in a 165 x 29pt box, a corner of a page a phone shows whole at
+    // about a third of its size, and in the 23.5h before this six phone
+    // addresses on home and mobile networks opened 1 to 5 covers each and none
+    // reached the site. The Trace Press samples link every page the same way.
     const page = doc.getPage(0);
     const { bold, regular } = await stampFonts(doc);
     const PT = 72;
@@ -115,17 +121,17 @@ async function finishSample(bytes, meta) {
     const left = (BLEED_IN + BARCODE_IN.margin) * PT;
     const right = (BLEED_IN + trim.w - BARCODE_IN.w - 2 * BARCODE_IN.margin) * PT;
     const base = (BLEED_IN + BARCODE_IN.margin) * PT;
-    const lead = "Sample cover, made free with Puzzle Press";
+    const lead = "Sample cover, made free with Puzzle Press. Tap to make your own.";
     const url = "puzzlepress.bananafest-destiny.com";
     const urlSize = Math.min(9, (9 * (right - left)) / bold.widthOfTextAtSize(url, 9));
     page.drawText(url, { x: left, y: base, size: urlSize, font: bold, color: rgb(1, 1, 1) }); // covers are a full colour since 09-27
     page.drawText(lead, { x: left, y: base + urlSize + 4, size: 7.5, font: regular, color: rgb(0.92, 0.92, 0.92) });
-    const top = base + urlSize + 4 + 10;
-    const width = Math.max(bold.widthOfTextAtSize(url, urlSize), regular.widthOfTextAtSize(lead, 7.5));
+    if (regular.widthOfTextAtSize(lead, 7.5) > right - left) throw new Error(`${meta.trim} cover: the publisher line runs into the barcode box`);
+    const { width: cw, height: ch } = page.getSize();
     const linkAnnot = doc.context.obj({
       Type: "Annot",
       Subtype: "Link",
-      Rect: [left - 4, base - 4, left + width + 4, top + 2],
+      Rect: [0, 0, cw, ch],
       Border: [0, 0, 0],
       A: { Type: "Action", S: "URI", URI: PDFString.of(LINK_URL) },
     });
@@ -142,18 +148,18 @@ async function finishSample(bytes, meta) {
   // interior sample from a search result sees the title page first, which said
   // "Puzzle Press" and gave no address and no link. So the title page gets a
   // linked publisher line at its foot, an inch up, inside every KDP margin.
+  // Since 2026-10-05 the whole title page is the link, as on the covers.
   {
     const title = doc.getPage(0);
-    const lead = "Sample book, made free with Puzzle Press";
+    const lead = "Sample book, made free with Puzzle Press. Tap to make your own.";
     const url = "puzzlepress.bananafest-destiny.com";
     const base = 72;
     title.drawText(url, { x: center(url, bold, 10), y: base, size: 10, font: bold, color: rgb(0.11, 0.21, 0.34) });
     title.drawText(lead, { x: center(lead, regular, 8), y: base + 15, size: 8, font: regular, color: rgb(0.4, 0.4, 0.4) });
-    const half = Math.max(bold.widthOfTextAtSize(url, 10), regular.widthOfTextAtSize(lead, 8)) / 2 + 6;
     const annot = doc.context.obj({
       Type: "Annot",
       Subtype: "Link",
-      Rect: [cx - half, base - 6, cx + half, base + 28],
+      Rect: [0, 0, w, h],
       Border: [0, 0, 0],
       A: { Type: "Action", S: "URI", URI: PDFString.of(LINK_URL) },
     });

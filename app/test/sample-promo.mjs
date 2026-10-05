@@ -51,6 +51,9 @@ check(SHOULD_HAVE_PROMO.length > 0 && SHOULD_STAY_SINGLE_PAGE.length > 0,
   `public/samples/ looks wrong: ${SHOULD_HAVE_PROMO.length} interiors, ${SHOULD_STAY_SINGLE_PAGE.length} covers`);
 
 const pub = new URL("../public/samples/", import.meta.url);
+// The first page a phone shows is shown whole, so its link must be the whole
+// page, not a line of small type in a corner (2026-10-05).
+const fullPage = (f) => f && f.rect[0] <= 0 && f.rect[1] <= 0 && f.rect[2] >= f.size.width && f.rect[3] >= f.size.height;
 
 async function lastPageLink(name, pageIndex = -1) {
   const bytes = readFileSync(new URL(name, pub));
@@ -63,7 +66,7 @@ async function lastPageLink(name, pageIndex = -1) {
     const a = obj.get(PDFName.of("A"));
     if (a && obj.get(PDFName.of("Subtype"))?.toString() === "/Link") {
       const uri = a.get(PDFName.of("URI"));
-      if (uri) return { pageCount: doc.getPageCount(), url: uri.decodeText(), size: page.getSize() };
+      if (uri) return { pageCount: doc.getPageCount(), url: uri.decodeText(), size: page.getSize(), rect: obj.get(PDFName.of("Rect")).asArray().map((n) => n.asNumber()) };
     }
   }
   return null;
@@ -81,6 +84,7 @@ for (const name of SHOULD_HAVE_PROMO) {
   // from search sees first. It must be a way back too.
   const first = await lastPageLink(name, 0);
   check(first?.url === SITE_URL, `${name}'s title page has no link to ${SITE_URL} — the first page seen from search is a dead end`);
+  check(fullPage(first), `${name}'s title page link is not the whole page: ${first?.rect}`);
 }
 
 for (const name of SHOULD_STAY_SINGLE_PAGE) {
@@ -93,6 +97,7 @@ for (const name of SHOULD_STAY_SINGLE_PAGE) {
   // publisher line on the back panel instead, and that line is the link.
   const found = await lastPageLink(name);
   check(found !== null && found.url === SITE_URL, `${name} has no link back to ${SITE_URL} — a cover opened from search is a dead end`);
+  check(fullPage(found), `${name}'s link is not the whole sheet: ${found?.rect}`);
 }
 
 // Metadata is the other half of the same job (2026-09-23). A PDF's own Title
