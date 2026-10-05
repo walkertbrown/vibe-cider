@@ -84,6 +84,8 @@ for pre-writing,
 (Sunday to December),
 [color words tracing worksheets](https://tracepress.bananafest-destiny.com/color-words-tracing-worksheets)
 (red to gray),
+[number words tracing worksheets](https://tracepress.bananafest-destiny.com/number-words-tracing-worksheets)
+(one to twenty),
 [alphabet tracing worksheets with pictures](https://tracepress.bananafest-destiny.com/alphabet-tracing-worksheets-with-pictures)
 (A is for apple to Z is for zeppelin),
 [number tracing worksheets with pictures](https://tracepress.bananafest-destiny.com/number-tracing-worksheets-with-pictures)

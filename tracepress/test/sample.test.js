@@ -124,6 +124,6 @@ test("the preschool worksheets: lines, shapes, A to Z, 0 to 9, a link on every p
   assert.equal(doc.getPageCount(), 47);
   for (let i = 0; i < 47; i++) assert.ok(links(doc, doc.getPage(i)).some((x) => x.uri === SITE), `page ${i + 1} has no link to the site`);
   const html = readFileSync(new URL("../public/preschool-tracing-worksheets.html", import.meta.url), "utf8");
-  assert.match(html, /\(PDF, 46 pages\)/);
+  assert.match(html, /\(PDF, 46 worksheets\)/);
   assert.match(html, /Pages 37 to 46: the numbers/);
 });

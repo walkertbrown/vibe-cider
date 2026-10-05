@@ -61,6 +61,7 @@ try {
     ["food-tracing-worksheets", "food-tracing-worksheet-banana", "Food tracing worksheets", "Twenty food words to trace, egg to broccoli, each with a picture to colour."],
     ["days-of-the-week-tracing-worksheets", "days-of-the-week-tracing-worksheet-wednesday", "Days of the week and months tracing worksheets", "Sunday to Saturday and January to December, a page each, to trace."],
     ["color-words-tracing-worksheets", "color-words-tracing-worksheet-yellow", "Color words tracing worksheets", "Red to gray, eleven color words, a page each, to trace."],
+    ["number-words-tracing-worksheets", "number-words-tracing-worksheet-thirteen", "Number words tracing worksheets", "One to twenty, spelled out, a page each, to trace."],
     ["handwriting-practice-sheets-for-adults", "handwriting-practice-sheet-for-adults-g", "Free handwriting practice sheets for adults", "A to Z and 0 to 9 on smaller lines, to trace and copy."],
     ["cursive-practice-sheets-for-adults", "cursive-practice-sheet-for-adults-m", "Free cursive practice sheets for adults", "A to Z in cursive on smaller lines, solid then grey to trace."],
     ["cursive-alphabet-chart", "cursive-alphabet-chart", "Free cursive alphabet chart", "A to Z, capital and lowercase, and 0 to 9, on one printable page."],
