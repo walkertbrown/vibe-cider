@@ -12,17 +12,16 @@
 //   - Links. A PDF opened from a search result, or detached from the tab on a
 //     phone, has no way back to the site. So the free footer line on every
 //     page becomes a link, the book ends with a whole-page link, and the
-//     cover's back-panel note is a link.
+//     whole cover sheet is a link.
 //
 // Run: npm run sample (writes public/samples/)
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { PDFDocument, PDFName, PDFString, rgb } from "pdf-lib";
 import fontkit from "@pdf-lib/fontkit";
 import { renderBook, planBook, renderName } from "../src/pdf/book.js";
-import { renderCover, coverGeometry } from "../src/pdf/cover.js";
-import { BARCODE_IN } from "../src/pdf/cover-geometry.js";
+import { renderCover } from "../src/pdf/cover.js";
 import { pageInk } from "../src/pdf/ink.js";
-import { PT, TRIMS } from "../src/pdf/kdp.js";
+import { TRIMS } from "../src/pdf/kdp.js";
 import { drawLetterPage } from "../src/pdf/draw.js";
 import { cursiveWidth } from "../src/pdf/cursive.js";
 import { cursiveChart, printChart } from "../src/pdf/chart.js";
@@ -256,16 +255,20 @@ await book(SAMPLES.animals, { words: holidayWords("animal", "animal"), from: 26 
 await book(SAMPLES.food, { words: holidayWords("food", "food"), from: 26 });
 await book(SAMPLES.cursiveBook, { script: "cursive", numbers: true, words: PRE_PRIMER });
 
-// The cover, sized for that book. The link sits on the free cover's own
-// back-panel note (cover.js drawPreviewMark puts it at the barcode margin).
+// The cover, sized for that book. The whole sheet is the link (2026-10-05).
+// It used to be only the free cover's back-panel note, a 3 x 0.75 inch box at
+// the barcode margin, on a sheet a phone shows whole at a fraction of its
+// size; on Puzzle Press, phones that opened a sample cover that day never
+// reached the site. Nobody writes on a cover, so a stray tap costs nothing.
+// The worksheet pages keep their footer-line links, so a tap made while
+// tracing on a tablet does not open a browser.
 {
   const pageCount = planBook({ trim: TRIM, guideIn: GUIDE_IN }).pages.length;
   const opts = { title: "My First Letter Tracing Book", subtitle: "Trace A to Z with stroke arrows and numbered start dots", author: "Trace Press", trim: TRIM, pageCount, paper: "white" };
   const doc = await PDFDocument.load(await renderCover(opts, fonts));
   meta(doc, SAMPLES.cover);
-  const g = coverGeometry(opts);
-  const x = g.backX + BARCODE_IN.margin * PT, y = g.panelY + BARCODE_IN.margin * PT;
-  link(doc, doc.getPage(0), [x, y, x + 3 * PT, y + 0.75 * PT]);
+  const { width, height } = doc.getPage(0).getSize();
+  link(doc, doc.getPage(0), [0, 0, width, height]);
   const bytes = await doc.save();
   writeFileSync(new URL(SAMPLES.cover.file, out), bytes);
   console.log(`wrote public/samples/${SAMPLES.cover.file}: ${bytes.length} bytes`);

@@ -113,7 +113,7 @@ async function finishSample(bytes, meta) {
     // 7.5pt in a 165 x 29pt box, a corner of a page a phone shows whole at
     // about a third of its size, and in the 23.5h before this six phone
     // addresses on home and mobile networks opened 1 to 5 covers each and none
-    // reached the site. The Trace Press samples link every page the same way.
+    // reached the site. The Trace Press cover sample links its whole sheet the same way.
     const page = doc.getPage(0);
     const { bold, regular } = await stampFonts(doc);
     const PT = 72;

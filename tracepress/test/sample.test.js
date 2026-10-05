@@ -47,7 +47,8 @@ test("the sample cover: one sheet, PREVIEW on it, and a link", async () => {
   const doc = await PDFDocument.load(readFileSync(COVER));
   assert.ok(doc.getTitle().length <= 70 && /Cover/.test(doc.getTitle()), doc.getTitle());
   assert.equal(doc.getPageCount(), 1);
-  assert.ok(links(doc, doc.getPage(0)).some((x) => x.uri === SITE));
+  const { width, height } = doc.getPage(0).getSize();
+  assert.ok(links(doc, doc.getPage(0)).some((x) => x.uri === SITE && x.rect[0] <= 0 && x.rect[1] <= 0 && x.rect[2] >= width && x.rect[3] >= height), "the whole cover sheet is the link");
   assert.match(execFileSync("pdftotext", [COVER, "-"], { encoding: "utf8" }), /PREVIEW/);
 });
 
