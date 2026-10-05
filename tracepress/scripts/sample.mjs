@@ -135,6 +135,11 @@ export const SAMPLES = {
     title: "Free Food Tracing Worksheets: 20 Food Words to Trace (PDF)",
     subject: "20 printable food word tracing worksheets: egg, apple, pizza, banana, carrot, broccoli and more, each with a picture to colour, numbered start dots, stroke-order arrows and dotted rows to trace on four-line guides. 8.5 x 11. Made free with Trace Press.",
   },
+  days: {
+    file: "days-of-the-week-tracing-worksheets.pdf",
+    title: "Free Days of the Week and Months Tracing Worksheets (PDF)",
+    subject: "19 printable tracing worksheets: the seven days of the week, Sunday to Saturday, and the twelve months, January to December, each with a capital first letter, numbered start dots, stroke-order arrows and dotted rows to trace on four-line guides. 8.5 x 11. Made free with Trace Press.",
+  },
   christmas: {
     file: "christmas-tracing-worksheets.pdf",
     title: "Free Christmas Tracing Worksheets: 20 Words to Trace (PDF)",
@@ -240,10 +245,10 @@ await book(SAMPLES.cursiveAdult, { script: "cursive", guideIn: 0.45 });
 await book(SAMPLES.printAdult, { guideIn: 0.45, numbers: true });
 await book(SAMPLES.preschool, { guideIn: 1, lines: true, shapes: true, cases: "upper", numbers: true });
 // Holiday words are read from the button on each holiday page, like PRE_PRIMER.
-const holidayWords = (slug, label) => {
+const holidayWords = (slug, label, count = 20) => {
   const page = readFileSync(new URL(`../public/${slug}-tracing-worksheets.html`, import.meta.url), "utf8");
   const words = decodeURIComponent(page.match(new RegExp(`href="/\\?words=([^"]+)">Make an? ${label} tracing book`))[1]).split(",");
-  if (words.length !== 20) throw new Error(`${slug} list has ${words.length} words, expected 20`);
+  if (words.length !== count) throw new Error(`${slug} list has ${words.length} words, expected ${count}`);
   return words;
 };
 await book(SAMPLES.halloween, { words: holidayWords("halloween", "Halloween"), from: 26 });
@@ -253,6 +258,7 @@ await book(SAMPLES.pictureWords, { words: holidayWords("picture-word", "picture 
 await book(SAMPLES.transportation, { words: holidayWords("transportation", "transportation"), from: 26 });
 await book(SAMPLES.animals, { words: holidayWords("animal", "animal"), from: 26 });
 await book(SAMPLES.food, { words: holidayWords("food", "food"), from: 26 });
+await book(SAMPLES.days, { words: holidayWords("days-of-the-week", "days and months", 19), from: 26 });
 await book(SAMPLES.cursiveBook, { script: "cursive", numbers: true, words: PRE_PRIMER });
 
 // The cover, sized for that book. The whole sheet is the link (2026-10-05).

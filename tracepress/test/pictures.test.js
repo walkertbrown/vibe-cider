@@ -24,10 +24,11 @@ const holiday = (slug) => {
   const page = readFileSync(new URL(`../public/${slug}-tracing-worksheets.html`, import.meta.url), "utf8");
   return decodeURIComponent(page.match(/href="\/\?words=([^"]+)">Make a/)[1]).split(",");
 };
-// Every "-tracing-worksheets" page whose button opens a word book.
+// Every "-tracing-worksheets" page whose button opens a word book with
+// pictures (the days and months page has none: nothing there to draw).
 const SLUGS = readdirSync(new URL("../public/", import.meta.url))
   .map((f) => f.match(/^(.+)-tracing-worksheets\.html$/)?.[1])
-  .filter((slug) => slug && /href="\/\?words=/.test(readFileSync(new URL(`../public/${slug}-tracing-worksheets.html`, import.meta.url), "utf8")));
+  .filter((slug) => slug && /href="\/\?words=[\s\S]*A word gets a picture|A word gets a picture[\s\S]*href="\/\?words=/.test(readFileSync(new URL(`../public/${slug}-tracing-worksheets.html`, import.meta.url), "utf8")));
 const HOLIDAY = SLUGS.flatMap(holiday);
 
 test("every word on the picture pages has a picture", () => {
