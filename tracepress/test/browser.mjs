@@ -58,6 +58,8 @@ try {
   check(got.pages === 26, `free download has 26 pages (${got.pages})`);
   check((got.text.match(/Made with Trace Press/g) || []).length === 26, "free download has the footer on every page");
   check(/^trace-press-6x9-075in\.pdf$/.test(dl.suggestedFilename()), `file name ${dl.suggestedFilename()}`);
+  await page.waitForFunction(() => /Next:/.test(document.querySelector("#status").textContent));
+  check(/wrap cover for these 26 pages/.test(await page.textContent("#status")), `after a download the status points at the cover (${await page.textContent("#status")})`);
 
   check(/spine 0\.059" for 26 pages/.test(await page.textContent("#coverNote")), `cover note gives the spine (${await page.textContent("#coverNote")})`);
   await page.fill("#title", "Tracing Fun For Test");

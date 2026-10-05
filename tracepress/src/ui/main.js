@@ -202,9 +202,12 @@ el.download.addEventListener("click", async (e) => {
     const bytes = await renderBook({ ...o, licensed: !!getLicense() }, { bold, regular, cursive: cursiveBytes });
     save(bytes, `trace-press-${o.trim}${o.bleed ? "-bleed" : ""}-${String(o.guideIn).replace(".", "")}in${o.script === "cursive" ? "-cursive" : ""}.pdf`);
     px("made");
-    el.status.textContent = getLicense()
+    // The one visitor of 09-28 to 10-05 who got a PDF never pressed Download
+    // cover. KDP asks for a cover file as well, sized to these pages.
+    const next = ` Next: the Cover section just below makes the wrap cover for these ${planBook(o).pages.length} pages, spine included.`;
+    el.status.textContent = (getLicense()
       ? "Downloaded. Upload it to KDP as the paperback manuscript."
-      : "Downloaded, with the free footer line on every page.";
+      : "Downloaded, with the free footer line on every page.") + next;
   } catch (err) {
     px("failed");
     el.status.textContent = `Could not make the PDF: ${err.message}. Reload the page and try again, or email ${SUPPORT}.`;
