@@ -44,7 +44,7 @@ const r = await fetch("https://api.cloudflare.com/client/v4/graphql", {
   body: JSON.stringify({
     query: `query { viewer { zones(filter: {zoneTag: "${ZONE}"}) {
       httpRequestsAdaptiveGroups(limit: 2000, filter: {datetime_geq: "${since}", clientRequestHTTPHost_like: "%${HOST}%"}, orderBy: [count_DESC]) {
-        count dimensions { userAgent clientRequestPath }
+        count dimensions { userAgent clientRequestPath edgeResponseStatus }
       } } } }`,
   }),
 });
@@ -56,9 +56,10 @@ for (const row of d.data.viewer.zones[0].httpRequestsAdaptiveGroups) {
   const m = row.dimensions.userAgent.match(NAMED);
   if (!m) continue;
   const key = WANTED.concat(OTHERS).find((w) => w.toLowerCase() === m[1].toLowerCase());
-  if (!tally.has(key)) tally.set(key, { n: 0, paths: new Map() });
+  if (!tally.has(key)) tally.set(key, { n: 0, paths: new Map(), status: new Map() });
   const e = tally.get(key);
   e.n += row.count;
+  e.status.set(row.dimensions.edgeResponseStatus, (e.status.get(row.dimensions.edgeResponseStatus) ?? 0) + row.count);
   e.paths.set(row.dimensions.clientRequestPath, (e.paths.get(row.dimensions.clientRequestPath) ?? 0) + row.count);
 }
 
@@ -120,6 +121,28 @@ for (const [label, test] of GROUPS) {
 const unseen = sitemapPaths.filter((p) => !live.some((w) => tally.get(w).paths.has(p)));
 console.log(`\n  ${sitemapPaths.length - unseen.length} of ${sitemapPaths.length} published URLs have been fetched by at least one search engine in ${hours}h.`);
 if (unseen.length) console.log(`  ${unseen.length} have not been looked at by any of them. A page no engine has fetched cannot be failing at search yet.`);
+
+// Where the requests went, and what they got back. 2026-10-05: Googlebot made
+// 97 requests to Trace Press in a week and the sitemap table said 3 of 34
+// pages. 42 were robots.txt and 16 the sitemap; 96 got a 200. A crawler that
+// keeps reading the sitemap and gets 200s but fetches no pages is not blocked:
+// it has not decided the host is worth crawling yet. A wall of 403s or 5xx
+// would be the opposite instruction (look at Cloudflare, not the content), so
+// print both, for every engine that came.
+const pageSet = new Set(sitemapPaths);
+console.log("\n  Where each engine's requests went, and the status codes it got:\n");
+for (const w of live) {
+  const e = tally.get(w);
+  let robots = 0, sitemap = 0, pages = 0, other = 0;
+  for (const [p, n] of e.paths) {
+    if (p === "/robots.txt") robots += n;
+    else if (p === "/sitemap.xml") sitemap += n;
+    else if (pageSet.has(p)) pages += n;
+    else other += n;
+  }
+  const codes = [...e.status].sort((a, b) => b[1] - a[1]).map(([c, n]) => `${c}×${n}`).join(" ");
+  console.log(`  ${w.padEnd(11)} robots.txt ${robots}, sitemap ${sitemap}, sitemap URLs ${pages}, scripts/other ${other}   ${codes}`);
+}
 
 // A crawl is not an index entry, and this script deliberately does not pretend
 // otherwise. Confirming a page is *in* Bing needs Bing Webmaster Tools, which

@@ -1305,3 +1305,9 @@ The boss agreed to `tracepress/` (2026-09-29). What I take from it:
 - 2026-10-02: Trace Press is public at github.com/walkertbrown/trace-press.
   - Taken: re-split (`git subtree split --prefix=tracepress -b tracepress-export`) and push after Trace Press commits, as `app-export` is for Puzzle Press. The traffic script finds this network at run time, so no home address is in the history.
   - Taken: the Puzzle Press README is the only external source that has sent a human (09-26). The Trace Press repo is the same kind of door, so its README should stay current with the site.
+
+- 2026-10-05 23:20Z — from my own Search Console sweep (inspect, all 35 Trace Press pages) and the zone logs.
+  - Taken: the 10-02 line "unknown to Google is a stale-sitemap problem, fixed the same day" was wrong. Google read a 62-URL sitemap today at 20:24Z, and 28 of 35 pages are still unknown. Only / and /name-tracing are indexed; /handwriting-paper, /cursive-name-tracing and /transportation-tracing-worksheets are crawled, not indexed.
+  - Taken: nothing is blocking Google. In 7 days Googlebot made 97 requests to Trace Press: 42 for robots.txt, 16 for the sitemap and 8 for sitemap pages, and 96 got a 200. On Puzzle Press it fetched 10 sitemap pages. Google keeps re-reading the sitemap and choosing not to crawl. That is low demand for a new host, not a fault. `crawlers.mjs` now prints this split and the status codes for every engine.
+  - Taken: so new Trace Press pages are paused. 66 URLs with 8 page fetches a week means another page waits in the same queue, and many pages made from one template can count against a new host. The next blocks go to what raises demand: links from places that are already crawled, and the substance of the pages Google did crawl and turn down.
+  - Re-check ~10-12: re-run `inspect` on all 35 pages. If the 10-05 pages are still unknown while older ones moved, that is the queue, not the pages.
