@@ -11,9 +11,9 @@ const top = (strokes) => Math.max(...strokes.flat().flatMap((s) => sample(s)).ma
 const bottom = (strokes) => Math.min(...strokes.flat().flatMap((s) => sample(s)).map((p) => p[1]));
 
 test("every accented letter is its base letter and then an accent clear above it", () => {
-  assert.equal(Object.keys(ACCENTED).length, 53);
+  assert.equal(Object.keys(ACCENTED).length, 57);
   for (const [ch, g] of Object.entries(ACCENTED)) {
-    if (/[çÇ]/.test(ch)) continue;
+    if (/[çÇøØæÆ]/.test(ch)) continue;
     const base = PRINT[ch.normalize("NFD")[0]];
     const upper = ch !== ch.toLowerCase();
     const kept = base.strokes.filter((s) => !(s.length === 1 && s[0].type === "dot"));
@@ -56,4 +56,22 @@ test("a hyphen sits across the lowercase middle; an apostrophe hangs from the he
   assert.ok(top(h.strokes) === 0.5 && bottom(h.strokes) === 0.5 && h.width > 0, "hyphen");
   assert.ok(top(q.strokes) === 2 && bottom(q.strokes) > 1, "apostrophe");
   assert.ok(LETTERS["-"] && LETTERS["'"] && LETTERS["ç"], "names can use them");
+});
+
+test("ø and Ø: the o, then one slash from top right to bottom left through it; æ and Æ are drawn and stay in their width", () => {
+  for (const ch of "øØ") {
+    const g = ACCENTED[ch], o = PRINT[ch === "ø" ? "o" : "O"];
+    assert.deepEqual(g.strokes.slice(0, o.strokes.length), o.strokes, `${ch}: the o first`);
+    const [slash] = g.strokes.slice(o.strokes.length);
+    const [a, b] = ends(slash[0]);
+    assert.ok(a[0] > b[0] && a[1] > b[1], `${ch}: written top right to bottom left`);
+    assert.ok(a[1] > top(o.strokes) && b[1] < bottom(o.strokes), `${ch}: the slash crosses the whole bowl`);
+  }
+  for (const ch of "øØæÆ") {
+    const g = ACCENTED[ch];
+    for (const [x] of g.strokes.flat().flatMap((s) => sample(s))) assert.ok(x >= -1e-9 && x <= g.width + 1e-9, `${ch}: outside its width`);
+    assert.ok(!breaks(g), `${ch}: stroke breaks`);
+    assert.ok(top(g.strokes) <= (ch === ch.toLowerCase() ? 2 : 2 + GAP_UNITS), `${ch}: too tall`);
+  }
+  assert.deepEqual(ACCENTED.æ.strokes.slice(0, PRINT.a.strokes.length), PRINT.a.strokes, "æ: the a first");
 });

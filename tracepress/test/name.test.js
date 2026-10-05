@@ -19,6 +19,8 @@ const NAMES = ["Jo", "Maya", "Christopher Lee", "Wwwwwwwwwwwwwwww", "Sofía Zoë
 test("cleanName keeps A–Z, a–z, accented letters, 0–9 and single spaces, up to NAME_MAX", () => {
   assert.equal(cleanName("  Mary-Kate  O’Neil "), "Mary-Kate O'Neil", "hyphens and apostrophes (curly made straight) are kept");
   assert.equal(cleanName("François+Ana!"), "FrançoisAna");
+  assert.equal(cleanName("Søren Ægir"), "Søren Ægir");
+  assert.equal(cleanName("Mæja Bjørn"), "Mæja Bjørn");
   assert.equal(cleanName("José"), "José");
   assert.equal(cleanName("Sofía Noël Ñúñez"), "Sofía Noël Ñúñez");
   assert.equal(cleanName("Łukasz"), "ukasz", "a letter with no strokes is still dropped");

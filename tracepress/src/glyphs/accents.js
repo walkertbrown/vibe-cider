@@ -63,9 +63,28 @@ function cedilla(ch) {
   return { width: g.width, strokes: [...g.strokes, [line(c, 0, start[0], start[1]), arc(cx, cy, rx, ry, from, -180)]] };
 }
 
+// ø and Ø (Søren, Bjørn): the o, then one slash through it, top right to
+// bottom left, standing a little past the bowl above and below.
+function slashed(ch) {
+  const g = PRINT[ch === "ø" ? "o" : "O"];
+  const top = ch === "ø" ? 1.15 : 2.15;
+  return { width: g.width, strokes: [...g.strokes, [line(g.width, top, 0, -0.15)]] };
+}
+
+// æ (Mæja): the a, then the e written over the a's stem, so the two share it.
+// Æ (Ægir): the A's left leg, then the E, whose stem is where the A's right
+// leg would be, and one bar that is both the A's crossbar and the E's middle.
+const AE_SHIFT = 0.85;
+const ligatures = {
+  æ: { width: 1 + AE_SHIFT, strokes: [...PRINT.a.strokes, ...PRINT.e.strokes.map((s) => s.map((seg) => shift(seg, AE_SHIFT)))] },
+  Æ: { width: 2, strokes: [[line(1, 2, 0, 0)], [line(1, 2, 1, 0)], [line(1, 2, 2, 2)], [line(0.4, 0.8, 1.8, 0.8)], [line(1, 0, 2, 0)]] },
+};
+
 export const ACCENTED = Object.fromEntries([
   ...Object.entries(MARKS).flatMap(([accent, chars]) => [...chars].map((ch) => [ch, compose(ch, accent)])),
   ...[..."çÇ"].map((ch) => [ch, cedilla(ch)]),
+  ...[..."øØ"].map((ch) => [ch, slashed(ch)]),
+  ...Object.entries(ligatures),
 ]);
 
 // The two marks inside names: Mary-Kate, O'Brien. A hyphen is one stroke
