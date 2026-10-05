@@ -508,13 +508,18 @@ try {
   // buyer; the edge log showed both presses followed by a /api/verify that
   // answered 200, which is a licence handed out (no payment found is 404,
   // throttled 429, Stripe down 502). So the outcome is read from the status.
+  // This machine's calls are left out: on 10-05 the line read "9 refused",
+  // and all 9 were test/browser.mjs runs from here, not a stuck buyer.
   let verifyBy = new Map();
   try {
     const v = await graphql(`query { viewer { zones(filter: {zoneTag: "${ZONE}"}) {
-      httpRequestsAdaptiveGroups(limit: 20, filter: {datetime_geq: "${daySince}", clientRequestHTTPHost_like: "%puzzle%", clientRequestPath: "/api/verify"}) {
-        count dimensions { edgeResponseStatus }
+      httpRequestsAdaptiveGroups(limit: 200, filter: {datetime_geq: "${daySince}", clientRequestHTTPHost_like: "%puzzle%", clientRequestPath: "/api/verify"}) {
+        count dimensions { edgeResponseStatus clientIP }
       } } } }`);
-    for (const r of v.viewer.zones[0].httpRequestsAdaptiveGroups) verifyBy.set(r.dimensions.edgeResponseStatus, r.count);
+    for (const r of v.viewer.zones[0].httpRequestsAdaptiveGroups) {
+      if (myIps.includes(r.dimensions.clientIP)) continue;
+      verifyBy.set(r.dimensions.edgeResponseStatus, (verifyBy.get(r.dimensions.edgeResponseStatus) ?? 0) + r.count);
+    }
   } catch { verifyBy = null; }
   const pxTotal = hits(/^\/px\//);
   // The one number the current strategy stands or falls on. The calculators
