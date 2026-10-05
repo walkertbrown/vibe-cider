@@ -82,6 +82,8 @@ for pre-writing,
 (20 foods, egg to broccoli),
 [days of the week and months tracing worksheets](https://tracepress.bananafest-destiny.com/days-of-the-week-tracing-worksheets)
 (Sunday to December),
+[color words tracing worksheets](https://tracepress.bananafest-destiny.com/color-words-tracing-worksheets)
+(red to gray),
 [alphabet tracing worksheets with pictures](https://tracepress.bananafest-destiny.com/alphabet-tracing-worksheets-with-pictures)
 (A is for apple to Z is for zeppelin),
 [number tracing worksheets with pictures](https://tracepress.bananafest-destiny.com/number-tracing-worksheets-with-pictures)

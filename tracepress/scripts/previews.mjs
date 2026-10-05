@@ -36,6 +36,7 @@ const PREVIEWS = [
   ["animal-tracing-worksheets.pdf", 14, "animal-tracing-worksheet-rabbit"],
   ["food-tracing-worksheets.pdf", 16, "food-tracing-worksheet-banana"],
   ["days-of-the-week-tracing-worksheets.pdf", 4, "days-of-the-week-tracing-worksheet-wednesday"],
+  ["color-words-tracing-worksheets.pdf", 3, "color-words-tracing-worksheet-yellow"],
   ["cursive-handwriting-workbook-sample-8.5x11.pdf", 47, "cursive-handwriting-workbook-word"],
 ];
 const pub = new URL("../public/", import.meta.url).pathname;

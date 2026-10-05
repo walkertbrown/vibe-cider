@@ -82,6 +82,7 @@ Made by this code with the free version, footer line and PREVIEW mark included:
 - [Animal tracing worksheets](https://tracepress.bananafest-destiny.com/animal-tracing-worksheets): 20 animal words, cat to butterfly, each with a picture
 - [Food tracing worksheets](https://tracepress.bananafest-destiny.com/food-tracing-worksheets): 20 food words, egg to broccoli, each with a picture
 - [Days of the week tracing worksheets](https://tracepress.bananafest-destiny.com/days-of-the-week-tracing-worksheets): the 7 days and 12 months, a page each
+- [Color words tracing worksheets](https://tracepress.bananafest-destiny.com/color-words-tracing-worksheets): 11 colors, red to gray, a page each
 - [Halloween tracing worksheets](https://tracepress.bananafest-destiny.com/halloween-tracing-worksheets), 20 words with pictures
 - [Thanksgiving tracing worksheets](https://tracepress.bananafest-destiny.com/thanksgiving-tracing-worksheets), 20 words with pictures
 - [Christmas tracing worksheets](https://tracepress.bananafest-destiny.com/christmas-tracing-worksheets), 20 words with pictures

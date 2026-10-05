@@ -135,6 +135,11 @@ export const SAMPLES = {
     title: "Free Food Tracing Worksheets: 20 Food Words to Trace (PDF)",
     subject: "20 printable food word tracing worksheets: egg, apple, pizza, banana, carrot, broccoli and more, each with a picture to colour, numbered start dots, stroke-order arrows and dotted rows to trace on four-line guides. 8.5 x 11. Made free with Trace Press.",
   },
+  colors: {
+    file: "color-words-tracing-worksheets.pdf",
+    title: "Free Color Words Tracing Worksheets: 11 Colors (PDF)",
+    subject: "11 printable color word tracing worksheets: red, orange, yellow, green, blue, purple, pink, brown, black, white and gray, each with numbered start dots, stroke-order arrows and dotted rows to trace on four-line guides. 8.5 x 11. Made free with Trace Press.",
+  },
   days: {
     file: "days-of-the-week-tracing-worksheets.pdf",
     title: "Free Days of the Week and Months Tracing Worksheets (PDF)",
@@ -259,6 +264,7 @@ await book(SAMPLES.transportation, { words: holidayWords("transportation", "tran
 await book(SAMPLES.animals, { words: holidayWords("animal", "animal"), from: 26 });
 await book(SAMPLES.food, { words: holidayWords("food", "food"), from: 26 });
 await book(SAMPLES.days, { words: holidayWords("days-of-the-week", "days and months", 19), from: 26 });
+await book(SAMPLES.colors, { words: holidayWords("color-words", "color words", 11), from: 26 });
 await book(SAMPLES.cursiveBook, { script: "cursive", numbers: true, words: PRE_PRIMER });
 
 // The cover, sized for that book. The whole sheet is the link (2026-10-05).
