@@ -346,11 +346,32 @@ for (const [ip, e] of ranTheApp) {
 // appear above. Listing them separately is what stops a crawler's tour of the
 // samples directory from being read as six people considering the product.
 const sampleOnly = visitors.filter(([, e]) => did(e.paths).samples.length && !did(e.paths).ranApp);
+// 2026-10-05: eleven of these, on phones, from consumer ISPs in eleven
+// countries, read like eleven people. Their minutes said otherwise: nine
+// addresses in nine countries each took one or two different samples between
+// 03:44 and 03:48Z, and two more took 5 and 3 files in one minute at 04:08.
+// That is one crawler spreading a file list over residential proxies. RDAP
+// cannot see it, because each address really is somebody's phone line. So
+// mark any address whose first sample fell in a 10-minute window with 3 or
+// more other sample-only addresses, and count them as one burst, not people.
 if (sampleOnly.length) {
+  const first = new Map();
+  const times = (
+    await graphql(`query { viewer { zones(filter: {zoneTag: "${ZONE}"}) {
+      httpRequestsAdaptiveGroups(limit: 2000, filter: {datetime_geq: "${since}", clientRequestHTTPHost_like: "%puzzle%", clientRequestPath_like: "/samples/%"}, orderBy: [datetimeMinute_ASC]) {
+        count dimensions { clientIP datetimeMinute }
+      } } } }`)
+  ).viewer.zones[0].httpRequestsAdaptiveGroups;
+  for (const r of times) if (!first.has(r.dimensions.clientIP)) first.set(r.dimensions.clientIP, Date.parse(r.dimensions.datetimeMinute));
+  const t = (ip) => first.get(ip) ?? NaN;
+  const burst = new Set(sampleOnly.map(([ip]) => ip).filter((ip) =>
+    sampleOnly.filter(([o]) => Math.abs(t(o) - t(ip)) <= 10 * 60e3).length >= 4));
   console.log("  Opened a sample without ever running the app:");
-  for (const [ip, e] of sampleOnly) {
-    console.log(`    ${ip}   ${did(e.paths).samples.join(", ")}   ${[...e.uas][0]?.slice(0, 60) ?? "no agent"}`);
+  for (const [ip, e] of sampleOnly.sort(([a], [b]) => t(a) - t(b))) {
+    const hhmm = Number.isNaN(t(ip)) ? "?" : new Date(t(ip)).toISOString().slice(5, 16) + "Z";
+    console.log(`    ${hhmm}  ${ip}${burst.has(ip) ? "  [burst]" : ""}   ${did(e.paths).samples.join(", ")}   ${[...e.uas][0]?.slice(0, 60) ?? "no agent"}`);
   }
+  if (burst.size) console.log(`  ${burst.size} of ${sampleOnly.length} arrived in bursts (4+ addresses within 10 minutes): a crawler on rented addresses, not ${burst.size} people.`);
   console.log("");
 }
 
