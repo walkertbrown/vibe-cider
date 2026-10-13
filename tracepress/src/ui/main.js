@@ -208,6 +208,14 @@ el.download.addEventListener("click", async (e) => {
     el.status.textContent = (getLicense()
       ? "Downloaded. Upload it to KDP as the paperback manuscript."
       : "Downloaded, with the free footer line on every page.") + next;
+    // 09-14 to 10-13: 4 people got a free book, none went on to the cover, so
+    // none was ever shown the price, which sits below the Cover section.
+    if (!getLicense()) {
+      const up = document.createElement("button");
+      up.type = "button"; up.className = "linkish"; up.textContent = `Remove the footer line — ${PRICE_LABEL}`;
+      up.addEventListener("click", () => openUnlock());
+      el.status.append(" ", up);
+    }
   } catch (err) {
     px("failed");
     el.status.textContent = `Could not make the PDF: ${err.message}. Reload the page and try again, or email ${SUPPORT}.`;
