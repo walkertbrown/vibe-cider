@@ -36,6 +36,6 @@ Studio → Content → Shorts → open each one → **Related video** → pick t
 - [ ] KDP's 3 print minimums (10-11)
 - [ ] A to Z in capitals: 49 strokes (10-13)
 - [ ] The Trace Press product Short (10-01)
-- Later: sight words (10-14) and 6x9 or 8.5x11 (10-16), once they are posted.
+- Later: sight words (10-14), 6x9 or 8.5x11 (10-16) and the alphabet chart (10-17), once they are posted.
 
 Tell me when it's up and I'll put the link in the README and the logs, and read its views next to the Shorts.
