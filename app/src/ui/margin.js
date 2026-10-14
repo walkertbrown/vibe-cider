@@ -3,6 +3,7 @@
 import { TRIMS, PT, MIN_PAGES, MAX_PAGES, gutterInches, pageGeometry, marginsForPage } from "../pdf/kdp.js";
 import { toolLink, carryNote } from "./tool-link.js";
 import { px } from "./px.js";
+import { drawPageTemplate } from "./page-template.js";
 
 const $ = (id) => document.getElementById(id);
 const el = {
@@ -12,6 +13,7 @@ const el = {
   inside: $("inside"), outside: $("outside"), topBottom: $("topBottom"),
   sides: $("sides"), settings: $("settings"), live: $("live"),
   diagram: $("diagram"), bleedNote: $("bleedNote"),
+  tplOdd: $("tplOdd"), tplEven: $("tplEven"), tplPx: $("tplPx"),
 };
 
 for (const [id, t] of Object.entries(TRIMS)) {
@@ -82,6 +84,7 @@ function update() {
     : `Page size ${t.w}" × ${t.h}"; mirror margins; inside (gutter) ${inch(inner)}, outside ${inch(outer)}, top ${inch(tb)}, bottom ${inch(tb)}.`;
   el.live.textContent = `Live area ${inch(w - inner - outer)} × ${inch(h - 2 * tb)} — everything that must print goes inside it.`;
   el.bleedNote.hidden = !bleed;
+  el.tplPx.textContent = `${Math.ceil(w * 300)} × ${Math.ceil(h * 300)} px`;
   drawPages(geom);
 }
 
@@ -105,6 +108,27 @@ for (const [node, where] of [[el.make, "handoff"], [el.makeTop, "handofftop"]]) 
     // the door beside the answer is what made the difference.
     px("handoff", { keep: true });
     if (where !== "handoff") px(where, { keep: true });
+  });
+}
+
+// The page templates: the margins above, drawn, one PNG per side because the
+// gutter swaps sides. Made on the click, in the browser, from the current
+// settings; nothing is sent anywhere but the content-free "pagetpl" beacon.
+for (const [node, pageNo, side] of [[el.tplOdd, 1, "odd"], [el.tplEven, 2, "even"]]) {
+  node.addEventListener("click", () => {
+    const trim = el.trim.value, bleed = el.bleed.checked;
+    const pages = Math.max(MIN_PAGES, Math.min(MAX_PAGES, parseInt(el.pages.value, 10) || MIN_PAGES));
+    const canvas = drawPageTemplate(pageGeometry({ trim, bleed, pageCount: pages }), { pageNo, pageCount: pages });
+    px("pagetpl");
+    canvas.toBlob((blob) => {
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = `kdp-interior-template-${trim}-${pages}-pages-${side}${bleed ? "-bleed" : ""}.png`;
+      document.body.append(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(a.href), 10000);
+    }, "image/png");
   });
 }
 

@@ -653,6 +653,8 @@ try {
     ["of them took the cover template", people(/^\/px\/template\.gif$/)],
     ["royalty", people(/^\/px\/royalty\.gif$/)],
     ["margin", people(/^\/px\/margin\.gif$/)],
+    // The margin calculator's page template download (src/ui/page-template.js).
+    ["of them took a page template", people(/^\/px\/pagetpl\.gif$/)],
   ].filter(([, n]) => n);
   // What the Pinterest pins (marketing/pins.md) actually drive traffic to —
   // previously invisible entirely, see the `served` note above.

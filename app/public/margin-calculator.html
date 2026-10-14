@@ -65,6 +65,9 @@
   .diagram { margin-top:18px; background:#f2f5fa; border:1px solid var(--line); border-radius:10px; padding:16px; }
   .diagram svg { width:100%; max-width:420px; height:auto; display:block; margin:0 auto; }
   .diagram p { margin:10px 0 0; font-size:13px; color:var(--muted); text-align:center; }
+  .tplbox { margin-top:14px; text-align:center; }
+  .tpl { margin:4px; font:inherit; font-size:15px; font-weight:600; padding:9px 14px; border-radius:8px; background:#fff; color:var(--accent); border:1px solid var(--accent); cursor:pointer; }
+  .tplbox p { margin:8px 0 0; font-size:13px; color:var(--muted); }
 </style>
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "b7be686eebf64639b0e60d43860bbd54"}'></script>
 <script type="application/ld+json">
@@ -148,6 +151,12 @@
       <p>Two facing pages, to scale. Shaded = where content may go. The gutter is the margin against the spine, and it swaps sides.</p>
     </div>
 
+    <div class="tplbox">
+      <button type="button" class="tpl" id="tplOdd">Odd-page template (PNG)</button>
+      <button type="button" class="tpl" id="tplEven">Even-page template (PNG)</button>
+      <p>Your page at 300 DPI, <span id="tplPx">—</span>, with the margins, the gutter side and the bleed drawn on it. Put it under your page as the bottom layer, then hide it before you export.</p>
+    </div>
+
     <div class="sum" id="settings">—</div>
 
 
@@ -194,6 +203,11 @@
   <section class="prose">
     <h2>Setting it up in Word, Google Docs or InDesign</h2>
     <p>Set the page size to the trim (or the trim plus bleed, if you use it). Turn on <em>mirror margins</em> (Word: Layout → Margins → Custom → Multiple pages: Mirror margins; InDesign: Facing pages). Then "inside" is the gutter figure above and "outside" is the outer figure. Export to PDF with fonts embedded — an un-embedded font is the other common rejection, and the previewer's message about it is not obvious.</p>
+  </section>
+
+  <section class="prose">
+    <h2>In Canva or Affinity: a page template</h2>
+    <p>Designing page by page, the gutter is easy to put on the wrong side. Set your trim, page count and bleed above, then download the odd-page and the even-page template. Each is a PNG at 300 DPI, exactly the size of the PDF page KDP expects, with KDP's minimum margins drawn as a blue dashed box and the gutter shaded on the side it belongs: the left of odd pages, the right of even ones. With bleed on, the extra 0.125" is drawn in pink on the outside edge, the top and the bottom only. Put the matching template under each page as the bottom layer, keep text inside the blue box, and hide the layer before you export.</p>
   </section>
 
   <section class="prose">

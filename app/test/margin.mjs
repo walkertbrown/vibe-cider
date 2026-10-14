@@ -50,6 +50,20 @@ for (const trim of Object.keys(TRIMS)) {
   check(row && row[2] === want[1] && row[3] === want[2], `bleed table row for ${trim}: want ${want.join(" | ")}, got ${row ? row.slice(1).join(" | ") : "no row"}`);
 }
 
+// The page templates are PNGs of exactly the pixel size printed beside them,
+// one per side, and 6x9 with bleed is the bleed table's 1838 x 2775.
+await page.selectOption("#trim", "6x9");
+await page.fill("#pages", "120");
+if (!(await page.isChecked("#bleed"))) await page.click("#bleed");
+await page.waitForTimeout(50);
+for (const id of ["tplOdd", "tplEven"]) {
+  const [dl] = await Promise.all([page.waitForEvent("download"), page.click(`#${id}`)]);
+  const png = (await import("node:fs")).readFileSync(await dl.path());
+  const [tw, th] = [png.readUInt32BE(16), png.readUInt32BE(20)];
+  const says = await page.textContent("#tplPx");
+  check(`${tw} × ${th} px` === says && tw === 1838 && th === 2775, `${id}: ${dl.suggestedFilename()} is ${tw} × ${th}, page says ${says}`);
+}
+
 const links = await page.$$eval("a[href^='/']", (as) => [...new Set(as.map((a) => a.getAttribute("href").split("#")[0]).filter(Boolean))]);
 for (const href of links) {
   const r = await page.request.get(`${base}${href}`);
