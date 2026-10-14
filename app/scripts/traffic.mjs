@@ -649,6 +649,8 @@ try {
   // stays one number.
   const calcEach = [
     ["spine", people(/^\/px\/spine\.gif$/)],
+    // The spine calculator's cover template download (src/ui/cover-template.js).
+    ["of them took the cover template", people(/^\/px\/template\.gif$/)],
     ["royalty", people(/^\/px\/royalty\.gif$/)],
     ["margin", people(/^\/px\/margin\.gif$/)],
   ].filter(([, n]) => n);

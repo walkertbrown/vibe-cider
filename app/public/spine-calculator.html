@@ -55,6 +55,7 @@
   footer { color:var(--muted); font-size:13px; text-align:center; padding:30px 24px; border-top:1px solid var(--line); background:var(--card); margin-top:30px; }
   footer a { color: var(--muted); }
   /* The handoff beside the answer — see the note in the markup. */
+  .tpl { margin-top:12px; font:inherit; font-size:15px; font-weight:600; padding:9px 14px; border-radius:8px; background:#fff; color:var(--accent); border:1px solid var(--accent); cursor:pointer; }
   .make-here { margin-top:18px; text-align:center; }
   .make-here p { margin:9px 0 0; font-size:13px; color:#5c6470; }
 </style>
@@ -119,6 +120,8 @@
         <div class="k">Design canvas at 300 DPI</div>
         <div class="v" id="coverPx">—</div>
         <div class="s" id="pxNote">—</div>
+        <button type="button" class="tpl" id="tplBtn">Download this cover template (PNG)</button>
+        <div class="s" id="tplNote">Bleed, trim, spine folds, text-safe lines and the barcode box, drawn at this exact size. Put it under your art as the bottom layer, then hide it before you export.</div>
       </div>
     </div>
 

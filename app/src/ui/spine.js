@@ -4,6 +4,7 @@ import { TRIMS, gutterInches, PT } from "../pdf/kdp.js";
 import { coverGeometry, spineWidthInches, PAPER, SPINE_TEXT_MIN_PAGES, SPINE_FOLD_IN, SPINE_SAFETY_IN, SPINE_TYPE_BOX_EM, SPINE_TYPE_MIN_PT, BARCODE_IN } from "../pdf/cover-geometry.js";
 import { toolLink, carryNote } from "./tool-link.js";
 import { px } from "./px.js";
+import { drawCoverTemplate } from "./cover-template.js";
 
 const $ = (id) => document.getElementById(id);
 const el = {
@@ -11,7 +12,7 @@ const el = {
   trim: $("trim"), pages: $("pages"), paper: $("paper"),
   spine: $("spine"), spineMm: $("spineMm"), cover: $("cover"), coverMm: $("coverMm"),
   gutter: $("gutter"), spineText: $("spineText"), barcode: $("barcode"), sum: $("sum"),
-  coverPx: $("coverPx"), pxNote: $("pxNote"),
+  coverPx: $("coverPx"), pxNote: $("pxNote"), tpl: $("tplBtn"),
 };
 
 // Nobody designs a cover in inches. They open Canva or Photoshop, which ask for
@@ -112,6 +113,26 @@ for (const [node, where] of [[el.make, "handoff"], [el.makeTop, "handofftop"]]) 
     if (where !== "handoff") px(where, { keep: true });
   });
 }
+
+// The cover template: the numbers above, drawn. Made on the click, in the
+// browser, from the current settings; nothing is sent anywhere but the
+// content-free "template" beacon.
+el.tpl.addEventListener("click", () => {
+  const trim = el.trim.value, paper = el.paper.value;
+  const pages = Math.max(24, Math.min(828, parseInt(el.pages.value, 10) || 24));
+  const g = coverGeometry({ trim, pageCount: pages, paper });
+  const canvas = drawCoverTemplate(g, { dpi: COVER_DPI, paperLabel: PAPER[paper].label.toLowerCase() });
+  px("template");
+  canvas.toBlob((blob) => {
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = `kdp-cover-template-${trim}-${pages}-pages-${paper}.png`;
+    document.body.append(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 10000);
+  }, "image/png");
+});
 
 // The load beacon, added 2026-09-23 for the same reason the guide and the
 // comparison page got one that morning. "Used a calculator" was counted as a

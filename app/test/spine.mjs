@@ -53,6 +53,17 @@ const at100 = await p.textContent("#spineText");
 console.log("spine text at 100p cream:", at100);
 if (!at100.includes("fits type up to about")) throw new Error("100 pages of cream: Puzzle Press prints spine text");
 
+// The cover template is a PNG of exactly the canvas size printed above it.
+await p.selectOption("#trim", "6x9");
+await p.selectOption("#paper", "cream");
+await p.fill("#pages", "120");
+await p.waitForTimeout(200);
+const [dl] = await Promise.all([p.waitForEvent("download"), p.click("#tplBtn")]);
+const png = (await import("node:fs")).readFileSync(await dl.path());
+const [tw, th] = [png.readUInt32BE(16), png.readUInt32BE(20)];
+console.log("template:", dl.suggestedFilename(), tw, th, "page says", await p.textContent("#coverPx"));
+if (`${tw} × ${th} px` !== (await p.textContent("#coverPx")) || tw !== 3765 || th !== 2775) throw new Error("cover template is not the 300 DPI canvas size");
+
 await p.setViewportSize({ width: 400, height: 900 });
 await p.waitForTimeout(300);
 const overflow = await p.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth);
