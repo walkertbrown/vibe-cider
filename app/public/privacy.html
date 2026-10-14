@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy — Puzzle Press</title>
+<meta name="description" content="What leaves your browser on Puzzle Press, what Cloudflare and Stripe see, and what stays on your computer, including every word list and title you type.">
+<link rel="canonical" href="https://puzzlepress.bananafest-destiny.com/privacy">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style>
+  :root { --ink:#1a1a1a; --muted:#5c6470; --line:#d9dde3; --bg:#f6f7f9; --card:#fff; --accent:#1d3557; }
+  * { box-sizing: border-box; }
+  html, body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+  a { color: var(--accent); }
+  header { padding:18px 24px; border-bottom:1px solid var(--line); background:var(--card); display:flex; gap:16px; align-items:baseline; flex-wrap:wrap; }
+  header strong { font-size:18px; } header .spacer { flex:1; }
+  main { max-width:760px; margin:0 auto; padding:32px 24px 8px; }
+  h1 { font-size:clamp(26px,4vw,36px); line-height:1.15; letter-spacing:-0.02em; margin:0 0 10px; }
+  h2 { font-size:21px; margin:30px 0 8px; }
+  .lede { color:var(--muted); margin:0 0 26px; font-size:17px; }
+  code { font-size:14px; background:#eceef1; padding:1px 4px; border-radius:4px; overflow-wrap:anywhere; }
+  footer { color:var(--muted); font-size:13px; text-align:center; padding:30px 24px; border-top:1px solid var(--line); background:var(--card); margin-top:30px; } footer a { color: var(--muted); }
+</style>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "b7be686eebf64639b0e60d43860bbd54"}'></script>
+</head>
+<body>
+<header>
+  <strong><a href="/" style="text-decoration:none;color:inherit">Puzzle Press</a></strong>
+  <span class="spacer"></span>
+  <a href="/how-to-make-a-puzzle-book">Guide</a>
+  <a href="/spine-calculator">Spine calculator</a>
+  <a href="/royalty-calculator">Royalty calculator</a>
+</header>
+<main>
+  <h1>Privacy</h1>
+  <p class="lede">Puzzle Press makes your book inside your browser. Your word lists, titles, settings and the PDFs it makes stay on your computer. Here is everything that does leave it, and who sees it.</p>
+
+  <h2>What stays on your computer</h2>
+  <ul>
+    <li>Every word, title and setting you enter, the puzzles, and the interior and cover PDFs. The book is built by code running in your browser; nothing is uploaded to make it.</li>
+    <li>After you unlock, your browser keeps a note of it in local storage (<code>puzzlepress.license</code>: your email and a reference to your payment) so you don't have to unlock again. Clearing this site's data removes it.</li>
+  </ul>
+  <p>Puzzle Press sets no cookies and has no accounts.</p>
+
+  <h2>What your browser sends</h2>
+  <ul>
+    <li><strong>Page requests.</strong> Like any website, the pages, scripts, fonts and sample PDFs are fetched from this site, which runs on Cloudflare. Cloudflare logs each request with your IP address, browser name and the address asked for. We read that log to count visits and to tell people from robots, and that includes looking up which network an address belongs to.</li>
+    <li><strong>Step counters.</strong> As you use the generator, the page fetches tiny empty images named after a step, such as <code>/px/tool.gif</code> (scrolled to the generator), <code>/px/touched.gif</code> (changed a setting), <code>/px/made.gif</code> (a book was made) and <code>/px/pay.gif</code>, each at most once per page load. The file name is the whole message: no word, title or setting, no ID. That is how we know how many people get as far as each step. A test in the code (<code>test/privacy.mjs</code>) types a made-up word into the generator, makes and downloads a book, and checks that the word never leaves the browser.</li>
+    <li><strong>Links we post elsewhere.</strong> Some links we publish off this site start with <code>/go/</code> and forward you to a page here. Each time one is used, we keep a note of which link it was, the time, your network's owner name and country, and whether the browser says it is a robot. We don't keep your address. Notes are deleted after 90 days.</li>
+    <li><strong>Cloudflare Web Analytics.</strong> Each page loads Cloudflare's analytics script, which reports the page viewed, the page you came from and how fast it loaded. <a href="https://www.cloudflare.com/web-analytics/">Cloudflare describes it here</a>.</li>
+  </ul>
+
+  <h2>If you pay</h2>
+  <ul>
+    <li>Payment happens on Stripe's checkout page, not here. Stripe handles your card and what its checkout asks for under <a href="https://stripe.com/privacy">Stripe's privacy policy</a>. We see the payment record in Stripe, including your email address. We never see your card number.</li>
+    <li>To unlock, the email you type is sent to this site's server, which asks Stripe whether that email has a completed Puzzle Press payment and answers yes or no. The server doesn't store the email.</li>
+  </ul>
+
+  <h2>Questions</h2>
+  <p>Email <a href="mailto:support@bananafest-destiny.com">support@bananafest-destiny.com</a>. The rest of the terms (what you own, refunds) are in <a href="/#terms">Terms</a>.</p>
+  <p>The site's code is public, so you can check all of this yourself: <a href="https://github.com/walkertbrown/vibe-cider/tree/main/app">github.com/walkertbrown/vibe-cider</a> (the <code>app</code> folder).</p>
+</main>
+<footer>
+  <p><strong>Puzzle Press</strong> — a <a href="https://bananafest-destiny.com">Bananafest Destiny</a> app. <a href="/#terms">Terms</a> · <a href="/privacy">Privacy</a> · <a href="/how-to-make-a-puzzle-book">Guide</a> · <a href="/spine-calculator">Spine calculator</a> · <a href="/royalty-calculator">Royalty calculator</a> · <a href="/margin-calculator">Margin calculator</a> · <a href="/word-search-book-generator">Word search</a> · <a href="/large-print-word-search-generator">Large print</a> · <a href="/sudoku-book-generator">Sudoku</a> · <a href="/maze-book-generator">Mazes</a> · <a href="/criss-cross-book-generator">Criss-cross</a> · <a href="/crossword-book-generator">Crosswords</a> · <a href="/word-lists/">Word lists</a> · <a href="mailto:support@bananafest-destiny.com">support@bananafest-destiny.com</a></p>
+  <p>Not affiliated with Amazon or with any tool mentioned. KDP is a trademark of Amazon.com, Inc.</p>
+  <p>Built in public by an autonomous agent — the full log is at <a href="https://bananafest-destiny.com/zoo/vibe-cider">bananafest-destiny.com/zoo/vibe-cider</a></p>
+</footer>
+</body>
+</html>
