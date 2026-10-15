@@ -1,0 +1,135 @@
+// Amazon.com paperback printing cost and royalty.
+//
+// Figures quoted from KDP's "Paperback Printing Cost" help page for the
+// Amazon.com (US) marketplace. They are marketplace-specific: these numbers
+// are wrong for amazon.co.uk or amazon.de, which is why everything here says
+// "Amazon.com" out loud rather than implying it works everywhere.
+//
+// Large trim means more than 6.12" wide or more than 9" tall. 6x9 is regular
+// trim — exactly 9" is not "more than" 9".
+//
+// No pdf-lib, no fonts: a calculator page can import this on its own.
+
+import { TRIMS } from "./kdp.js";
+
+export const MARKETPLACE = "Amazon.com (US)";
+
+export const INKS = {
+  black: { label: "Black ink" },
+  premiumColor: { label: "Premium colour" },
+  standardColor: { label: "Standard colour" },
+  // A paper, not an ink, but KDP prices it as its own row: black ink on
+  // groundwood, about 5% cheaper a page, flat to 112 pages rather than 110.
+  groundwood: { label: "Black ink, groundwood paper" },
+};
+
+// [fixed, perPage] by ink, with a flat band for short books where KDP has one.
+const RATES = {
+  regular: {
+    black: { flat: { max: 110, cost: 2.3 }, fixed: 1.0, perPage: 0.012, min: 24, max: 828 },
+    premiumColor: { flat: { max: 40, cost: 3.6 }, fixed: 1.0, perPage: 0.065, min: 24, max: 828 },
+    standardColor: { flat: null, fixed: 1.0, perPage: 0.0255, min: 72, max: 600 },
+    groundwood: { flat: { max: 112, cost: 2.23 }, fixed: 1.0, perPage: 0.0114, min: 24, max: 828 },
+  },
+  large: {
+    black: { flat: { max: 110, cost: 2.84 }, fixed: 1.0, perPage: 0.017, min: 24, max: 828 },
+    premiumColor: { flat: { max: 40, cost: 4.2 }, fixed: 1.0, perPage: 0.08, min: 24, max: 828 },
+    standardColor: { flat: null, fixed: 1.0, perPage: 0.0402, min: 72, max: 600 },
+    groundwood: { flat: { max: 112, cost: 2.75 }, fixed: 1.0, perPage: 0.0162, min: 24, max: 828 },
+  },
+};
+
+export function isLargeTrim(trim) {
+  const t = TRIMS[trim] ?? TRIMS["6x9"];
+  return t.w > 6.12 || t.h > 9;
+}
+
+// printingCost({ trim, pages, ink }) -> { cost, band, large, note }
+// `cost` is null when the combination is outside what KDP will print.
+export function printingCost({ trim = "6x9", pages = 24, ink = "black" } = {}) {
+  const large = isLargeTrim(trim);
+  const r = RATES[large ? "large" : "regular"][ink] ?? RATES.regular.black;
+
+  // flatMax is reported so a caller can say what the flat band is *worth*.
+  // Printing is one price from r.min pages to r.flat.max, so every page under
+  // that ceiling is free to print — at 6x9 black that is $2.30 whether the
+  // book is 24 pages or 110. Callers had only the band's name to go on.
+  const flatMax = r.flat ? r.flat.max : null;
+
+  if (pages < r.min || pages > r.max) {
+    return {
+      cost: null,
+      large,
+      band: null,
+      flatMax,
+      note: `${INKS[ink].label} on ${large ? "large" : "regular"} trim is printed from ${r.min} to ${r.max} pages.`,
+    };
+  }
+  if (r.flat && pages <= r.flat.max) {
+    return { cost: r.flat.cost, large, band: `flat rate up to ${r.flat.max} pages`, flatMax, note: null };
+  }
+  const cost = r.fixed + pages * r.perPage;
+  return {
+    cost: Math.round(cost * 100) / 100,
+    large,
+    band: `${r.fixed.toFixed(2)} + ${pages} × ${r.perPage}`,
+    flatMax,
+    perPage: r.perPage,
+    note: null,
+  };
+}
+
+// KDP pays 60% of list above a threshold and 50% at or below it.
+export const ROYALTY_THRESHOLD = 9.99;
+export function royaltyRate(listPrice) {
+  return listPrice >= ROYALTY_THRESHOLD ? 0.6 : 0.5;
+}
+
+// royalty({ list, trim, pages, ink }) -> { rate, printing, royalty, minList }
+export function royalty({ list = 9.99, trim = "6x9", pages = 24, ink = "black" } = {}) {
+  const { cost, large, band, note } = printingCost({ trim, pages, ink });
+  if (cost === null) return { rate: null, printing: null, royalty: null, minList: null, large, band, note };
+  const rate = royaltyRate(list);
+  const earned = rate * list - cost;
+  return {
+    rate,
+    printing: cost,
+    royalty: Math.round(earned * 100) / 100,
+    // The lowest list price that still covers printing, at the rate that price
+    // would itself qualify for.
+    minList: minimumListPrice(cost),
+    large,
+    band,
+    note,
+  };
+}
+
+// Below the threshold KDP pays 50%, so a cheap book needs a higher price to
+// break even than a naive cost/0.6 suggests. Check the low band first.
+export function minimumListPrice(printing) {
+  const low = centsToCover(printing, 0.5);
+  if (low < ROYALTY_THRESHOLD) return low;
+  return Math.max(ROYALTY_THRESHOLD, centsToCover(printing, 0.6));
+}
+
+// The lowest whole-cent price at which `rate` of it covers `printing`. Done in
+// integer cents: in floats 2.49 / 0.5 * 100 is 498.00000000000006, and a ceil
+// of that told a 124-page 6x9 its floor was $4.99 instead of $4.98.
+function centsToCover(printing, rate) {
+  const cents = Math.round(printing * 100);
+  const pct = Math.round(rate * 100);
+  return Math.ceil((cents * 100) / pct) / 100;
+}
+
+// Expanded Distribution (bookstores, libraries, other retailers) pays 40% of
+// list, minus the same printing cost, at every price. KDP's worked example:
+// $15, 333 pages, $5.00 printing -> $4.00 on Amazon.com, $1.00 expanded.
+export const EXPANDED_RATE = 0.4;
+export function expandedRoyalty({ list = 9.99, trim = "6x9", pages = 24, ink = "black" } = {}) {
+  const { cost } = printingCost({ trim, pages, ink });
+  if (cost === null) return { royalty: null, minList: null };
+  return {
+    royalty: Math.round((EXPANDED_RATE * list - cost) * 100) / 100,
+    minList: centsToCover(cost, EXPANDED_RATE),
+  };
+}

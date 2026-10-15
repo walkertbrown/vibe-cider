@@ -8,6 +8,9 @@ import { TRIMS } from "../pdf/kdp.js";
 import { listingText, keywordsFor } from "../pdf/listing.js";
 import { SHAPES } from "../glyphs/lines.js";
 import { coverGeometry, PAPER } from "../pdf/cover-geometry.js";
+// Amazon.com printing rates: a copy of Puzzle Press's table (test/kdp-cost.test.js
+// fails if the two differ), kept here so this folder builds on its own.
+import { printingCost } from "../pdf/kdp-cost.js";
 import { pageSvg } from "./preview.js";
 import { getLicense as storedLicense, setLicense, clearLicense, verifyEmail, PRICE_LABEL } from "./license.js";
 import { px } from "./px.js";
@@ -60,6 +63,14 @@ function showCoverNote() {
   const pageCount = planBook(opts()).pages.length;
   const g = coverGeometry({ trim: el.trim.value, pageCount, paper: el.paper.value });
   el.coverNote.textContent = `${inch(g.width)} × ${inch(g.height)} with bleed, spine ${inch(g.spine)} for ${pageCount} pages. KDP allows spine text from 79 pages, so the spine is left blank.`;
+  // The paper menu's keys are KDP's price rows, except white and cream, which
+  // both print at the black-ink rate.
+  const ink = ["white", "cream"].includes(el.paper.value) ? "black" : el.paper.value;
+  const { cost, flatMax } = printingCost({ trim: el.trim.value, pages: pageCount, ink });
+  if (cost == null) return;
+  el.coverNote.textContent += ` Prints for $${cost.toFixed(2)} a copy on Amazon.com.`;
+  // Under KDP's flat band, more practice pages cost nothing more to print.
+  if (flatMax && pageCount < flatMax) el.coverNote.textContent += ` Any book up to ${flatMax} pages prints for the same $${cost.toFixed(2)}.`;
 }
 
 // The cover as it will print (back, spine, front), redrawn a moment after
