@@ -11,7 +11,7 @@ A Short's description can't carry a clickable link. The Related video bar under 
 **Puzzle Press Shorts → "How to make a KDP puzzle book in 60 seconds…" (`ph6q2ih6cBs`)**
 
 - [x] `Qb3LZ-1aG1s` No sudoku with 16 clues has one answer
-- [ ] `zicmbaeXMK0` KDP spine text at 79 pages: 0.053" — **linked to the Trace Press video by mistake (10-15); switch to `ph6q2ih6cBs`**
+- [x] `zicmbaeXMK0` KDP spine text at 79 pages: 0.053"
 - [x] `CH06BN1HpUI` A 124-page Halloween word search book for KDP
 - [x] `DPndBRKnDUo` KDP royalty: $9.98 vs $9.99
 - [x] `g0VXASTqsg4` KDP margins: the gutter grows with page count
