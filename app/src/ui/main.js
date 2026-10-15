@@ -19,7 +19,7 @@ import { TRIMS } from "../pdf/kdp.js";
 // pdf-lib and fontkit are about 90% of this bundle and are only needed once
 // somebody actually asks for a file, so they load on the first download
 // instead of before the page is usable.
-import { planPages, solutionsThatFit, solutionsPerPageFor, puzzlesForMinimum } from "../pdf/layout.js";
+import { planPages, solutionsThatFit, solutionsPerPageFor, puzzlesForMinimum, puzzlesForPages } from "../pdf/layout.js";
 import { gridBound } from "../generator/gridbound.js";
 
 // Loaded separately rather than together. They share the heavy chunk, so the
@@ -43,7 +43,7 @@ import { keywordsFor } from "./keywords.js";
 import { listingText } from "./listing.js";
 import { PALETTE_HEX, paletteIndex } from "../pdf/palettes.js";
 import { coverGeometry, spineWidthInches, SPINE_TEXT_MIN_PAGES, PAPER } from "../pdf/cover-geometry.js";
-import { royalty } from "../pdf/kdp-cost.js";
+import { royalty, printingCost } from "../pdf/kdp-cost.js";
 import { pageGeometry } from "../pdf/kdp.js";
 import { FREE_LIMIT, PRICE_LABEL, getLicense as storedLicense, setLicense, verifyEmail } from "./license.js";
 
@@ -387,6 +387,16 @@ function showMeta(s) {
   } else {
     el.moneyNote.textContent =
       `Prints for $${m.printing.toFixed(2)} on Amazon.com — at $${s.list.toFixed(2)} you keep $${m.royalty.toFixed(2)} a copy.`;
+    // KDP prints a short black-ink book for one price from 24 pages to 110
+    // (112 on groundwood), so a 30-page book pays for pages it doesn't have.
+    // The royalty calculator says so in pages; here it can say it in puzzles.
+    // Every book in the band is under 151 pages, so it has the same gutter and
+    // the same answers-per-page as this one, and the count is exact.
+    const { flatMax } = printingCost({ trim: s.trim, pages, ink: s.ink });
+    if (flatMax && pages < flatMax && !plan.belowMinimum) {
+      const most = puzzlesForPages(flatMax, answersPerPage(s, effective));
+      if (most > effective) el.moneyNote.textContent += ` Up to ${most} puzzles print for the same $${m.printing.toFixed(2)}.`;
+    }
   }
 }
 
