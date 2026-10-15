@@ -1,6 +1,6 @@
 # YouTube Studio checklist (rewritten 2026-10-15)
 
-This replaces the 09-26 list, which covered 6 Shorts; the channel now has 20 of ours. Every item is a change to a video that is already live, so it has to be done in YouTube Studio on your account. Buffer cannot edit a post once it has been sent.
+This replaces the 09-26 list, which covered 6 Shorts; the channel now has 19 of ours. `node app/scripts/ytlinks.mjs` reads the public Short pages and says which are linked, so you don't need to tick these. Every item is a change to a video that is already live, so it has to be done in YouTube Studio on your account. Buffer cannot edit a post once it has been sent.
 
 ## 1. Related video on every Short (the one that matters)
 
@@ -20,6 +20,7 @@ A Short's description can't carry a clickable link. The Related video bar under 
 - [ ] `ivTWiVtvW3I` KDP Spine Width Calculator
 - [ ] `W6RQSZvffMY` Free KDP royalty calculator that then makes the book
 - [ ] `v0-cvmEOcEk` Five kinds of KDP puzzle book from one free tool
+- [ ] `uKGoCuyMiJ8` Making a KDP puzzle book in under a minute
 
 **Trace Press Shorts → "Free handwriting workbook generator for Amazon KDP…" (`lnrBt6qFtw8`)**
 
