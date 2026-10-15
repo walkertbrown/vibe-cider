@@ -128,9 +128,13 @@ book that earns less than it should:
 - [Spine calculator](https://puzzlepress.bananafest-destiny.com/spine-calculator)
   — spine width from page count and paper (white, cream, groundwood or
   colour), and the full cover canvas in pixels
-  at 300 DPI, which is what design tools actually ask you for.
+  at 300 DPI, which is what design tools actually ask you for. One button
+  downloads that canvas as a cover template PNG: bleed, trim, spine folds,
+  text-safe lines and the 2" × 1.2" barcode box, to put under your art.
 - [Margin calculator](https://puzzlepress.bananafest-destiny.com/margin-calculator)
-  — the inside margin for your page count, which steps up at 150 pages.
+  — the inside margin for your page count, which steps up at 150 pages, and
+  odd- and even-page interior templates (PNG, 300 DPI) with KDP's margins and
+  the gutter drawn on the side it belongs.
 - [How to make a puzzle book](https://puzzlepress.bananafest-destiny.com/how-to-make-a-puzzle-book)
   — the 24-page minimum, the even-page rule, and the traps around both.
 

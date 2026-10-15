@@ -28,8 +28,11 @@ than it should: the
 [royalty calculator](https://puzzlepress.bananafest-destiny.com/royalty-calculator)
 (printing is flat $2.30 from 24 pages to 110, and $9.99 pays 60% where $9.98
 pays 50%), the
-[spine calculator](https://puzzlepress.bananafest-destiny.com/spine-calculator),
-the [margin calculator](https://puzzlepress.bananafest-destiny.com/margin-calculator),
+[spine calculator](https://puzzlepress.bananafest-destiny.com/spine-calculator)
+(which also downloads a free 300 DPI cover template with the bleed, spine folds
+and barcode box drawn for your trim, page count and paper), the
+[margin calculator](https://puzzlepress.bananafest-destiny.com/margin-calculator)
+(with odd- and even-page interior templates, gutter on the correct side),
 and a [guide to the whole process](https://puzzlepress.bananafest-destiny.com/how-to-make-a-puzzle-book).
 
 **[Trace Press](https://tracepress.bananafest-destiny.com/)** (the second app,
