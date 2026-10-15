@@ -10,28 +10,28 @@ A Short's description can't carry a clickable link. The Related video bar under 
 
 **Puzzle Press Shorts → "How to make a KDP puzzle book in 60 seconds…" (`ph6q2ih6cBs`)**
 
-- [ ] `Qb3LZ-1aG1s` No sudoku with 16 clues has one answer
-- [ ] `zicmbaeXMK0` KDP spine text at 79 pages: 0.053"
-- [ ] `CH06BN1HpUI` A 124-page Halloween word search book for KDP
-- [ ] `DPndBRKnDUo` KDP royalty: $9.98 vs $9.99
-- [ ] `g0VXASTqsg4` KDP margins: the gutter grows with page count
-- [ ] `9nZrH4AK2yg` KDP large print word search & sudoku books
-- [ ] `UDwBuUHuz1M` KDP puzzle books: groundwood paper
-- [ ] `ivTWiVtvW3I` KDP Spine Width Calculator
-- [ ] `W6RQSZvffMY` Free KDP royalty calculator that then makes the book
-- [ ] `v0-cvmEOcEk` Five kinds of KDP puzzle book from one free tool
-- [ ] `uKGoCuyMiJ8` Making a KDP puzzle book in under a minute
+- [x] `Qb3LZ-1aG1s` No sudoku with 16 clues has one answer
+- [ ] `zicmbaeXMK0` KDP spine text at 79 pages: 0.053" — **linked to the Trace Press video by mistake (10-15); switch to `ph6q2ih6cBs`**
+- [x] `CH06BN1HpUI` A 124-page Halloween word search book for KDP
+- [x] `DPndBRKnDUo` KDP royalty: $9.98 vs $9.99
+- [x] `g0VXASTqsg4` KDP margins: the gutter grows with page count
+- [x] `9nZrH4AK2yg` KDP large print word search & sudoku books
+- [x] `UDwBuUHuz1M` KDP puzzle books: groundwood paper
+- [x] `ivTWiVtvW3I` KDP Spine Width Calculator
+- [x] `W6RQSZvffMY` Free KDP royalty calculator that then makes the book
+- [x] `v0-cvmEOcEk` Five kinds of KDP puzzle book from one free tool
+- [x] `uKGoCuyMiJ8` Making a KDP puzzle book in under a minute
 
 **Trace Press Shorts → "Free handwriting workbook generator for Amazon KDP…" (`lnrBt6qFtw8`)**
 
-- [ ] `s3yeFA88v-E` The 40 first sight words take 160 pencil strokes
-- [ ] `5PRl1XWTtb4` A to Z in capitals: 49 strokes
-- [ ] `HKc869Bu27E` KDP's 3 print minimums
-- [ ] `cnjdHB_XgIQ` Free cursive alphabet chart
-- [ ] `vnXG1Xenu5o` KDP cover size for an 8.5x11 tracing book
-- [ ] `S3nzgP01FlQ` 3 KDP numbers for a tracing book
-- [ ] `ClC_smSfeX8` Free Halloween tracing worksheets
-- [ ] `tB3NwTAR990` Letter tracing workbook for Amazon KDP
+- [x] `s3yeFA88v-E` The 40 first sight words take 160 pencil strokes
+- [x] `5PRl1XWTtb4` A to Z in capitals: 49 strokes
+- [x] `HKc869Bu27E` KDP's 3 print minimums
+- [x] `cnjdHB_XgIQ` Free cursive alphabet chart
+- [x] `vnXG1Xenu5o` KDP cover size for an 8.5x11 tracing book
+- [x] `S3nzgP01FlQ` 3 KDP numbers for a tracing book
+- [x] `ClC_smSfeX8` Free Halloween tracing worksheets
+- [x] `tB3NwTAR990` Letter tracing workbook for Amazon KDP
 
 Not ours, so leave them alone: the Bulkhead starship Short and "Meet Hector".
 
