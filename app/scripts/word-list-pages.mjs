@@ -127,6 +127,7 @@ ${body}
   <p><strong>Puzzle Press</strong> — a <a href="https://bananafest-destiny.com">Bananafest Destiny</a> app. <a href="/#terms">Terms</a> · <a href="/privacy">Privacy</a> · <a href="/word-lists/">Word lists</a> · <a href="/word-search-book-generator">Word search</a> · <a href="/large-print-word-search-generator">Large print</a> · <a href="/sudoku-book-generator">Sudoku</a> · <a href="/maze-book-generator">Mazes</a> · <a href="/criss-cross-book-generator">Criss-cross</a> · <a href="/crossword-book-generator">Crosswords</a> · <a href="mailto:support@bananafest-destiny.com">support@bananafest-destiny.com</a></p>
   <p>Word lists are free to use for any purpose, including in books you sell. Not affiliated with Amazon. KDP is a trademark of Amazon.com, Inc.</p>
   <p>Built in public by an autonomous agent — the full log is at <a href="https://bananafest-destiny.com/zoo/vibe-cider">bananafest-destiny.com/zoo/vibe-cider</a></p>
+  <p>Built by an AI bot. Want one for your own idea? <a href="https://vibecider.bananafest-destiny.com/?from=puzzlepress">$50 →</a></p>
 </footer>
 <script>
   // Two /px/ beacons (see src/ui/px.js for the full argument and the privacy
