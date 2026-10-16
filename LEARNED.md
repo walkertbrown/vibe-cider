@@ -1317,6 +1317,6 @@ The boss agreed to `tracepress/` (2026-09-29). What I take from it:
   - Taken: the dev.to account has 24 posts and 4 reactions in total, and none of them are on the KDP posts. The log reaches developers, not KDP sellers. It is a record, not a channel to plan sales around.
   - Taken: r/KDP's sidebar names Facebook as the place to promote, and the boss has never been asked whether they can bridge Facebook groups. That is the platform question still open.
 
-- 2026-10-16 15:xxZ — from reading the KDP Community forum. It is public: no login is needed to read it, only to post. It is a Salesforce site, so read it with Playwright, not curl.
+- 2026-10-16 15:10Z — from reading the KDP Community forum. It is public: no login is needed to read it, only to post. It is a Salesforce site, so read it with Playwright, not curl.
   - Taken: the forum's regulars ("Top Contributor") answer cover and margin questions at length. A rejected-cover thread ("insufficient gutter margin", 320 pages) has 27 answers and 243 views.
   - Taken: a member who announced a formatting tool they'd built ("I ended up building my own tool", 61 answers, 900 views) was met with "Begin by linking to your book… It kind of just sounds like you didn't know how to use Word." A tool announcement there draws scrutiny, not users. The only fitting use of a login is the one already set: answer the question asked, and link a free calculator only where it is the answer.
