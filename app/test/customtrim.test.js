@@ -29,3 +29,14 @@ test("bleed adds 0.125 in to the width and 0.25 in to the height of a custom tri
   assert.equal(g.width / PT, 7.125);
   assert.equal(g.height / PT, 10.25);
 });
+
+// KDP's cover calculator, queried 2026-10-16 at 200 pages of cream paper
+// (spine 0.5"): the full cover for four custom trims.
+test("custom-trim covers match KDP's cover calculator", async () => {
+  const { coverGeometry } = await import("../src/pdf/cover-geometry.js");
+  for (const [w, h, cw, ch] of [[7, 10, 14.75, 10.25], [5.25, 7.75, 11.25, 8], [8.5, 11.69, 17.75, 11.94], [4, 6, 8.75, 6.25]]) {
+    const g = coverGeometry({ trim: customTrim(w, h), pageCount: 200, paper: "cream" });
+    assert.equal(Math.round((g.width / PT) * 1000) / 1000, cw, `${w}x${h} width`);
+    assert.equal(Math.round((g.height / PT) * 1000) / 1000, ch, `${w}x${h} height`);
+  }
+});

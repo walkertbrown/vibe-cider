@@ -1,6 +1,6 @@
 // The spine calculator page. It imports the same functions the book generator
 // uses, so the numbers here cannot drift away from the numbers in the PDFs.
-import { TRIMS, gutterInches, PT } from "../pdf/kdp.js";
+import { TRIMS, gutterInches, PT, customTrim } from "../pdf/kdp.js";
 import { coverGeometry, spineWidthInches, PAPER, SPINE_TEXT_MIN_PAGES, SPINE_FOLD_IN, SPINE_SAFETY_IN, SPINE_TYPE_BOX_EM, SPINE_TYPE_MIN_PT, BARCODE_IN } from "../pdf/cover-geometry.js";
 import { toolLink, carryNote } from "./tool-link.js";
 import { px } from "./px.js";
@@ -10,6 +10,7 @@ const $ = (id) => document.getElementById(id);
 const el = {
   make: $("makeBtn"), makeTop: $("makeBtnTop"), carry: $("carry"),
   trim: $("trim"), pages: $("pages"), paper: $("paper"),
+  custom: $("custom"), customW: $("customW"), customH: $("customH"), customNote: $("customNote"), makeBox: $("makeBox"),
   spine: $("spine"), spineMm: $("spineMm"), cover: $("cover"), coverMm: $("coverMm"),
   gutter: $("gutter"), spineText: $("spineText"), barcode: $("barcode"), sum: $("sum"),
   coverPx: $("coverPx"), pxNote: $("pxNote"), tpl: $("tplBtn"),
@@ -31,6 +32,12 @@ for (const [id, t] of Object.entries(TRIMS)) {
   if (id === "6x9") o.selected = true;
   el.trim.append(o);
 }
+{
+  const o = document.createElement("option");
+  o.value = "custom";
+  o.textContent = "Custom size";
+  el.trim.append(o);
+}
 for (const [id, p] of Object.entries(PAPER)) {
   const o = document.createElement("option");
   o.value = id;
@@ -42,11 +49,34 @@ for (const [id, p] of Object.entries(PAPER)) {
 const inch = (n) => `${n.toFixed(3)}"`;
 const mm = (n) => `${(n * 25.4).toFixed(1)} mm`;
 
+// The trim the figures are for: a TRIMS key, or the typed custom { w, h },
+// or null when the custom size is outside what KDP prints.
+function currentTrim() {
+  if (el.trim.value !== "custom") return el.trim.value;
+  return customTrim(parseFloat(el.customW.value), parseFloat(el.customH.value));
+}
+
 function update() {
-  const trim = el.trim.value;
+  const custom = el.trim.value === "custom";
+  el.custom.hidden = !custom;
+  const trim = currentTrim();
+  el.customNote.hidden = !custom || !!trim;
+  if (!trim) {
+    for (const k of ["spine", "spineMm", "cover", "coverMm", "coverPx"]) el[k].textContent = "—";
+    el.gutter.textContent = el.spineText.textContent = el.sum.textContent = "";
+    return;
+  }
   const pages = Math.max(24, Math.min(828, parseInt(el.pages.value, 10) || 24));
   const paper = el.paper.value;
 
+  // The generator only makes the standard sizes, so a custom size gets the
+  // figures and the template, no "make this book" beside them, and a plain
+  // link at the foot that says why.
+  el.makeBox.hidden = custom;
+  if (custom) {
+    el.make.href = "/";
+    el.carry.textContent = "Puzzle Press makes the standard trim sizes in the menu, not custom ones.";
+  } else {
   // Carried into the generator: trim, paper (the two things that set the spine
   // width), and their page count as the puzzle count that reaches it. The
   // cover it makes then has the spine width printed on this page.
@@ -54,12 +84,13 @@ function update() {
   el.make.href = link.href;
   el.makeTop.href = link.href;
   el.carry.textContent = carryNote(link, trim, ` on ${PAPER[paper].label.toLowerCase()}`);
+  }
 
   const spine = spineWidthInches(pages, paper);
   const g = coverGeometry({ trim, pageCount: pages, paper });
   const w = g.width / PT;
   const h = g.height / PT;
-  const t = TRIMS[trim];
+  const t = g.trim;
 
   el.spine.textContent = inch(spine);
   el.spineMm.textContent = mm(spine);
@@ -91,7 +122,7 @@ function update() {
     `0.125" bleed + ${t.w}" back + ${inch(spine)} spine + ${t.w}" front + 0.125" bleed = ${inch(w)}`;
 }
 
-for (const node of [el.trim, el.pages, el.paper]) {
+for (const node of [el.trim, el.pages, el.paper, el.customW, el.customH]) {
   node.addEventListener("input", update);
   node.addEventListener("change", update);
 }
@@ -118,7 +149,9 @@ for (const [node, where] of [[el.make, "handoff"], [el.makeTop, "handofftop"]]) 
 // browser, from the current settings; nothing is sent anywhere but the
 // content-free "template" beacon.
 el.tpl.addEventListener("click", () => {
-  const trim = el.trim.value, paper = el.paper.value;
+  const trim = currentTrim(), paper = el.paper.value;
+  if (!trim) return;
+  const name = typeof trim === "object" ? `${trim.w}x${trim.h}` : trim;
   const pages = Math.max(24, Math.min(828, parseInt(el.pages.value, 10) || 24));
   const g = coverGeometry({ trim, pageCount: pages, paper });
   const canvas = drawCoverTemplate(g, { dpi: COVER_DPI, paperLabel: PAPER[paper].label.toLowerCase() });
@@ -126,7 +159,7 @@ el.tpl.addEventListener("click", () => {
   canvas.toBlob((blob) => {
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = `kdp-cover-template-${trim}-${pages}-pages-${paper}.png`;
+    a.download = `kdp-cover-template-${name}-${pages}-pages-${paper}.png`;
     document.body.append(a);
     a.click();
     a.remove();

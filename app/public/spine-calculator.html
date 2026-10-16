@@ -57,6 +57,8 @@
   /* The handoff beside the answer — see the note in the markup. */
   .tpl { margin-top:12px; font:inherit; font-size:15px; font-weight:600; padding:9px 14px; border-radius:8px; background:#fff; color:var(--accent); border:1px solid var(--accent); cursor:pointer; }
   .make-here { margin-top:18px; text-align:center; }
+  .wh { display:flex; align-items:center; gap:8px; } .wh input { min-width:0; }
+  .note-bad { font-size:13px; color:#a33; margin:6px 0 0; }
   .make-here p { margin:9px 0 0; font-size:13px; color:#5c6470; }
 </style>
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "b7be686eebf64639b0e60d43860bbd54"}'></script>
@@ -87,13 +89,18 @@
 
 <main>
   <h1>KDP spine width calculator</h1>
-  <p class="lede">Enter your page count, trim size and paper (white, cream, groundwood or colour). You get the spine width and the exact size your full cover PDF has to be — using Amazon's own formula, with nothing added to it.</p>
+  <p class="lede">Enter your page count, trim size and paper (white, cream, groundwood or colour). You get the spine width and the exact size your full cover PDF has to be — using Amazon's own formula, with nothing added to it. Custom trim sizes work too: 4" to 8.5" wide, 6" to 11.69" tall.</p>
 
   <div class="calc">
     <div class="fields">
       <div>
         <label for="trim">Trim size</label>
         <select id="trim"></select>
+      </div>
+      <div id="custom" hidden>
+        <label for="customW">Width × height (inches)</label>
+        <div class="wh"><input type="number" id="customW" value="7" min="4" max="8.5" step="0.01" aria-label="Width in inches"> × <input type="number" id="customH" value="10" min="6" max="11.69" step="0.01" aria-label="Height in inches"></div>
+        <p id="customNote" class="note-bad" hidden>KDP takes widths from 4" to 8.5" and heights from 6" to 11.69".</p>
       </div>
       <div>
         <label for="pages">Page count</label>
@@ -135,7 +142,7 @@
          calculator, none pressed the button. Same shape as the generator thumb
          bar and #previewDownload — a second button to the same place, so there
          is one destination and one funnel signal. -->
-    <div class="make-here">
+    <div class="make-here" id="makeBox">
       <a class="btn" id="makeBtnTop" href="/">Make this book free</a>
       <p>Opens the generator with this exact book already set up. Nothing to re-type.</p>
     </div>

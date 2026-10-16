@@ -50,8 +50,10 @@ export function spineWidthInches(pageCount, paper = "cream") {
   return pageCount * t;
 }
 
+// trim is a TRIMS key, or a custom { w, h } in inches (the spine calculator's
+// "Custom size", see customTrim in kdp.js).
 export function coverGeometry({ trim = "6x9", pageCount = 24, paper = "cream" }) {
-  const t = TRIMS[trim] ?? TRIMS["6x9"];
+  const t = typeof trim === "object" ? trim : TRIMS[trim] ?? TRIMS["6x9"];
   const spineIn = spineWidthInches(pageCount, paper);
   const widthIn = BLEED_IN + t.w + spineIn + t.w + BLEED_IN;
   const heightIn = BLEED_IN + t.h + BLEED_IN;
