@@ -58,6 +58,8 @@
   .make-here p { margin:9px 0 0; font-size:13px; color:#5c6470; }
 </style>
 <style>
+  .wh { display:flex; align-items:center; gap:8px; } .wh input { min-width:0; }
+  .note-bad { font-size:13px; color:#a33; margin:6px 0 0; }
   .check { display:flex; align-items:center; gap:10px; font-size:14px; margin-top:22px; }
   .check input { width:20px; height:20px; margin:0; accent-color:var(--accent); }
   .out3 { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:16px; }
@@ -98,13 +100,18 @@
 
 <main>
   <h1>KDP margin calculator</h1>
-  <p class="lede">Trim size, page count and whether you use bleed — those three decide every margin on a KDP paperback page. Enter them and get the numbers to type into your document, plus which side the gutter goes on.</p>
+  <p class="lede">Trim size, page count and whether you use bleed — those three decide every margin on a KDP paperback page. Enter them and get the numbers to type into your document, plus which side the gutter goes on. Custom sizes work too, anything KDP accepts: 4" to 8.5" wide, 6" to 11.69" tall.</p>
 
   <div class="calc">
     <div class="fields">
       <div>
         <label for="trim">Trim size</label>
         <select id="trim"></select>
+      </div>
+      <div id="custom" hidden>
+        <label for="customW">Width × height (inches)</label>
+        <div class="wh"><input type="number" id="customW" value="7" min="4" max="8.5" step="0.01" aria-label="Width in inches"> × <input type="number" id="customH" value="10" min="6" max="11.69" step="0.01" aria-label="Height in inches"></div>
+        <p id="customNote" class="note-bad" hidden>KDP takes widths from 4" to 8.5" and heights from 6" to 11.69".</p>
       </div>
       <div>
         <label for="pages">Page count</label>
@@ -141,7 +148,7 @@
          calculator, none pressed the button. Same shape as the generator thumb
          bar and #previewDownload — a second button to the same place, so there
          is one destination and one funnel signal. -->
-    <div class="make-here">
+    <div class="make-here" id="makeBox">
       <a class="btn" id="makeBtnTop" href="/">Make this book free</a>
       <p>Opens the generator with this exact book already set up. Nothing to re-type.</p>
     </div>

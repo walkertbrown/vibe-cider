@@ -1,6 +1,6 @@
 // The margin calculator page. Same functions the PDF engine lays pages out
 // with, so the figures here are the figures in the books.
-import { TRIMS, PT, MIN_PAGES, MAX_PAGES, gutterInches, pageGeometry, marginsForPage } from "../pdf/kdp.js";
+import { TRIMS, PT, MIN_PAGES, MAX_PAGES, gutterInches, pageGeometry, marginsForPage, customTrim } from "../pdf/kdp.js";
 import { toolLink, carryNote } from "./tool-link.js";
 import { px } from "./px.js";
 import { drawPageTemplate } from "./page-template.js";
@@ -9,6 +9,7 @@ const $ = (id) => document.getElementById(id);
 const el = {
   make: $("makeBtn"), makeTop: $("makeBtnTop"), carry: $("carry"),
   trim: $("trim"), pages: $("pages"), bleed: $("bleed"),
+  custom: $("custom"), customW: $("customW"), customH: $("customH"), customNote: $("customNote"), makeBox: $("makeBox"),
   pageSize: $("pageSize"), pageSizeMm: $("pageSizeMm"), pagePt: $("pagePt"),
   inside: $("inside"), outside: $("outside"), topBottom: $("topBottom"),
   sides: $("sides"), settings: $("settings"), live: $("live"),
@@ -22,6 +23,19 @@ for (const [id, t] of Object.entries(TRIMS)) {
   o.textContent = t.label + (id === "6x9" ? " (recommended)" : "");
   if (id === "6x9") o.selected = true;
   el.trim.append(o);
+}
+{
+  const o = document.createElement("option");
+  o.value = "custom";
+  o.textContent = "Custom size";
+  el.trim.append(o);
+}
+
+// The trim the figures are for: a TRIMS key, or the typed custom { w, h }.
+// A custom size outside KDP's limits falls back to nothing, and says so.
+function currentTrim() {
+  if (el.trim.value !== "custom") return el.trim.value;
+  return customTrim(parseFloat(el.customW.value), parseFloat(el.customH.value));
 }
 
 const inch = (n) => `${(Math.round(n * 1000) / 1000).toString()}"`;
@@ -53,10 +67,26 @@ function drawPages(geom) {
 }
 
 function update() {
-  const trim = el.trim.value;
+  const custom = el.trim.value === "custom";
+  el.custom.hidden = !custom;
+  const trim = currentTrim();
+  el.customNote.hidden = !custom || !!trim;
+  if (!trim) {
+    for (const k of ["pageSize", "pageSizeMm", "pagePt", "inside", "outside", "topBottom"]) el[k].textContent = "—";
+    el.sides.textContent = el.settings.textContent = el.live.textContent = "";
+    return;
+  }
   const pages = Math.max(MIN_PAGES, Math.min(MAX_PAGES, parseInt(el.pages.value, 10) || MIN_PAGES));
   const bleed = el.bleed.checked;
 
+  // The generator only makes the standard sizes, so a custom size gets the
+  // figures and the templates, no "make this book" beside them, and a plain
+  // link at the foot that says why.
+  el.makeBox.hidden = custom;
+  if (custom) {
+    el.make.href = "/";
+    el.carry.textContent = "Puzzle Press makes the standard trim sizes in the menu, not custom ones.";
+  } else {
   // Carried into the generator: trim, bleed, and their page count as the
   // puzzle count that reaches it. The interior it lays out uses exactly the
   // margins and the gutter side drawn on this page.
@@ -64,9 +94,10 @@ function update() {
   el.make.href = link.href;
   el.makeTop.href = link.href;
   el.carry.textContent = carryNote(link, trim, bleed ? ", with bleed" : "");
+  }
 
   const geom = pageGeometry({ trim, bleed, pageCount: pages });
-  const t = TRIMS[trim];
+  const t = geom.trim;
   const w = geom.width / PT, h = geom.height / PT;
   const inner = geom.margin.inner / PT, outer = geom.margin.outer / PT, tb = geom.margin.top / PT;
 
@@ -88,7 +119,7 @@ function update() {
   drawPages(geom);
 }
 
-for (const node of [el.trim, el.pages, el.bleed]) {
+for (const node of [el.trim, el.pages, el.bleed, el.customW, el.customH]) {
   node.addEventListener("input", update);
   node.addEventListener("change", update);
 }
@@ -116,14 +147,16 @@ for (const [node, where] of [[el.make, "handoff"], [el.makeTop, "handofftop"]]) 
 // settings; nothing is sent anywhere but the content-free "pagetpl" beacon.
 for (const [node, pageNo, side] of [[el.tplOdd, 1, "odd"], [el.tplEven, 2, "even"]]) {
   node.addEventListener("click", () => {
-    const trim = el.trim.value, bleed = el.bleed.checked;
+    const trim = currentTrim(), bleed = el.bleed.checked;
+    if (!trim) return;
+    const name = typeof trim === "object" ? `${trim.w}x${trim.h}` : trim;
     const pages = Math.max(MIN_PAGES, Math.min(MAX_PAGES, parseInt(el.pages.value, 10) || MIN_PAGES));
     const canvas = drawPageTemplate(pageGeometry({ trim, bleed, pageCount: pages }), { pageNo, pageCount: pages });
     px("pagetpl");
     canvas.toBlob((blob) => {
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
-      a.download = `kdp-interior-template-${trim}-${pages}-pages-${side}${bleed ? "-bleed" : ""}.png`;
+      a.download = `kdp-interior-template-${name}-${pages}-pages-${side}${bleed ? "-bleed" : ""}.png`;
       document.body.append(a);
       a.click();
       a.remove();

@@ -22,6 +22,16 @@ export const TRIMS = {
 // says it "can even happen with a value that matches KDP's minimum".
 export const SAFETY_IN = 1 / 32;
 
+// KDP's custom paperback trim limits, in inches (KDP help, "Print Options").
+export const CUSTOM_TRIM = { minW: 4, maxW: 8.5, minH: 6, maxH: 11.69 };
+
+// A custom trim from typed width and height, or null when KDP would refuse it.
+export function customTrim(w, h) {
+  const c = CUSTOM_TRIM;
+  if (!(w >= c.minW && w <= c.maxW && h >= c.minH && h <= c.maxH)) return null;
+  return { label: `${w}" × ${h}"`, w, h };
+}
+
 export const MIN_PAGES = 24;
 export const MAX_PAGES = 828;
 
@@ -38,8 +48,10 @@ export function gutterInches(pageCount) {
 // With bleed, KDP wants the PDF page 0.125" wider (outside edge) and 0.25"
 // taller, and the outside/top/bottom margins measured from the trim line
 // to be at least 0.375" instead of 0.25".
+// trim is a TRIMS key, or a custom { w, h } in inches (the margin calculator's
+// "Custom size"; the generator only makes the TRIMS sizes).
 export function pageGeometry({ trim = "6x9", bleed = false, pageCount = MIN_PAGES }) {
-  const t = TRIMS[trim] ?? TRIMS["6x9"];
+  const t = typeof trim === "object" ? trim : TRIMS[trim] ?? TRIMS["6x9"];
   const bleedIn = bleed ? 0.125 : 0;
   const width = (t.w + bleedIn) * PT;
   const height = (t.h + 2 * bleedIn) * PT;
