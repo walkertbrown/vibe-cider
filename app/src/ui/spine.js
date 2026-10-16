@@ -103,7 +103,7 @@ function update() {
   el.gutter.textContent = `${inch(gutterInches(pages))} inside margin`;
   // KDP's cover calculator gives a "Spine Safe Area" of the spine less 0.0625"
   // at each fold (checked against 120 trim/paper/page combinations 2026-09-24).
-  // Being allowed spine text at 79 pages is not the same as having room for it:
+  // Being allowed spine text at 80 pages is not the same as having room for it:
   // at 80 pages of cream the safe strip is 0.075", under 5pt of type. The type
   // figure is a bold sans's full ascender-to-descender height, 1.117 em.
   const safe = spine - 2 * SPINE_FOLD_IN;

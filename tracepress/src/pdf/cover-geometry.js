@@ -7,15 +7,18 @@
 //   cover width  = bleed + back width + spine + front width + bleed
 //   cover height = bleed + trim height + bleed
 //   bleed        = 0.125" on every outside edge
-//   spine text   = allowed only at 79 pages or more
+//   spine text   = from 80 pages. The help page says "at least 79" and
+//                  "more than 79" in different places, Cover Creator says
+//                  80, and a book KDP counted at 79 pages was refused spine
+//                  text in October 2026 (KDP Community), so 80.
 
 import { PT, TRIMS } from "./kdp.js";
 
 export const BLEED_IN = 0.125;
-export const SPINE_TEXT_MIN_PAGES = 79;
+export const SPINE_TEXT_MIN_PAGES = 80;
 // KDP's cover calculator: "Spine Safe Area" is the spine less 0.0625" at each
 // fold. Our spine type is Liberation Sans Bold, whose ascender-to-descender box
-// is 1.117 em; below 6pt it is not worth printing. So from 79 pages KDP allows
+// is 1.117 em; below 6pt it is not worth printing. So from 80 pages KDP allows
 // spine text, but it only fits once the spine is about 0.249" — 100 pages on
 // cream, 111 on white.
 export const SPINE_FOLD_IN = 0.0625;

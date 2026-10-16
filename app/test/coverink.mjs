@@ -99,7 +99,7 @@ for (const pageCount of [32, 66, 78, 80, 100, 300]) {
       const inBarcode = darkestIn(png, { x0: bx0 + 1, y0: by0 + 1, x1: bx1 - 1, y1: by1 - 1 });
       check(!inBarcode, `${label}: something is printed in the barcode area at ${inBarcode?.x},${inBarcode?.y} (grey ${inBarcode?.v})`);
 
-      // 2. Spine text only when KDP allows it (79 pages) AND it fits inside
+      // 2. Spine text only when KDP allows it (80 pages) AND it fits inside
       //    each fold with room to spare (g.spineTextFits — 100pp on cream,
       //    111 on white).
       //    Otherwise the spine must be a flat band: no glyphs, which show up

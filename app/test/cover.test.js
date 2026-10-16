@@ -48,7 +48,7 @@ test("panels sit next to each other with no gap or overlap", () => {
   assert.ok(Math.abs(g.frontX + g.panelW + 0.125 * 72 - g.width) < 1e-9);
 });
 
-test("spine text is allowed only from 79 pages", () => {
+test("spine text is allowed only from 80 pages", () => {
   assert.equal(coverGeometry({ pageCount: SPINE_TEXT_MIN_PAGES - 1 }).spineTextAllowed, false);
   assert.equal(coverGeometry({ pageCount: SPINE_TEXT_MIN_PAGES }).spineTextAllowed, true);
 });

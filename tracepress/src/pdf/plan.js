@@ -31,7 +31,7 @@ export const DIGITS = [..."0123456789"].filter((d) => PRINT[d]);
 
 // Practice words the buyer adds get a page each after that, laid out like the
 // free name sheet (name.js). Numbers and words together are at most 52 pages
-// past Z, so the book stays under KDP's 79-page floor for spine text and the
+// past Z, so the book stays under KDP's 80-page floor for spine text and the
 // cover's blank spine stays right: 52 words, or 10 numbers and 42 words.
 export const EXTRA_MAX = 52;
 export const WORDS_MAX = EXTRA_MAX;

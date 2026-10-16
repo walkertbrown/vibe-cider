@@ -10,7 +10,7 @@
 // gets its model in cursive instead: "Aa" joined, solid, on the guides. A
 // print book with pictures (`abc`, "A is for apple") gets the apple beside
 // the letters, its word under it, as the first page has it. A 26-page book
-// is under KDP's 79-page floor for spine text, so the spine is blank.
+// is under KDP's 80-page floor for spine text, so the spine is blank.
 //
 // `layoutCover` returns plain shapes (the ink.js kinds, plus `rect`), so a
 // test can check every word sits inside the safe area without rendering.

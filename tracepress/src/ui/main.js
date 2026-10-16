@@ -62,7 +62,7 @@ const inch = (pt) => `${(pt / 72).toFixed(3).replace(/0+$/, "").replace(/\.$/, "
 function showCoverNote() {
   const pageCount = planBook(opts()).pages.length;
   const g = coverGeometry({ trim: el.trim.value, pageCount, paper: el.paper.value });
-  el.coverNote.textContent = `${inch(g.width)} × ${inch(g.height)} with bleed, spine ${inch(g.spine)} for ${pageCount} pages. KDP allows spine text from 79 pages, so the spine is left blank.`;
+  el.coverNote.textContent = `${inch(g.width)} × ${inch(g.height)} with bleed, spine ${inch(g.spine)} for ${pageCount} pages. KDP allows spine text from 80 pages, so the spine is left blank.`;
   // The paper menu's keys are KDP's price rows, except white and cream, which
   // both print at the black-ink rate.
   const ink = ["white", "cream"].includes(el.paper.value) ? "black" : el.paper.value;

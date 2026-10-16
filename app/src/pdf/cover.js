@@ -7,7 +7,7 @@
 //   cover width  = bleed + back width + spine + front width + bleed
 //   cover height = bleed + trim height + bleed
 //   bleed        = 0.125" on every outside edge
-//   spine text   = allowed only at 79 pages or more
+//   spine text   = from 80 pages (SPINE_TEXT_MIN_PAGES, cover-geometry.js)
 //
 // The barcode area is not given as a number on that page; the 2" x 1.2" clear
 // box in the lower right of the back cover is the convention KDP's own
@@ -477,7 +477,7 @@ function drawHero(page, p, { x, top, side, font, bold, pal, plain = false }) {
 }
 
 function drawSpine(page, g, { title, author, regular, bold, pal }) {
-  // KDP allows spine text from 79 pages, but the type must stay 0.0625" inside
+  // KDP allows spine text from 80 pages, but the type must stay 0.0625" inside
   // each fold, and ours stays a further 1/64" in (cover-geometry.js), so the
   // spine stays blank until 6pt fits.
   // A title too long for the spine drops the author, then goes blank rather

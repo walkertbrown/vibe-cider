@@ -32,8 +32,8 @@ for (const c of cases) {
 await p.fill("#pages", "60");
 await p.waitForTimeout(200);
 console.log("spine text at 60p:", (await p.textContent("#spineText")).slice(0, 60));
-if (!(await p.textContent("#spineText")).includes("Not allowed")) throw new Error("should forbid spine text under 79 pages");
-// Allowed from 79 pages, but KDP's spine safe area (spine less 0.0625" at each
+if (!(await p.textContent("#spineText")).includes("Not allowed")) throw new Error("should forbid spine text under 80 pages");
+// Allowed from 80 pages, but KDP's spine safe area (spine less 0.0625" at each
 // fold) has no room for readable type until about 88 pages of cream, and
 // Puzzle Press keeps its own spine text a further 1/64" in: 100 pages.
 await p.selectOption("#paper", "cream");

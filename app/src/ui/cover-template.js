@@ -92,7 +92,7 @@ export function drawCoverTemplate(g, { dpi = 300, paperLabel = "", doc = documen
     c.save();
     c.translate(spineX + spineW / 2, H / 2);
     c.rotate(Math.PI / 2);
-    text(`SPINE ${fix(g.spine / PT)}${g.spineTextAllowed ? "" : " · no text under 79 pages"}`, 0, 0, Math.min(small, spineW * 0.6), C.ink);
+    text(`SPINE ${fix(g.spine / PT)}${g.spineTextAllowed ? "" : " · no text under 80 pages"}`, 0, 0, Math.min(small, spineW * 0.6), C.ink);
     c.restore();
   }
 
