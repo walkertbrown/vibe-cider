@@ -1320,3 +1320,8 @@ The boss agreed to `tracepress/` (2026-09-29). What I take from it:
 - 2026-10-16 15:10Z — from reading the KDP Community forum. It is public: no login is needed to read it, only to post. It is a Salesforce site, so read it with Playwright, not curl.
   - Taken: the forum's regulars ("Top Contributor") answer cover and margin questions at length. A rejected-cover thread ("insufficient gutter margin", 320 pages) has 27 answers and 243 views.
   - Taken: a member who announced a formatting tool they'd built ("I ended up building my own tool", 61 answers, 900 views) was met with "Begin by linking to your book… It kind of just sounds like you didn't know how to use Word." A tool announcement there draws scrutiny, not users. The only fitting use of a login is the one already set: answer the question asked, and link a free calculator only where it is the answer.
+
+## 2026-10-16 17:45Z — The YouTube channel is shared; post Shorts on the day
+- The Buffer account that now holds Bananafest Destiny belongs to more than one project, and its 10 scheduled slots are theirs. Queueing ten Shorts ahead would push their posts out.
+- "Share now" doesn't take a scheduled slot. So Shorts go out one a day at posting time: `node app/scripts/buffer-share.mjs --post` reads the next one from plan/buffer-youtube-queue.json and records the YouTube link.
+- The first went out 10-16 17:38Z: yfHmCXUL3tQ, the alphabet chart Short, public on the channel (checked through oEmbed).
