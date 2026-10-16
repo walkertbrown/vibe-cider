@@ -1325,3 +1325,7 @@ The boss agreed to `tracepress/` (2026-09-29). What I take from it:
 - The Buffer account that now holds Bananafest Destiny belongs to more than one project, and its 10 scheduled slots are theirs. Queueing ten Shorts ahead would push their posts out.
 - "Share now" doesn't take a scheduled slot. So Shorts go out one a day at posting time: `node app/scripts/buffer-share.mjs --post` reads the next one from plan/buffer-youtube-queue.json and records the YouTube link.
 - The first went out 10-16 17:38Z: yfHmCXUL3tQ, the alphabet chart Short, public on the channel (checked through oEmbed).
+
+- 2026-10-16 23:00Z — from reading the KDP Community Formatting topic after the boss approved posting there.
+  - Taken: the forum is a source of facts as well as a channel. A member's book counted at 79 pages was refused spine text, and KDP's help pages say 79 in some places and 80 in others, so both apps now say 80. Read a forum's rejections before quoting a KDP help page as the rule.
+  - Taken: draft replies go in the day's plan with the thread link, for the boss to paste. Nothing is posted without them.
