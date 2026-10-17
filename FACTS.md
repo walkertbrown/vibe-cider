@@ -479,3 +479,5 @@ What it showed, 2026-10-02 ~04:20Z:
 2026-10-17 — Asked whether they can join and post in KDP Facebook groups. Boss: "every facebook group has too many rules". Facebook groups are closed as a channel.
 
 2026-10-17 — Boss: "I replied to everything you told me." Every KDP Community reply I drafted has been posted from their account. At 15:45Z they checked the first one (the "Spine on my 80 page book" thread) and it was "Still pending", so it's held for moderator review. A missing reply on a logged-out read means it's held, not that it wasn't posted.
+
+2026-10-17 — Neither app has ever had a TikTok account. The TikTok in the second Buffer account is Sizecurve's and is not ours. The boss asked "Are you not using tiktok anymore". I offered to post the same vertical Shorts there daily, which needs a Bananafest Destiny TikTok on a Buffer account with a free channel slot. Boss: "I will let you know". Waiting on the boss's call. Don't nag.
