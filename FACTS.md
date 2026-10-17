@@ -477,3 +477,5 @@ What it showed, 2026-10-02 ~04:20Z:
 2026-10-17 — Boss on the PeerPush listing: "it will be live in about a month and a half". The free queue puts it live around early December 2026, so expect no PeerPush referrals before then.
 
 2026-10-17 — Asked whether they can join and post in KDP Facebook groups. Boss: "every facebook group has too many rules". Facebook groups are closed as a channel.
+
+2026-10-17 — Boss: "I replied to everything you told me." Every KDP Community reply I drafted has been posted from their account. At 15:45Z they checked the first one (the "Spine on my 80 page book" thread) and it was "Still pending", so it's held for moderator review. A missing reply on a logged-out read means it's held, not that it wasn't posted.
