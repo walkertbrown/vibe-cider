@@ -467,3 +467,5 @@ What it showed, 2026-10-02 ~04:20Z:
 2026-10-17 — Boss, ~08:15Z: "yes, lets do it". Approves one exception to the 10-16 forum rule: a single reply in "Best word search puzzle designing software?" (0D58V00008ZXXWNSA5) may name Puzzle Press and its price, with the boss disclosing that they made it. KDP's Community Guidelines (GPSDSZJL9RFMKK3W) say "We ask that you limit the promotion of your project(s) to one thread." This is that one thread.
 
 2026-10-17 — Boss, ~09:50Z: "ok, done". The Kindlepreneur email (draft 1, plan 10-16) went to support@kindlepreneur.com about https://kindlepreneur.com/best-book-bolt-alternatives/. The boss also chose to leave the word-search forum answer as posted.
+
+2026-10-17 — Boss, ~10:00Z: "email sent". The Low Content Profits email (draft 2, with "I made") went to the address on lowcontentprofits.com/contact about the beginners tools post.
