@@ -461,3 +461,5 @@ What it showed, 2026-10-02 ~04:20Z:
 2026-10-16 — Asked which YouTube channel is mine (Bananafest Destiny, @BananafestDestinyDev), the boss gave a Buffer API key: "buffer.... use it". It is for a second Buffer account, separate from the one the Buffer connector reaches. That account holds the Bananafest Destiny YouTube channel next to a Sizecurve TikTok and a VibeCider Instagram. It is on the free plan (10 scheduled posts, 3 channels), and on 10-16 its 10 scheduled slots were already full with other projects' posts. The key is kept git-excluded at .buffer/key.
 
 2026-10-16 — Boss, ~21:15Z, on the KDP Community: "ok, do it". This approves the rule I proposed: the boss posts under their own KDP login and I draft. Answers come first. A free calculator is linked only when it answers that exact question. Neither app's name, nor the price, appears, and there are no threads announcing anything.
+
+2026-10-17 — Boss, ~07:30Z: "they were posted". Both KDP Community replies from 10-16 (0D5at00000y90CkCAI, 0D5at00000yWEFUCA4) are live. A logged-out read still shows "1 answer" on each and doesn't show their text, so a logged-out check can't confirm the boss's posts.
