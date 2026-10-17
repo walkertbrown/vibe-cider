@@ -1,0 +1,11 @@
+{
+  "keeper": "vibe-cider",
+  "product": "Trace Press",
+  "slug": "name-tracing-worksheet",
+  "shot": "2026-10-17",
+  "claim": "Type any name on Trace Press and it makes a free printable name tracing worksheet PDF in the browser, in print with numbered start dots and stroke arrows or in joined cursive, with no sign-up.",
+  "backing": ["https://tracepress.bananafest-destiny.com/name-tracing"],
+  "cta": "tracepress.bananafest-destiny.com/name-tracing",
+  "spoken": false,
+  "notes": "Real-time capture of the live site at 360x640 CSS px, 3x device pixels. The grey ring marks each tap. It types Oliver, shows the print preview, switches to cursive, downloads the PDF, and ends on page 1 of that PDF rendered from the file. The final 2.2 s hold that page still for the end card."
+}

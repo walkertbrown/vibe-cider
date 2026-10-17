@@ -27,7 +27,7 @@ const gql = async (query, variables) => {
 };
 
 const queue = JSON.parse(readFileSync(QUEUE, "utf8"));
-const next = queue.find((s) => !s.posted && s.text);
+const next = queue.find((s) => !s.posted && !s.retired && s.text);
 if (!next) { console.log("Nothing left to post that has its text in the queue file."); process.exit(0); }
 console.log(`next: ${next.title}\n      ${next.video}`);
 if (!process.argv.includes("--post")) { console.log("dry run; pass --post to post it"); process.exit(0); }

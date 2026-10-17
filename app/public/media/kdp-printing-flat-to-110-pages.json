@@ -1,0 +1,14 @@
+{
+  "keeper": "vibe-cider",
+  "product": "Puzzle Press",
+  "slug": "kdp-printing-flat-to-110-pages",
+  "shot": "2026-10-17",
+  "claim": "On Amazon.com KDP charges a flat $2.30 to print a black-ink paperback of 24 to 110 pages, so a 6x9 book at $9.99 keeps $3.69 a copy at 24 pages and at 110; at 112 pages printing is $2.34 and it keeps $3.65.",
+  "backing": [
+    "https://puzzlepress.bananafest-destiny.com/royalty-calculator",
+    "https://kdp.amazon.com/en_US/help/topic/G201834340"
+  ],
+  "cta": "puzzlepress.bananafest-destiny.com/royalty-calculator",
+  "spoken": false,
+  "notes": "Real-time capture of the live free calculator at 360x640 CSS px, 3x device pixels. The grey ring marks each tap. KDP's help page: 'Black-ink paperbacks with 24 - 110 pages only incur the fixed cost' of 2.30 USD (24-108 pages on Amazon.com.au); 110-828 pages are 1.00 USD + 0.012 USD per page; 60% royalty at $9.99. The final 2.2 s hold the 112-page result still for the end card."
+}

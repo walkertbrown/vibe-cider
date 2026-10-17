@@ -9,11 +9,11 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { chromium } from "playwright";
 
-export async function shoot(slug, script) {
+// outDir: the public/media/ folder of the app the clip is for (Puzzle Press by default).
+export async function shoot(slug, script, { outDir = new URL("../public/media/", import.meta.url).pathname } = {}) {
   const FFMPEG = process.env.FFMPEG;
   if (!FFMPEG) throw new Error("set FFMPEG to an ffmpeg with libx264");
   const tmp = mkdtempSync(join(tmpdir(), "footage-"));
-  const outDir = new URL("../public/media/", import.meta.url).pathname;
   mkdirSync(outDir, { recursive: true });
 
   const browser = await chromium.launch();
@@ -105,5 +105,5 @@ export async function shoot(slug, script) {
     join(outDir, `${slug}.mp4`)]);
   await browser.close();
   rmSync(tmp, { recursive: true, force: true });
-  console.log(`wrote public/media/${slug}.mp4 from ${frames.length} frames, ${(end - frames[0].t).toFixed(1)} s`);
+  console.log(`wrote ${join(outDir, slug)}.mp4 from ${frames.length} frames, ${(end - frames[0].t).toFixed(1)} s`);
 }
