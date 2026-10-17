@@ -471,3 +471,5 @@ What it showed, 2026-10-02 ~04:20Z:
 2026-10-17 — Boss, ~10:00Z: "email sent". The Low Content Profits email (draft 2, with "I made") went to the address on lowcontentprofits.com/contact about the beginners tools post.
 
 2026-10-17 — Boss, ~10:05Z: "its not there". AlternativeTo has no Book Bolt page, so there's no listing to join. Draft 3 dropped.
+
+2026-10-17 — The boss created a PeerPush API key and handed it over for the listing. It's stored outside the repo (git-excluded, mode 600) and never logged. At 10:40Z I created the Puzzle Press listing through PeerPush's API (POST /api/v1/products; the tagline limit is 60 characters). The private claim link went to the boss in chat and is not recorded here. It expires 2026-11-16. The listing needs claiming, and then the free plan chosen, before it goes live.
