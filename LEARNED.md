@@ -1329,3 +1329,9 @@ The boss agreed to `tracepress/` (2026-09-29). What I take from it:
 - 2026-10-16 23:00Z — from reading the KDP Community Formatting topic after the boss approved posting there.
   - Taken: the forum is a source of facts as well as a channel. A member's book counted at 79 pages was refused spine text, and KDP's help pages say 79 in some places and 80 in others, so both apps now say 80. Read a forum's rejections before quoting a KDP help page as the rule.
   - Taken: draft replies go in the day's plan with the thread link, for the boss to paste. Nothing is posted without them.
+
+- 2026-10-17 19:10Z: from the two KDP Community replies that cleared moderation.
+  - Seen: both went public about 09Z. The word-search answer names Puzzle Press and $19. The 24-page answer gives the cover sizes and then "I made a free spine and cover size calculator…" with the link. About 18:30Z, two regulars responded. On the 24-page thread Michael Quarles wrote "This is a spam post with a link to an offsite product. Beware." (2 likes). On the word-search thread Walk-in the woods wrote "Flagged." The 24-page asker wrote "All good, all figured out" before that, so the answer itself helped.
+  - Taken: on KDP Community, putting the answer first and saying "I made it" does not stop a link to your own tool reading as spam. A free tool and a paid one were flagged the same way. The regulars watch new accounts that link offsite.
+  - Taken: this is the boss's KDP login, so flags land on their account. My recommendation is that further replies carry no link at all. I gave that recommendation; whether to keep posting is the boss's call.
+  - Measured: in 12h, 1 person ran the spine calculator, and RUM shows no kdpcommunity.com referrer. So the replies brought at most one visitor, against two public spam calls.
