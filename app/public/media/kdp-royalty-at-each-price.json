@@ -1,0 +1,15 @@
+{
+  "keeper": "vibe-cider",
+  "product": "Puzzle Press",
+  "slug": "kdp-royalty-at-each-price",
+  "shot": "2026-10-17",
+  "claim": "On Amazon.com a 6x9, 120-page black-ink KDP paperback costs $2.44 to print and keeps $1.06 a copy at $6.99 (50% rate), $3.55 at $9.99 and $5.35 at $12.99 (60% rate); in premium colour printing is $8.80, so at $12.99 the royalty is -$1.01.",
+  "backing": [
+    "https://puzzlepress.bananafest-destiny.com/royalty-calculator",
+    "https://kdp.amazon.com/en_US/help/topic/G201834330",
+    "https://kdp.amazon.com/en_US/help/topic/G201834340"
+  ],
+  "cta": "puzzlepress.bananafest-destiny.com/royalty-calculator",
+  "spoken": false,
+  "notes": "Real-time capture of the live free calculator at 360x640 CSS px, 3x device pixels. The grey ring marks each tap. Figures are KDP's published Amazon.com rates (royalty: 50% at or below $9.98, 60% at $9.99 and up; regular-trim black ink $1.00 + $0.012/page; premium colour $1.00 + $0.065/page). The two KDP help pages are Amazon's own, listed after our calculator. The final 2.2 s hold the colour result still for the end card."
+}

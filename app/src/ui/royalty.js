@@ -29,7 +29,7 @@ for (const [id, ink] of Object.entries(INKS)) {
 }
 el.market.textContent = MARKETPLACE;
 
-const money = (n) => `$${n.toFixed(2)}`;
+const money = (n) => (n < 0 ? `\u2212\u2060$${(-n).toFixed(2)}` : `$${n.toFixed(2)}`);
 
 function update() {
   const trim = el.trim.value;
