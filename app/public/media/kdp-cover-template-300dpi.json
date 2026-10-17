@@ -1,0 +1,14 @@
+{
+  "keeper": "vibe-cider",
+  "product": "Puzzle Press",
+  "slug": "kdp-cover-template-300dpi",
+  "shot": "2026-10-17",
+  "claim": "Puzzle Press's free spine calculator gives a 6x9, 120-page KDP paperback on white paper a 0.270-inch spine and a 12.520 x 9.250-inch full cover (3756 x 2775 px at 300 DPI), and downloads a cover template at that size with the bleed, trim, spine folds, text-safe lines and barcode box drawn on.",
+  "backing": [
+    "https://puzzlepress.bananafest-destiny.com/spine-calculator",
+    "https://kdp.amazon.com/en_US/help/topic/G201953020"
+  ],
+  "cta": "puzzlepress.bananafest-destiny.com/spine-calculator",
+  "spoken": false,
+  "notes": "Real-time capture of the live free calculator at 360x640 CSS px, 3x device pixels. The grey ring marks each tap. Spine = 120 pages x 0.002252 in (KDP white paper); full cover = 0.125 bleed + 6 + 0.270 + 6 + 0.125 by 9 + 2 x 0.125. It ends on the PNG the button downloaded, whole and then panned at full height. The final 2.2 s hold the front cover still for the end card."
+}
