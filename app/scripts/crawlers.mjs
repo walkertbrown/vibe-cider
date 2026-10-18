@@ -118,6 +118,16 @@ for (const [label, test] of GROUPS) {
   });
   console.log(`  ${label.padEnd(22)}${cells.join("")}`);
 }
+// `--missing bingbot`: list the sitemap pages (not PDFs) that crawler never
+// fetched, ready to hand to `.search/search.mjs bing-submit`.
+const mi = process.argv.indexOf("--missing");
+if (mi > 0) {
+  const who = process.argv[mi + 1];
+  const got = tally.get(who)?.paths ?? new Set();
+  const miss = sitemapPaths.filter((p) => !p.startsWith("/samples/") && !got.has(p));
+  console.log(`\n  ${who} never fetched ${miss.length} of these pages:`);
+  for (const p of miss) console.log(`    ${p}`);
+}
 const unseen = sitemapPaths.filter((p) => !live.some((w) => tally.get(w).paths.has(p)));
 console.log(`\n  ${sitemapPaths.length - unseen.length} of ${sitemapPaths.length} published URLs have been fetched by at least one search engine in ${hours}h.`);
 if (unseen.length) console.log(`  ${unseen.length} have not been looked at by any of them. A page no engine has fetched cannot be failing at search yet.`);
