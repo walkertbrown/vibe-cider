@@ -1,0 +1,14 @@
+{
+  "keeper": "vibe-cider",
+  "product": "Puzzle Press",
+  "slug": "kdp-paperback-spine-no-extra",
+  "shot": "2026-10-18",
+  "claim": "A KDP paperback spine is page count x paper thickness, with nothing added: a 100-page 6 x 9 book on cream paper has a 0.25 inch spine and a 12.5 x 9.25 inch full cover. Calculators that add 0.06 inch are using a hardcover allowance. The free Puzzle Press spine calculator also leaves the spine blank under 80 pages, because KDP's help gives 79 in one place and 80 for Cover Creator.",
+  "backing": [
+    "https://kdp.amazon.com/en_US/help/topic/G201953020",
+    "https://puzzlepress.bananafest-destiny.com/spine-calculator"
+  ],
+  "cta": "puzzlepress.bananafest-destiny.com/spine-calculator",
+  "spoken": false,
+  "notes": "Real-time capture of the live spine calculator at 360x640 CSS px, 3x device pixels, 6x9 on cream. It shows 100 pages (0.250 inch spine, 12.500 x 9.250 inch cover, and the sum line), then types 79 (spine text: not allowed) and 80 (allowed, but a 0.075 inch safe area, so left blank), then holds on the page's warning about the 0.06 inch. KDP help G201953020, re-read 2026-10-18: cream is page count x 0.0025 inch, white x 0.002252 inch, nothing added to the spine. The final 2.2 s hold still for the end card."
+}
