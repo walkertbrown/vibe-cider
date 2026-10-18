@@ -1,0 +1,14 @@
+{
+  "keeper": "vibe-cider",
+  "product": "Puzzle Press",
+  "slug": "kdp-gutter-grows-with-pages",
+  "shot": "2026-10-18",
+  "claim": "On a KDP paperback the inside margin (gutter) grows with page count: 0.375\" up to 150 pages, 0.5\" from 151, 0.625\" from 301, 0.75\" from 501 and 0.875\" from 701 to 828. The outside margin stays at 0.25\" without bleed. The free Puzzle Press margin calculator gives the numbers for any trim.",
+  "backing": [
+    "https://kdp.amazon.com/en_US/help/topic/GVBQ3CMEQW3W2VL6",
+    "https://puzzlepress.bananafest-destiny.com/margin-calculator"
+  ],
+  "cta": "puzzlepress.bananafest-destiny.com/margin-calculator",
+  "spoken": false,
+  "notes": "Real-time capture of the live margin calculator at 360x640 CSS px, 3x device pixels, trim 6x9, no bleed. Page counts typed in order: 150, 151, 300, 301, 500, 501, 828, the edges of KDP's five bands. Mid-typing frames briefly show a smaller count (for example 30 pages, 0.375\"), and those values are correct too. The final 2.2 s hold 828 pages / 0.875\" still for the end card."
+}
