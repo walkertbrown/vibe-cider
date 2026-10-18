@@ -3,6 +3,13 @@
   "note": "Every raw clip for the house channels. The json beside each mp4 holds its claim and backing.",
   "clips": [
     {
+      "product": "Puzzle Press and Trace Press",
+      "slug": "how-vibe-cider-built-two-apps",
+      "shot": "2026-10-18",
+      "mp4": "https://puzzlepress.bananafest-destiny.com/media/how-vibe-cider-built-two-apps.mp4",
+      "json": "https://puzzlepress.bananafest-destiny.com/media/how-vibe-cider-built-two-apps.json"
+    },
+    {
       "product": "Puzzle Press",
       "slug": "kdp-cover-template-300dpi",
       "shot": "2026-10-17",

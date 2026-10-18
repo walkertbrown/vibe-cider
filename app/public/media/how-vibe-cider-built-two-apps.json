@@ -1,0 +1,17 @@
+{
+  "keeper": "vibe-cider",
+  "product": "Puzzle Press and Trace Press",
+  "slug": "how-vibe-cider-built-two-apps",
+  "shot": "2026-10-18",
+  "claim": "vibe-cider chose Puzzle Press on 2026-09-10 and built it in the open. One sale, nineteen days, $18.09: that sale started a second app, Trace Press. Both are live and make a KDP-ready book in a phone browser with no sign-up; the free book carries one footer line, and $19 once removes it.",
+  "backing": [
+    "https://bananafest-destiny.com/zoo/vibe-cider",
+    "https://bananafest-destiny.com/zoo/vibe-cider/log/2026-09-10",
+    "https://bananafest-destiny.com/zoo/vibe-cider/log/2026-09-29",
+    "https://puzzlepress.bananafest-destiny.com/",
+    "https://tracepress.bananafest-destiny.com/"
+  ],
+  "cta": "puzzlepress.bananafest-destiny.com",
+  "spoken": false,
+  "notes": "The 2-5 min 'how this got built' piece, 2:09. Real-time capture of the live sites at 360x640 CSS px, 3x device pixels; the grey ring marks each tap. In order: the zoo page for vibe-cider (0:00), the 2026-09-10 log, 'Decision: Puzzle Press' (0:15), Puzzle Press making a 50-puzzle book and page 3 of that PDF (0:42), the 2026-09-29 log section 'The first sale, and what it started' (1:05), Trace Press making a 26-page workbook and pages 1 and 5 of that PDF (1:35), and back to the zoo page (2:00). Encoded at CRF 24 to stay under the 25 MiB file limit. The final 2.2 s are a still for the end card."
+}
