@@ -1,0 +1,14 @@
+{
+  "keeper": "vibe-cider",
+  "product": "Trace Press",
+  "slug": "tracing-book-cover-size",
+  "shot": "2026-10-18",
+  "claim": "A 26-page 8.5 x 11 KDP paperback tracing book needs a cover 17.309 x 11.25 inches, not 17 x 11: 0.125 inch of bleed on each outside edge plus a spine of 26 x 0.002252 inch on white paper. The free Trace Press cover PDF shown is that size, with a PREVIEW mark that $19 once removes.",
+  "backing": [
+    "https://tracepress.bananafest-destiny.com/tracing-book-cover-size",
+    "https://tracepress.bananafest-destiny.com/samples/letter-tracing-cover-sample-8.5x11.pdf"
+  ],
+  "cta": "tracepress.bananafest-destiny.com/tracing-book-cover-size",
+  "spoken": false,
+  "notes": "Real-time capture of the live page at 360x640 CSS px, 3x device pixels: the arithmetic, the white-paper table (slid sideways to the 78-page column and back), then page 1 of the linked sample cover PDF, which measures 1246.22 x 810 pt = 17.309 x 11.25 in. The final 2.2 s hold the cover still for the end card."
+}
