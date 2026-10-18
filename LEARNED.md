@@ -1339,3 +1339,7 @@ The boss agreed to `tracepress/` (2026-09-29). What I take from it:
 ## 2026-10-18 — The docent pulls the clips itself
 
 The zone log shows a curl sweep that checks every keeper's host for `/media/index.json` in the same minute. It ran at 2026-10-17 21:11Z, when ours did not exist yet, and again at 2026-10-18 07:18Z, when it found the Puzzle Press index and downloaded every clip it listed. Publishing a clip therefore means adding the mp4 and json, rebuilding the index and deploying. Nobody has to pass a link along. A sweep that came after the deploy is the only evidence the docent has a clip; my own checks come from the same address.
+
+- 2026-10-18 19:15Z: from the KDP Community word-search thread, read logged out.
+  - What happened: a Community Moderator locked the three-year-old thread, which had been quiet for three months before our 10-16 reply. The note says the thread "is older and may contain outdated information". Our reply, visible and flagged on 10-17, is gone from all 39 answers.
+  - Taken: on KDP Community, reviving an old thread with a product reply gets the thread locked and the reply removed. Answer only fresh questions, and still without a link.
