@@ -177,6 +177,14 @@ const svgPuzzle = (p) => {
 </svg>`;
 };
 
+// 2026-10-19: a seasonal list is only worth anything if the book is on sale
+// by the day, so those pages say how long KDP takes, in KDP's own words
+// (Timelines help, G202173620; Low-Content Books help, GGE5T76TWKA85DJM).
+const SEASON = { halloween: "31 October", christmas: "25 December" };
+const seasonNote = (id, t) => SEASON[id] ? `  <h2>On sale by ${SEASON[id]}</h2>
+  <p>KDP's <a href="https://kdp.amazon.com/en_US/help/topic/G202173620" rel="noopener">Timelines</a> help page says "it takes 3 business days for your book (or update) to be live on Amazon", and that publishing "may take up to 6 days" for an account that has never published a book. It says low-content book reviews are taking longer than usual right now, three to four weeks. KDP's <a href="https://kdp.amazon.com/en_US/help/topic/GGE5T76TWKA85DJM" rel="noopener">low-content</a> page says that category "does not typically include activity books, such as puzzle books or coloring books". Leave a few days' margin, and check the Timelines page on the day you publish.</p>
+` : "";
+
 const themePage = (id, t) => {
   const words = t.words.map((w) => w.toLowerCase()).sort();
   const n = words.length;
@@ -240,7 +248,7 @@ const themePage = (id, t) => {
   </div>
   <p class="fine">Medium difficulty: across, down and diagonals, nothing backwards. Every word appears exactly once — the generator checks the finished grid rather than assuming. Solutions are in the book, not on this page.</p>
 
-  <div class="cta">
+${seasonNote(id, t)}  <div class="cta">
     <h2>Turn it into a book</h2>
     <p>Puzzle Press makes the whole paperback for Amazon KDP — word search or <a href="/criss-cross-book-generator">criss-cross fill-in</a>, this theme or several mixed, graded easy to hard if you like, solutions at the back, margins and page count to KDP's rules — then the cover. Free to use; free books carry one small line in the page footer and a cover marked PREVIEW, and $19 once removes both.</p>
     <a class="btn" href="/?theme=${id}#tool">Make ${an(t.title)} ${esc(t.title)} word search book free</a>
