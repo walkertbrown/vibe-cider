@@ -1,7 +1,31 @@
 {
   "keeper": "vibe-cider",
-  "note": "Every raw clip for the house channels. The json beside each mp4 holds its claim and backing.",
+  "note": "Every raw clip for the house channels. The json beside each mp4 holds its claim and backing. Clips with post_by are seasonal and listed first: they are stale after that date. The rest are evergreen.",
   "clips": [
+    {
+      "product": "Trace Press",
+      "slug": "halloween-tracing-book",
+      "shot": "2026-10-19",
+      "post_by": "2026-10-31",
+      "mp4": "https://tracepress.bananafest-destiny.com/media/halloween-tracing-book.mp4",
+      "json": "https://tracepress.bananafest-destiny.com/media/halloween-tracing-book.json"
+    },
+    {
+      "product": "Puzzle Press",
+      "slug": "large-print-christmas-word-search",
+      "shot": "2026-10-18",
+      "post_by": "2026-12-25",
+      "mp4": "https://puzzlepress.bananafest-destiny.com/media/large-print-christmas-word-search.mp4",
+      "json": "https://puzzlepress.bananafest-destiny.com/media/large-print-christmas-word-search.json"
+    },
+    {
+      "product": "Trace Press",
+      "slug": "christmas-tracing-book",
+      "shot": "2026-10-18",
+      "post_by": "2026-12-25",
+      "mp4": "https://tracepress.bananafest-destiny.com/media/christmas-tracing-book.mp4",
+      "json": "https://tracepress.bananafest-destiny.com/media/christmas-tracing-book.json"
+    },
     {
       "product": "Puzzle Press and Trace Press",
       "slug": "how-vibe-cider-built-two-apps",
@@ -46,13 +70,6 @@
     },
     {
       "product": "Puzzle Press",
-      "slug": "large-print-christmas-word-search",
-      "shot": "2026-10-18",
-      "mp4": "https://puzzlepress.bananafest-destiny.com/media/large-print-christmas-word-search.mp4",
-      "json": "https://puzzlepress.bananafest-destiny.com/media/large-print-christmas-word-search.json"
-    },
-    {
-      "product": "Puzzle Press",
       "slug": "puzzle-press-book-in-the-browser",
       "shot": "2026-10-17",
       "mp4": "https://puzzlepress.bananafest-destiny.com/media/puzzle-press-book-in-the-browser.mp4",
@@ -67,24 +84,10 @@
     },
     {
       "product": "Trace Press",
-      "slug": "christmas-tracing-book",
-      "shot": "2026-10-18",
-      "mp4": "https://tracepress.bananafest-destiny.com/media/christmas-tracing-book.mp4",
-      "json": "https://tracepress.bananafest-destiny.com/media/christmas-tracing-book.json"
-    },
-    {
-      "product": "Trace Press",
       "slug": "cursive-workbook-for-adults",
       "shot": "2026-10-17",
       "mp4": "https://tracepress.bananafest-destiny.com/media/cursive-workbook-for-adults.mp4",
       "json": "https://tracepress.bananafest-destiny.com/media/cursive-workbook-for-adults.json"
-    },
-    {
-      "product": "Trace Press",
-      "slug": "halloween-tracing-book",
-      "shot": "2026-10-19",
-      "mp4": "https://tracepress.bananafest-destiny.com/media/halloween-tracing-book.mp4",
-      "json": "https://tracepress.bananafest-destiny.com/media/halloween-tracing-book.json"
     },
     {
       "product": "Trace Press",
