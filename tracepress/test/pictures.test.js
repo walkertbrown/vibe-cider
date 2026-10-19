@@ -22,7 +22,7 @@ import { cursiveWidth } from "../src/pdf/cursive.js";
 
 const holiday = (slug) => {
   const page = readFileSync(new URL(`../public/${slug}-tracing-worksheets.html`, import.meta.url), "utf8");
-  return decodeURIComponent(page.match(/href="\/\?words=([^"]+)">Make a/)[1]).split(",");
+  return decodeURIComponent(page.match(/href="\/\?words=([^"#]+)#tool">Make a/)[1]).split(",");
 };
 // Every "-tracing-worksheets" page whose button opens a word book with
 // pictures (the days and months page has none: nothing there to draw).
@@ -217,7 +217,7 @@ test("each word page names the sources of its own pictures", () => {
   let checked = 0;
   for (const f of pages) {
     const html = readFileSync(new URL(`../public/${f}`, import.meta.url), "utf8").replace(/\s+/g, " ");
-    const cta = html.match(/class="cta" href="\/\?words=([^"&]*)/);
+    const cta = html.match(/class="cta" href="\/\?words=([^"&#]*)/);
     if (!cta || !html.includes("A word gets a picture")) continue;
     const words = cta[1].split(",");
     assert.equal(words.length, 20, f);

@@ -25,7 +25,7 @@ test("the holiday and themed word pages carry the word facts", () => {
 
 for (const [f, html] of pages) {
   test(`${f}: its word facts match its words and the glyphs`, () => {
-    const words = html.match(/class="cta" href="\/\?words=([^"]+)"/)[1].split(",").map(decodeURIComponent);
+    const words = html.match(/class="cta" href="\/\?words=([^"#]+)#tool"/)[1].split(",").map(decodeURIComponent);
     const text = html.replace(/\s+/g, " ");
 
     const rows = [...html.matchAll(/<tr><td>([^<]+)<\/td><td>(\d+)<\/td><td>(\d+)<\/td><\/tr>/g)].map((m) => [m[1], +m[2], +m[3]]);
@@ -39,7 +39,7 @@ for (const [f, html] of pages) {
     const ORD = ["first", "second", "third", "fourth", "fifth", "sixth", "seventh", "eighth", "ninth", "tenth", "eleventh", "twelfth", "thirteenth", "fourteenth", "fifteenth", "sixteenth", "seventeenth", "eighteenth", "nineteenth", "twentieth"];
     const by = [...words].sort((a, b) => strokes(a) - strokes(b) || words.indexOf(a) - words.indexOf(b));
     assert.ok(text.includes(`fewest first, the words go ${list(by)}.`), "the stroke order");
-    assert.ok(html.includes(`<a href="/?words=${by.join(",")}">open Trace Press with the words by strokes</a>`), "the stroke-order link");
+    assert.ok(html.includes(`<a href="/?words=${by.join(",")}#tool">open Trace Press with the words by strokes</a>`), "the stroke-order link");
     const moved = words.map((w, i) => [w, i, by.indexOf(w), by.indexOf(w) - i]);
     const top = Math.max(...moved.map((m) => m[3]));
     const tops = moved.filter((m) => m[3] === top);

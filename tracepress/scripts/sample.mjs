@@ -182,7 +182,7 @@ const belongsSample = (trim) => ({
 // rather than typed out a second time, so the sample and the page that links
 // it cannot disagree.
 const sightPage = readFileSync(new URL("../public/sight-word-tracing-workbook.html", import.meta.url), "utf8");
-export const PRE_PRIMER = decodeURIComponent(sightPage.match(/href="\/\?words=([^"]+)">Open Trace Press with the 40 pre-primer words/)[1]).split(",");
+export const PRE_PRIMER = decodeURIComponent(sightPage.match(/href="\/\?words=([^"#]+)#tool">Open Trace Press with the 40 pre-primer words/)[1]).split(",");
 if (PRE_PRIMER.length !== 40) throw new Error(`pre-primer list has ${PRE_PRIMER.length} words, expected 40`);
 const KEYWORDS = ["letter tracing", "handwriting workbook", "alphabet tracing", "KDP", "printable", "PDF", "Trace Press"];
 
@@ -257,7 +257,7 @@ await book(SAMPLES.preschool, { guideIn: 1, lines: true, shapes: true, cases: "u
 // Holiday words are read from the button on each holiday page, like PRE_PRIMER.
 const holidayWords = (slug, label, count = 20) => {
   const page = readFileSync(new URL(`../public/${slug}-tracing-worksheets.html`, import.meta.url), "utf8");
-  const words = decodeURIComponent(page.match(new RegExp(`href="/\\?words=([^"]+)">Make an? ${label} tracing book`))[1]).split(",");
+  const words = decodeURIComponent(page.match(new RegExp(`href="/\\?words=([^"#]+)">Make an? ${label} tracing book`))[1]).split(",");
   if (words.length !== count) throw new Error(`${slug} list has ${words.length} words, expected ${count}`);
   return words;
 };

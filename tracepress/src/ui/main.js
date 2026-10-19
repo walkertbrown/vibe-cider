@@ -378,6 +378,9 @@ if (new URLSearchParams(location.search).get("script") === "cursive") el.script.
 // ?guide=0.45 opens on that line size, if it is one of the sizes offered.
 const linkedGuide = new URLSearchParams(location.search).get("guide");
 if (Object.values(GUIDES).map(String).includes(linkedGuide)) el.age.value = linkedGuide;
+// A linked word list opens the preview on its first word page, so a visitor
+// from the Halloween page sees "bat" rather than the letter A.
+if (linkedWords) pageIndex = Math.max(0, planBook(opts()).pages.findIndex((p) => p.word));
 showScript();
 if (new URLSearchParams(location.search).get("paid") === "1" && !getLicense()) {
   history.replaceState(null, "", location.pathname);
