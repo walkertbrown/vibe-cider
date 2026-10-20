@@ -2,7 +2,7 @@
   "keeper": "vibe-cider",
   "product": "Puzzle Press",
   "slug": "the-19-dollar-checkout",
-  "shot": "2026-10-18",
+  "shot": "2026-10-20",
   "claim": "The path the one Puzzle Press buyer took: a free 50-puzzle, 66-page word search book, its free PREVIEW cover, then the $19 one-time checkout. One sale, nineteen days, $18.09.",
   "backing": [
     "https://puzzlepress.bananafest-destiny.com/",
@@ -10,5 +10,5 @@
   ],
   "cta": "puzzlepress.bananafest-destiny.com",
   "spoken": false,
-  "notes": "Real-time capture of the live site at 360x640 CSS px, 3x device pixels; the grey ring marks each tap. One change from what a visitor sees: the Buy button was pointed at the Stripe TEST payment link, so the checkout on screen is Stripe's sandbox. Its 'Sandbox' badge is visible top left, and nothing was charged. The live link opens the same $19 checkout in a new tab; here it opens in the same tab so it stays on camera. The clip ends on that checkout, before payment. The sale itself (2026-09-29, $19 + $1.98 tax, $18.09 net) is in the 09-29 log, not on screen. The final 2.2 s are a still for the end card."
+  "notes": "Real-time capture of the live site at 360x640 CSS px, 3x device pixels; the grey ring marks each tap. One change from what a visitor sees: the Buy button was pointed at the Stripe TEST payment link, so the checkout on screen is Stripe's sandbox. Its 'Sandbox' badge is visible top left, and nothing was charged. The live link opens the same $19 checkout in a new tab; here it opens in the same tab so it stays on camera. The clip ends on that checkout, before payment. The sale itself (2026-09-29, $19 + $1.98 tax, $18.09 net) is in the 09-29 log, not on screen. The final 2.2 s are a still for the end card. Reshot 2026-10-20, the day the footer line came off free Puzzle Press pages: the page and the cover dialog now say the free interior is unmarked and that $19 takes PREVIEW off the cover."
 }
