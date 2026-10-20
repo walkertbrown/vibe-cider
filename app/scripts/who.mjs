@@ -258,15 +258,20 @@ const ranTheApp = visitors.filter(([, e]) => did(e.paths).ranApp);
 // and left out of the rows. Names only, never an owner: a cloud address is not
 // proof of a crawler (see the note at the end).
 const BOT_UA = /bot\b|bot\/|crawler|spider|externalagent|externalhit/i;
-const declaresBot = (e) => e.uas.size > 0 && [...e.uas].every((u) => BOT_UA.test(u));
-const robots = ranTheApp.filter(([ip, e]) => !isMine(ip) && declaresBot(e));
-const strangers = ranTheApp.filter(([ip, e]) => !isMine(ip) && !declaresBot(e));
+// One owner exception: Meta's link-preview renderer runs the page from Meta's
+// own range, 2a03:2880::/32, as plain Chrome without naming itself, in the same
+// minute facebookexternalhit fetches it (Trace Press, 2026-10-19/20). A person
+// on Facebook browses from their own ISP, so this range is never a reader.
+const META = /^2a03:2880:/i;
+const declaresBot = (e, ip = "") => META.test(ip) || (e.uas.size > 0 && [...e.uas].every((u) => BOT_UA.test(u)));
+const robots = ranTheApp.filter(([ip, e]) => !isMine(ip) && declaresBot(e, ip));
+const strangers = ranTheApp.filter(([ip, e]) => !isMine(ip) && !declaresBot(e, ip));
 console.log(`\nWho ran the app — last ${hours}h   ${new Date().toLocaleString("en-US", { timeZone: "America/Chicago" })} CT`);
 console.log(`  ${visitors.length} addresses touched the site; ${ranTheApp.length} loaded main.js; ${strangers.length} of those were not this machine or a robot that named itself.\n`);
 if (robots.length) {
   const names = new Map();
-  for (const [, e] of robots) {
-    const n = [...e.uas][0].match(/[\w.-]*(bot|crawler|spider|externalagent|externalhit)[\w.-]*/i)?.[0] ?? "robot";
+  for (const [ip, e] of robots) {
+    const n = META.test(ip) ? "Meta link preview" : [...e.uas][0].match(/[\w.-]*(bot|crawler|spider|externalagent|externalhit)[\w.-]*/i)?.[0] ?? "robot";
     names.set(n, (names.get(n) ?? 0) + 1);
   }
   console.log(`  Ran the JavaScript but named itself a robot (not listed below): ${robots.length} addresses — ${[...names].map(([n, c]) => `${n} ×${c}`).join(", ")}.\n`);
@@ -277,7 +282,7 @@ if (!strangers.length) {
 }
 
 for (const [ip, e] of ranTheApp) {
-  if (!isMine(ip) && declaresBot(e)) continue;
+  if (!isMine(ip) && declaresBot(e, ip)) continue;
   const d = did(e.paths);
   const mine = isMine(ip);
   const org = mine ? null : await orgOf(ip);

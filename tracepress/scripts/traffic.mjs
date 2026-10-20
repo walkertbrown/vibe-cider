@@ -47,6 +47,14 @@ const fromHere = (ip = "") => HERE.some((p) => (p.endsWith(":") ? ip.startsWith(
 // themselves: on 2026-10-02 Meta's crawler (meta-externalagent) and Applebot
 // were 60 of 69 "visitors" on Puzzle Press in a day (app/scripts/who.mjs).
 const BOT_UA = /bot\b|bot\/|crawler|spider|externalagent|externalhit/i;
+// Meta's link-preview renderer does not name itself. When a link is shared on
+// Facebook it runs the page from Meta's own range, 2a03:2880::/32, as plain
+// Chrome (Windows Chrome 74, or "Android 10; K"), in the same minute that
+// facebookexternalhit fetches the page. On 2026-10-19/20 it was every
+// "m.facebook.com" and "www.facebook.com" referral in the 7-day web analytics,
+// and the 2a03:2880 address under "ran the page". A person reading Facebook comes
+// from their own ISP, not from Meta's network, so this range is never a reader.
+const META = /^2a03:2880:/i;
 // The funnel, in order. Each is a real file in public/px/.
 const RUNGS = [
   ["ran", "ran the page"],
@@ -104,7 +112,7 @@ try {
   const robots = new Set();
   for (const { dimensions: d } of rows) {
     if (MINE.test(d.userAgent || "") || fromHere(d.clientIP)) { tests++; continue; }
-    if (BOT_UA.test(d.userAgent || "")) { robots.add(d.clientIP); continue; }
+    if (BOT_UA.test(d.userAgent || "") || META.test(d.clientIP || "")) { robots.add(d.clientIP); continue; }
     const name = d.clientRequestPath.replace(/^\/px\/|\.gif$/g, "");
     if (!byRung.has(name)) byRung.set(name, new Set());
     byRung.get(name).add(d.clientIP);
@@ -157,7 +165,7 @@ try {
   };
   console.log(`\n  Last 7 days by the page beacon: ${total} page loads (Cloudflare's bot filter; my headless tests are NOT excluded here)`);
   if (rows.some((x) => (x.avg?.sampleInterval ?? 1) !== 1)) console.log("    (SAMPLED: estimates, not counts. Run again.)");
-  console.log("    Referred by:");
+  console.log("    Referred by: (a facebook.com row can be Meta's own link-preview renderer, which this count keeps; look for 2a03:2880 in the zone log before calling it a person)");
   for (const [h, n] of tally((d) => d.refererHost).slice(0, 10)) console.log(`      ${String(n).padStart(4)}  ${h === "(none)" ? "(no referer: typed, bookmarked, or opened in an app)" : h}`);
   console.log(`    Landed on: ${tally((d) => d.requestPath).slice(0, 6).map(([k, n]) => `${k} ${n}`).join(", ")}`);
   console.log(`    Device: ${tally((d) => d.deviceType).map(([k, n]) => `${k} ${n}`).join(", ")}`);
