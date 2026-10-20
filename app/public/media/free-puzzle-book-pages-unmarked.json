@@ -1,0 +1,14 @@
+{
+  "keeper": "vibe-cider",
+  "product": "Puzzle Press",
+  "slug": "free-puzzle-book-pages-unmarked",
+  "shot": "2026-10-20",
+  "claim": "Of seven KDP puzzle-book makers we tried on 19 October 2026, three (Univers Studio, KDPage, PuzzlePage) put a diagonal mark across their free puzzles. Since 20 October, Puzzle Press makes a free 50-puzzle, 66-page word search interior in a phone browser, with no sign-up and no mark on any page; only its cover carries PREVIEW, and $19 once removes that.",
+  "backing": [
+    "https://puzzlepress.bananafest-destiny.com/compare#tested",
+    "https://puzzlepress.bananafest-destiny.com/"
+  ],
+  "cta": "puzzlepress.bananafest-destiny.com/compare",
+  "spoken": false,
+  "notes": "Real-time capture of the live site at 360x640 CSS px, 3x device pixels. The grey ring marks each tap. It opens on the tested table at /compare and slides it to the 'Mark on the free file' column. That column is tinted yellow in this capture only; the live page has no tint. It scrolls down the column to the Puzzle Press row ('None on the pages since 20 October; PREVIEW across the cover', $19 once), then taps 'Make a book free'. It downloads the default book (50 puzzles, 66 pages) and its cover (the price dialog shows, then closes), and ends on pages 3 and 20 of that PDF and on the cover, rendered from those files. The final 2.2 s hold the cover still for the end card."
+}
