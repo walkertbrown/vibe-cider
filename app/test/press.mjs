@@ -88,7 +88,7 @@ check(
 
 const zoneText = press.zone.map((o) => o.t).join(" ");
 check(/free/i.test(zoneText), "the press says the book is free");
-check(/footer/i.test(zoneText), "the press says what the free mark actually is");
+check(/PREVIEW/.test(zoneText), "the press says what the free mark actually is");
 // The reason a stranger does not press an unknown download button is rarely the
 // price. It is not knowing what it will ask them for first.
 check(

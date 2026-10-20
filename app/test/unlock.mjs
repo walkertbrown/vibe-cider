@@ -260,7 +260,8 @@ page.on("pageerror", (e) => errs.push(String(e)));
 await page.goto(BASE, { waitUntil: "networkidle" });
 await page.waitForSelector(".grid div");
 
-// The free book first, so "no watermark" below means something.
+// The free book first. Since 2026-10-20 its pages carry no mark either, so
+// what unlocking changes is the cover, checked at the end.
 await page.fill("#count", "2");
 let [dl] = await Promise.all([page.waitForEvent("download", { timeout: 180000 }), page.click("#download")]);
 let path = new URL("unlock-free.pdf", out).pathname;
@@ -268,7 +269,8 @@ await dl.saveAs(path);
 // Read with an extractor, not by grepping the bytes: the font is subset, so
 // the words are glyph ids in a compressed stream and `bytes.includes(...)`
 // finds nothing whether the mark is there or not. See test/pdftext.mjs.
-check((await pdfText(path)).includes(WATERMARK), "the free book is watermarked");
+const freeText = await pdfText(path);
+check(!freeText.includes(WATERMARK) && /Word Search/i.test(freeText), "the free book's pages are unmarked");
 
 await page.click("#unlockLink");
 await page.waitForSelector("#unlockDialog[open]");

@@ -19,8 +19,8 @@ at 8.5×11 sized for older eyes. Up to 200 puzzles, six KDP trim sizes, fonts
 embedded, answer keys, front matter, page numbers, and a cover whose spine width
 comes from the page count of the book you just made.
 
-Free to use, and it makes the entire book. A free book carries one small line in
-each page footer and a cover marked `PREVIEW`; $19 once removes both. No
+Free to use, and it makes the entire book. A free book's pages are unmarked and its
+cover is marked `PREVIEW`; $19 once removes that. No
 account, no subscription.
 
 A [Bananafest Destiny](https://bananafest-destiny.com) app. Making activity books

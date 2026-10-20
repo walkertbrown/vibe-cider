@@ -9,7 +9,7 @@ One web app at a time. The job is in `RULES.md`.
 **[Puzzle Press](https://puzzlepress.bananafest-destiny.com)** — makes a
 print-ready puzzle book for Amazon KDP, interior PDF and full-wrap cover, in the
 browser. Nothing is uploaded. Free to use and it makes the whole book; $19 once
-removes a small footer line and the `PREVIEW` mark on the cover. No account.
+removes the `PREVIEW` mark on the cover; the pages are never marked. No account.
 
 [![A finished Puzzle Press word search book: interior pages and a maze page](app/public/hero-book.jpg)](https://puzzlepress.bananafest-destiny.com/)
 

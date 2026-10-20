@@ -43,6 +43,11 @@ const ABOUT_SOMEBODY_ELSE = [
   // the rule working: the sentence is about somebody else's product and had to
   // be declared to survive.
   "free to build with a watermarked proof and a one-time payment to remove it",
+  // Rows of the /compare table (2026-10-19) describing other tools' free output.
+  "free-credit books watermarked (claimed)",
+  "Diagonal univers.studio watermark across the puzzle (tested)",
+  "its puzzles are watermarked (claimed)",
+  "Watermark on demo puzzles (claimed)",
 ];
 
 const files = [];
@@ -84,7 +89,7 @@ console.log(`scanned ${files.length} published files — everything under public
 if (bad.length) {
   console.log(`\n${bad.length} line(s) call this product's free tier watermarked:\n`);
   for (const b of bad) console.log("  " + b);
-  console.log("\nIt is a line in the page footer and PREVIEW on the cover. Say that.");
+  console.log("\nIt is PREVIEW on the cover and nothing on the pages. Say that.");
   process.exit(1);
 }
 console.log('MARKS OK — no published page describes the free tier as "watermarked"');

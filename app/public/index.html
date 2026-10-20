@@ -391,8 +391,10 @@
            has always said it precisely, but that is twelve screens down and the
            decision is made here. Same failure as the dashboard calling a load
            timer engagement: literally true, practically misleading, except this
-           one is charged to the customer. -->
-      <span class="note price"><span class="hero-lg">Free: a full-length book, one small line in each page footer. $19 once removes it.</span><span class="hero-sm">Free — one small footer line. $19 removes it.</span></span>
+           one is charged to the customer.
+           2026-10-20: the footer line is gone; free pages carry no mark at all,
+           and only the cover says PREVIEW. -->
+      <span class="note price"><span class="hero-lg">Free: the whole book, pages unmarked. $19 once removes PREVIEW from the cover.</span><span class="hero-sm">Free, pages unmarked. $19 for a clean cover.</span></span>
       <span class="note">More samples: <a href="samples/sample-cover-6x9.pdf" target="_blank" rel="noopener">its cover</a> · <a href="samples/sample-sudoku-6x9.pdf" target="_blank" rel="noopener">sudoku</a> · <a href="samples/sample-maze-6x9.pdf" target="_blank" rel="noopener">maze</a> · <a href="samples/sample-crisscross-6x9.pdf" target="_blank" rel="noopener">fill-in</a> · <a href="samples/sample-crossword-6x9.pdf" target="_blank" rel="noopener">crossword</a></span>
     </div>
     <ul class="trust">
@@ -556,7 +558,7 @@ cherry"></textarea>
         <button type="button" id="previewDownload">Download this book</button>
         <!-- The phone bar has said what it costs since the day it was built.
              This one asked for a click in silence. -->
-        <span class="note">Free — one small footer line.</span>
+        <span class="note">Free, pages unmarked.</span>
       </div>
     </div>
     <div class="page" id="page"></div>
@@ -674,7 +676,7 @@ cherry"></textarea>
 <section class="band alt" id="pricing">
   <div class="band-inner">
     <h2>Pricing</h2>
-    <p class="sub">Make the whole book before you pay anything — all two hundred puzzles if that is what you want, with solutions and a cover. The free version is marked, not shortened: one small line in the footer of each page and a PREVIEW across the cover. Paying removes the marks. Nothing else changes.</p>
+    <p class="sub">Make the whole book before you pay anything — all two hundred puzzles if that is what you want, with solutions and a cover. The free version is not shortened and its pages are not marked. The only mark is PREVIEW across the cover. Paying removes it. Nothing else changes.</p>
     <div class="price">
       <div class="col">
         <div class="amount">Free</div>
@@ -682,14 +684,14 @@ cherry"></textarea>
           <li>Full-length books — as many puzzles as you like</li>
           <li>All five puzzle types, every trim size</li>
           <li>Solutions included</li>
-          <li>Small "made with Puzzle Press" footer</li>
+          <li>Interior pages unmarked</li>
           <li>A cover of your own book, marked PREVIEW</li>
         </ul>
       </div>
       <div class="col">
         <div class="amount">$19 <span style="font-size:15px;font-weight:400;color:var(--muted)">once</span></div>
         <ul>
-          <li>Everything in Free, with no footer line</li>
+          <li>Everything in Free</li>
           <li>Cover without the PREVIEW mark</li>
           <li>Unlimited books, forever — one payment</li>
           <li>Sell what you make — we claim no rights to it</li>
@@ -717,7 +719,7 @@ cherry"></textarea>
     <details class="faq"><summary>Do I need bleed?</summary>
       <p>Only if artwork runs off the edge of the page. A plain puzzle book does not — leave bleed off. Turning it on makes the PDF page slightly larger, which KDP expects for full-bleed interiors and flags as an error otherwise.</p></details>
     <details class="faq"><summary>What if I pay and it is not what I expected?</summary>
-      <p>Email support@bananafest-destiny.com within 30 days from the address you paid with and you get a refund, no questions asked. Before that, though: the free version makes the whole book — every puzzle, the solutions and the cover — so you can check the output on your own words, at your own trim size, before paying anything. The $19 removes the footer line and the PREVIEW mark and changes nothing else.</p></details>
+      <p>Email support@bananafest-destiny.com within 30 days from the address you paid with and you get a refund, no questions asked. Before that, though: the free version makes the whole book — every puzzle, the solutions and the cover — so you can check the output on your own words, at your own trim size, before paying anything. The $19 removes the PREVIEW mark from the cover and changes nothing else.</p></details>
     <details class="faq"><summary>I paid already. How do I unlock on another computer?</summary>
       <p>Open the tool and choose <strong>Already paid? Unlock</strong> next to the price, then enter the same email you paid with. That is the whole licence — there is no account and no password, so it works on every machine you use, for as long as the payment exists. You never pay twice. If the email is refused, it is almost always a different address from the one on your Stripe receipt; email <a href="mailto:support@bananafest-destiny.com">support@bananafest-destiny.com</a> and we will unlock it by hand.</p></details>
     <details class="faq"><summary>Can I sell the books I make?</summary>
@@ -743,7 +745,7 @@ cherry"></textarea>
       </div>
       <div>
         <h3>What $19 buys</h3>
-        <p>One payment, no subscription: every book you make, with no footer line and the cover without its PREVIEW mark. It is tied to the email you pay with. There is no account to lose and nothing expires. Stripe adds sales tax at checkout if your state requires it on this kind of purchase — the $19 itself never changes. Checkout itself is hosted by Stripe and may show the account name on file rather than "Puzzle Press" — it's still this product and this site; only the label on that one page is different.</p>
+        <p>One payment, no subscription: every cover you make, without its PREVIEW mark. It is tied to the email you pay with. There is no account to lose and nothing expires. Stripe adds sales tax at checkout if your state requires it on this kind of purchase — the $19 itself never changes. Checkout itself is hosted by Stripe and may show the account name on file rather than "Puzzle Press" — it's still this product and this site; only the label on that one page is different.</p>
         <p>On a new computer, or after clearing your browser? Open the tool and choose <b>Already paid? Unlock</b>, then enter the same email. It works on every device you use, for as long as the payment exists — you never pay twice.</p>
       </div>
       <div>
@@ -817,7 +819,7 @@ cherry"></textarea>
 
 <dialog id="unlockDialog">
   <h2 id="dialogTitle">Unlock full books</h2>
-  <p id="dialogLede">Pay once, make unlimited books with no footer line and no PREVIEW mark. After paying, enter the email you used at checkout.</p>
+  <p id="dialogLede">Pay once, and every cover you make comes without the PREVIEW mark. After paying, enter the email you used at checkout.</p>
   <p id="buyLine"></p>
   <p class="paidlead" id="paidLead" hidden></p>
   <label for="email">Email used at checkout</label>
@@ -839,7 +841,7 @@ cherry"></textarea>
   <!-- Pinned to the bottom of the viewport the whole way down, so this is the
        single most-read sentence on the site. See the hero note for why it no
        longer says "watermarked". -->
-  <span class="note">Free — one small footer line.</span>
+  <span class="note">Free, pages unmarked.</span>
 </div>
 
 <script src="config.js"></script>

@@ -1,13 +1,13 @@
-// Free tier: up to FREE_LIMIT puzzles per book, watermark on every page.
-// Licensed: unlimited, no watermark. The licence is a record in localStorage
+// Free tier: the whole book, interior unmarked; the cover carries PREVIEW.
+// Licensed: the cover without PREVIEW. The licence is a record in localStorage
 // written after /api/verify confirms a paid Stripe checkout for an email.
 
 // There is no longer a puzzle-count cap. Capping length meant the free tier
 // could only produce something nobody would publish, so it demonstrated the
-// opposite of what it needed to. The watermark is the gate: a footer line on
-// every page and a PREVIEW mark across the cover make a book unsellable
-// however long it is, and a full-length watermarked book proves the product
-// actually works. FREE_LIMIT is kept as the UI's maximum, not a tier limit.
+// opposite of what it needed to. The PREVIEW mark across the cover is the gate.
+// Until 2026-10-20 a footer line on every interior page was too; it came off
+// so a free visitor can upload and proof the interior they actually made.
+// FREE_LIMIT is kept as the UI's maximum, not a tier limit.
 export const FREE_LIMIT = 200;
 
 export const PRICE_LABEL = "$19 one-time";

@@ -118,7 +118,7 @@ check(/\$19/.test(foldText), "the price is above the fold");
 // "watermarked" made a 7pt grey footer sound like a stamp across the artwork.
 // Assert the substance — that the free terms are stated up here at all — so the
 // next rewording does not have to fight the test that was guarding the idea.
-check(/free/i.test(foldText) && /(footer|watermark)/i.test(foldText), "what you get for free is above the fold");
+check(/free/i.test(foldText) && /(unmarked|PREVIEW)/.test(foldText), "what you get for free is above the fold");
 check(above.some((c) => /make a book free/i.test(c.t)), 'the "Make a book free" button is above the fold');
 
 await browser.close();

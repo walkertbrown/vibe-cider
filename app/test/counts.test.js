@@ -118,7 +118,7 @@ test("the same seed and settings make the same book, for every type", () => {
   }
 });
 
-test("a free book carries its recipe on the page; a paid one carries it only in the file's properties", async () => {
+test("free and paid books carry the recipe only in the file's properties, and the same pages", async () => {
   const { renderBook } = await import("../src/pdf/render.js");
   const { readFileSync } = await import("node:fs");
   const fonts = {
@@ -133,8 +133,9 @@ test("a free book carries its recipe on the page; a paid one carries it only in 
     const doc = await PDFDocument.load(bytes);
     assert.equal(doc.getSubject(), recipe, `${licensed ? "paid" : "free"}: the recipe should be in the file's properties`);
   }
-  // $19 removes every mark from the page — including this one.
+  // Since 2026-10-20 the interior is the same book whether or not anybody
+  // paid: no footer line, no recipe on the copyright page. Only the cover differs.
   const paid = await renderBook(book, { title: "T", trim: "6x9", licensed: true, fonts, recipe });
   const free = await renderBook(book, { title: "T", trim: "6x9", licensed: false, fonts, recipe });
-  assert.ok(free.length > paid.length, "the free book should carry more ink than the paid one");
+  assert.equal(free.length, paid.length, "the free interior should carry exactly the ink of the paid one");
 });

@@ -613,7 +613,7 @@ function refreshTier(note = "") {
   if (lic) {
     el.tier.className = "tier licensed";
     el.tier.innerHTML =
-      `<b>Unlocked</b> for ${escapeHtml(lic.email)}. Unlimited puzzles, no watermark.` +
+      `<b>Unlocked</b> for ${escapeHtml(lic.email)}. Covers without PREVIEW.` +
       (note === "storage"
         ? ` <b>This tab only:</b> your browser is blocking site storage (a private window, or cookies turned off), so the unlock will not survive a reload. Enter the same email again after reloading, or use a normal window — your payment is recorded either way.`
         : "");
@@ -630,9 +630,9 @@ function refreshTier(note = "") {
     // first. The claim is literal: the PDF is built in this browser and saved
     // with createObjectURL (download(), ~line 711). Nothing is uploaded and
     // there is no account.
-    el.tier.innerHTML = `<b>Free:</b> full-length books, with one small line in the footer of every page and a cover marked PREVIEW. ` +
+    el.tier.innerHTML = `<b>Free:</b> the whole book, interior unmarked. Only the cover is marked PREVIEW. ` +
       `No sign-up, no email — the PDF is made here and saves straight to this device. ` +
-      `<a href="#" id="unlockLink">Remove both — ${PRICE_LABEL}</a> · ` +
+      `<a href="#" id="unlockLink">Unmarked cover — ${PRICE_LABEL}</a> · ` +
       `<a href="#" id="alreadyPaid">Already paid? Unlock</a>`;
     for (const id of ["unlockLink", "alreadyPaid"]) {
       el.tier.querySelector(`#${id}`).addEventListener("click", (e) => {
@@ -705,14 +705,14 @@ function openUnlock({ justPaid = false, intent = "buy", after = null, pages = 0,
       // landing page. It was still here, on the dialog where the money is,
       // promising to remove a stamp across the artwork that does not exist.
       // The lede underneath had said "no line in the footer" the whole time.
-      ? "Remove the footer line and PREVIEW"
+      ? "Take PREVIEW off your covers"
       : "Enter the email you paid with";
   el.dialogLede.textContent = justPaid
     ? "Enter the email you used at checkout and everything unlocks on this device."
     : afterCover
-      ? `Your title, your spine${pages ? `, sized for ${pages} pages` : ""}, with PREVIEW across the front. ${PRICE_LABEL} takes PREVIEW off the cover and the line off the interior's footer. Unlimited books, no account, no subscription.`
+      ? `Your title, your spine${pages ? `, sized for ${pages} pages` : ""}, with PREVIEW across the front. ${PRICE_LABEL} takes PREVIEW off it, and off every cover you make after. No account, no subscription.`
     : buying
-      ? `${PRICE_LABEL}. Unlimited books, no line in the footer, no PREVIEW across the cover. No account and no subscription.`
+      ? `${PRICE_LABEL}. Every cover you make, with no PREVIEW across it. The interior is already unmarked. No account and no subscription.`
       : "Enter the email you used at checkout and everything unlocks on this device.";
   // The cover saved itself somewhere the visitor has to go and find, and on a
   // phone that is usually out of sight, so the dialog asking for money sat over

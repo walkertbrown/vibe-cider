@@ -41,11 +41,6 @@ const MIN_TYPE = 7;
 const gridLetter = (cell, share) => Math.min(Math.max(MIN_TYPE, cell * share), cell * 0.85);
 const GREY = rgb(0.45, 0.45, 0.45);
 const SHADE = rgb(0.82, 0.82, 0.82);
-// The address is in the line because a free book can reach Amazon, where Look
-// Inside shows interior pages. A mark that names the tool but not where to find
-// it is an advert with no phone number. Text only, no link annotation: KDP
-// interiors should carry none.
-const WATERMARK = "Made with Puzzle Press, free preview — puzzlepress.bananafest-destiny.com";
 
 export async function renderBook(book, opts = {}) {
   const {
@@ -97,10 +92,14 @@ export async function renderBook(book, opts = {}) {
 
   // 1–2: title + copyright
   drawTitlePage(ctx, { title, subtitle, author });
-  // A paid book carries no marks at all, so the recipe is printed only on a
-  // free one — where a watermark already says where it came from, and the
-  // book cannot be published as it stands anyway.
-  drawCopyrightPage(ctx, { title, author, recipe: licensed ? null : opts.recipe ?? null });
+  // 2026-10-20: the interior is the same book whether or not anybody paid.
+  // Until today a free interior carried a footer line on every page and this
+  // recipe on its copyright page, and the $19 removed both. A marked interior
+  // is a book nobody can publish, so a free visitor could judge the puzzles
+  // but not the thing they came for. The cover keeps PREVIEW (cover.js) and
+  // that is what the money buys. The recipe still travels in the file's
+  // Subject (above), so the seed is not lost.
+  drawCopyrightPage(ctx, { title, author });
 
   // Every eighth page: often enough that a phone never looks hung, rare
   // enough that the yields cost nothing measurable.
@@ -157,12 +156,6 @@ function footer(ctx, page, box, { number = true } = {}) {
     const w = ctx.F.regular.widthOfTextAtSize(text, size);
     const x = box.rightHand ? box.x + box.w - w : box.x;
     page.drawText(text, { x, y, size, font: ctx.F.regular, color: GREY });
-  }
-  if (!ctx.licensed) {
-    let s = 7;
-    while (s > 5 && ctx.F.regular.widthOfTextAtSize(WATERMARK, s) > box.w) s -= 0.25;
-    const w = ctx.F.regular.widthOfTextAtSize(WATERMARK, s);
-    page.drawText(WATERMARK, { x: box.x + (box.w - w) / 2, y: y + 12, size: s, font: ctx.F.regular, color: GREY });
   }
 }
 
