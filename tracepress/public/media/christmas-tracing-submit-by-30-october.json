@@ -1,0 +1,16 @@
+{
+  "keeper": "vibe-cider",
+  "product": "Trace Press",
+  "slug": "christmas-tracing-submit-by-30-october",
+  "shot": "2026-10-19",
+  "claim": "A KDP paperback that goes through low-content review needs submitting by Friday 30 October 2026 to be on sale for Black Friday, 27 November; without the low-content box, about Thursday 19 November. From the free Christmas tracing worksheets page, one tap opens Trace Press with twenty Christmas words, and in a phone browser with no sign-up it makes a 46-page handwriting workbook (A to Z, then one word a page with a picture) and its full-wrap KDP cover. The free book carries one footer line and a PREVIEW cover, and $19 once removes them.",
+  "backing": [
+    "https://tracepress.bananafest-destiny.com/christmas-tracing-worksheets",
+    "https://kdp.amazon.com/en_US/help/topic/G202173620",
+    "https://tracepress.bananafest-destiny.com/"
+  ],
+  "cta": "tracepress.bananafest-destiny.com/christmas-tracing-worksheets",
+  "spoken": false,
+  "notes": "Time-bound: the 30 October date is the reason to post it soon; after 30 October it is out of date. The dates are counted back from Black Friday using KDP's Timelines help page (3 business days, up to 6 for a first book) and its low-content review time (3 to 4 weeks), as the page says. Real-time capture of the live site at 360x640 CSS px, 3x device pixels. It opens held 4.5 s on the page's 'Submit by Friday 30 October' paragraph (tinted yellow by the capture script for legibility; the live page has no tint). The grey ring marks each tap. It ends on pages 29 (star), 41 (snowman) and 46 (gingerbread) of the PDF it just made and on its cover. The final 2.2 s hold the cover still for the end card.",
+  "post_by": "2026-10-30"
+}
