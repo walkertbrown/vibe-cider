@@ -350,7 +350,12 @@ for (const [ip, e] of ranTheApp) {
 // finds them — including things that never run main.js and therefore never
 // appear above. Listing them separately is what stops a crawler's tour of the
 // samples directory from being read as six people considering the product.
-const sampleOnly = visitors.filter(([, e]) => did(e.paths).samples.length && !did(e.paths).ranApp);
+const sampleAll = visitors.filter(([, e]) => did(e.paths).samples.length && !did(e.paths).ranApp);
+// 2026-10-20: a robot that names itself (or Meta's range) is not a reader here
+// either. Facebook's preview fetcher took 30+ samples in two bursts on 10-19 and
+// filled this list; count those on one line instead.
+const sampleRobots = sampleAll.filter(([ip, e]) => declaresBot(e, ip));
+const sampleOnly = sampleAll.filter(([ip, e]) => !declaresBot(e, ip));
 // 2026-10-05: eleven of these, on phones, from consumer ISPs in eleven
 // countries, read like eleven people. Their minutes said otherwise: nine
 // addresses in nine countries each took one or two different samples between
@@ -359,6 +364,7 @@ const sampleOnly = visitors.filter(([, e]) => did(e.paths).samples.length && !di
 // cannot see it, because each address really is somebody's phone line. So
 // mark any address whose first sample fell in a 10-minute window with 3 or
 // more other sample-only addresses, and count them as one burst, not people.
+if (sampleRobots.length) console.log(`  Took a sample and named itself a robot (not listed): ${sampleRobots.length} addresses.\n`);
 if (sampleOnly.length) {
   const first = new Map();
   const times = (
@@ -404,8 +410,12 @@ if (scanners.length) {
 // addresses. The same rotation caught traffic.mjs out on 09-14; every other
 // list in this file is built from `strangers`, which already excludes them.
 const wordListOnly = visitors.filter(
-  ([ip, e]) => !isMine(ip) && [...e.paths.keys()].some((p) => p.startsWith("/word-lists/")) && !did(e.paths).ranApp,
+  ([ip, e]) => !isMine(ip) && [...e.paths.keys()].some((p) => p.startsWith("/word-lists/")) && !did(e.paths).ranApp && !declaresBot(e, ip),
 );
+const wordListRobots = visitors.filter(
+  ([ip, e]) => !isMine(ip) && [...e.paths.keys()].some((p) => p.startsWith("/word-lists/")) && !did(e.paths).ranApp && declaresBot(e, ip),
+).length;
+if (wordListRobots) console.log(`  Read a word list and named itself a robot (not listed): ${wordListRobots} addresses.\n`);
 if (wordListOnly.length) {
   const total = wordListOnly.reduce((a, [, e]) => a + e.n, 0);
   console.log(`  Visited a word-list page without ever running the app: ${wordListOnly.length} addresses, ${total} requests.`);
