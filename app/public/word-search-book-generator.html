@@ -98,11 +98,11 @@
 
   <section class="prose">
     <h2>What goes wrong in word search books</h2>
-    <p>Word search books are judged in their reviews, and those reviews are unforgiving about a small set of faults that are easy to make and easy for a solver to spot:</p>
+    <p>A small set of faults is easy to make and easy for a solver to spot:</p>
     <ul>
       <li><strong>A word appears twice.</strong> Crossing words, or the random filler letters, accidentally spell a second copy — and the answer key only marks one.</li>
       <li><strong>One word hides inside another.</strong> CAT inside CATALOG in the same grid is found twice.</li>
-      <li><strong>Filler letters spell something rude.</strong> Random letters do this more often than you would think.</li>
+      <li><strong>Filler letters spell something rude.</strong> In the 5,400 puzzles measured below, the generator threw away 6,038 fills for exactly this.</li>
       <li><strong>The same list, twice.</strong> A short theme list reused across fifty puzzles produces near-identical grids.</li>
     </ul>
     <p>Puzzle Press checks every grid after placing the words: each word must occur exactly once in all eight directions, nested words are removed from the list before placement (you are told which and why), filler letters are screened against a blocklist, and each puzzle draws a word list not used earlier in the book — if the theme is too small to supply enough different lists, you are warned before you download, not after. These are checks, not hopes; the same tests run on every book.</p>
@@ -120,9 +120,22 @@
       <tr><td>Easy</td><td>2 — across and down only</td><td>Random</td></tr>
       <tr><td>Medium</td><td>4 — adds diagonals, nothing backwards</td><td>Random</td></tr>
       <tr><td>Hard</td><td>All 8, including backwards</td><td>Drawn from the puzzle's own words, so near-misses are everywhere</td></tr>
-      <tr><td>Graded</td><td colspan="2">Easy at the front through hard at the back, with the level printed on each puzzle — how published books are made</td></tr>
+      <tr><td>Graded</td><td colspan="2">Easy at the front through hard at the back, with the level printed on each puzzle</td></tr>
     </table>
-    <p>Grid size is automatic from the word list (usually 15×15 to 17×17), or set it yourself. <strong>Large print</strong> switches to 8.5 × 11 with bigger letters and a grid sized for them, the format that sells to older readers.</p>
+    <p>Grid size is automatic from the word list (measured below: 17×17 is the middle size at medium), or set it yourself. <strong>Large print</strong> switches to 8.5 × 11 with bigger letters and a grid sized for them, for readers who need bigger letters: see the <a href="/large-print-word-search-generator">large print generator</a>.</p>
+  </section>
+
+  <section class="prose">
+    <h2>Measured on 5,400 puzzles</h2>
+    <p>To put numbers on the checks above, the generator was run on all 90 built-in themes on 21 October 2026: a 20-puzzle book for each theme at each grade, 15 words a puzzle, with the grid size left automatic. That is 5,400 puzzles, and every word of every list was placed in all of them.</p>
+    <div class="scroll"><table>
+      <tr><th>Grade</th><th>Grid sizes</th><th>Middle size</th><th>Fills thrown away: a word twice</th><th>Fills thrown away: a blocked word</th></tr>
+      <tr><td>Easy</td><td>15×15 to 22×22</td><td>18×18</td><td>331</td><td>1,644</td></tr>
+      <tr><td>Medium</td><td>14×14 to 20×20</td><td>17×17</td><td>296</td><td>1,258</td></tr>
+      <tr><td>Hard</td><td>13×13 to 19×19</td><td>16×16</td><td>1,153</td><td>3,136</td></tr>
+    </table></div>
+    <p>Easy grids come out biggest because the automatic size allows about 3 cells for every letter at easy, 2.6 at medium and 2.2 at hard: with only two directions, a tight easy grid would leave words that don't fit. Hard also throws away the most fills: its filler letters are drawn from the puzzle's own words, so they spell a puzzle word a second time far more readily.</p>
+    <p>The blocklist is 37 rude or offensive strings, three of them only three letters long. Every one of the 90 easy and medium books, and 89 of the 90 hard books, had at least one fill thrown away for spelling one. So a book of 20 puzzles from random letters, with nobody checking, would be likely to carry one. Here each rejected fill is simply redone, and the PDF only ever gets grids that passed both checks.</p>
   </section>
 
   <section class="prose">
