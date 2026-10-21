@@ -154,9 +154,25 @@ try {
   const rumSince = iso(Date.now() - 7 * 86400e3);
   const r = await graphql(`query { viewer { accounts(filter: {accountTag: "${ACCOUNT}"}) {
     rumPageloadEventsAdaptiveGroups(limit: 500, filter: {datetime_geq: "${rumSince}", bot: 0, requestHost: "${HOST}"}) {
-      count avg { sampleInterval } dimensions { requestPath refererHost deviceType countryName }
+      count avg { sampleInterval } dimensions { datetimeMinute requestPath refererHost deviceType countryName }
     } } } }`);
   const rows = r.viewer.accounts[0].rumPageloadEventsAdaptiveGroups;
+  // Match each facebook.com row to the zone log: Meta's renderer runs the same
+  // path in the same minute from 2a03:2880. On 2026-10-21 all 11 facebook
+  // loads of the week matched; none was a person.
+  const fb = rows.filter((x) => /facebook\.com$/.test(x.dimensions.refererHost || ""));
+  const fbSplit = { meta: 0, other: 0, old: 0 };
+  for (const x of fb) {
+    const t = Date.parse(x.dimensions.datetimeMinute);
+    try {
+      const z = await graphql(`query { viewer { zones(filter: {zoneTag: "${ZONE}"}) {
+        httpRequestsAdaptiveGroups(limit: 100, filter: {datetime_geq: "${iso(t - 60e3)}", datetime_lt: "${iso(t + 120e3)}", clientRequestHTTPHost: "${HOST}", clientRequestPath: "${x.dimensions.requestPath}"}) {
+          count dimensions { clientIP userAgent } } } } }`);
+      const hits = z.viewer.zones[0].httpRequestsAdaptiveGroups.filter((h) => !BOT_UA.test(h.dimensions.userAgent || ""));
+      if (hits.length && hits.every((h) => META.test(h.dimensions.clientIP || ""))) fbSplit.meta += x.count;
+      else fbSplit.other += x.count;
+    } catch { fbSplit.old += x.count; }
+  }
   const total = rows.reduce((a, x) => a + x.count, 0);
   const tally = (pick) => {
     const m = new Map();
@@ -165,8 +181,9 @@ try {
   };
   console.log(`\n  Last 7 days by the page beacon: ${total} page loads (Cloudflare's bot filter; my headless tests are NOT excluded here)`);
   if (rows.some((x) => (x.avg?.sampleInterval ?? 1) !== 1)) console.log("    (SAMPLED: estimates, not counts. Run again.)");
-  console.log("    Referred by: (a facebook.com row can be Meta's own link-preview renderer, which this count keeps; look for 2a03:2880 in the zone log before calling it a person)");
+  console.log("    Referred by:");
   for (const [h, n] of tally((d) => d.refererHost).slice(0, 10)) console.log(`      ${String(n).padStart(4)}  ${h === "(none)" ? "(no referer: typed, bookmarked, or opened in an app)" : h}`);
+  if (fb.length) console.log(`    facebook.com, matched to the zone log by path and minute: ${fbSplit.meta} Meta's link-preview renderer (2a03:2880, not a person), ${fbSplit.other} from elsewhere (look before calling it a person), ${fbSplit.old} older than the zone log keeps`);
   console.log(`    Landed on: ${tally((d) => d.requestPath).slice(0, 6).map(([k, n]) => `${k} ${n}`).join(", ")}`);
   console.log(`    Device: ${tally((d) => d.deviceType).map(([k, n]) => `${k} ${n}`).join(", ")}`);
 } catch (e) {
