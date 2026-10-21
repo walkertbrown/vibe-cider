@@ -16,7 +16,7 @@ const WORDS = {
   candle: "candle", cookie: "cookie", pumpkin: "pumpkin-scary", lollipop: "lollipop", mushroom: "mushroom",
   // Thanksgiving
   mug: "mug", cake: "cake", bowl: "bowl", home: "home", bread: "bread", wheat: "wheat", maple: "leaf-maple",
-  glass: "glass", carrot: "carrot", cherry: "cherry", teapot: "teapot", pepper: "pepper", feather: "feather", seedling: "seedling",
+  glass: "lucide:glass-water", carrot: "carrot", cherry: "cherry", teapot: "teapot", pepper: "pepper", feather: "feather", seedling: "seedling",
   // Christmas
   ball: "ball-basketball", gift: "gift", bell: "bell", sock: "sock", book: "book", train: "train", robot: "robot",
   sleigh: "sleigh", snowman: "snowman", reindeer: "deer", deer: "deer", ornament: "christmas-ball", snowflake: "snowflake",

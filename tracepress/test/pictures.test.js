@@ -223,7 +223,7 @@ test("each word page names the sources of its own pictures", () => {
     assert.equal(words.length, 20, f);
     const lucide = words.filter((w) => WORDS[w].startsWith("lucide:"));
     const said = lucide.length
-      ? `${N[20 - lucide.length]} of the twenty pictures on this page are from Tabler Icons, under the MIT licence, and ${N[lucide.length].toLowerCase()} are from Lucide, under the ISC licence: ${and(lucide)}.`
+      ? `${N[20 - lucide.length]} of the twenty pictures on this page are from Tabler Icons, under the MIT licence, and ${N[lucide.length].toLowerCase()} ${lucide.length > 1 ? "are" : "is"} from Lucide, under the ISC licence: ${and(lucide)}.`
       : "All twenty pictures on this page are from Tabler Icons, under the MIT licence.";
     assert.ok(html.includes(said), `${f}: ${said}`);
     if (html.includes("Tabler has no icon for any of those")) for (const w of lucide) assert.ok(!tabler.includes(`${w}.svg`), `${f}: Tabler has ${w}`);

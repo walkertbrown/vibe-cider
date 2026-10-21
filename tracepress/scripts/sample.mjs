@@ -257,7 +257,7 @@ await book(SAMPLES.preschool, { guideIn: 1, lines: true, shapes: true, cases: "u
 // Holiday words are read from the button on each holiday page, like PRE_PRIMER.
 const holidayWords = (slug, label, count = 20) => {
   const page = readFileSync(new URL(`../public/${slug}-tracing-worksheets.html`, import.meta.url), "utf8");
-  const words = decodeURIComponent(page.match(new RegExp(`href="/\\?words=([^"#]+)">Make an? ${label} tracing book`))[1]).split(",");
+  const words = decodeURIComponent(page.match(new RegExp(`href="/\\?words=([^"#]+)(?:#[^"]*)?">Make an? ${label} tracing book`))[1]).split(",");
   if (words.length !== count) throw new Error(`${slug} list has ${words.length} words, expected ${count}`);
   return words;
 };
