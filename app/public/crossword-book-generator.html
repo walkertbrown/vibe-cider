@@ -37,6 +37,7 @@
   section.prose p { margin:0 0 12px; }
   section.prose ul { margin:0 0 12px; padding-left:22px; } section.prose li { margin:4px 0; }
   table { border-collapse:collapse; width:100%; font-size:14px; background:var(--card); margin:0 0 12px; }
+  .scroll { overflow-x:auto; }
   th, td { text-align:left; padding:8px 10px; border-bottom:1px solid var(--line); vertical-align:top; }
   th { color:var(--muted); font-weight:600; }
   .cta { margin:34px 0 10px; padding:22px; background:var(--card); border:1px solid var(--line); border-radius:12px; }
@@ -85,7 +86,7 @@
   <div class="top">
     <div>
       <h1>Crossword book generator for Amazon KDP</h1>
-      <p class="lede">Themed crosswords with clues — the sparse, friendly grids that fill KDP's crossword books — as a complete paperback: graded easy to expert, numbered grids, Across and Down clue lists, solutions at the back, plus the matching cover. Free to use; free books have unmarked pages and a cover marked PREVIEW.</p>
+      <p class="lede">Themed crosswords with clues — open, interlocking grids on one subject — as a complete paperback: graded easy to expert, numbered grids, Across and Down clue lists, solutions at the back, plus the matching cover. Free to use; free books have unmarked pages and a cover marked PREVIEW.</p>
       <div class="actions">
         <a class="btn" href="/?kind=crossword#tool">Make a book free</a>
         <a href="/samples/sample-crossword-6x9.pdf" target="_blank" rel="noopener">See a finished crossword book (PDF)</a>
@@ -98,8 +99,8 @@
 
   <section class="prose">
     <h2>What kind of crossword this makes</h2>
-    <p>Not the dense newspaper kind, where every square is checked and the setter needs a dictionary of obscurities to make it close. These are <strong>themed crosswords</strong> — 8 to 22 answers on one subject, laid out in the open, interlocking shape that KDP crossword books actually use, with a plain-language clue for each. A solver who knows the theme can finish one; a solver who does not learns the theme. That is the whole appeal of the category, and why they sell to the same readers as word search books.</p>
-    <p>Every one of the 2,346 built-in clues was written by hand for this tool, definition-style — "Reef-building sea creature", "Tradesman who cuts keys" — with no clue containing its own answer and no trivia a general reader could not reasonably know. The clue list is checked by the test suite for both of those, every build. Paste your own list as <code>word — clue</code> lines and your clues are used instead; a pasted word without a clue is reported by name and left out rather than given an invented one.</p>
+    <p>Not the dense newspaper kind, where every square is checked and the setter needs a dictionary of obscurities to make it close. These are <strong>themed crosswords</strong> — 8 to 22 answers on one subject, laid out in an open, interlocking shape, with a plain-language clue for each. A solver who knows the theme can finish one; a solver who does not learns the theme.</p>
+    <p>Every one of the 2,346 built-in clues was written for this tool, definition-style — "Reef-building sea creature", "Tradesman who cuts keys" — and no clue contains its own answer or a whole-word piece of it. The test suite checks that on every build, and checks that every built-in word has a clue. Paste your own list as <code>word — clue</code> lines and your clues are used instead; a pasted word without a clue is reported by name and left out rather than given an invented one.</p>
   </section>
 
   <section class="prose">
@@ -113,6 +114,20 @@
       <tr><td>Graded</td><td colspan="2">Easy at the front through expert at the back, level printed on each puzzle</td></tr>
     </table>
     <p>Grids are numbered the conventional way — one number where an answer starts, across or down — and the clue lists carry the answer length in brackets. Each puzzle draws its own answers from the theme, so a fifty-puzzle book is fifty different grids. Solutions are the filled grids, 6 to a page at the back.</p>
+  </section>
+
+  <section class="prose">
+    <h2>Measured on 7,200 crosswords</h2>
+    <p>On 22 October 2026 we made a 20-puzzle book from each of the 90 built-in themes at every grade and checked every puzzle. Every answer in the grid had its clue, and the Across and Down lists matched the grid.</p>
+    <div class="scroll"><table>
+      <tr><th>Grade</th><th>Answers, middle</th><th>Grid, middle</th><th>Letters crossed by another answer, middle</th><th>Puzzles that came out a grade easier</th></tr>
+      <tr><td>Easy</td><td>8</td><td>11 × 11</td><td>14%</td><td>0 of 1,800</td></tr>
+      <tr><td>Medium</td><td>12</td><td>13 × 13</td><td>15%</td><td>331 of 1,800 (33 of the 90 books)</td></tr>
+      <tr><td>Hard</td><td>16</td><td>15 × 15</td><td>15%</td><td>154 of 1,800 (20 books)</td></tr>
+      <tr><td>Expert</td><td>16</td><td>17 × 17</td><td>15%</td><td>121 of 1,800 (10 books)</td></tr>
+    </table></div>
+    <p><strong>What the crossed share means for the solver.</strong> In a dense crossword, where every square belongs to two answers, a missing word can be pieced together from the words that cross it. Here the middle puzzle crosses about one letter in seven. Most letters are got from the clue alone, so the clues carry the puzzle, and that is why every one of them is written in plain language.</p>
+    <p><strong>Puzzles that came out easier.</strong> When a theme's answers will not interlock at the grade you chose, that puzzle is built one grade down instead of being left out. The worst were short state lists: every Medium West Virginia and New Hampshire puzzle came out Easy. Each such puzzle is labelled with its real level, and the tool says how many there are before you download. Until 22 October that happened without a word. A longer list of <code>word — clue</code> lines keeps a book at the grade you chose. Puzzles took a few milliseconds each to make, 74 at the slowest.</p>
   </section>
 
   <section class="prose">
