@@ -37,6 +37,7 @@
   section.prose p { margin:0 0 12px; }
   section.prose ul { margin:0 0 12px; padding-left:22px; } section.prose li { margin:4px 0; }
   table { border-collapse:collapse; width:100%; font-size:14px; background:var(--card); margin:0 0 12px; }
+  .scroll { overflow-x:auto; }
   th, td { text-align:left; padding:8px 10px; border-bottom:1px solid var(--line); vertical-align:top; }
   th { color:var(--muted); font-weight:600; }
   .cta { margin:34px 0 10px; padding:22px; background:var(--card); border:1px solid var(--line); border-radius:12px; }
@@ -98,8 +99,8 @@
 
   <section class="prose">
     <h2>What a criss-cross is, and the one way it goes wrong</h2>
-    <p>A criss-cross (also sold as "word fill-in" or "fill-it-in") is a crossword-shaped grid with no clues: the words are listed by length, and the solver works out where each one goes from its length and from the letters where words cross. They are a large KDP category of their own, popular with the same readers who buy word search books, and easier on the eyes than a crossword because there is nothing to know — only to fit.</p>
-    <p>The one way they go wrong: a grid where two words of the same length could swap places. Then there are two correct fills, the answer key at the back matches only one of them, and the reader who found the other one leaves the review. Puzzle Press solves every grid it builds with a backtracking solver that counts fills; if it finds a second, the longest word is printed into the grid as a starter (as fill-in books do), and if that still leaves two, the grid is thrown away and rebuilt. Every puzzle in every book has exactly one fill.</p>
+    <p>A criss-cross (also sold as "word fill-in" or "fill-it-in") is a crossword-shaped grid with no clues: the words are listed by length, and the solver works out where each one goes from its length and from the letters where words cross. Unlike a crossword, there is nothing to know, only to fit.</p>
+    <p>The one way they go wrong: a grid where two words of the same length could swap places. Then there are two correct fills, the answer key at the back matches only one of them, and the reader who found the other one leaves the review. Puzzle Press solves every grid it builds with a backtracking solver that counts fills; if it finds a second, the longest word is printed into the grid as a starter, and if that still leaves two, the grid is thrown away and rebuilt. Every puzzle in every book has exactly one fill.</p>
   </section>
 
   <section class="prose">
@@ -112,7 +113,20 @@
       <tr><td>Expert</td><td>22</td><td>17 × 17</td></tr>
       <tr><td>Graded</td><td colspan="2">Easy at the front through expert at the back, level printed on each puzzle</td></tr>
     </table>
-    <p>Words come from the same 90 themes as the word search books, or a list you paste. Each puzzle draws its own words, so a Halloween fill-in book is fifty different Halloween grids. Grids are trimmed to the shape the words make — no black squares, no padding — and the word list beneath is grouped by length, the way printed fill-ins are.</p>
+    <p>Words come from the same 90 themes as the word search books, or a list you paste. Each puzzle draws its own words, so a Halloween fill-in book is fifty different Halloween grids. Grids are trimmed to the shape the words make — no black squares, no padding — and the word list beneath is grouped by length.</p>
+  </section>
+
+  <section class="prose">
+    <h2>Measured on 1,800 grids</h2>
+    <p>On 22 October 2026 we built five grids at every grade from each of the 90 built-in themes, then solved every grid again from scratch. All 1,800 had exactly one fill. None needed the starter word: in this run, every layout that could be filled two ways still could with its longest word printed in, and was thrown away.</p>
+    <div class="scroll"><table>
+      <tr><th>Grade</th><th>Layouts tried, middle / most</th><th>Grid, middle</th><th>Came back empty</th></tr>
+      <tr><td>Easy</td><td>5 / 87</td><td>11 × 11</td><td>0 of 450</td></tr>
+      <tr><td>Medium</td><td>31 / 119</td><td>13 × 13</td><td>74 of 450</td></tr>
+      <tr><td>Hard</td><td>19 / 115</td><td>15 × 15</td><td>33 of 450</td></tr>
+      <tr><td>Expert</td><td>7 / 109</td><td>17 × 17</td><td>29 of 450</td></tr>
+    </table></div>
+    <p>Most layouts are thrown away before the uniqueness check: the words would not all cross, or the grid formed a stray run of letters that is not on the list. When a theme cannot make a grid at the grade you asked for, the book drops that puzzle one grade rather than leave a gap. In whole 20-puzzle books, that happened to 209 of 1,800 Medium puzzles, in 20 of the 90 themes. The worst were short state lists (11 to 13 words): every Medium West Virginia puzzle came out Easy. Until this measurement it happened silently. Now each such puzzle is labelled with its real level, and the tool tells you how many there are, so you can paste in a longer list or choose the easier grade knowingly.</p>
   </section>
 
   <section class="prose">
