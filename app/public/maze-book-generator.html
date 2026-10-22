@@ -37,6 +37,7 @@
   section.prose p { margin:0 0 12px; }
   section.prose ul { margin:0 0 12px; padding-left:22px; } section.prose li { margin:4px 0; }
   table { border-collapse:collapse; width:100%; font-size:14px; background:var(--card); margin:0 0 12px; }
+  .scroll { overflow-x:auto; }
   th, td { text-align:left; padding:8px 10px; border-bottom:1px solid var(--line); vertical-align:top; }
   th { color:var(--muted); font-weight:600; }
   .cta { margin:34px 0 10px; padding:22px; background:var(--card); border:1px solid var(--line); border-radius:12px; }
@@ -98,26 +99,39 @@
 
   <section class="prose">
     <h2>What "perfect maze" means, and why it matters</h2>
-    <p>A perfect maze has exactly one path between any two points — one way in, one way out, no loops and no sealed-off pockets. That is what makes it satisfying to solve and what makes the answer key correct: there is exactly one route to draw. Mazes made by hand, or by generators that punch random openings, often have two routes (so the printed solution looks wrong) or unreachable areas (which look like a printing error).</p>
+    <p>A perfect maze has exactly one path between any two points — one way in, one way out, no loops and no sealed-off pockets. That is what makes it satisfying to solve and what makes the answer key correct: there is exactly one route to draw. A maze with a loop has two routes, so the printed solution can look wrong to a solver who found the other; a maze with a sealed-off pocket looks like a printing error.</p>
     <p>Puzzle Press carves each maze as a spanning tree of the grid, which is perfect by definition. Entrance top-left, exit bottom-right, and the solution is the unique path between them — printed at the back as a wide grey corridor over the maze, easy to read at 6 to a page.</p>
   </section>
 
   <section class="prose">
     <h2>Grades</h2>
     <table>
-      <tr><th>Level</th><th>Grid</th><th>Suits</th></tr>
-      <tr><td>Easy</td><td>15 × 15</td><td>Young children — wide corridors for crayons</td></tr>
-      <tr><td>Medium</td><td>21 × 21</td><td>Ages 6–10, activity books</td></tr>
-      <tr><td>Hard</td><td>29 × 29</td><td>Older children and adults</td></tr>
-      <tr><td>Expert</td><td>39 × 39</td><td>Adult maze books; a few minutes each</td></tr>
+      <tr><th>Level</th><th>Grid</th><th>Size</th></tr>
+      <tr><td>Easy</td><td>15 × 15</td><td>225 cells, the widest corridors</td></tr>
+      <tr><td>Medium</td><td>21 × 21</td><td>441 cells</td></tr>
+      <tr><td>Hard</td><td>29 × 29</td><td>841 cells</td></tr>
+      <tr><td>Expert</td><td>39 × 39</td><td>1,521 cells, the narrowest corridors</td></tr>
       <tr><td>Graded</td><td colspan="2">Easy at the front through expert at the back, level printed on each maze</td></tr>
     </table>
-    <p>Each maze fills the page's live area, so the cell size follows the trim: 8.5 × 11 gives the biggest cells and is the usual choice for children's books, at the cost of KDP's large-trim print rate. 6 × 9 keeps the flat printing rate.</p>
+    <p>Each maze fills the page's live area, so the cell size follows the trim: 8.5 × 11 gives the biggest cells, at the cost of KDP's large-trim print rate. 6 × 9 keeps the flat printing rate.</p>
+  </section>
+
+  <section class="prose">
+    <h2>Measured on 2,000 mazes</h2>
+    <p>On 22 October 2026 we generated 500 mazes at each grade and checked every one. All 2,000 were perfect: every cell reachable, and exactly one route from entrance to exit.</p>
+    <div class="scroll"><table>
+      <tr><th>Grade</th><th>Route, shortest / middle / longest</th><th>Middle share of the grid</th><th>Dead ends, middle</th><th>Turns on the route, middle</th></tr>
+      <tr><td>Easy</td><td>37 / 93 / 179 cells</td><td>41%</td><td>24</td><td>58</td></tr>
+      <tr><td>Medium</td><td>57 / 159 / 309 cells</td><td>36%</td><td>46</td><td>102</td></tr>
+      <tr><td>Hard</td><td>105 / 287 / 537 cells</td><td>34%</td><td>87</td><td>181</td></tr>
+      <tr><td>Expert</td><td>165 / 477 / 833 cells</td><td>31%</td><td>155</td><td>306</td></tr>
+    </table></div>
+    <p>Two things follow. First, grid size is not the whole of difficulty: the longest easy maze had a longer route (179 cells) than the shortest hard one (105). Second, these mazes are carved by a random walk that keeps going until it has nowhere new to go, then backs up to the last fork. That makes long winding corridors: about one cell in ten is a dead end, at every grade. Every maze took under 2 ms to make.</p>
   </section>
 
   <section class="prose">
     <h2>Maze books for children</h2>
-    <p>This is where most maze books sell: "Mazes for Kids Ages 4–8", "My First Maze Book", "Dinosaur Mazes". Amazon's children's categories filter by age range, so put the age range in the title and grade the book so the first mazes are the easiest. A 50-maze book is the normal size; the table below shows what that costs.</p>
+    <p>If the book is for children, say the age range in the title and grade the book so the first mazes are the easiest. Graded puts easy at the front. Within a grade, though, the route length varies a lot (measured below), so look through the preview: if a maze near the front looks too long for its place, change the seed.</p>
   </section>
 
   <section class="prose">
