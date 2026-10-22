@@ -37,6 +37,7 @@
   section.prose p { margin:0 0 12px; }
   section.prose ul { margin:0 0 12px; padding-left:22px; } section.prose li { margin:4px 0; }
   table { border-collapse:collapse; width:100%; font-size:14px; background:var(--card); margin:0 0 12px; }
+  .scroll { overflow-x:auto; }
   th, td { text-align:left; padding:8px 10px; border-bottom:1px solid var(--line); vertical-align:top; }
   th { color:var(--muted); font-weight:600; }
   .cta { margin:34px 0 10px; padding:22px; background:var(--card); border:1px solid var(--line); border-radius:12px; }
@@ -98,8 +99,8 @@
 
   <section class="prose">
     <h2>The one thing a sudoku book must get right</h2>
-    <p>A sudoku with two valid solutions is broken: the solver who finds the other one checks the answer key, sees it disagree, and leaves a review saying the book is wrong. The reader can prove the fault from your own answer key, and it comes from generators that remove clues until the grid "looks hard" without checking that it still solves one way.</p>
-    <p>Puzzle Press starts from a full valid grid and digs clues out in symmetric pairs. Before each pair is removed, the grid is solved by a solver that counts solutions; if removing the pair would allow a second solution, the pair stays. Every puzzle in every book has exactly one answer, by construction. The expert grades take a few seconds each because of this check — the page shows progress while it works — which is the cost of getting it right.</p>
+    <p>A sudoku with two valid solutions is broken: the solver who finds the other one checks the answer key, sees it disagree, and leaves a review saying the book is wrong. The reader can prove the fault from your own answer key. Removing clues without re-solving the grid after each removal is how such a puzzle gets made.</p>
+    <p>Puzzle Press starts from a full valid grid and digs clues out in symmetric pairs. Before each pair is removed, the grid is solved by a solver that counts solutions; if removing the pair would allow a second solution, the pair stays. Every puzzle in every book has exactly one answer, by construction. That check is what makes the hard and expert grades slower to make than the easy ones (measured below); the page shows progress while it works.</p>
   </section>
 
   <section class="prose">
@@ -112,7 +113,21 @@
       <tr><td>Expert</td><td>26</td></tr>
       <tr><td>Graded</td><td>Easy at the front through expert at the back, level printed on each puzzle</td></tr>
     </table>
-    <p>Clue layouts are rotationally symmetric, as in newspaper and book sudoku. Grids are 9×9 with bold 3×3 boxes and numbering sized for a 6 × 9 page; <a href="/?kind=sudoku&amp;largePrint=1#tool">large print</a> sets 8.5 × 11 pages with 9×9 digits at about 38pt, puts one answer grid on each page so the solutions are large print too, and adds a "Large Print Edition" badge to the cover. <strong>For children's books</strong> there are 6×6 grids (2×3 boxes, clue bands 20/16/12/10) and 4×4 grids (2×2 boxes, 10/8/6/4) — "sudoku for kids" is its own KDP category, and every small grid is verified to have one solution exactly as the 9×9 is.</p>
+    <p>Clue layouts are rotationally symmetric: turn the grid upside down and the clues sit in the same squares. Grids are 9×9 with bold 3×3 boxes and numbering sized for a 6 × 9 page; <a href="/?kind=sudoku&amp;largePrint=1#tool">large print</a> sets 8.5 × 11 pages with 9×9 digits at about 38pt, puts one answer grid on each page so the solutions are large print too, and adds a "Large Print Edition" badge to the cover. <strong>For children's books</strong> there are 6×6 grids (2×3 boxes, clue bands 20/16/12/10) and 4×4 grids (2×2 boxes, 10/8/6/4) — and every small grid is verified to have one solution exactly as the 9×9 is.</p>
+  </section>
+
+  <section class="prose">
+    <h2>Measured on 2,400 puzzles</h2>
+    <p>On 21 October 2026 we ran the generator 200 times for every grade at every grid size and solved every result again from scratch. All 2,400 puzzles had exactly one solution, and every clue matched the answer key.</p>
+    <div class="scroll"><table>
+      <tr><th>9×9 grade</th><th>Clue target</th><th>Hit it</th><th>Removals refused</th><th>Time, middle / slowest</th></tr>
+      <tr><td>Easy</td><td>40</td><td>200 of 200</td><td>6%</td><td>1 / 10 ms</td></tr>
+      <tr><td>Medium</td><td>32</td><td>200 of 200</td><td>15%</td><td>3 / 12 ms</td></tr>
+      <tr><td>Hard</td><td>28</td><td>200 of 200</td><td>45%</td><td>15 / 432 ms</td></tr>
+      <tr><td>Expert</td><td>26</td><td>193 of 200</td><td>65%</td><td>141 / 1,933 ms</td></tr>
+    </table></div>
+    <p>"Removals refused" counts the pairs of clues the generator tried to take out and had to put back, because without them the puzzle would have had a second solution. At easy that happens to about one try in seventeen; at expert, to nearly two in three. That is why expert is slow: each refusal costs a full solve.</p>
+    <p>Some finished grids cannot be dug down to 26 symmetric clues at all. The generator starts again from a new grid, up to 12 times per puzzle, and then keeps the closest it found. In this run that left 7 expert puzzles of 200 with 27 clues: the book gets a 27-clue puzzle that solves one way rather than a 26-clue one that doesn't. On 6×6, 8 expert puzzles of 200 kept 12 clues instead of 10; every other 6×6 and 4×4 grade hit its target every time, in under 40 ms each. Times are from Node on a desktop computer; a phone browser will be slower.</p>
   </section>
 
   <section class="prose">
