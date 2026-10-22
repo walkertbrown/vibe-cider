@@ -1,0 +1,83 @@
+// /compare by UTC hour: who fetched the page, who ran it (fired /px/compare),
+// and who pressed through (/px/compareclick), with each address's owner.
+//
+// Written for 2026-10-23, when /compare goes out in a newsletter. Newsletter
+// clicks often carry no referrer, so the hour is the signal. A mail service
+// checking a link fetches the page and fires the beacon, just like a reader:
+// on 10-22 at 13:14Z two Google addresses did exactly that, minutes after the
+// table was emailed. So every address that ran the page is named by RDAP, and
+// a hosting or mail network (Google, Microsoft, Amazon…) is shown as such,
+// not counted as a person.
+//
+// Usage: node scripts/compare-hourly.mjs [hours, max 23.5]
+import { readFileSync } from "node:fs";
+
+const hours = Math.min(Number(process.argv[2] || 23.5), 23.5);
+const creds = readFileSync(new URL("../../.git-credentials", import.meta.url), "utf8");
+const CF = (creds.match(/^CLOUDFLARE_API_TOKEN=(.*)$/m) || [])[1]?.trim();
+const ZONE = "4169ea6b92a0920d72f9ebc5f7653e9d";
+const since = new Date(Date.now() - hours * 3600e3).toISOString().replace(/\.\d+Z$/, "Z");
+
+const r = await fetch("https://api.cloudflare.com/client/v4/graphql", {
+  method: "POST",
+  headers: { authorization: `Bearer ${CF}`, "content-type": "application/json" },
+  body: JSON.stringify({ query: `query { viewer { zones(filter: {zoneTag: "${ZONE}"}) {
+    httpRequestsAdaptiveGroups(limit: 5000, filter: {datetime_geq: "${since}", clientRequestHTTPHost_like: "%puzzle%", OR: [{clientRequestPath: "/compare"}, {clientRequestPath_like: "/px/compare%"}]}, orderBy: [datetimeMinute_ASC]) {
+      count dimensions { datetimeMinute clientIP clientRequestPath userAgent } } } } }` }),
+});
+const d = await r.json();
+if (d.errors) throw new Error(d.errors.map((e) => e.message).join("; "));
+const rows = d.data.viewer.zones[0].httpRequestsAdaptiveGroups;
+
+// This machine: the IPv4 address and the IPv6 /64 the tests run from.
+const mine = (ip) => ip === "162.194.147.225" || ip.startsWith("2600:1702:6328:b810:");
+const namesItself = (ua) => /bot|crawl|spider|slurp|preview|facebookexternalhit|curl|python|node|go-http|headless/i.test(ua);
+const NETWORK = /google|microsoft|amazon|aws|cloudflare|tencent|alibaba|huawei|hwcsnet|oracle|digitalocean|linode|akamai|ovh|hetzner|proofpoint|mimecast|barracuda|yahoo|apple/i;
+
+const owners = new Map();
+const owner = async (ip) => {
+  if (!owners.has(ip)) {
+    try {
+      const j = await (await fetch(`https://rdap.org/ip/${ip}`, { headers: { accept: "application/rdap+json", "user-agent": "curl/8.5.0" } })).json();
+      const ent = (j.entities || []).flatMap((e) => (e.vcardArray?.[1] || []).filter((v) => v[0] === "fn").map((v) => v[3]));
+      owners.set(ip, [j.name, ...ent].filter(Boolean).join(" / ") || "?");
+    } catch { owners.set(ip, "?"); }
+  }
+  return owners.get(ip);
+};
+
+// An address that hunts for /rss, /feed and the like piles up 404s; who.mjs
+// calls 5+ a scanner, and so does this. On 10-22 a Magticom (Georgia) address
+// ran /compare, "pressed" and then read the zoo's feed: a feed reader, not a
+// newsletter reader.
+const nf = await (await fetch("https://api.cloudflare.com/client/v4/graphql", {
+  method: "POST",
+  headers: { authorization: `Bearer ${CF}`, "content-type": "application/json" },
+  body: JSON.stringify({ query: `query { viewer { zones(filter: {zoneTag: "${ZONE}"}) {
+    httpRequestsAdaptiveGroups(limit: 5000, filter: {datetime_geq: "${since}", clientRequestHTTPHost_like: "%puzzle%", edgeResponseStatus: 404}) {
+      count dimensions { clientIP } } } } }` }),
+})).json();
+const notFound = new Map();
+for (const g of nf.data?.viewer.zones[0].httpRequestsAdaptiveGroups || []) notFound.set(g.dimensions.clientIP, (notFound.get(g.dimensions.clientIP) || 0) + g.count);
+const scanner = (ip) => (notFound.get(ip) || 0) >= 5;
+
+const H = new Map();
+for (const { datetimeMinute: m, clientIP: ip, clientRequestPath: p, userAgent: ua } of rows.map((x) => x.dimensions)) {
+  if (mine(ip)) continue;
+  const h = m.slice(0, 13) + "Z";
+  const e = H.get(h) || { fetched: new Set(), ran: new Map(), clicked: new Set(), robots: new Set() };
+  if (namesItself(ua)) e.robots.add(ip);
+  else if (p === "/compare") e.fetched.add(ip);
+  else if (p.startsWith("/px/compareclick")) e.clicked.add(ip);
+  else if (!e.ran.has(ip)) e.ran.set(ip, m.slice(11, 16));
+  H.set(h, e);
+}
+
+console.log(`/compare by UTC hour since ${since}, this machine left out`);
+console.log(`hour           fetched  ran it  people  pressed  robots`);
+for (const [h, e] of H) {
+  const ran = await Promise.all([...e.ran].map(async ([ip, t]) => [ip, t, await owner(ip)]));
+  const people = ran.filter(([ip, , o]) => !NETWORK.test(o) && !scanner(ip));
+  console.log(`${h} ${String(e.fetched.size).padStart(8)} ${String(ran.length).padStart(7)} ${String(people.length).padStart(7)} ${String([...e.clicked].filter((ip) => people.some(([p]) => p === ip)).length).padStart(8)} ${String(e.robots.size).padStart(7)}`);
+  for (const [ip, t, o] of ran) console.log(`    ${t}Z  ${ip.padEnd(40)} ${o}${NETWORK.test(o) ? "   (network, not counted)" : scanner(ip) ? `   (scanner, ${notFound.get(ip)} 404s, not counted)` : ""}${e.clicked.has(ip) ? "   PRESSED" : ""}`);
+}
