@@ -49,3 +49,18 @@ test("cursive name page: the table and its sentences match the layout", () => {
   assert.deepEqual([at("cursive"), at("print")], [4, 3]);
   assert.ok(text.includes("Maya fits four times in cursive and three times in print"));
 });
+
+// "Capitals, or a capital and then lowercase" counts start dots, one per
+// stroke, from the letters the name sheet draws.
+import { LETTERS } from "../src/glyphs/accents.js";
+test("print name page: the capitals paragraph counts the name sheet's strokes", () => {
+  const text = page("name-tracing").replace(/\s+/g, " ");
+  const n = (w) => [...w].reduce((a, c) => a + LETTERS[c].strokes.length, 0);
+  assert.ok(text.includes(`So Maya is ${n("Maya")} strokes and MAYA is ${n("MAYA")}; Christopher is ${n("Christopher")} and CHRISTOPHER is ${n("CHRISTOPHER")}.`));
+  const up = [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ"], lo = [..."abcdefghijklmnopqrstuvwxyz"];
+  const most = Math.max(...up.map(n));
+  assert.deepEqual(up.filter((c) => n(c) === most), ["E"]);
+  assert.ok(text.includes(`E takes ${most}; A, F, H and I take 3 each.`));
+  assert.deepEqual(up.filter((c) => n(c) === 3), ["A", "F", "H", "I"]);
+  assert.deepEqual([...new Set(lo.map(n))].sort(), [1, 2]);
+});
