@@ -73,8 +73,11 @@ const numberClaims = [
   ["clue table", /\b(\d{1,3},\d{3}|\d{4,})\s+(?:\w+[- ])?clues\b/gi, CLUE_COUNT],
   ["price", /\$(\d+)\s+(?:once|one-time)/gi, PRICE],
   ["KDP page minimum", /KDP'?s?\s+(\d+)-page minimum/gi, MIN_PAGES],
-  ["page range", /(\d+)\s*(?:–|-|to)\s*828\s+pages/gi, MIN_PAGES],
-  ["max pages", /24\s*(?:–|-|to)\s*(\d+)\s+pages/gi, MAX_PAGES],
+  // Not in a table cell: the margin calculator quotes KDP's own gutter rows
+  // ("24 to 150 pages" … "701 to 828 pages"), which are KDP's ranges, not ours.
+  // Nor mid-number: "701 to 828" must not match as "01 to 828".
+  ["page range", /(?<!<td>|\d)(\d+)\s*(?:–|-|to)\s*828\s+pages/gi, MIN_PAGES],
+  ["max pages", /(?<!<td>|\d)24\s*(?:–|-|to)\s*(\d+)\s+pages/gi, MAX_PAGES],
   ["sudoku expert clues", /expert[^.]{0,40}?\b(\d\d)\s+clues/gi, SUDOKU_DIFFICULTY.expert.givens],
 
 ];
