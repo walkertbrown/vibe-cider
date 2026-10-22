@@ -270,8 +270,10 @@ export function generateCrissCrossBook({ pools, count = 20, difficulty = "medium
   const failures = [];
   const all = [...new Set(pools.flatMap((p) => normalizeWords(p.words)))];
   const rng = makeRng(`${seed}|crisscross-book`);
+  const easier = [];
   for (let i = 0; i < count; i++) {
     let level = gradeFor(i, gradeCount ?? count, difficulty);
+    const asked = level;
     const pool = pools.length > 1 ? rng.pick(pools) : pools[0];
     let puzzle = generateCrissCross({ words: pool.words, difficulty: level, seed: `${seed}|${i}` });
     if (!puzzle) {
@@ -288,13 +290,23 @@ export function generateCrissCrossBook({ pools, count = 20, difficulty = "medium
       continue;
     }
     // Title after any fallback, so the printed level is the real one.
-    const title = pools.length > 1 || difficulty === "graded"
+    if (level !== asked) easier.push(`${CRISSCROSS_DIFFICULTY[asked].label} → ${CRISSCROSS_DIFFICULTY[level].label}`);
+    const title = pools.length > 1 || difficulty === "graded" || level !== asked
       ? `${pool.title} · ${CRISSCROSS_DIFFICULTY[level].label}`
       : pool.title;
     puzzles.push({ index: puzzles.length + 1, title, ...puzzle });
   }
   // One line, however many failed — a hundred identical warnings is not a
   // warning, it is a wall of text nobody reads.
+  // A puzzle that would not lay at the level asked drops a level rather than
+  // leaving a hole in the book. That used to happen in silence: a Medium West
+  // Virginia criss-cross book came out as twenty Easy puzzles with no level
+  // printed (measured 2026-10-22). Now each one carries its real level and
+  // the buyer is told.
+  if (easier.length) {
+    const kinds = [...new Set(easier)].join(", ");
+    warnings.push(`${easier.length} of ${count} puzzles came out easier than asked (${kinds}): these words would not interlock at the larger grid. Each one is labelled with its real level. A longer word list keeps them at the level you chose.`);
+  }
   if (failures.length) {
     warnings.push(
       failures.length === count

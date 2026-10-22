@@ -114,3 +114,13 @@ test("a word too long for any grid is named, not dropped in silence", () => {
   const fine = generateCrissCrossBook({ pools: [THEMES.garden], count: 2, difficulty: "graded" });
   assert.deepEqual(fine.warnings, []);
 });
+
+// A puzzle that drops a level says so, on the page and in the warnings. A
+// Medium West Virginia book used to come out as twenty unlabelled Easy grids.
+test("a puzzle easier than asked carries its real level and is warned about", () => {
+  const b = generateCrissCrossBook({ pools: [THEMES.westvirginia], count: 4, difficulty: "medium", seed: "m|westvirginia" });
+  const down = b.puzzles.filter((p) => p.difficulty !== "medium");
+  assert.ok(down.length > 0, "this list is known to drop a level at Medium");
+  for (const p of down) assert.match(p.title, new RegExp(` · ${CRISSCROSS_DIFFICULTY[p.difficulty].label}$`));
+  assert.ok(b.warnings.some((w) => w.startsWith(`${down.length} of 4 puzzles came out easier than asked (Medium → Easy)`)));
+});

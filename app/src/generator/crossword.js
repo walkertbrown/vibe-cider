@@ -108,8 +108,10 @@ export function generateCrosswordBook({ pools, builtinClues = {}, count = 20, di
       warnings.push(`${pool.title}: no clue for ${shown}${missing.length > 6 ? ` and ${missing.length - 6} more` : ""} — write lines as "word — clue" to use them in crosswords.`);
     }
   }
+  const easier = [];
   for (let i = 0; i < count; i++) {
     let level = gradeFor(i, gradeCount ?? count, difficulty);
+    const asked = level;
     const pool = pools.length > 1 ? rng.pick(pools) : pools[0];
     const clueOf = cluesFor(pool, builtinClues);
     let puzzle = generateCrossword({ words: pool.words, clueOf, difficulty: level, seed: `${seed}|${i}` });
@@ -122,10 +124,20 @@ export function generateCrosswordBook({ pools, builtinClues = {}, count = 20, di
       failures.push(i + 1);
       continue;
     }
-    const title = pools.length > 1 || difficulty === "graded"
+    if (level !== asked) easier.push(`${CROSSWORD_DIFFICULTY[asked].label} → ${CROSSWORD_DIFFICULTY[level].label}`);
+    const title = pools.length > 1 || difficulty === "graded" || level !== asked
       ? `${pool.title} · ${CROSSWORD_DIFFICULTY[level].label}`
       : pool.title;
     puzzles.push({ index: puzzles.length + 1, title, ...puzzle });
+  }
+  // A puzzle that would not lay at the level asked drops a level rather than
+  // leaving a hole in the book. That used to happen in silence: a Medium West
+  // Virginia criss-cross book came out as twenty Easy puzzles with no level
+  // printed (measured 2026-10-22). Now each one carries its real level and
+  // the buyer is told.
+  if (easier.length) {
+    const kinds = [...new Set(easier)].join(", ");
+    warnings.push(`${easier.length} of ${count} puzzles came out easier than asked (${kinds}): these words would not interlock at the larger grid. Each one is labelled with its real level. A longer word list keeps them at the level you chose.`);
   }
   if (failures.length) {
     warnings.push(
