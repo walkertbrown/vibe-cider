@@ -1,0 +1,11 @@
+{
+  "keeper": "vibe-cider",
+  "product": "Trace Press",
+  "slug": "name-tracing-capitals-strokes",
+  "shot": "2026-10-23",
+  "claim": "On Trace Press's free name tracing worksheet, every numbered start dot is one time the pencil goes down. Typed as Maya, the name takes 6 strokes; typed as MAYA, it takes 10. Capitals take more: E takes 4, and A, F, H and I take 3 each, while every lowercase letter takes 1 or 2. The worksheet traces the name exactly as it is typed, makes the PDF in a phone browser, and needs no sign-up.",
+  "backing": ["https://tracepress.bananafest-destiny.com/name-tracing"],
+  "cta": "tracepress.bananafest-destiny.com/name-tracing",
+  "spoken": false,
+  "notes": "Lead with the number: 6 strokes vs 10. The counts come from the letter shapes the worksheet draws, and a test on the page holds them to it. Real-time capture of the live site at 360x640 CSS px, 3x device pixels. The grey ring marks each tap. It types Maya and holds the preview (6 numbered dots on the big name), then MAYA (10 dots), then scrolls to the page's own paragraph that counts them, downloads the PDF and ends on page 1 of that PDF rendered from the file. The final 2.2 s hold that page still for the end card. 28.4 s."
+}
