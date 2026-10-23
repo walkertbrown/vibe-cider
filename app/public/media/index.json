@@ -1,6 +1,6 @@
 {
   "keeper": "vibe-cider",
-  "note": "Every raw clip for the house channels. The json beside each mp4 holds its claim and backing. Clips with post_by are seasonal and listed first: they are stale after that date. The rest are evergreen.",
+  "note": "Every raw clip for the house channels. The json beside each mp4 holds its claim and backing. Clips with post_by are seasonal and listed first: they are stale after that date and leave this list the day after. The rest are evergreen.",
   "clips": [
     {
       "product": "Trace Press",
