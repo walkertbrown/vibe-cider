@@ -15,6 +15,7 @@ import { readFileSync } from "node:fs";
 const hours = Math.min(Number(process.argv[2] || 23.5), 23.5);
 const creds = readFileSync(new URL("../../.git-credentials", import.meta.url), "utf8");
 const CF = (creds.match(/^CLOUDFLARE_API_TOKEN=(.*)$/m) || [])[1]?.trim();
+const ACCOUNT = (creds.match(/^CLOUDFLARE_ACCOUNT_ID=(.*)$/m) || [])[1]?.trim();
 const ZONE = "4169ea6b92a0920d72f9ebc5f7653e9d";
 const since = new Date(Date.now() - hours * 3600e3).toISOString().replace(/\.\d+Z$/, "Z");
 
@@ -80,4 +81,28 @@ for (const [h, e] of H) {
   const people = ran.filter(([ip, , o]) => !NETWORK.test(o) && !scanner(ip));
   console.log(`${h} ${String(e.fetched.size).padStart(8)} ${String(ran.length).padStart(7)} ${String(people.length).padStart(7)} ${String([...e.clicked].filter((ip) => people.some(([p]) => p === ip)).length).padStart(8)} ${String(e.robots.size).padStart(7)}`);
   for (const [ip, t, o] of ran) console.log(`    ${t}Z  ${ip.padEnd(40)} ${o}${NETWORK.test(o) ? "   (network, not counted)" : scanner(ip) ? `   (scanner, ${notFound.get(ip)} 404s, not counted)` : ""}${e.clicked.has(ip) ? "   PRESSED" : ""}`);
+}
+
+// Where the /compare loads came from, by hour, from Cloudflare's Web Analytics
+// beacon (account-scoped; the zone log has no referrer on this plan). A
+// newsletter platform's click-tracking host shows up here when it passes a
+// referrer; "(none)" is the usual answer for a mail app. This machine can't be
+// left out here, since the beacon carries no address: a run of tests shows as
+// "(none)" too, so read it against the people column above.
+try {
+  const rum = await (await fetch("https://api.cloudflare.com/client/v4/graphql", {
+    method: "POST",
+    headers: { authorization: `Bearer ${CF}`, "content-type": "application/json" },
+    body: JSON.stringify({ query: `query { viewer { accounts(filter: {accountTag: "${ACCOUNT}"}) {
+      rumPageloadEventsAdaptiveGroups(limit: 1000, filter: {datetime_geq: "${since}", bot: 0, requestPath: "/compare"}) {
+        count dimensions { datetimeHour requestHost refererHost deviceType } } } } }` }),
+  })).json();
+  if (rum.errors) throw new Error(rum.errors.map((e) => e.message).join("; "));
+  const loads = rum.data.viewer.accounts[0].rumPageloadEventsAdaptiveGroups.filter((g) => /puzzle/.test(g.dimensions.requestHost || ""));
+  console.log(`\n/compare page loads by referrer (Web Analytics beacon, Cloudflare's bot filter)`);
+  if (!loads.length) console.log("    none");
+  for (const { count, dimensions: d } of loads.sort((a, b) => a.dimensions.datetimeHour.localeCompare(b.dimensions.datetimeHour)))
+    console.log(`    ${d.datetimeHour.slice(0, 13)}Z  ${String(count).padStart(3)}  ${(d.refererHost || "(none)").padEnd(36)} ${d.deviceType || ""}`);
+} catch (e) {
+  console.log(`\n(referrers unavailable: ${String(e.message).slice(0, 100)})`);
 }
