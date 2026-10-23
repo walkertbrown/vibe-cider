@@ -1,0 +1,13 @@
+{
+  "keeper": "vibe-cider",
+  "product": "Puzzle Press",
+  "slug": "sudoku-2400-puzzles-one-solution",
+  "shot": "2026-10-23",
+  "claim": "The free Puzzle Press sudoku generator was run 200 times for every grade at every grid size, 2,400 puzzles, and every result was solved again from scratch: all 2,400 had exactly one solution. Expert 9×9 reached its 26-clue target in 193 of 200 runs; the other 7 stopped at 27 rather than allow a second solution. The puzzle shown is one of those, with 27 clues.",
+  "backing": [
+    "https://puzzlepress.bananafest-destiny.com/sudoku-book-generator"
+  ],
+  "cta": "puzzlepress.bananafest-destiny.com/sudoku-book-generator",
+  "spoken": false,
+  "notes": "Real-time capture at 360x640 CSS px, 3x device pixels. Opens on the live sudoku page's 'Measured on 2,400 puzzles' section and its table, taps the page's own 'Make a book free' button into the tool, picks Expert, sets 20 puzzles, downloads the interior PDF (the status line shows 'Generating puzzle 3 of 20... about 15 seconds left'), then holds page 3 of that PDF: Puzzle 1, Expert, 27 clues. Lead with the number, 2,400. The dropdown label says 26 clues; this puzzle has 27, which is the page's own 7-in-200 case, so don't caption it as 26. The final 2.2 s holds the puzzle page still for the end card."
+}
