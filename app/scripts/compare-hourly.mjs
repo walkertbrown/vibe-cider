@@ -47,6 +47,13 @@ const owner = async (ip) => {
   return owners.get(ip);
 };
 
+// 404s are counted over the whole day the zone log keeps, whatever the window,
+// and an IPv6 address by its /64: on 10-23 at 09:13Z the same Magticom feed
+// reader came back from a new address in the same /64 with no 404s of its own,
+// and was counted as a person.
+const daySince = new Date(Date.now() - 23.5 * 3600e3).toISOString().replace(/\.\d+Z$/, "Z");
+const net = (ip) => (ip.includes(":") ? ip.split(":").slice(0, 4).join(":") + "::/64" : ip);
+
 // An address that hunts for /rss, /feed and the like piles up 404s; who.mjs
 // calls 5+ a scanner, and so does this. On 10-22 a Magticom (Georgia) address
 // ran /compare, "pressed" and then read the zoo's feed: a feed reader, not a
@@ -55,12 +62,12 @@ const nf = await (await fetch("https://api.cloudflare.com/client/v4/graphql", {
   method: "POST",
   headers: { authorization: `Bearer ${CF}`, "content-type": "application/json" },
   body: JSON.stringify({ query: `query { viewer { zones(filter: {zoneTag: "${ZONE}"}) {
-    httpRequestsAdaptiveGroups(limit: 5000, filter: {datetime_geq: "${since}", clientRequestHTTPHost_like: "%puzzle%", edgeResponseStatus: 404}) {
+    httpRequestsAdaptiveGroups(limit: 5000, filter: {datetime_geq: "${daySince}", clientRequestHTTPHost_like: "%puzzle%", edgeResponseStatus: 404}) {
       count dimensions { clientIP } } } } }` }),
 })).json();
 const notFound = new Map();
-for (const g of nf.data?.viewer.zones[0].httpRequestsAdaptiveGroups || []) notFound.set(g.dimensions.clientIP, (notFound.get(g.dimensions.clientIP) || 0) + g.count);
-const scanner = (ip) => (notFound.get(ip) || 0) >= 5;
+for (const g of nf.data?.viewer.zones[0].httpRequestsAdaptiveGroups || []) notFound.set(net(g.dimensions.clientIP), (notFound.get(net(g.dimensions.clientIP)) || 0) + g.count);
+const scanner = (ip) => (notFound.get(net(ip)) || 0) >= 5;
 
 const H = new Map();
 for (const { datetimeMinute: m, clientIP: ip, clientRequestPath: p, userAgent: ua } of rows.map((x) => x.dimensions)) {
@@ -80,7 +87,7 @@ for (const [h, e] of H) {
   const ran = await Promise.all([...e.ran].map(async ([ip, t]) => [ip, t, await owner(ip)]));
   const people = ran.filter(([ip, , o]) => !NETWORK.test(o) && !scanner(ip));
   console.log(`${h} ${String(e.fetched.size).padStart(8)} ${String(ran.length).padStart(7)} ${String(people.length).padStart(7)} ${String([...e.clicked].filter((ip) => people.some(([p]) => p === ip)).length).padStart(8)} ${String(e.robots.size).padStart(7)}`);
-  for (const [ip, t, o] of ran) console.log(`    ${t}Z  ${ip.padEnd(40)} ${o}${NETWORK.test(o) ? "   (network, not counted)" : scanner(ip) ? `   (scanner, ${notFound.get(ip)} 404s, not counted)` : ""}${e.clicked.has(ip) ? "   PRESSED" : ""}`);
+  for (const [ip, t, o] of ran) console.log(`    ${t}Z  ${ip.padEnd(40)} ${o}${NETWORK.test(o) ? "   (network, not counted)" : scanner(ip) ? `   (scanner, ${notFound.get(net(ip))} 404s from its network today, not counted)` : ""}${e.clicked.has(ip) ? "   PRESSED" : ""}`);
 }
 
 // Where the /compare loads came from, by hour, from Cloudflare's Web Analytics
