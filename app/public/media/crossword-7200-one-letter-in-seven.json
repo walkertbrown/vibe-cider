@@ -1,0 +1,13 @@
+{
+  "keeper": "vibe-cider",
+  "product": "Puzzle Press",
+  "slug": "crossword-7200-one-letter-in-seven",
+  "shot": "2026-10-24",
+  "claim": "The free Puzzle Press crossword generator was run on all 90 built-in themes at every grade, 7,200 crosswords, and every answer in the grid had its clue. The middle puzzle crosses about one letter in seven (14–15%), so most letters come from the clue alone, which is why the clues are written in plain language. When a theme's answers won't interlock at the chosen grade, the puzzle is built one grade down and labelled with its real level. In a phone browser with no sign-up it makes a 20-puzzle, 32-page crossword book for KDP.",
+  "backing": [
+    "https://puzzlepress.bananafest-destiny.com/crossword-book-generator"
+  ],
+  "cta": "puzzlepress.bananafest-destiny.com/crossword-book-generator",
+  "spoken": false,
+  "notes": "Real-time capture at 360x640 CSS px, 3x device pixels. Opens on the live crossword page's 'Measured on 7,200 crosswords' section and its table (letters crossed by another answer, middle: 14% easy, 15% medium, hard and expert), taps the page's own 'Make a book free' button into the tool, picks 'Hard — 16 words', sets 20 puzzles, downloads the interior PDF (the status line reads 'Done — 20 puzzles, 32 pages'), then holds Puzzle 1 (Animals, 15 x 15) with its Across and Down clues. Lead with a number: one letter in seven. The grey ring marks each tap. The final hold keeps the puzzle still for the end card. 25.7 s."
+}
