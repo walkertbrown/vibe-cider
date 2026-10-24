@@ -1,0 +1,13 @@
+{
+  "keeper": "vibe-cider",
+  "product": "Puzzle Press",
+  "slug": "maze-2000-measured-easy-to-expert",
+  "shot": "2026-10-24",
+  "claim": "The free Puzzle Press maze generator was run 500 times at each of four grades, 2,000 mazes, and every one was checked: every cell reachable and exactly one route from entrance to exit. Grid size is not the whole of difficulty: the longest easy maze had a 179-cell route, longer than the shortest hard maze's 105. In a phone browser with no sign-up it makes a graded maze book, easy at the front and expert at the back, with the level printed on each puzzle.",
+  "backing": [
+    "https://puzzlepress.bananafest-destiny.com/maze-book-generator"
+  ],
+  "cta": "puzzlepress.bananafest-destiny.com/maze-book-generator",
+  "spoken": false,
+  "notes": "Real-time capture at 360x640 CSS px, 3x device pixels. Opens on the live maze page's 'Measured on 2,000 mazes' section and its table (easy 37/93/179 cells, hard 105/287/537), taps the page's own 'Make a book free' button into the tool, picks 'Graded — easy to expert', sets 20 mazes, downloads the interior PDF (the status line ends 'Done — 20 puzzles, 32 pages'), then holds Puzzle 1 (Easy) and Puzzle 20 (Expert) from that PDF. Lead with a number: 179 beats 105. The grey ring marks each tap. The final 2.2 s hold the expert maze still for the end card. 27.7 s."
+}
