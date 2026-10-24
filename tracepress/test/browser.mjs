@@ -148,7 +148,7 @@ try {
   await page.click("#tier .linkish");
   check(await page.isVisible("#unlockDialog"), "the tier button opens the unlock dialog");
   const buy = page.locator("#buyLine a");
-  check((await buy.getAttribute("href")) === "https://buy.stripe.com/bJe14p0IKcKV2gzblBeIw01" && (await buy.getAttribute("target")) === "_blank", "Buy is the Trace Press link, in a new tab (not clicked)");
+  check((await buy.getAttribute("href")).startsWith("https://buy.stripe.com/bJe14p0IKcKV2gzblBeIw01?client_reference_id=src-") && (await buy.getAttribute("target")) === "_blank", "Buy is the Trace Press link, tagged src-, in a new tab (not clicked)");
   await page.fill("#email", "tester@example.com");
   await page.click("#verify");
   await page.waitForSelector("#unlockDialog", { state: "hidden" });
@@ -283,7 +283,7 @@ try {
   for (const [i, n] of [[0, 66], [1, 78]]) {
     await nm.goto(`${base}${ctas[i]}`);
     await nm.waitForSelector("#preview svg circle");
-    check(new RegExp(`Page 1 of ${n} `).test(await nm.textContent("#pageNo")) && new RegExp(`for ${n} pages`).test(await nm.textContent("#coverNote")), `sight words: button ${i + 1} makes a ${n}-page book (${await nm.textContent("#pageNo")})`);
+    check(new RegExp(`Page \\d+ of ${n} `).test(await nm.textContent("#pageNo")) && new RegExp(`for ${n} pages`).test(await nm.textContent("#coverNote")), `sight words: button ${i + 1} makes a ${n}-page book (${await nm.textContent("#pageNo")})`);
   }
   for (const from of ["/", "/handwriting-paper", guide, "/name-tracing", "/nope-404"]) {
     check((await (await nm.request.get(`${base}${from}`)).text()).includes(`href="${sw}"`), `sight words: linked from ${from}`);

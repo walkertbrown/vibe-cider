@@ -21,6 +21,7 @@ import { TRIMS } from "../pdf/kdp.js";
 // instead of before the page is usable.
 import { planPages, solutionsThatFit, solutionsPerPageFor, puzzlesForMinimum, puzzlesForPages } from "../pdf/layout.js";
 import { gridBound } from "../generator/gridbound.js";
+import { source, payHref } from "./source.js";
 
 // Loaded separately rather than together. They share the heavy chunk, so the
 // second one costs almost nothing once the first has been fetched — and the
@@ -66,6 +67,7 @@ const getLicense = () => storedLicense() ?? sessionLicense;
 // The pay link is injected by the Worker at request time (config.js) or is
 // absent in local dev. No link, no Buy button.
 const PAY_URL = window.PUZZLE_PRESS_PAY_URL || "";
+source();
 
 const $ = (id) => document.getElementById(id);
 const el = {
@@ -735,8 +737,8 @@ function openUnlock({ justPaid = false, intent = "buy", after = null, pages = 0,
     // deliberate, so the book they just built is still there when they come
     // back. Only the weight changed.
     el.buyLine.innerHTML = buying
-      ? `<a class="buybtn" href="${escapeHtml(PAY_URL)}" target="_blank" rel="noopener">Buy now — ${PRICE_LABEL}</a><span class="fine">Opens Stripe checkout in a new tab. This page keeps your book.</span>`
-      : `<a href="${escapeHtml(PAY_URL)}" target="_blank" rel="noopener"><b>Buy now — ${PRICE_LABEL}</b></a> (opens Stripe checkout)`;
+      ? `<a class="buybtn" href="${escapeHtml(payHref(PAY_URL))}" target="_blank" rel="noopener">Buy now — ${PRICE_LABEL}</a><span class="fine">Opens Stripe checkout in a new tab. This page keeps your book.</span>`
+      : `<a href="${escapeHtml(payHref(PAY_URL))}" target="_blank" rel="noopener"><b>Buy now — ${PRICE_LABEL}</b></a> (opens Stripe checkout)`;
     // The last act before Stripe, and the one that was hardest to live without:
     // a Stripe session that never completes is invisible to me from this side,
     // so "went to checkout and did not pay" read exactly like "never went".

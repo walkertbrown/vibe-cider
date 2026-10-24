@@ -14,8 +14,10 @@ import { printingCost } from "../pdf/kdp-cost.js";
 import { pageSvg } from "./preview.js";
 import { getLicense as storedLicense, setLicense, clearLicense, verifyEmail, PRICE_LABEL } from "./license.js";
 import { px } from "./px.js";
+import { source, payHref } from "./source.js";
 
 const PAY_URL = window.TRACE_PRESS_PAY_URL || "";
+source();
 const SUPPORT = "support@bananafest-destiny.com";
 
 // A licence verified in this tab still counts when the browser refuses to
@@ -292,7 +294,7 @@ function openUnlock({ justPaid = false, after = null } = {}) {
   el.buyLine.replaceChildren();
   if (!justPaid && PAY_URL) {
     const a = document.createElement("a");
-    a.href = PAY_URL; a.target = "_blank"; a.rel = "noopener"; a.className = "buybtn";
+    a.href = payHref(PAY_URL); a.target = "_blank"; a.rel = "noopener"; a.className = "buybtn";
     a.textContent = `Pay ${PRICE_LABEL.replace(" one-time", "")} with Stripe`;
     a.addEventListener("click", (e) => { if (e.isTrusted) px("checkout", { keep: true }); });
     el.buyLine.append(a);

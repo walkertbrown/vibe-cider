@@ -123,6 +123,15 @@ if (paid.length) {
     console.log(`    ${when}  $${((s.amount_total ?? 0) / 100).toFixed(2)}  ${(s.customer_details || {}).email ?? "?"}`);
   }
 }
+// Since 2026-10-24 the Buy link says where the buyer came from (src/ui/source.js).
+if (real.length) {
+  const by = {};
+  for (const s of real) {
+    const k = `${s.client_reference_id ?? "(untagged)"}${s.payment_status === "paid" ? " paid" : ""}`;
+    by[k] = (by[k] ?? 0) + 1;
+  }
+  console.log("\n  Checkouts by source:  " + Object.entries(by).map(([k, n]) => `${k} ×${n}`).join(", "));
+}
 if (real.length && !paid.length) {
   console.log("\n  Someone opened checkout and did not pay. Worth knowing why.");
 }

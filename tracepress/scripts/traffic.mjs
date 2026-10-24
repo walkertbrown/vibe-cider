@@ -199,7 +199,7 @@ try {
   const paid = j.data.filter((s) => s.payment_status === "paid");
   console.log(`\n  Stripe, Trace Press link, all time: ${j.data.length} checkout session(s), ${paid.length} paid${j.has_more ? " (more than 100; first page only)" : ""}`);
   for (const s of j.data.slice(0, 10)) {
-    console.log(`    ${iso(s.created * 1000)}  ${s.status}/${s.payment_status}  ${(s.amount_total / 100).toFixed(2)} ${s.currency.toUpperCase()}`);
+    console.log(`    ${iso(s.created * 1000)}  ${s.status}/${s.payment_status}  ${(s.amount_total / 100).toFixed(2)} ${s.currency.toUpperCase()}  ${s.client_reference_id ?? "(untagged)"}`);
   }
 } catch (e) {
   console.log(`\n  (Stripe unavailable: ${e.message.slice(0, 100)})`);

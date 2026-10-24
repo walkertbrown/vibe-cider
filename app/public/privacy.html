@@ -40,6 +40,7 @@
   <ul>
     <li>Every word, title and setting you enter, the puzzles, and the interior and cover PDFs. The book is built by code running in your browser; nothing is uploaded to make it.</li>
     <li>After you unlock, your browser keeps a note of it in local storage (<code>puzzlepress.license</code>: your email and a reference to your payment) so you don't have to unlock again. Clearing this site's data removes it.</li>
+    <li>The first time the generator opens, your browser keeps a one-word note of where you came from in local storage (<code>puzzlepress.src</code>): the site that linked here, such as <code>google_com</code>, or the page of this site you came from, or <code>direct</code>. Not the search you typed, and not a full address. Clearing this site's data removes it.</li>
   </ul>
   <p>Puzzle Press sets no cookies and has no accounts.</p>
 
@@ -54,6 +55,7 @@
   <h2>If you pay</h2>
   <ul>
     <li>Payment happens on Stripe's checkout page, not here. Stripe handles your card and what its checkout asks for under <a href="https://stripe.com/privacy">Stripe's privacy policy</a>. We see the payment record in Stripe, including your email address. We never see your card number.</li>
+    <li>The Buy link carries that one-word note to Stripe (as <code>client_reference_id=src-google_com</code>, for example), so the payment record says which site or page led to the sale.</li>
     <li>To unlock, the email you type is sent to this site's server, which asks Stripe whether that email has a completed Puzzle Press payment and answers yes or no. The server doesn't store the email.</li>
   </ul>
 

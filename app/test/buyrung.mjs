@@ -104,7 +104,8 @@ check(!opened.includes("unlock"), `and does not also fire /px/unlock — a buyer
 const buy = page.locator("#buyLine a");
 check(await buy.count() === 1, `the dialog has exactly one buy link`);
 const href = await buy.getAttribute("href");
-check(href === PAY, `it points at the configured pay URL, not a hard-coded one`);
+check(href.startsWith(PAY + "?client_reference_id=src-"), `it points at the configured pay URL, not a hard-coded one, tagged with where the buyer came from (${href})`);
+check(!href.includes("selftest"), `and the tag can never look like a self-test`);
 await buy.click();
 await page.waitForTimeout(500);
 const clicked = since();

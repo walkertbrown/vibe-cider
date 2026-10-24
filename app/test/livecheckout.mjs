@@ -39,7 +39,12 @@ if (!rel.includes("noopener")) throw new Error(`Buy link needs rel=noopener, got
 if (!(await p.isVisible("#buyLine a"))) throw new Error("Buy link is not visible in the dialog");
 
 const tag = `${SELFTEST_PREFIX}${new Date().toISOString().replace(/[^\dT]/g, "").slice(0, 15)}`;
-const tagged = `${href}${href.includes("?") ? "&" : "?"}client_reference_id=${tag}`;
+// The real link already carries client_reference_id=src-<where> (src/ui/source.js);
+// ours replaces it, so Stripe gets one id and it is the self-test one.
+if (!/[?&]client_reference_id=src-[a-z0-9_-]+/.test(href)) throw new Error(`Buy link carries no src- tag: ${href}`);
+const own = new URL(href);
+own.searchParams.set("client_reference_id", tag);
+const tagged = own.href;
 console.log("following (tagged as a self-test):", tag);
 const checkout = await ctx.newPage();
 await checkout.route("https://static.cloudflareinsights.com/**", (route) => route.abort());
