@@ -1,0 +1,13 @@
+{
+  "keeper": "vibe-cider",
+  "product": "Puzzle Press",
+  "slug": "word-search-5400-rude-words-caught",
+  "shot": "2026-10-24",
+  "claim": "The free Puzzle Press word search generator was run on all 90 built-in themes at three grades, 5,400 puzzles, and every word of every list was placed in all of them. Its blocklist is 37 rude or offensive strings, and every one of the 90 easy and medium books, and 89 of the 90 hard books, had at least one grid fill thrown away for spelling one. Each rejected fill is redone, so the PDF only gets grids that passed. In a phone browser with no sign-up it makes a 20-puzzle, 32-page word search book for KDP.",
+  "backing": [
+    "https://puzzlepress.bananafest-destiny.com/word-search-book-generator"
+  ],
+  "cta": "puzzlepress.bananafest-destiny.com/word-search-book-generator",
+  "spoken": false,
+  "notes": "Real-time capture at 360x640 CSS px, 3x device pixels. Opens on the live word search page's 'Measured on 5,400 puzzles' section and its table (fills thrown away for a blocked word: easy 1,644, medium 1,258, hard 3,136), holds the blocklist paragraph, taps the page's own 'Make a book free' button into the tool, picks Easy, sets 20 puzzles, downloads the interior PDF (the status line reads 'Done — 20 puzzles, 32 pages'), then holds Puzzle 1 (Animals, 15 words). Lead with a number: 90 of 90 easy books. The grey ring marks each tap. The final hold keeps the puzzle still for the end card. 30.9 s."
+}
