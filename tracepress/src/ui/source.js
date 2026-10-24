@@ -6,7 +6,7 @@
 // client_reference_id=src-<where>, and the Stripe session records it.
 //
 // <where> is decided once per browser and kept in local storage; main.js
-// calls source() as it starts, before any click. It is ?ref=<name> on the
+// and first-touch.js (every other page) call source() as they start. It is ?ref=<name> on the
 // address if a link we posted has one, else the site that linked here
 // (www.google.com → google_com), else the page of this site that sent them to
 // the tool (via-name-tracing), else "direct". Only a site name or a page name:

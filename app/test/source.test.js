@@ -32,3 +32,17 @@ test("every tag is short, plain, and cannot read as a self-test", () => {
     assert.ok(!("src-" + s).startsWith("selftest-"));
   }
 });
+
+// Every page but the tool records the first touch too; a page without it
+// would tag a visitor who lands there as via-<page> and lose where they came
+// from. /compare is exempt only while it is frozen for the newsletter (to 10-25).
+test("every page loads first-touch.js or the tool", async () => {
+  const { readdirSync, readFileSync } = await import("node:fs");
+  const root = new URL("../public/", import.meta.url);
+  const pages = readdirSync(root, { recursive: true }).filter((f) => f.endsWith(".html") && f !== "404.html" && f !== "compare.html");
+  assert.ok(pages.length > 10);
+  for (const f of pages) {
+    const s = readFileSync(new URL(f, root), "utf8");
+    assert.ok(s.includes('src="/js/first-touch.js"') || /src="\/?js\/main\.js"/.test(s), `${f} records no first touch`);
+  }
+});

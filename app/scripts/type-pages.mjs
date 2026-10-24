@@ -331,6 +331,7 @@ ${JSON.stringify({
 }, null, 2)}
 </script>
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "b7be686eebf64639b0e60d43860bbd54"}'></script>
+<script type="module" src="/js/first-touch.js"></script>
 </head>
 <body>
 <header>
