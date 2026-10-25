@@ -13,6 +13,8 @@
 // never a search, a path past the first segment, or anything typed.
 // "selftest-" is the test scripts' prefix and can never be produced here,
 // since every tag starts with "src-".
+import { px } from "./px.js";
+
 const KEY = "tracepress.src";
 
 const clean = (s) => String(s).toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_+|_+$/g, "").slice(0, 40);
@@ -33,6 +35,10 @@ export function firstSource(loc = location, referrer = document.referrer) {
 let memo;
 export function source() {
   if (memo) return memo;
+  // A link we handed someone carries ?ref=. Stripe only sees it if they buy;
+  // this says, the same hour, that the link was used. The beacon is one fixed
+  // path for every ref, so the name never leaves.
+  if (new URLSearchParams(location.search).get("ref")) px("ref");
   try {
     memo = localStorage.getItem(KEY);
     if (!memo) localStorage.setItem(KEY, (memo = firstSource()));

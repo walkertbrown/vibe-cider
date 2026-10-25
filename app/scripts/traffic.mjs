@@ -498,6 +498,7 @@ try {
   const browsed = people(/^\/px\/browsed\.gif$/);
   const pressed = people(/^\/px\/click\.gif$/);
   const pressedEmpty = people(/^\/px\/empty\.gif$/);
+  const fromRef = people(/^\/px\/ref\.gif$/);
   const made = people(/^\/px\/made\.gif$/);
   const failed = people(/^\/px\/failed\.gif$/);
   // The money side, added 2026-09-23. Every stage above this line describes
@@ -721,6 +722,7 @@ try {
   if (botAppIps.length) console.log(`      of which ${botAppIps.length} address${botAppIps.length > 1 ? "es" : ""} said "bot" in the user-agent — Googlebot runs JavaScript too`);
   console.log(`    ...and did not bounce       ${stayed}   <-- stayed long enough to idle-warm the PDF chunk`);
   if (pxTotal) {
+    console.log(`    ...came from a ?ref= link   ${fromRef}   <-- a link we handed out, on any page (since 10-25)`);
     console.log(`    ...scrolled to the tool     ${sawTool}   <-- the generator came on screen (immediate on desktop)`);
     console.log(`    ...touched a control        ${touched}   <-- operated the form at all`);
     console.log(`    ...browsed the preview      ${browsed}   <-- pressed Previous or Next`);

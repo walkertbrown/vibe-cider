@@ -57,6 +57,7 @@ const BOT_UA = /bot\b|bot\/|crawler|spider|externalagent|externalhit/i;
 const META = /^2a03:2880:/i;
 // The funnel, in order. Each is a real file in public/px/.
 const RUNGS = [
+  ["ref", "opened any page from a ?ref= link we handed out"],
   ["ran", "ran the page"],
   ["touched", "changed a control"],
   ["cursive", "picked Cursive"],
