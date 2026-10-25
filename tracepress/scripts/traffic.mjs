@@ -162,6 +162,7 @@ try {
   // loads of the week matched; none was a person.
   const fb = rows.filter((x) => /facebook\.com$/.test(x.dimensions.refererHost || ""));
   const fbSplit = { meta: 0, other: 0, old: 0 };
+  const fbOther = [];
   for (const x of fb) {
     const t = Date.parse(x.dimensions.datetimeMinute);
     try {
@@ -170,7 +171,10 @@ try {
           count dimensions { clientIP userAgent } } } } }`);
       const hits = z.viewer.zones[0].httpRequestsAdaptiveGroups.filter((h) => !BOT_UA.test(h.dimensions.userAgent || ""));
       if (hits.length && hits.every((h) => META.test(h.dimensions.clientIP || ""))) fbSplit.meta += x.count;
-      else fbSplit.other += x.count;
+      else {
+        fbSplit.other += x.count;
+        fbOther.push(`${x.dimensions.datetimeMinute.slice(5, 16)}Z ${x.dimensions.requestPath} ${x.dimensions.deviceType} ${x.dimensions.countryName}  ${[...new Set(hits.filter((h) => !META.test(h.dimensions.clientIP || "")).map((h) => h.dimensions.clientIP))].join(" ") || "(no zone row)"}`);
+      }
     } catch { fbSplit.old += x.count; }
   }
   const total = rows.reduce((a, x) => a + x.count, 0);
@@ -184,6 +188,7 @@ try {
   console.log("    Referred by:");
   for (const [h, n] of tally((d) => d.refererHost).slice(0, 10)) console.log(`      ${String(n).padStart(4)}  ${h === "(none)" ? "(no referer: typed, bookmarked, or opened in an app)" : h}`);
   if (fb.length) console.log(`    facebook.com, matched to the zone log by path and minute: ${fbSplit.meta} Meta's link-preview renderer (2a03:2880, not a person), ${fbSplit.other} from elsewhere (look before calling it a person), ${fbSplit.old} older than the zone log keeps`);
+  if (showIps) for (const line of fbOther) console.log(`      ${line}`);
   console.log(`    Landed on: ${tally((d) => d.requestPath).slice(0, 6).map(([k, n]) => `${k} ${n}`).join(", ")}`);
   console.log(`    Device: ${tally((d) => d.deviceType).map(([k, n]) => `${k} ${n}`).join(", ")}`);
 } catch (e) {
