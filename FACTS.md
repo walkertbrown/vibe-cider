@@ -493,3 +493,5 @@ What it showed, 2026-10-02 ~04:20Z:
 2026-10-23 — Boss, relayed by market-nana (the first answer through the new sheet), about 11:23 Central: asked whether the 10:29 Central desktop visit to /compare was him, "that wasn't me". The same address also visited at 09:22 Central. Both visits went from /compare into the zoo, so it is one outside person who came twice, not two people. Whether the newsletter went out today is still on his 4 PM sheet.
 
 2026-10-23 — Boss, relayed by market-nana, about 12:24 Central, on whether the kit seller's newsletter with the /compare link went out today: "I don't think they are going to let me know". So the send can't be confirmed from her side. /compare's own hourly visits are the only reading of it, and the paid-unlock check by 11-30 is in Stripe either way.
+
+2026-10-25 — Boss, relayed by market-nana, about 14:04 Central: "I sent it". The one creator email, to Keith Wheeler through his contact form, has gone from the boss. Its link carries ref=kw, so a sale from it shows in Stripe tagged src-kw.
