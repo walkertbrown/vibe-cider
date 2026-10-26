@@ -5,6 +5,7 @@ import { planBook } from "./plan.js";
 import { planPaper } from "./paper.js";
 import { planName, nameInk } from "./name.js";
 import { planCards, cardsInk } from "./cards.js";
+import { planCvc, planCount, sheetInk } from "./sheets.js";
 import { drawLetterPage, drawShapes } from "./draw.js";
 import { cursiveWidth } from "./cursive.js";
 
@@ -70,5 +71,20 @@ export async function renderCards(opts, fonts) {
     regular: await doc.embedFont(fonts.regular, { subset: true }),
   };
   for (const page of plan.pages) drawShapes(doc.addPage([plan.geom.width, plan.geom.height]), cardsInk(plan, page, { licensed: opts.licensed === true }), embedded);
+  return doc.save();
+}
+
+// Kindergarten sheets (sheets.js): `opts.kind` is "cvc" or "count".
+export async function renderSheets(opts, fonts) {
+  const { geom, pages } = opts.kind === "count" ? planCount(opts) : planCvc(opts);
+  const doc = await PDFDocument.create();
+  doc.registerFontkit(fontkit);
+  doc.setTitle(opts.kind === "count" ? "Count and trace worksheets, 1 to 10" : "CVC word worksheets with pictures");
+  doc.setCreator("Trace Press — tracepress.bananafest-destiny.com");
+  const embedded = {
+    bold: await doc.embedFont(fonts.bold, { subset: true }),
+    regular: await doc.embedFont(fonts.regular, { subset: true }),
+  };
+  for (const page of pages) drawShapes(doc.addPage([geom.width, geom.height]), sheetInk(page, { licensed: opts.licensed === true }), embedded);
   return doc.save();
 }

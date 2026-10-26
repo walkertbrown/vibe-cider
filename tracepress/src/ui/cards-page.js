@@ -112,7 +112,7 @@ el.download.addEventListener("click", async () => {
     const url = URL.createObjectURL(new Blob([bytes], { type: "application/pdf" }));
     const a = document.createElement("a");
     a.href = url;
-    a.download = `sight-word-flash-cards-${own() && o.licensed ? "my-words" : el.list.value}-${el.sheet.value}${o.trace ? "-trace" : ""}.pdf`;
+    a.download = `sight-word-flash-cards-${own() ? (o.licensed ? "my-words" : "pre-primer") : el.list.value}-${el.sheet.value}${o.trace ? "-trace" : ""}.pdf`;
     document.body.append(a); a.click(); a.remove();
     setTimeout(() => URL.revokeObjectURL(url), 60000);
     px("cardsmade");

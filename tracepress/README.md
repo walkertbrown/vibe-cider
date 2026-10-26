@@ -98,6 +98,9 @@ Made by this code with the free version, footer line and PREVIEW mark included:
 - [Tracing worksheet generator](https://tracepress.bananafest-destiny.com/tracing-worksheet-generator): type a few words, print one page on handwriting lines
 - [Sight word tracing workbook](https://tracepress.bananafest-destiny.com/sight-word-tracing-workbook)
 - [Sight word flash cards](https://tracepress.bananafest-destiny.com/sight-word-flash-cards): Dolch pre-primer and primer words on 3" × 5" cards, four to a sheet with cut lines
+- [Kindergarten worksheets](https://tracepress.bananafest-destiny.com/kindergarten-worksheets): every sheet for a kindergarten class on one page
+- [CVC word worksheets](https://tracepress.bananafest-destiny.com/cvc-worksheets): 15 CVC words with pictures, a box for each letter, then the word to trace
+- [Count and trace 1–10](https://tracepress.bananafest-destiny.com/count-and-trace-worksheets): a ten frame to count, then the number to trace
 - [Handwriting practice paper](https://tracepress.bananafest-destiny.com/handwriting-paper): blank four-line guides
 - [How to make a tracing book (handwriting workbook) for KDP](https://tracepress.bananafest-destiny.com/how-to-make-a-handwriting-workbook), step by step
 - [Cursive handwriting workbook for KDP](https://tracepress.bananafest-destiny.com/cursive-handwriting-workbook)
