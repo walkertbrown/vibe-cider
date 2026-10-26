@@ -499,3 +499,5 @@ What it showed, 2026-10-02 ~04:20Z:
 2026-10-26 — Boss, relayed by market-nana, about 01:57 Central, asked whether he can open "View email address" on a YouTube About page from his account: "I don't think I can. I don't see it". So creators whose only public contact is the YouTube About-page email can't be reached for now.
 
 2026-10-26 — Boss, about 10:30 AM Central, asked whether we had thought about an Android app ("one time payment and then books straight to your phone"), then said: "I have a developer account, its a business account, no testing". So a Google Play developer account exists, it is an organization account, and the closed-testing requirement for new personal accounts does not apply.
+
+2026-10-26 — Boss, about 10:45 AM Central, sent Google Play Store search-box screenshots. Typing "puzzle ge" suggests "puzzle generator" first; "puzzle g" and "puzzle m" suggest only games. His words: "Tracing sheets is searched, puzzle generator I can't really tell, when you type in puzzle".
