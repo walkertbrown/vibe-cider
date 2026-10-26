@@ -17,9 +17,12 @@ const ROWS = 5; // a page
 const PAD = 0.5; // units of room before the first letter on a writing row
 
 const width = (word) => [...word].reduce((w, ch) => w + LETTERS[ch].width, 0) + LETTER_GAP * (word.length - 1);
-function copies(word, x0, right, unit, max, marks) {
+// As many copies as fit, up to `max`. With `write`, a copy after the first
+// must still leave room after it to write the word once by hand.
+function copies(word, x0, right, unit, max, marks, write = false) {
   const letters = [];
-  for (let x = x0 + PAD * unit, n = 0; n < max && x + width(word) * unit <= right - PAD * unit; n++) {
+  const room = (n) => (write && n > 0 ? (width(word) + 2.5 - LETTER_GAP) * unit : 0);
+  for (let x = x0 + PAD * unit, n = 0; n < max && x + width(word) * unit + room(n) <= right - PAD * unit; n++) {
     for (const ch of word) { letters.push({ ch, x, marks: marks && n === 0 }); x += (LETTERS[ch].width + LETTER_GAP) * unit; }
     x += (2.5 - LETTER_GAP) * unit;
   }
@@ -59,7 +62,7 @@ export function planCvc({ words = CVC, guideIn = 0.75 } = {}) {
     const shapes = [...word].flatMap((_, j) => rect(bx + j * (cell + 6), top - pitch / 2 - cell / 2, cell, cell));
     const left = bx + 3 * (cell + 6) + 12;
     return {
-      row: { kind: "trace", unit, baseY, left, right: box.right, letters: copies(word, left, box.right, unit, 3, false) },
+      row: { kind: "trace", unit, baseY, left, right: box.right, letters: copies(word, left, box.right, unit, 3, false, true) },
       pictures: [{ paths: PICTURES[word], x: box.left, y: top - (pitch - pic) / 2, size: pic }],
       shapes,
     };

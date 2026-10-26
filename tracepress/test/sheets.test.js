@@ -36,6 +36,15 @@ test("all ink stays on the page, inside a home printer's margin", () => {
   }
 });
 
+test("every CVC row leaves room to write the word after tracing it", () => {
+  for (const g of [1, 0.75, 0.6]) for (const p of planCvc({ guideIn: g }).pages) for (const r of p.rows) {
+    const n = r.letters.length / 3, xs = r.letters.map((l) => l.x);
+    const wordW = xs[2] - xs[0] + 1.2 * r.unit; // three letters, about a unit wide each
+    if (n > 1) assert.ok(r.right - (Math.max(...xs) + r.unit) >= wordW, `${g}": ${r.letters.map((l) => l.ch).join("")} has no room to write`);
+  }
+  assert.ok(planCvc().pages.every((p) => p.rows.every((r) => r.letters.length === 3)), "at 0.75\" lines, each word once");
+});
+
 test("free pages carry the footer line; licensed ones don't", () => {
   for (const [kind, { pages }] of plans()) {
     const n = (licensed) => sheetInk(pages[0], { licensed }).filter((s) => s.kind === "text" && s.text === SHEET_FOOTER).length;

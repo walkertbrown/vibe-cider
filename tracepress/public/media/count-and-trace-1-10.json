@@ -1,0 +1,11 @@
+{
+  "keeper": "vibe-cider",
+  "product": "Trace Press",
+  "slug": "count-and-trace-1-10",
+  "shot": "2026-10-26",
+  "claim": "Trace Press makes free printable count and trace worksheets for 1 to 10 in the browser: each row has a ten frame with that many dots to count, then the number in dots on writing lines to trace, the first copy with numbered start dots and arrows for the strokes. Two US Letter pages, five numbers to a page. No sign-up.",
+  "backing": ["https://tracepress.bananafest-destiny.com/count-and-trace-worksheets"],
+  "cta": "tracepress.bananafest-destiny.com/count-and-trace-worksheets",
+  "spoken": false,
+  "notes": "Real-time capture of the live site at 360x640 CSS px, 3x device pixels. The grey ring marks each tap. It pages through both sheets on the page, downloads the PDF, and ends on pages 1 (1 to 5) and 2 (6 to 10) of that PDF rendered from the file. The final 2.2 s hold page 2 still for the end card."
+}
