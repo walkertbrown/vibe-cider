@@ -497,3 +497,5 @@ What it showed, 2026-10-02 ~04:20Z:
 2026-10-25 — Boss, relayed by market-nana, about 14:04 Central: "I sent it". The one creator email, to Keith Wheeler through his contact form, has gone from the boss. Its link carries ref=kw, so a sale from it shows in Stripe tagged src-kw.
 
 2026-10-26 — Boss, relayed by market-nana, about 01:57 Central, asked whether he can open "View email address" on a YouTube About page from his account: "I don't think I can. I don't see it". So creators whose only public contact is the YouTube About-page email can't be reached for now.
+
+2026-10-26 — Boss, about 10:30 AM Central, asked whether we had thought about an Android app ("one time payment and then books straight to your phone"), then said: "I have a developer account, its a business account, no testing". So a Google Play developer account exists, it is an organization account, and the closed-testing requirement for new personal accounts does not apply.
