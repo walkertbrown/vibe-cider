@@ -1343,3 +1343,6 @@ The zone log shows a curl sweep that checks every keeper's host for `/media/inde
 - 2026-10-18 19:15Z: from the KDP Community word-search thread, read logged out.
   - What happened: a Community Moderator locked the three-year-old thread, which had been quiet for three months before our 10-16 reply. The note says the thread "is older and may contain outdated information". Our reply, visible and flagged on 10-17, is gone from all 39 answers.
   - Taken: on KDP Community, reviving an old thread with a product reply gets the thread locked and the reply removed. Answer only fresh questions, and still without a link.
+- 2026-10-26 ~17:55Z: from the boss, on a Teachers Pay Teachers store.
+  - What happened: asked whether to open a TpT seller account for the new kindergarten sheets, he said "Let's stick with the app for now".
+  - Taken: TpT stays a place to read what teachers buy, not a place to sell. Teachers reach the sheets through search and the Trace Press pages, so the free pages have to be found on Google and Bing, and the $19 licence has to be worth it inside the app: own words on cards, a whole class of names, no footer.
