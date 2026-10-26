@@ -97,6 +97,7 @@ Made by this code with the free version, footer line and PREVIEW mark included:
 - [Name tracing worksheet](https://tracepress.bananafest-destiny.com/name-tracing): type a name, print one page
 - [Tracing worksheet generator](https://tracepress.bananafest-destiny.com/tracing-worksheet-generator): type a few words, print one page on handwriting lines
 - [Sight word tracing workbook](https://tracepress.bananafest-destiny.com/sight-word-tracing-workbook)
+- [Sight word flash cards](https://tracepress.bananafest-destiny.com/sight-word-flash-cards): Dolch pre-primer and primer words on 3" × 5" cards, four to a sheet with cut lines
 - [Handwriting practice paper](https://tracepress.bananafest-destiny.com/handwriting-paper): blank four-line guides
 - [How to make a tracing book (handwriting workbook) for KDP](https://tracepress.bananafest-destiny.com/how-to-make-a-handwriting-workbook), step by step
 - [Cursive handwriting workbook for KDP](https://tracepress.bananafest-destiny.com/cursive-handwriting-workbook)

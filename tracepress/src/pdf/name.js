@@ -130,7 +130,16 @@ export function planName({ trim = "8.5x11", guideIn = 0.75, name = "", script = 
 // The one line of text on the sheet, in the footer band every page keeps free.
 export const NAME_FOOTER = "Free tracing sheet from tracepress.bananafest-destiny.com";
 
-export function nameInk(layout, { cursive } = {}) {
+// Licensed (a whole class at once), the sheet has no footer line.
+export function nameInk(layout, { cursive, licensed = false } = {}) {
   const { box } = layout;
-  return [...pageInk(layout, { licensed: true, cursive }), { kind: "text", text: NAME_FOOTER, x: (box.left + box.right) / 2, y: box.bottom - FOOTER_PT + 3, size: LABEL_PT, font: "regular", color: GREY }];
+  const ink = pageInk(layout, { licensed: true, cursive });
+  return licensed ? ink : [...ink, { kind: "text", text: NAME_FOOTER, x: (box.left + box.right) / 2, y: box.bottom - FOOTER_PT + 3, size: LABEL_PT, font: "regular", color: GREY }];
+}
+
+// A class list: one name a line (or split by commas), each cleaned as a
+// single name; blank and undrawable lines dropped, repeats kept once.
+export const CLASS_MAX = 60;
+export function cleanClass(s) {
+  return [...new Set(String(s ?? "").split(/[\n,;]+/).map(cleanName).filter(Boolean))].slice(0, CLASS_MAX);
 }
