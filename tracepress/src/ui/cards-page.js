@@ -116,7 +116,8 @@ el.download.addEventListener("click", async () => {
     document.body.append(a); a.click(); a.remove();
     setTimeout(() => URL.revokeObjectURL(url), 60000);
     px("cardsmade");
-    el.status.textContent = `Downloaded: ${o.words.length} cards. Print at 100% ("Actual size"), not "Fit to page", so the cards come out at their size.`;
+    el.status.textContent = `Downloaded: ${o.words.length} cards. Print at 100% ("Actual size"), not "Fit to page", so the cards come out at their size.`
+      + (o.licensed ? "" : ` Your own words, up to ${WORDS_MAX}, come with the ${PRICE_LABEL} licence: pick "Your own words" in the list.`);
   } catch (err) {
     px("failed");
     el.status.textContent = `Could not make the PDF: ${err.message}. Reload the page and try again, or email ${SUPPORT}.`;

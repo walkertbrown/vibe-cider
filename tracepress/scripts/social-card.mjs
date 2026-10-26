@@ -68,6 +68,10 @@ try {
     ["alphabet-chart", "alphabet-chart", "Free printable alphabet chart", "A to Z, capital and lowercase, and 0 to 9, in print on one page."],
     ["cursive-handwriting-workbook", "cursive-handwriting-workbook-word", "Cursive handwriting workbook for KDP", "A to Z, 0 to 9 and words in joined cursive, with its cover."],
     ["sight-word-tracing-workbook", "sight-word-tracing-worksheet", "Sight word tracing workbook for KDP", "The Dolch lists, a page per word, with start dots and arrows."],
+    ["sight-word-flash-cards", "sight-word-flash-cards-3x5", "Free sight word flash cards", "Dolch pre-primer and primer words on 3 × 5 cards, four to a sheet with cut lines."],
+    ["cvc-worksheets", "cvc-word-worksheet", "Free CVC word worksheets", "15 words with pictures: write each sound in a box, then trace the word."],
+    ["count-and-trace-worksheets", "count-and-trace-worksheet", "Free count and trace worksheets, 1 to 10", "Count the dots in a ten frame, then trace the number."],
+    ["kindergarten-worksheets", "count-and-trace-worksheet", "Free kindergarten worksheets", "Class name sheets, sight word cards, CVC words, count and trace."],
   ];
   for (const [slug, img, title, line, pill = "Printable PDF · no sign-up"] of CARDS) {
     const src = `data:image/png;base64,${readFileSync(new URL(`../public/img/${img}.png`, import.meta.url)).toString("base64")}`;

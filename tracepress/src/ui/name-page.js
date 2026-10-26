@@ -100,7 +100,8 @@ el.download.addEventListener("click", async () => {
     document.body.append(a); a.click(); a.remove();
     setTimeout(() => URL.revokeObjectURL(url), 60000);
     px("namemade");
-    el.status.textContent = o.names.length > 1 ? `Downloaded: ${o.names.length} tracing sheets, one for each name.` : `Downloaded: a tracing sheet for ${name}.`;
+    el.status.textContent = o.names.length > 1 ? `Downloaded: ${o.names.length} tracing sheets, one for each name.` : `Downloaded: a tracing sheet for ${name}.`
+      + (el.cls && !getLicense() ? ` A sheet for every child? Paste the class list under "Whole class" and get them all in one PDF (${PRICE_LABEL}).` : "");
   } catch (err) {
     px("failed");
     el.status.textContent = `Could not make the PDF: ${err.message}. Reload the page and try again, or email ${SUPPORT}.`;
