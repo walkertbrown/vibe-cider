@@ -35,6 +35,11 @@
   .hero .go { display: inline-block; background: var(--accent); color: var(--accent-ink); text-decoration: none; font-weight: 700; padding: 12px 22px; border-radius: 999px; }
   .hero .see { font-weight: 600; font-size: 16px; }
   .hero .note { margin-top: 12px; font-size: 14px; color: var(--muted); }
+  .hero .also { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 8px; max-width: none; }
+  .pill { display: inline-block; white-space: nowrap; padding: 6px 12px; border-radius: 999px; font-size: 14px; font-weight: 600; text-decoration: none; color: var(--ink); }
+  .pill.orange { background: #ffd2ad; }
+  .pill.blue { background: #bfe0ff; }
+  #holidays { padding-bottom: 8px; scroll-margin-top: 16px; }
   .fan { position: relative; height: 300px; }
   .fan img { position: absolute; top: 10px; width: 190px; height: auto; background: #fff; border-radius: 4px; box-shadow: 0 8px 24px rgba(40, 30, 0, 0.18); }
   .fan img:nth-child(1) { left: 0; transform: rotate(-8deg); }
@@ -138,6 +143,7 @@ section.pages .watch { margin: 14px 0 0; font-size: 15px; }
   <p>Pick a trim size and a line size. You get a 26-page paperback interior and a matching full-wrap cover, built in your browser. No sign-up.</p>
   <p class="ctas"><a class="go" href="#download">Make the free book ↓</a> <a class="see" href="/samples/letter-tracing-workbook-sample-8.5x11.pdf" target="_blank" rel="noopener">See a finished book (PDF, 27 pages)</a></p>
   <p class="note">That book <a href="/samples/letter-tracing-cover-sample-8.5x11.pdf" target="_blank" rel="noopener">and its cover</a> were made with the free version, footer line and PREVIEW mark included.</p>
+  <p class="also"><a class="pill orange" href="#holidays">Halloween to Christmas books ↓</a> <a class="pill blue" href="/kindergarten-worksheets">Teaching kindergarten? Free worksheets →</a></p>
   </div>
   <div class="fan" aria-hidden="true">
     <img src="/img/letter-tracing-worksheet-a.png" width="720" height="932" alt="">
@@ -145,20 +151,6 @@ section.pages .watch { margin: 14px 0 0; font-size: 15px; }
     <img src="/img/number-tracing-worksheet-5-stars.png" width="720" height="932" alt="">
   </div>
  </div>
-</div>
-
-<section class="gets">
-  <ul>
-    <li><b>A page for each letter</b>Capital and lowercase: a model letter with numbered start dots and arrows showing stroke order, rows of dotted letters to trace, and rows for writing the letter alone.</li>
-    <li><b>“A is for apple”</b>A picture on each letter page (apple, ball, cat, an outline to colour with the word under it) and stars to count on each number page.</li>
-    <li><b>Before A, after Z</b>Four pages of pre-writing lines before A, and the numbers 0 to 9 after Z.</li>
-    <li><b>Your own practice words</b>Sight words, a theme, names, a page each, so your book isn't the same as the next seller's. A word Trace Press has a picture for, such as cat, train or rabbit, gets an outline of it to colour, on 163 words so far: see the <a href="/animal-tracing-worksheets">animal</a>, <a href="/food-tracing-worksheets">food</a> and <a href="/transportation-tracing-worksheets">transportation</a> worksheets.</li>
-  </ul>
-</section>
-
-<div class="bands">
-  <p class="band orange">For the holidays: a <a href="/halloween-tracing-worksheets">Halloween</a>, <a href="/thanksgiving-tracing-worksheets">Thanksgiving</a> or <a href="/christmas-tracing-worksheets">Christmas</a> tracing book, A to Z plus 20 words with pictures. Halloween is 31 October. KDP says a new book takes 3 business days to go live, and longer for a first book. For Christmas, a book that goes through KDP&rsquo;s low-content review needs submitting by <strong>Friday 30 October</strong> to be on sale for Black Friday, 27 November: <a href="/christmas-tracing-worksheets#kdp">how that date is counted</a>.</p>
-  <p class="band blue">Teaching kindergarten? The <a href="/kindergarten-worksheets">kindergarten worksheets</a> are free to print: sight word flash cards to cut out, CVC words with pictures, count and trace 1 to 10, and name tracing. The $19 licence adds a whole class of name sheets in one PDF.</p>
 </div>
 
 <main id="tool">
@@ -236,6 +228,20 @@ section.pages .watch { margin: 14px 0 0; font-size: 15px; }
     </div>
   </div>
 </main>
+
+<section class="gets">
+  <ul>
+    <li><b>A page for each letter</b>Capital and lowercase: a model letter with numbered start dots and arrows showing stroke order, rows of dotted letters to trace, and rows for writing the letter alone.</li>
+    <li><b>“A is for apple”</b>A picture on each letter page (apple, ball, cat, an outline to colour with the word under it) and stars to count on each number page.</li>
+    <li><b>Before A, after Z</b>Four pages of pre-writing lines before A, and the numbers 0 to 9 after Z.</li>
+    <li><b>Your own practice words</b>Sight words, a theme, names, a page each, so your book isn't the same as the next seller's. A word Trace Press has a picture for, such as cat, train or rabbit, gets an outline of it to colour, on 163 words so far: see the <a href="/animal-tracing-worksheets">animal</a>, <a href="/food-tracing-worksheets">food</a> and <a href="/transportation-tracing-worksheets">transportation</a> worksheets.</li>
+  </ul>
+</section>
+
+<div class="bands" id="holidays">
+  <p class="band orange">For the holidays: a <a href="/halloween-tracing-worksheets">Halloween</a>, <a href="/thanksgiving-tracing-worksheets">Thanksgiving</a> or <a href="/christmas-tracing-worksheets">Christmas</a> tracing book, A to Z plus 20 words with pictures. Halloween is 31 October. KDP says a new book takes 3 business days to go live, and longer for a first book. For Christmas, a book that goes through KDP&rsquo;s low-content review needs submitting by <strong>Friday 30 October</strong> to be on sale for Black Friday, 27 November: <a href="/christmas-tracing-worksheets#kdp">how that date is counted</a>.</p>
+  <p class="band blue">Teaching kindergarten? The <a href="/kindergarten-worksheets">kindergarten worksheets</a> are free to print: sight word flash cards to cut out, CVC words with pictures, count and trace 1 to 10, and name tracing. The $19 licence adds a whole class of name sheets in one PDF.</p>
+</div>
 
 <section class="pages" aria-label="Sample pages">
   <h3>What the pages look like</h3>
