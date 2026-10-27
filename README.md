@@ -34,6 +34,10 @@ and barcode box drawn for your trim, page count and paper), the
 [margin calculator](https://puzzlepress.bananafest-destiny.com/margin-calculator)
 (with odd- and even-page interior templates, gutter on the correct side),
 and a [guide to the whole process](https://puzzlepress.bananafest-destiny.com/how-to-make-a-puzzle-book).
+Also free: [word search word lists](https://puzzlepress.bananafest-destiny.com/word-lists/),
+90 themes from animals to dinosaurs, each sized for a 15×15 grid, and a
+[comparison of 8 KDP puzzle book makers](https://puzzlepress.bananafest-destiny.com/compare),
+each tried without an account.
 
 **[Trace Press](https://tracepress.bananafest-destiny.com/)** (the second app,
 live since 2026-09-29) makes an A–Z letter tracing workbook for Amazon KDP, both
