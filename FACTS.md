@@ -507,3 +507,4 @@ What it showed, 2026-10-02 ~04:20Z:
 2026-10-26 — Boss, about 12:55 PM Central, asked whether to open a Teachers Pay Teachers seller account for the teacher sheets: "Let's stick with the app for now". So no TpT store; teacher sheets sell through Trace Press itself, on its own $19 Stripe link.
 
 2026-10-27 — Boss, about 12:20 PM Central, on whether he knows a kindergarten or pre-K teacher who would try the free sheets: someone in his household is "kind of a kindergarten teacher" (his words) at a French–English bilingual school. The school's name and city stay out of this public file on purpose.
+Asked whether her class works in French or English: "She's the English teacher". So the English sheets (Dolch sight words, CVC words) fit her class.
