@@ -47,6 +47,13 @@
   section h2 { font-size: 26px; margin: 0 0 14px; }
   .big { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
   @media (max-width: 700px) { .big { grid-template-columns: 1fr; } }
+  .season { display: flex; gap: 22px; align-items: center; background: var(--orange); border-radius: 18px; padding: 18px 26px; }
+  .season-wrap { padding-top: 28px; }
+  .season .pic img { display: block; width: 110px; height: auto; background: #fff; border-radius: 3px; box-shadow: 0 6px 18px rgba(60,30,0,0.18); transform: rotate(-4deg); }
+  .season h2 { margin: 0 0 4px; }
+  .season p { margin: 0 0 12px; color: var(--muted); }
+  .season .go { display: inline-block; margin: 0; }
+  @media (max-width: 560px) { .season { padding: 16px; gap: 14px; align-items: flex-start; } .season .pic img { width: 72px; } .season h2 { font-size: 21px; } }
   .sheet { background: var(--card); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; }
   .sheet .pic { display: flex; align-items: center; justify-content: center; padding: 28px 28px 0; height: 320px; overflow: hidden; }
   .sheet .pic img { width: min(82%, 340px); height: auto; background: #fff; border-radius: 4px 4px 0 0; box-shadow: 0 6px 20px rgba(0,0,0,0.14); align-self: flex-start; transition: transform 0.2s; }
@@ -97,6 +104,17 @@
     <img src="/img/cvc-word-worksheet.png" width="720" height="932" alt="">
   </div>
 </div>
+
+<section class="season-wrap">
+  <div class="season">
+    <a class="pic" href="/halloween-tracing-worksheets"><img src="/img/halloween-tracing-worksheet-bat.png" width="720" height="932" alt="A Halloween tracing worksheet for the word bat, with a bat outline to colour, then dotted rows to trace"></a>
+    <div>
+      <h2>Halloween is Saturday 31 October</h2>
+      <p>20 <a href="/halloween-tracing-worksheets">Halloween words</a> to trace, like bat, ghost and pumpkin, each with a picture to colour.</p>
+      <a class="go" href="/samples/halloween-tracing-worksheets.pdf" target="_blank" rel="noopener">Print all 20 (PDF)</a>
+    </div>
+  </div>
+</section>
 
 <section class="big" id="sheets">
   <article class="sheet blue">
