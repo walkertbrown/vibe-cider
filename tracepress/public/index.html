@@ -27,9 +27,37 @@
   header { padding: 18px 24px; border-bottom: 1px solid var(--line); background: var(--card); display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; }
   header h1 { margin: 0; font-size: 20px; }
   header p { margin: 0; color: var(--muted); }
-  .hero { max-width: 1100px; margin: 0 auto; padding: 28px 24px 8px; }
-  .hero h2 { font-size: clamp(24px, 4vw, 34px); line-height: 1.15; margin: 0 0 10px; letter-spacing: -0.01em; }
-  .hero p { margin: 0; color: var(--muted); max-width: 70ch; font-size: 16px; }
+  .hero { background: linear-gradient(135deg, #fff1c7, #ffe3ea 55%, #dceeff); overflow: hidden; border-bottom: 1px solid var(--line); }
+  .hero .in { max-width: 1100px; margin: 0 auto; padding: 36px 24px 40px; display: grid; grid-template-columns: 1fr minmax(0, 400px); gap: 24px; align-items: center; }
+  .hero h2 { font: 800 clamp(28px, 4.6vw, 44px)/1.08 ui-rounded, "SF Pro Rounded", "Arial Rounded MT Bold", system-ui, sans-serif; margin: 0 0 14px; letter-spacing: -0.01em; }
+  .hero p { margin: 0; font-size: 18px; max-width: 40ch; }
+  .hero .ctas { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; }
+  .hero .go { display: inline-block; background: var(--accent); color: var(--accent-ink); text-decoration: none; font-weight: 700; padding: 12px 22px; border-radius: 999px; }
+  .hero .see { font-weight: 600; font-size: 16px; }
+  .hero .note { margin-top: 12px; font-size: 14px; color: var(--muted); }
+  .fan { position: relative; height: 300px; }
+  .fan img { position: absolute; top: 10px; width: 190px; height: auto; background: #fff; border-radius: 4px; box-shadow: 0 8px 24px rgba(40, 30, 0, 0.18); }
+  .fan img:nth-child(1) { left: 0; transform: rotate(-8deg); }
+  .fan img:nth-child(2) { left: 105px; top: 0; transform: rotate(2deg); z-index: 1; }
+  .fan img:nth-child(3) { left: 210px; transform: rotate(9deg); }
+  @media (max-width: 760px) {
+    .hero .in { grid-template-columns: 1fr; padding: 24px 16px 12px; }
+    .fan { height: 210px; margin: 0 auto; width: 300px; }
+    .fan img { width: 130px; }
+    .fan img:nth-child(2) { left: 85px; }
+    .fan img:nth-child(3) { left: 170px; }
+  }
+  .gets { max-width: 1100px; margin: 0 auto; padding: 24px 24px 0; }
+  .gets ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+  .gets li { background: var(--card); border: 1px solid var(--line); border-top: 6px solid #9cc8f0; border-radius: 12px; padding: 14px 16px; color: var(--muted); font-size: 14px; }
+  .gets li:nth-child(2) { border-top-color: #f3a3b8; }
+  .gets li:nth-child(3) { border-top-color: #f2cf6b; }
+  .gets li:nth-child(4) { border-top-color: #8fd1a6; }
+  .gets li b { display: block; color: var(--ink); font-size: 16px; margin-bottom: 4px; }
+  .bands { max-width: 1100px; margin: 0 auto; padding: 14px 24px 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+  .band { margin: 0; border-radius: 12px; padding: 14px 16px; font-size: 14px; }
+  .band.orange { background: #ffe6d1; }
+  .band.blue { background: #dceeff; }
   main { display: grid; grid-template-columns: minmax(260px, 340px) 1fr; gap: 24px; padding: 24px; max-width: 1100px; margin: 0 auto; }
   @media (max-width: 760px) { main { grid-template-columns: 1fr; } .viewer { order: -1; } }
   .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px; }
@@ -104,12 +132,33 @@ section.pages .watch { margin: 14px 0 0; font-size: 15px; }
 </header>
 
 <div class="hero">
+ <div class="in">
+  <div>
   <h2>An A–Z handwriting workbook, ready to upload to KDP</h2>
-  <p>Pick a trim size and a line size. You get a 26-page paperback interior: one page for each letter, capital and lowercase. Each page has a model letter with numbered start dots and arrows showing stroke order, rows of dotted letters to trace, and rows for writing the letter alone. Then add what you want: a picture on each letter page (“A is for apple”: apple, ball, cat, an outline to colour with the word under it) and stars to count on each number page, four pages of pre-writing lines before A, the numbers 0 to 9 after Z, and your own practice words (sight words, a theme, names), a page each, so your book isn't the same as the next seller's. A word Trace Press has a picture for, such as cat, train or rabbit, gets an outline of it to colour, on 163 words so far: see the <a href="/animal-tracing-worksheets">animal</a>, <a href="/food-tracing-worksheets">food</a> and <a href="/transportation-tracing-worksheets">transportation</a> worksheets. There's a matching full-wrap cover too. It's all built in your browser. No sign-up.</p>
-  <p style="margin-top:8px"><a href="/samples/letter-tracing-workbook-sample-8.5x11.pdf" target="_blank" rel="noopener">See a finished book (PDF, 27 pages)</a> · <a href="/samples/letter-tracing-cover-sample-8.5x11.pdf" target="_blank" rel="noopener">and its cover</a>. Both were made with the free version, footer line and PREVIEW mark included.</p>
-  <p style="margin-top:8px">For the holidays: a <a href="/halloween-tracing-worksheets">Halloween</a>, <a href="/thanksgiving-tracing-worksheets">Thanksgiving</a> or <a href="/christmas-tracing-worksheets">Christmas</a> tracing book, A to Z plus 20 words with pictures. Halloween is 31 October. KDP says a new book takes 3 business days to go live, and longer for a first book. For Christmas, a book that goes through KDP&rsquo;s low-content review needs submitting by <strong>Friday 30 October</strong> to be on sale for Black Friday, 27 November: <a href="/christmas-tracing-worksheets#kdp">how that date is counted</a>.</p>
-  <p style="margin-top:8px">Teaching kindergarten? The <a href="/kindergarten-worksheets">kindergarten worksheets</a> are free to print: sight word flash cards to cut out, CVC words with pictures, count and trace 1 to 10, and name tracing. The $19 licence adds a whole class of name sheets in one PDF.</p>
-  <p class="skip">Every setting below starts filled in, so you can <a href="#download">skip to the Download button</a> and get the free book now.</p>
+  <p>Pick a trim size and a line size. You get a 26-page paperback interior and a matching full-wrap cover, built in your browser. No sign-up.</p>
+  <p class="ctas"><a class="go" href="#download">Make the free book ↓</a> <a class="see" href="/samples/letter-tracing-workbook-sample-8.5x11.pdf" target="_blank" rel="noopener">See a finished book (PDF, 27 pages)</a></p>
+  <p class="note">That book <a href="/samples/letter-tracing-cover-sample-8.5x11.pdf" target="_blank" rel="noopener">and its cover</a> were made with the free version, footer line and PREVIEW mark included.</p>
+  </div>
+  <div class="fan" aria-hidden="true">
+    <img src="/img/letter-tracing-worksheet-a.png" width="720" height="932" alt="">
+    <img src="/img/alphabet-tracing-worksheet-apple.png" width="720" height="932" alt="">
+    <img src="/img/number-tracing-worksheet-5-stars.png" width="720" height="932" alt="">
+  </div>
+ </div>
+</div>
+
+<section class="gets">
+  <ul>
+    <li><b>A page for each letter</b>Capital and lowercase: a model letter with numbered start dots and arrows showing stroke order, rows of dotted letters to trace, and rows for writing the letter alone.</li>
+    <li><b>“A is for apple”</b>A picture on each letter page (apple, ball, cat, an outline to colour with the word under it) and stars to count on each number page.</li>
+    <li><b>Before A, after Z</b>Four pages of pre-writing lines before A, and the numbers 0 to 9 after Z.</li>
+    <li><b>Your own practice words</b>Sight words, a theme, names, a page each, so your book isn't the same as the next seller's. A word Trace Press has a picture for, such as cat, train or rabbit, gets an outline of it to colour, on 163 words so far: see the <a href="/animal-tracing-worksheets">animal</a>, <a href="/food-tracing-worksheets">food</a> and <a href="/transportation-tracing-worksheets">transportation</a> worksheets.</li>
+  </ul>
+</section>
+
+<div class="bands">
+  <p class="band orange">For the holidays: a <a href="/halloween-tracing-worksheets">Halloween</a>, <a href="/thanksgiving-tracing-worksheets">Thanksgiving</a> or <a href="/christmas-tracing-worksheets">Christmas</a> tracing book, A to Z plus 20 words with pictures. Halloween is 31 October. KDP says a new book takes 3 business days to go live, and longer for a first book. For Christmas, a book that goes through KDP&rsquo;s low-content review needs submitting by <strong>Friday 30 October</strong> to be on sale for Black Friday, 27 November: <a href="/christmas-tracing-worksheets#kdp">how that date is counted</a>.</p>
+  <p class="band blue">Teaching kindergarten? The <a href="/kindergarten-worksheets">kindergarten worksheets</a> are free to print: sight word flash cards to cut out, CVC words with pictures, count and trace 1 to 10, and name tracing. The $19 licence adds a whole class of name sheets in one PDF.</p>
 </div>
 
 <main id="tool">
