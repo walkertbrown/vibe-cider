@@ -432,6 +432,25 @@ const PAGE = /^\/($|[a-z0-9-]+$|word-lists\/)/;
 const ranScript = (paths) => [...paths].includes("/js/main.js") && [...paths].some((p) => PAGE.test(p));
 const RAN = (paths) => [...paths].some((p) => /^\/px\//.test(p)) || ranScript(paths);
 const peopleWhere = (pred) => (pathsByIp.size ? [...pathsByIp.values()].filter(pred).length : null);
+// The cloud an address belongs to, by its RDAP record, or null for anything
+// else, including a lookup that failed: an unknown owner stays a person.
+const CLOUD = /tencent|aceville|huawei|alibaba|aliyun|amazon|\baws\b|google|microsoft|azure|digitalocean|\bovh|hetzner|linode|akamai|oracle|vultr|choopa|contabo|scaleway|leaseweb|\bm247\b|datacamp|cdn77/i;
+// ACEVILLE is Tencent Cloud's registrant outside China.
+const CLOUD_ALIAS = { aceville: "Tencent", aliyun: "Alibaba", aws: "Amazon", azure: "Microsoft", choopa: "Vultr", ovh: "OVH", m247: "M247", cdn77: "CDN77", digitalocean: "DigitalOcean" };
+const cloudOf = async (ip) => {
+  try {
+    const r = await fetch(`https://rdap.arin.net/registry/ip/${ip}`, {
+      headers: { accept: "application/rdap+json" },
+      signal: AbortSignal.timeout(8000),
+    });
+    const m = r.ok ? (await r.text()).match(CLOUD) : null;
+    if (!m) return null;
+    const name = m[0].toLowerCase();
+    return CLOUD_ALIAS[name] ?? name[0].toUpperCase() + name.slice(1);
+  } catch {
+    return null;
+  }
+};
 
 try {
   const everyone = await pathCounts();
@@ -715,6 +734,19 @@ try {
     console.log(`    REAL PEOPLE (ran any page)  ${realPeople}   <-- everything else on this report is a stage of these ${realPeople}, or a robot`);
     const silent = peopleWhere((paths) => RAN(paths) && ![...paths].some((p) => /^\/px\//.test(p)));
     if (silent) console.log(`      ${silent} of them sent no beacon: an ad blocker, or something that fetches scripts without running them`);
+    // 2026-10-27: this line read 7 and who.mjs read 0. Six were one cloud
+    // provider's addresses, each in its own /24 so the farm rule could not see
+    // them, running Chrome on a word list and firing /px/list like a reader; the
+    // seventh loaded the app from another cloud. ASN is gated on this plan, so
+    // ask RDAP about the handful of addresses on this line instead. Printed
+    // beside the number, not taken out of it: a developer on a VPS is a person,
+    // and who.mjs names each owner so the call is mine, row by row.
+    const realIps = [...pathsByIp].filter(([, paths]) => RAN(paths)).map(([ip]) => ip);
+    const inCloud = (await Promise.all(realIps.map(cloudOf))).filter(Boolean);
+    if (inCloud.length) {
+      const names = [...new Set(inCloud)].join(", ");
+      console.log(`      ${inCloud.length} of them are on a cloud network (${names}), not a home or phone connection: node scripts/who.mjs 23.5 names each one`);
+    }
   }
   console.log(`    Requests for the page       ${requested}`);
   const nobody = ranTheApp === null;
