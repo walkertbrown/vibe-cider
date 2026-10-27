@@ -737,7 +737,7 @@ function openUnlock({ justPaid = false, intent = "buy", after = null, pages = 0,
     // deliberate, so the book they just built is still there when they come
     // back. Only the weight changed.
     el.buyLine.innerHTML = buying
-      ? `<a class="buybtn" href="${escapeHtml(payHref(PAY_URL))}" target="_blank" rel="noopener">Buy now — ${PRICE_LABEL}</a><span class="fine">Opens Stripe checkout in a new tab. $19 is US dollars; outside the US, Stripe converts it to your currency. This page keeps your book.</span>`
+      ? `<a class="buybtn" href="${escapeHtml(payHref(PAY_URL))}" target="_blank" rel="noopener">Buy now — ${PRICE_LABEL}</a><span class="fine">Opens Stripe checkout in a new tab. $19 is US dollars; outside the US, Stripe converts it to your currency, or you can pay in USD. This page keeps your book.</span>`
       : `<a href="${escapeHtml(payHref(PAY_URL))}" target="_blank" rel="noopener"><b>Buy now — ${PRICE_LABEL}</b></a> (opens Stripe checkout)`;
     // The last act before Stripe, and the one that was hardest to live without:
     // a Stripe session that never completes is invisible to me from this side,
