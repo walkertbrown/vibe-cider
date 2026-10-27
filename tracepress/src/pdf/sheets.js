@@ -1,4 +1,4 @@
-// Kindergarten worksheets on US Letter, one row per item:
+// Kindergarten worksheets on US Letter or A4, one row per item:
 //   CVC words: a picture, three boxes to write the word's letters in, then
 //     the word in dots on writing lines to trace.
 //   Count and trace: a ten frame with that many dots, then the numeral in
@@ -14,6 +14,16 @@ import { PICTURES } from "./pictures.js";
 export const CVC = ["bat", "cat", "map", "rat", "van", "bed", "pig", "dog", "box", "bug", "bus", "cup", "mug", "nut", "sun"].filter((w) => PICTURES[w]);
 export const COUNT = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const ROWS = 5; // a page
+export const PAPERS = { letter: "US Letter", a4: "A4" };
+// Line sizes each sheet offers. A CVC word on 1" lines fills its row and
+// leaves no room to write it after tracing; those lines are for ages 4-5.
+export const SHEET_GUIDES = { cvc: [0.75, 0.6], count: [1, 0.75, 0.6] };
+// A loose sheet, not a book page: Letter is KDP's 8.5" × 11" with its
+// margins; A4 keeps those margins on a 210 × 297 mm page.
+function paperGeometry(paper) {
+  const geom = pageGeometry({ trim: "8.5x11", bleed: false });
+  return paper === "a4" ? { ...geom, width: 595.28, height: 841.89 } : geom;
+}
 const PAD = 0.5; // units of room before the first letter on a writing row
 
 const width = (word) => [...word].reduce((w, ch) => w + LETTERS[ch].width, 0) + LETTER_GAP * (word.length - 1);
@@ -35,8 +45,8 @@ const rect = (x, y, w, h, color = BASE, lw = 1) => [
 
 // Rows of `items` laid out five to a page; `row(item, top, pitch, box)` gives
 // that row's writing row, pictures and shapes.
-function paginate(items, guideIn, row, title) {
-  const geom = pageGeometry({ trim: "8.5x11", bleed: false });
+function paginate(items, guideIn, row, title, paper) {
+  const geom = paperGeometry(paper);
   const pages = [];
   for (let i = 0; i < items.length; i += ROWS) {
     const box = contentBox(geom, 1);
@@ -52,12 +62,14 @@ function paginate(items, guideIn, row, title) {
   return { geom, pages };
 }
 
-export function planCvc({ words = CVC, guideIn = 0.75 } = {}) {
+export function planCvc({ words = CVC, guideIn = 0.75, paper = "letter" } = {}) {
   return paginate(words, guideIn, (word, top, pitch, box, g) => {
     const unit = Math.min((g * 72) / 2, (pitch * 0.8) / 3);
     const baseY = top - pitch / 2 - 0.5 * unit; // the row's ink centred in its band
-    const pic = Math.min(pitch * 0.8, 80);
-    const cell = Math.min(pic * 0.62, 50);
+    // A4 is 17pt narrower than Letter: a smaller picture and boxes keep room
+    // after the traced word to write it.
+    const pic = Math.min(pitch * 0.8, paper === "a4" ? 72 : 80);
+    const cell = Math.min(pic * 0.62, paper === "a4" ? 44 : 50);
     const bx = box.left + pic + 14;
     const shapes = [...word].flatMap((_, j) => rect(bx + j * (cell + 6), top - pitch / 2 - cell / 2, cell, cell));
     const left = bx + 3 * (cell + 6) + 12;
@@ -66,10 +78,10 @@ export function planCvc({ words = CVC, guideIn = 0.75 } = {}) {
       pictures: [{ paths: PICTURES[word], x: box.left, y: top - (pitch - pic) / 2, size: pic }],
       shapes,
     };
-  }, "Say it. Write the letters. Trace the word, then write it.");
+  }, "Say it. Write the letters. Trace the word, then write it.", paper);
 }
 
-export function planCount({ numbers = COUNT, guideIn = 0.75 } = {}) {
+export function planCount({ numbers = COUNT, guideIn = 0.75, paper = "letter" } = {}) {
   return paginate(numbers, guideIn, (n, top, pitch, box, g) => {
     const unit = Math.min((g * 72) / 2, (pitch * 0.8) / 3);
     const baseY = top - pitch / 2 - 0.5 * unit;
@@ -84,7 +96,7 @@ export function planCount({ numbers = COUNT, guideIn = 0.75 } = {}) {
     }
     const left = fx + 5 * cell + 18;
     return { row: { kind: "trace", unit, baseY, left, right: box.right, letters: copies(String(n), left, box.right, unit, 4, true) }, shapes };
-  }, "Count the dots. Trace the number.");
+  }, "Count the dots. Trace the number.", paper);
 }
 
 export const SHEET_FOOTER = "Free worksheet from tracepress.bananafest-destiny.com";
