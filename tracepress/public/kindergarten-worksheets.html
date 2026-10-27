@@ -16,67 +16,65 @@
 <link rel="icon" href="/favicon.ico" sizes="48x48">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <style>
-  h1.t { font-size: 1.5em; margin: 0.83em 0; }
-  header .brand { font-weight: 700; color: inherit; }
-  :root { --ink: #1a1a1a; --muted: #5c6470; --line: #d9dde3; --bg: #f6f7f9; --card: #fff; --accent: #234e3a; --accent-ink: #fff; }
+  :root { --ink: #1a1a1a; --muted: #5c6470; --line: #d9dde3; --bg: #fffdf8; --card: #fff; --accent: #234e3a; --accent-ink: #fff;
+    --blue: #dceeff; --pink: #ffe3ea; --yellow: #fff1c7; --green: #dcf3e4; --purple: #ece4ff; --orange: #ffe6d1; }
   * { box-sizing: border-box; }
-  html, body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  html, body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
   a { color: var(--accent); }
   header { padding: 18px 24px; border-bottom: 1px solid var(--line); background: var(--card); display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; }
-  header .brand { margin: 0; font-size: 20px; }
+  header .brand { margin: 0; font-size: 20px; font-weight: 700; color: inherit; }
   header p { margin: 0; color: var(--muted); }
-  .hero { max-width: 1100px; margin: 0 auto; padding: 28px 24px 8px; }
-  .hero h2, .hero h1.t { font-size: clamp(24px, 4vw, 34px); line-height: 1.15; margin: 0 0 10px; letter-spacing: -0.01em; }
-  .hero p { margin: 0; color: var(--muted); max-width: 70ch; font-size: 16px; }
-  main { display: grid; grid-template-columns: minmax(260px, 340px) 1fr; gap: 24px; padding: 24px; max-width: 1100px; margin: 0 auto; }
-  @media (max-width: 760px) { main { grid-template-columns: 1fr; } .viewer { order: -1; } }
-  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px; }
-  label { display: block; font-weight: 600; font-size: 14px; margin: 14px 0 4px; }
-  label:first-child { margin-top: 0; }
-  input[type=text] { width: 100%; font: inherit; padding: 8px; border: 1px solid var(--line); border-radius: 8px; }
-  h3.sub { margin: 22px 0 0; padding-top: 16px; border-top: 1px solid var(--line); font-size: 16px; }
-  .opt { font-weight: 400; color: var(--muted); }
-  .primary.secondary { background: #fff; color: var(--accent); border: 2px solid var(--accent); }
-  #coverStatus { min-height: 20px; font-size: 14px; margin: 10px 0 0; }
-  select { width: 100%; font: inherit; padding: 8px; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
-  .check { display: flex; gap: 8px; align-items: center; font-weight: 400; }
-  .hint { color: var(--muted); font-size: 13px; margin: 4px 0 0; }
-  .primary { display: block; width: 100%; margin-top: 18px; background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 8px; padding: 12px; font: 600 16px system-ui, sans-serif; cursor: pointer; }
-  .primary:disabled { opacity: 0.6; cursor: progress; }
-  #status { min-height: 20px; font-size: 14px; margin: 10px 0 0; }
-  #tier { font-size: 13px; color: var(--muted); margin: 14px 0 0; padding-top: 12px; border-top: 1px solid var(--line); }
-  .linkish { background: none; border: 0; padding: 0; font: inherit; color: var(--accent); text-decoration: underline; cursor: pointer; }
-  .viewer { display: flex; flex-direction: column; gap: 10px; }
-  #preview svg { display: block; width: 100%; height: auto; max-height: 80vh; border: 1px solid var(--line); border-radius: 4px; box-shadow: 0 2px 10px rgba(0,0,0,0.06); background: #fff; }
-  .pager { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-  .pager button { font: inherit; padding: 8px 14px; border: 1px solid var(--line); border-radius: 8px; background: #fff; cursor: pointer; }
-  .pager button:disabled { opacity: 0.4; cursor: default; }
-  #pageNo { color: var(--muted); font-size: 14px; }
-  section.info { max-width: 1100px; margin: 0 auto; padding: 8px 24px 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
-  section.info h3 { margin: 0 0 6px; font-size: 17px; }
-  section.info p, section.info li { color: var(--muted); }
-  section.info ul { padding-left: 18px; margin: 0; }
-  .scroll { overflow-x: auto; max-width: 100%; }
-  table.words { border-collapse: collapse; margin: 8px 0 0; font-size: 14px; }
-  table.words th, table.words td { text-align: left; padding: 3px 14px 3px 0; border-bottom: 1px solid var(--line); }
-  footer { text-align: center; color: var(--muted); font-size: 13px; padding: 24px; border-top: 1px solid var(--line); }
-  dialog { border: 1px solid var(--line); border-radius: 12px; padding: 22px; max-width: 420px; width: calc(100% - 32px); }
-  dialog::backdrop { background: rgba(0,0,0,0.35); }
-  dialog h2, dialog h1.t { margin: 0 0 8px; font-size: 18px; }
-  dialog p { margin: 6px 0; color: var(--muted); font-size: 14px; }
-  dialog input { width: 100%; font: inherit; padding: 9px; border: 1px solid var(--line); border-radius: 8px; }
-  dialog .buybtn { display: block; text-align: center; background: var(--accent); color: var(--accent-ink); border-radius: 8px; font-weight: 600; padding: 12px 18px; font-size: 16px; text-decoration: none; margin: 14px 0 6px; }
-  dialog .row { display: flex; gap: 8px; margin-top: 12px; }
-  dialog .row button { flex: 1; font: inherit; padding: 10px; border-radius: 8px; border: 1px solid var(--line); background: #fff; cursor: pointer; }
-  dialog .row #verify { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 600; }
-  .err { color: #b00020; font-size: 13px; min-height: 18px; }
-  .err a { color: inherit; }
-  textarea { width: 100%; font: inherit; padding: 8px; border: 1px solid var(--line); border-radius: 8px; min-height: 90px; }
-  .buybtn { display: block; text-align: center; background: var(--accent); color: var(--accent-ink); border-radius: 8px; font-weight: 600; padding: 12px 18px; font-size: 16px; text-decoration: none; margin: 10px 0 6px; }
-  #unlock { margin-top: 12px; padding: 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); }
-  #unlock p { margin: 0 0 6px; font-size: 14px; color: var(--muted); }
-  #unlock input { width: 100%; font: inherit; padding: 8px; border: 1px solid var(--line); border-radius: 8px; }
-  #verify { margin-top: 8px; font: inherit; padding: 8px 14px; border-radius: 8px; border: 1px solid var(--accent); background: var(--accent); color: var(--accent-ink); cursor: pointer; }
+  h1, h2 { font-family: ui-rounded, "SF Pro Rounded", "Arial Rounded MT Bold", system-ui, sans-serif; letter-spacing: -0.01em; }
+  .hero { background: linear-gradient(135deg, var(--yellow), var(--pink) 55%, var(--blue)); overflow: hidden; }
+  .hero { display: grid; grid-template-columns: 1fr minmax(0, 420px); gap: 24px; align-items: center; padding: 36px max(24px, calc(50% - 526px)) 40px; }
+  .hero h1.t { font-size: clamp(30px, 5.5vw, 50px); line-height: 1.05; margin: 0 0 14px; }
+  .hero p { margin: 0; font-size: 18px; max-width: 34ch; }
+  .hero .jump { margin-top: 18px; }
+  .hero .jump a { display: inline-block; background: var(--accent); color: var(--accent-ink); text-decoration: none; font-weight: 700; padding: 12px 20px; border-radius: 999px; }
+  .fan { position: relative; height: 300px; }
+  .fan img { position: absolute; top: 10px; width: 190px; height: auto; background: #fff; border-radius: 4px; box-shadow: 0 8px 24px rgba(40, 30, 0, 0.18); }
+  .fan img:nth-child(1) { left: 0; transform: rotate(-8deg); }
+  .fan img:nth-child(2) { left: 115px; top: 0; transform: rotate(2deg); z-index: 1; }
+  .fan img:nth-child(3) { left: 230px; transform: rotate(9deg); }
+  @media (max-width: 760px) {
+    .hero { grid-template-columns: 1fr; padding-bottom: 8px; }
+    .fan { height: 210px; margin: 0 auto; width: 300px; }
+    .fan img { width: 130px; }
+    .fan img:nth-child(2) { left: 85px; }
+    .fan img:nth-child(3) { left: 170px; }
+  }
+  section { max-width: 1100px; margin: 0 auto; padding: 32px 24px 0; }
+  section h2 { font-size: 26px; margin: 0 0 14px; }
+  .big { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  @media (max-width: 700px) { .big { grid-template-columns: 1fr; } }
+  .sheet { background: var(--card); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; }
+  .sheet .pic { display: flex; align-items: center; justify-content: center; padding: 28px 28px 0; height: 320px; overflow: hidden; }
+  .sheet .pic img { width: min(82%, 340px); height: auto; background: #fff; border-radius: 4px 4px 0 0; box-shadow: 0 6px 20px rgba(0,0,0,0.14); align-self: flex-start; transition: transform 0.2s; }
+  .sheet .pic:hover img { transform: translateY(-4px) rotate(-1deg); }
+  .sheet.blue .pic img { width: min(92%, 420px); align-self: center; border-radius: 4px; }
+  .sheet .txt { padding: 18px 22px 22px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+  .sheet h2 { font-size: 22px; margin: 0; }
+  .sheet h2 a { color: inherit; text-decoration: none; }
+  .sheet p { margin: 0 0 6px; color: var(--muted); }
+  .go { display: block; text-align: center; background: var(--accent); color: var(--accent-ink); border-radius: 10px; font-weight: 700; padding: 13px 16px; text-decoration: none; margin-top: auto; }
+  .more { text-align: center; font-weight: 600; font-size: 15px; }
+  .blue .pic, .tile.blue { background: var(--blue); }
+  .pink .pic, .tile.pink { background: var(--pink); }
+  .yellow .pic, .tile.yellow { background: var(--yellow); }
+  .green .pic, .tile.green { background: var(--green); }
+  .tile.purple { background: var(--purple); }
+  .tile.orange { background: var(--orange); }
+  .class-set { margin: 32px auto 0; width: calc(100% - 48px); max-width: 1052px; background: var(--card); border: 2px dashed var(--line); border-radius: 18px; padding: 22px 26px; }
+  .class-set > * { max-width: 70ch; }
+  @media (max-width: 760px) { .class-set { width: calc(100% - 32px); padding: 18px; } section { padding-left: 16px; padding-right: 16px; } }
+  .class-set p, .class-set li { color: var(--muted); }
+  .class-set ul { margin: 8px 0 0; padding-left: 20px; }
+  .tiles .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 16px; }
+  .tile { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 16px 14px 14px; border-radius: 14px; text-decoration: none; color: var(--ink); font-weight: 700; text-align: center; font-size: 15px; line-height: 1.25; }
+  .tile img { width: 100%; height: auto; background: #fff; border-radius: 3px; box-shadow: 0 4px 12px rgba(0,0,0,0.12); transition: transform 0.2s; }
+  .tile:hover img { transform: translateY(-3px); }
+  .also { color: var(--muted); margin: 18px 0 0; }
+  footer { text-align: center; color: var(--muted); font-size: 13px; padding: 24px; border-top: 1px solid var(--line); margin-top: 40px; }
 </style>
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "b7be686eebf64639b0e60d43860bbd54"}'></script>
 <script type="module" src="/js/first-touch.js"></script>
@@ -88,32 +86,82 @@
 </header>
 
 <div class="hero">
-  <h1 class="t">Free kindergarten worksheets to print</h1>
-  <p>Every sheet here is made in your browser as a PDF, in the same print letters, with the same four writing lines and the same start dots and arrows. They're free, with no sign-up. Free sheets carry one small footer line. The Trace Press licence ($19 once, for one teacher) takes that line off these sheets and adds the parts marked below.</p>
+  <div class="hero-text">
+    <h1 class="t">Free kindergarten worksheets to print</h1>
+    <p>Sight words, CVC words, counting and names, with start dots and arrows on every letter. Print one now, or make your own. No sign-up.</p>
+    <p class="jump"><a href="#sheets">See the sheets ↓</a></p>
+  </div>
+  <div class="fan" aria-hidden="true">
+    <img src="/img/count-and-trace-worksheet.png" width="720" height="932" alt="">
+    <img src="/img/name-tracing-worksheet-maya.png" width="720" height="932" alt="">
+    <img src="/img/cvc-word-worksheet.png" width="720" height="932" alt="">
+  </div>
 </div>
-<section class="info">
-  <div>
-    <h3><a href="/name-tracing">Name tracing</a></h3>
-    <p>A child's name large with start dots and arrows, then rows to trace and rows to write. One name is free. With the licence, paste the whole class list and get one PDF with a sheet for every child. There's also <a href="/cursive-name-tracing">a cursive version</a>.</p>
-    <h3><a href="/sight-word-flash-cards">Sight word flash cards</a></h3>
-    <p>Dolch pre-primer (40 words) and primer (52) on 3" × 5" cards, four to a sheet with cut lines, or one per index card, with an optional copy to trace. With the licence, type your own words. Or print the pre-primer cards now: <a href="/samples/sight-word-flash-cards-pre-primer-3x5.pdf" target="_blank" rel="noopener">40 cards on 3" × 5" (PDF, 10 pages)</a>.</p>
+
+<section class="big" id="sheets">
+  <article class="sheet blue">
+    <a class="pic" href="/sight-word-flash-cards"><img src="/img/sight-word-flash-cards-3x5.png" width="720" height="557" loading="lazy" alt="A sheet of four sight word flash cards, all, am, are and at, each with a dotted copy to trace, and cut lines between them"></a>
+    <div class="txt">
+      <h2><a href="/sight-word-flash-cards">Sight word flash cards</a></h2>
+      <p>Dolch pre-primer (40 words) and primer (52) on 3" × 5" cards, four to a sheet with cut lines, or one per index card. Each card can have a dotted copy to trace.</p>
+      <a class="go" href="/samples/sight-word-flash-cards-pre-primer-3x5.pdf" target="_blank" rel="noopener">Print 40 pre-primer cards (PDF, 10 pages)</a>
+      <a class="more" href="/sight-word-flash-cards">Choose the list or size →</a>
+    </div>
+  </article>
+  <article class="sheet pink">
+    <a class="pic" href="/cvc-worksheets"><img src="/img/cvc-word-worksheet.png" width="720" height="932" loading="lazy" alt="A CVC worksheet: pictures of a bat, cat, map, rat and van, three boxes for the sounds, then each word to trace"></a>
+    <div class="txt">
+      <h2><a href="/cvc-worksheets">CVC word worksheets</a></h2>
+      <p>15 words with pictures. Say it, write each sound in a box, then trace the word and write it.</p>
+      <a class="go" href="/samples/cvc-word-worksheets.pdf" target="_blank" rel="noopener">Print all 15 words (PDF, 3 pages)</a>
+      <a class="more" href="/cvc-worksheets">Bigger or smaller lines, or A4 →</a>
+    </div>
+  </article>
+  <article class="sheet yellow">
+    <a class="pic" href="/count-and-trace-worksheets"><img src="/img/count-and-trace-worksheet.png" width="720" height="932" loading="lazy" alt="A count and trace worksheet: ten frames with one to five dots, each number to trace beside them"></a>
+    <div class="txt">
+      <h2><a href="/count-and-trace-worksheets">Count and trace 1–10</a></h2>
+      <p>Count the dots in the ten frame, then trace the number.</p>
+      <a class="go" href="/samples/count-and-trace-worksheets-1-10.pdf" target="_blank" rel="noopener">Print 1 to 10 (PDF, 2 pages)</a>
+      <a class="more" href="/count-and-trace-worksheets">Bigger or smaller lines, or A4 →</a>
+    </div>
+  </article>
+  <article class="sheet green">
+    <a class="pic" href="/name-tracing"><img src="/img/name-tracing-worksheet-maya.png" width="720" height="932" loading="lazy" alt="A name tracing worksheet for Maya: the name large with numbered start dots and arrows, then rows to trace"></a>
+    <div class="txt">
+      <h2><a href="/name-tracing">Name tracing</a></h2>
+      <p>Type a child's name and print it large, with start dots and arrows, then rows to trace and write. Names with accents work too. There's <a href="/cursive-name-tracing">a cursive version</a>.</p>
+      <a class="go" href="/name-tracing">Type a name →</a>
+    </div>
+  </article>
+</section>
+
+<section class="class-set">
+  <h2>For a whole class</h2>
+  <p>Everything above is free. Free sheets carry one small footer line with the web address. The Trace Press licence is $19 once, for one teacher. It takes that line off and adds two things:</p>
+  <ul>
+    <li><a href="/name-tracing">Name tracing</a>: paste your class list and get one PDF with a sheet for every child.</li>
+    <li><a href="/sight-word-flash-cards">Flash cards</a>: type your own words, up to 240.</li>
+  </ul>
+</section>
+
+<section class="tiles">
+  <h2>More free sheets</h2>
+  <div class="grid">
+    <a class="tile blue" href="/letter-tracing"><img src="/img/letter-tracing-worksheet-a.png" width="720" height="932" loading="lazy" alt=""><span>Letter tracing <span style="white-space:nowrap">A–Z</span></span></a>
+    <a class="tile pink" href="/alphabet-tracing-worksheets-with-pictures"><img src="/img/alphabet-tracing-worksheet-apple.png" width="720" height="932" loading="lazy" alt=""><span>Alphabet with pictures</span></a>
+    <a class="tile yellow" href="/number-tracing"><img src="/img/number-tracing-worksheet-3.png" width="720" height="932" loading="lazy" alt=""><span>Number tracing <span style="white-space:nowrap">0–9</span></span></a>
+    <a class="tile green" href="/alphabet-chart"><img src="/img/alphabet-chart.png" width="720" height="932" loading="lazy" alt=""><span>Alphabet chart</span></a>
+    <a class="tile purple" href="/sight-word-tracing-workbook"><img src="/img/sight-word-tracing-worksheet.png" width="720" height="932" loading="lazy" alt=""><span>Sight word tracing</span></a>
+    <a class="tile orange" href="/picture-word-tracing-worksheets"><img src="/img/picture-word-tracing-worksheet-fish.png" width="720" height="932" loading="lazy" alt=""><span>First words with pictures</span></a>
+    <a class="tile blue" href="/color-words-tracing-worksheets"><img src="/img/color-words-tracing-worksheet-yellow.png" width="720" height="932" loading="lazy" alt=""><span>Color words</span></a>
+    <a class="tile pink" href="/number-words-tracing-worksheets"><img src="/img/number-words-tracing-worksheet-thirteen.png" width="720" height="932" loading="lazy" alt=""><span>Number words</span></a>
+    <a class="tile yellow" href="/days-of-the-week-tracing-worksheets"><img src="/img/days-of-the-week-tracing-worksheet-wednesday.png" width="720" height="932" loading="lazy" alt=""><span>Days of the week</span></a>
+    <a class="tile green" href="/shape-tracing-worksheets"><img src="/img/shape-tracing-worksheet-star.png" width="720" height="932" loading="lazy" alt=""><span>Shapes</span></a>
+    <a class="tile purple" href="/thanksgiving-tracing-worksheets"><img src="/img/thanksgiving-tracing-worksheet-pumpkin.png" width="720" height="932" loading="lazy" alt=""><span>Thanksgiving words</span></a>
+    <a class="tile orange" href="/christmas-tracing-worksheets"><img src="/img/christmas-tracing-worksheet-snowman.png" width="720" height="932" loading="lazy" alt=""><span>Christmas words</span></a>
   </div>
-  <div>
-    <h3><a href="/cvc-worksheets">CVC word worksheets</a></h3>
-    <p>15 words with pictures: write each sound in a box, then trace the word. Or print them now: <a href="/samples/cvc-word-worksheets.pdf" target="_blank" rel="noopener">all 15 on US Letter (PDF, 3 pages)</a>.</p>
-    <h3><a href="/count-and-trace-worksheets">Count and trace 1–10</a></h3>
-    <p>A ten frame to count, then the number to trace. Or print them now: <a href="/samples/count-and-trace-worksheets-1-10.pdf" target="_blank" rel="noopener">1 to 10 on US Letter (PDF, 2 pages)</a>.</p>
-    <h3>Letters and numbers</h3>
-    <p><a href="/letter-tracing">Letter tracing A–Z</a> (<a href="/uppercase-letter-tracing">uppercase</a> or <a href="/lowercase-letter-tracing">lowercase</a> alone), <a href="/alphabet-tracing-worksheets-with-pictures">alphabet tracing with pictures</a>, <a href="/number-tracing">number tracing 0–9</a>, an <a href="/alphabet-chart">alphabet chart</a>, and <a href="/tracing-lines">tracing lines</a> for before letters.</p>
-  </div>
-  <div>
-    <h3>Words</h3>
-    <p><a href="/color-words-tracing-worksheets">Color words</a>, <a href="/number-words-tracing-worksheets">number words</a>, <a href="/days-of-the-week-tracing-worksheets">days of the week</a>, <a href="/picture-word-tracing-worksheets">first words with pictures</a>, a <a href="/sight-word-tracing-workbook">sight word tracing workbook</a>, and a <a href="/tracing-worksheet-generator">worksheet generator</a> for any word.</p>
-    <h3>For the season</h3>
-    <p><a href="/thanksgiving-tracing-worksheets">Thanksgiving</a> and <a href="/christmas-tracing-worksheets">Christmas</a> word tracing, 20 words each with a picture to colour.</p>
-    <h3>Paper</h3>
-    <p><a href="/handwriting-paper">Blank handwriting paper</a> with the same four lines, in four line sizes.</p>
-  </div>
+  <p class="also">Also: <a href="/uppercase-letter-tracing">uppercase</a> or <a href="/lowercase-letter-tracing">lowercase</a> letters alone, a <a href="/tracing-worksheet-generator">worksheet generator</a> for any word, <a href="/tracing-lines">tracing lines</a> for before letters, and blank <a href="/handwriting-paper">handwriting paper</a> with the same four lines.</p>
 </section>
 <footer>Trace Press · questions: <a href="mailto:support@bananafest-destiny.com">support@bananafest-destiny.com</a> · <a href="/privacy">privacy</a> · <a href="/letter-tracing">free letter tracing worksheets</a> · <a href="/how-to-make-a-handwriting-workbook">how to make a tracing book for KDP</a> · <a href="/tracing-font-for-kdp">tracing fonts and KDP</a> · <a href="/tracing-book-cover-size">tracing book cover size for KDP</a> · <a href="/handwriting-paper">free handwriting paper</a> · <a href="/sight-word-tracing-workbook">sight word tracing workbook</a> · <a href="/name-tracing">free name tracing worksheets</a> · <a href="/number-tracing">free number tracing worksheets</a> · <a href="/tracing-lines">free tracing lines worksheets</a> · <a href="/preschool-tracing-worksheets">free preschool tracing worksheets</a> · <a href="/christmas-tracing-worksheets">free Christmas tracing worksheets</a> · <a href="/halloween-tracing-worksheets">free Halloween tracing worksheets</a> · <a href="/thanksgiving-tracing-worksheets">free Thanksgiving tracing worksheets</a> · <a href="/uppercase-letter-tracing">free uppercase letter tracing</a> · <a href="/lowercase-letter-tracing">free lowercase letter tracing</a> · <a href="/cursive-letter-tracing">free cursive letter tracing</a> · <a href="/alphabet-chart">free alphabet chart</a> · <a href="/cursive-alphabet-chart">free cursive alphabet chart</a> · <a href="/cursive-practice-sheets-for-adults">free cursive practice sheets for adults</a> · <a href="/handwriting-practice-sheets-for-adults">free handwriting practice sheets for adults</a> · <a href="/cursive-handwriting-workbook">cursive handwriting workbook</a> · <a href="/cursive-name-tracing">free cursive name tracing</a> · <a href="/this-book-belongs-to-page">free “this book belongs to” page</a> · <a href="/tracing-worksheet-generator">free tracing worksheet generator</a> · <a href="/picture-word-tracing-worksheets">free word tracing worksheets with pictures</a> · <a href="/transportation-tracing-worksheets">free transportation tracing worksheets</a> · <a href="/animal-tracing-worksheets">free animal tracing worksheets</a> · <a href="/food-tracing-worksheets">free food tracing worksheets</a> · <a href="/days-of-the-week-tracing-worksheets">free days of the week tracing worksheets</a> · <a href="/number-words-tracing-worksheets">free number words tracing worksheets</a> · <a href="/color-words-tracing-worksheets">free color words tracing worksheets</a> · <a href="/alphabet-tracing-worksheets-with-pictures">free alphabet tracing worksheets with pictures</a> · <a href="/number-tracing-worksheets-with-pictures">free number tracing worksheets with pictures</a> · <a href="/shape-tracing-worksheets">free shape tracing worksheets</a> · <a href="/sight-word-flash-cards">free sight word flash cards</a> · <a href="/cvc-worksheets">free CVC word worksheets</a> · <a href="/count-and-trace-worksheets">free count and trace worksheets</a> · from the maker of <a href="https://puzzlepress.bananafest-destiny.com/">Puzzle Press</a><br>Not affiliated with Amazon. KDP is a trademark of Amazon.com, Inc.<br>Built by an AI bot. Want one for your own idea? <a href="https://vibecider.bananafest-destiny.com/?from=tracepress">$50 →</a></footer>
 
