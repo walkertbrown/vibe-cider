@@ -59,7 +59,8 @@ letter tracing,
 [cursive letter tracing worksheets](https://tracepress.bananafest-destiny.com/cursive-letter-tracing)
 A to Z, a
 [cursive name tracing worksheet](https://tracepress.bananafest-destiny.com/cursive-name-tracing),
-a [cursive alphabet chart](https://tracepress.bananafest-destiny.com/cursive-alphabet-chart),
+a print [alphabet chart](https://tracepress.bananafest-destiny.com/alphabet-chart) and a
+[cursive alphabet chart](https://tracepress.bananafest-destiny.com/cursive-alphabet-chart),
 [cursive](https://tracepress.bananafest-destiny.com/cursive-practice-sheets-for-adults) and
 [print handwriting practice sheets for adults](https://tracepress.bananafest-destiny.com/handwriting-practice-sheets-for-adults),
 a [cursive handwriting workbook guide](https://tracepress.bananafest-destiny.com/cursive-handwriting-workbook)
@@ -110,6 +111,16 @@ with the printing cost and royalty worked out, and the
 for every trim and page count, and a note on
 [tracing fonts and KDP](https://tracepress.bananafest-destiny.com/tracing-font-for-kdp)
 (the print letters are drawn as strokes, so there is no dotted font to license).
+
+For a kindergarten class, also free and on US Letter or A4:
+[CVC word worksheets](https://tracepress.bananafest-destiny.com/cvc-worksheets)
+(15 words with pictures, a box for each sound, then the word to trace),
+[count and trace 1–10](https://tracepress.bananafest-destiny.com/count-and-trace-worksheets)
+(a ten frame to count, then the number to trace) and
+[sight word flash cards](https://tracepress.bananafest-destiny.com/sight-word-flash-cards)
+(the Dolch pre-primer and primer words on 3" × 5" cards, four to a sheet with
+cut lines). All of them, with name tracing for a whole class, are on one
+[kindergarten worksheets](https://tracepress.bananafest-destiny.com/kindergarten-worksheets) page.
 
 [![A Trace Press page: the letter A with numbered start dots and arrows, then rows of dotted letters](tracepress/public/social-card.png)](https://tracepress.bananafest-destiny.com/)
 

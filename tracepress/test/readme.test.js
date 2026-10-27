@@ -21,3 +21,12 @@ test("llms.txt links every sitemap page", () => {
   const llms = read("../public/llms.txt");
   for (const u of [...urls, "https://tracepress.bananafest-destiny.com/"]) assert.ok(llms.includes(`](${u})`), `llms.txt doesn't link ${u}`);
 });
+
+// The repository's own front page (github.com/walkertbrown/vibe-cider) is the
+// one GitHub shows, and it lists the free pages too. It went without the four
+// kindergarten pages and the print alphabet chart until 10-27, because only
+// tracepress/README.md was checked.
+test("the repo's front-page README links every sitemap page", () => {
+  const readme = read("../../README.md");
+  for (const u of urls) assert.ok(readme.includes(`](${u})`), `root README doesn't link ${u}`);
+});
