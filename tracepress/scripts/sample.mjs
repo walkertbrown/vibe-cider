@@ -18,7 +18,9 @@
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { PDFDocument, PDFName, PDFString, rgb } from "pdf-lib";
 import fontkit from "@pdf-lib/fontkit";
-import { renderBook, planBook, renderName } from "../src/pdf/book.js";
+import { renderBook, planBook, renderName, renderSheets, renderCards } from "../src/pdf/book.js";
+import { planCvc, planCount, sheetInk } from "../src/pdf/sheets.js";
+import { planCards, cardsInk, LISTS } from "../src/pdf/cards.js";
 import { renderCover } from "../src/pdf/cover.js";
 import { pageInk } from "../src/pdf/ink.js";
 import { TRIMS } from "../src/pdf/kdp.js";
@@ -140,7 +142,7 @@ export const SAMPLES = {
     title: "Free Color Words Tracing Worksheets: 11 Colors (PDF)",
     subject: "11 printable color word tracing worksheets: red, orange, yellow, green, blue, purple, pink, brown, black, white and gray, each with numbered start dots, stroke-order arrows and dotted rows to trace on four-line guides. 8.5 x 11. Made free with Trace Press.",
   },
-  numbers: {
+  numberWords: {
     file: "number-words-tracing-worksheets.pdf",
     title: "Free Number Words Tracing Worksheets: One to Twenty (PDF)",
     subject: "20 printable number word tracing worksheets: one to twenty spelled out, each with numbered start dots, stroke-order arrows and dotted rows to trace on four-line guides. 8.5 x 11. Made free with Trace Press.",
@@ -270,7 +272,7 @@ await book(SAMPLES.animals, { words: holidayWords("animal", "animal"), from: 26 
 await book(SAMPLES.food, { words: holidayWords("food", "food"), from: 26 });
 await book(SAMPLES.days, { words: holidayWords("days-of-the-week", "days and months", 19), from: 26 });
 await book(SAMPLES.colors, { words: holidayWords("color-words", "color words", 11), from: 26 });
-await book(SAMPLES.numbers, { words: holidayWords("number-words", "number words", 20), from: 26 });
+await book(SAMPLES.numberWords, { words: holidayWords("number-words", "number words", 20), from: 26 });
 await book(SAMPLES.cursiveBook, { script: "cursive", numbers: true, words: PRE_PRIMER });
 
 // The cover, sized for that book. The whole sheet is the link (2026-10-05).
@@ -394,4 +396,52 @@ for (const trim of Object.keys(TRIMS)) {
   const bytes = await doc.save();
   writeFileSync(new URL(sample.file, out), bytes);
   console.log(`wrote public/samples/${sample.file}: ${bytes.length} bytes`);
+}
+
+// The kindergarten sheets, for /cvc-worksheets, /count-and-trace-worksheets
+// and /sight-word-flash-cards: exactly what each page downloads at its
+// defaults (US Letter, 0.75" lines, the pre-primer cards four to a sheet),
+// with the free footer line on every page as a link. Those pages make the
+// PDF in the browser, so until these existed the sitemap had no file for
+// them, and Bing reads the sample PDFs far more than the pages (2026-10-27).
+async function sheets(sample, render, plans, ink) {
+  const doc = await PDFDocument.load(await render());
+  doc.registerFontkit(fontkit);
+  meta(doc, sample);
+  const regular = await doc.embedFont(fonts.regular, { subset: true });
+  plans.forEach((page, i) => {
+    const f = ink(page).find((s) => s.kind === "text" && /tracepress/.test(s.text));
+    if (!f) throw new Error(`${sample.file} page ${i + 1}: no footer line to link`);
+    const half = regular.widthOfTextAtSize(f.text, f.size) / 2 + 4;
+    link(doc, doc.getPage(i), [f.x - half, f.y - 4, f.x + half, f.y + f.size + 2]);
+  });
+  if (doc.getPageCount() !== plans.length) throw new Error(`${sample.file}: ${doc.getPageCount()} pages, planned ${plans.length}`);
+  const bytes = await doc.save();
+  writeFileSync(new URL(sample.file, out), bytes);
+  console.log(`wrote public/samples/${sample.file}: ${plans.length} pages, ${bytes.length} bytes`);
+}
+{
+  const opts = { kind: "cvc", guideIn: 0.75, paper: "letter" };
+  await sheets({
+    file: "cvc-word-worksheets.pdf",
+    title: "Free CVC Word Worksheets with Pictures, Printable PDF · Trace Press",
+    subject: "Three printable CVC word worksheets, 15 short-vowel words five to a page (bat, cat, bed, pig, dog, bug, sun and more): a picture to say, three boxes for the sounds, then the word in dots to trace on four-line guides. US Letter. Free from Trace Press.",
+  }, () => renderSheets(opts, fonts), planCvc(opts).pages, (p) => sheetInk(p));
+}
+{
+  const opts = { kind: "count", guideIn: 0.75, paper: "letter" };
+  await sheets({
+    file: "count-and-trace-worksheets-1-10.pdf",
+    title: "Free Count and Trace Worksheets 1–10, Ten Frames (PDF) · Trace Press",
+    subject: "Two printable counting worksheets, 1 to 10, five to a page: a ten frame with that many dots to count, then the number in dots to trace on four-line guides, with a numbered start dot and arrows on the first copy. US Letter. Free from Trace Press.",
+  }, () => renderSheets(opts, fonts), planCount(opts).pages, (p) => sheetInk(p));
+}
+{
+  const opts = { sheet: "letter-3x5", words: LISTS["pre-primer"].words, trace: false, tag: LISTS["pre-primer"].label };
+  const plan = planCards(opts);
+  await sheets({
+    file: "sight-word-flash-cards-pre-primer-3x5.pdf",
+    title: "Free Dolch Pre-Primer Sight Word Flash Cards, 3x5 (PDF) · Trace Press",
+    subject: "The 40 Dolch pre-primer sight words as printable flash cards, one word to a card in large school print letters, four 3 x 5 inch cards to a US Letter sheet with dashed lines to cut along. 10 sheets. Free from Trace Press.",
+  }, () => renderCards(opts, fonts), plan.pages, (p) => cardsInk(plan, p));
 }

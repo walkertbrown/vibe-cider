@@ -127,3 +127,33 @@ test("the preschool worksheets: lines, shapes, A to Z, 0 to 9, a link on every p
   assert.match(html, /\(PDF, 46 worksheets\)/);
   assert.match(html, /Pages 37 to 46: the numbers/);
 });
+
+// The kindergarten sheets' samples: what each page downloads at its defaults,
+// the free footer line on every page, and that line a link.
+for (const [file, title, pages, footer] of [
+  ["cvc-word-worksheets.pdf", /CVC Word Worksheets/, 3, /Free worksheet from tracepress/],
+  ["count-and-trace-worksheets-1-10.pdf", /Count and Trace Worksheets 1–10/, 2, /Free worksheet from tracepress/],
+  ["sight-word-flash-cards-pre-primer-3x5.pdf", /Pre-Primer Sight Word Flash Cards/, 10, /Free sight word cards from tracepress/],
+]) {
+  test(`${file}: titled for search, ${pages} pages, the footer line a link on each`, async () => {
+    const doc = await PDFDocument.load(readFileSync(path(file)));
+    assert.ok(doc.getTitle().length <= 70 && title.test(doc.getTitle()), doc.getTitle());
+    assert.equal(doc.getPageCount(), pages);
+    for (let i = 0; i < pages; i++) {
+      assert.ok(links(doc, doc.getPage(i)).some((x) => x.uri === SITE), `page ${i + 1} has no link to the site`);
+      assert.match(execFileSync("pdftotext", ["-f", String(i + 1), "-l", String(i + 1), path(file), "-"], { encoding: "utf8" }), footer);
+    }
+  });
+}
+
+// A key used twice in SAMPLES keeps only the second, and the first file is
+// silently never written again: `numbers` was both the 0–9 worksheets and the
+// number words from 10-05 to 10-27. Read from the source, since importing
+// sample.mjs runs it.
+test("every SAMPLES key in scripts/sample.mjs is used once", () => {
+  const src = readFileSync(new URL("../scripts/sample.mjs", import.meta.url), "utf8");
+  const block = src.slice(src.indexOf("export const SAMPLES = {"), src.indexOf("\n};", src.indexOf("export const SAMPLES = {")));
+  const keys = [...block.matchAll(/^ {2}(\w+): \{$/gm)].map((m) => m[1]);
+  assert.ok(keys.length >= 25, `${keys.length}`);
+  assert.deepEqual(keys.filter((k, i) => keys.indexOf(k) !== i), []);
+});
