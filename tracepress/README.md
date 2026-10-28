@@ -97,7 +97,7 @@ Made by this code with the free version, footer line and PREVIEW mark included:
 - [Name tracing worksheet](https://tracepress.bananafest-destiny.com/name-tracing): type a name, print one page
 - [Tracing worksheet generator](https://tracepress.bananafest-destiny.com/tracing-worksheet-generator): type a few words, print one page on handwriting lines
 - [Sight word tracing workbook](https://tracepress.bananafest-destiny.com/sight-word-tracing-workbook)
-- [Sight word flash cards](https://tracepress.bananafest-destiny.com/sight-word-flash-cards): Dolch pre-primer and primer words on 3" × 5" cards, four to a sheet with cut lines
+- [Sight word flash cards](https://tracepress.bananafest-destiny.com/sight-word-flash-cards): Dolch pre-primer and primer words on 3" × 5" cards, four to a sheet with cut lines, or short vowel matching pairs on 2.5" cards with coloured backs
 - [Kindergarten worksheets](https://tracepress.bananafest-destiny.com/kindergarten-worksheets): every sheet for a kindergarten class on one page
 - [CVC word worksheets](https://tracepress.bananafest-destiny.com/cvc-worksheets): 15 CVC words with pictures, a box for each letter, then the word to trace
 - [Count and trace 1–10](https://tracepress.bananafest-destiny.com/count-and-trace-worksheets): a ten frame to count, then the number to trace
