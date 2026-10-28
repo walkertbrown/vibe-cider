@@ -1,0 +1,11 @@
+{
+  "keeper": "vibe-cider",
+  "product": "Trace Press",
+  "slug": "short-vowel-matching-game",
+  "shot": "2026-10-28",
+  "claim": "Nine straight cuts make twelve matching cards. Trace Press prints a free short vowel matching game: short a, e, i, o and u, 12 CVC words each (cat, bed, pig, dog, bug and more), every word on two 2.5 inch cards, twelve to a US Letter sheet with the cards touching so each cut line runs straight across. Each sheet is followed by a coloured back: one block of colour a quarter inch past the cut lines, so it still covers every card if the printer shifts the second side. All five sets are one 20-page free PDF. No sign-up.",
+  "backing": ["https://tracepress.bananafest-destiny.com/sight-word-flash-cards", "https://tracepress.bananafest-destiny.com/samples/short-vowel-matching-cards.pdf"],
+  "cta": "tracepress.bananafest-destiny.com/sight-word-flash-cards",
+  "spoken": false,
+  "notes": "No taps, so no tap ring and nothing added to any frame. It opens on sheet 1 of the free sample PDF (short a: cat, bat, hat, map, cap, can, each twice) rendered from the live file and held 4 s, then its green back, then the short o sheet and its back, the short u sheet and its back. Then a real-time capture of the live page at 360x640 CSS px, 3x device pixels, opened with the short i set, game cards, matching game and coloured backs already chosen by its URL, scrolled to the preview. The free PDF has one footer line on each front sheet. Idea from a teacher who had cut a set like this out by hand. The final 2.2 s hold the preview still for the end card."
+}
