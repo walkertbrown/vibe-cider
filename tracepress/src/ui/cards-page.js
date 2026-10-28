@@ -12,7 +12,7 @@ const SUPPORT = "support@bananafest-destiny.com";
 const PAY_URL = window.TRACE_PRESS_PAY_URL || "";
 const $ = (id) => document.getElementById(id);
 const el = {
-  list: $("list"), words: $("words"), wordsBox: $("wordsBox"), sheet: $("sheet"), trace: $("trace"), preview: $("preview"),
+  list: $("list"), words: $("words"), wordsBox: $("wordsBox"), sheet: $("sheet"), trace: $("trace"), pairs: $("pairs"), preview: $("preview"),
   prev: $("prev"), next: $("next"), pageNo: $("pageNo"), download: $("download"), status: $("status"),
   unlock: $("unlock"), buyLine: $("buyLine"), email: $("email"), verify: $("verify"), unlockErr: $("unlockErr"), tier: $("tier"),
 };
@@ -28,10 +28,10 @@ const own = () => el.list.value === "own";
 const opts = () => {
   if (own() && getLicense()) {
     const words = cleanWords(el.words.value);
-    return { sheet: el.sheet.value, trace: el.trace.checked, words: words.length ? words : LISTS["pre-primer"].words, tag: "", licensed: true };
+    return { sheet: el.sheet.value, trace: el.trace.checked, pairs: el.pairs.checked, words: words.length ? words : LISTS["pre-primer"].words, tag: "", licensed: true };
   }
   const l = LISTS[own() ? "pre-primer" : el.list.value];
-  return { sheet: el.sheet.value, trace: el.trace.checked, words: l.words, tag: l.label, licensed: !!getLicense() };
+  return { sheet: el.sheet.value, trace: el.trace.checked, pairs: el.pairs.checked, words: l.words, tag: l.label, licensed: !!getLicense() };
 };
 
 let pageIndex = 0;
@@ -42,7 +42,8 @@ function show() {
   const svg = pageSvg(plan.geom, null, { shapes: cardsInk(plan, plan.pages[pageIndex], { licensed: o.licensed }) });
   svg.setAttribute("aria-label", `Sheet ${pageIndex + 1} of the flash cards: ${plan.pages[pageIndex].cards.map((c) => c.word).join(", ")}`);
   el.preview.replaceChildren(svg);
-  el.pageNo.textContent = `Sheet ${pageIndex + 1} of ${plan.pages.length} · ${o.words.length} cards`;
+  const cards = plan.pages.reduce((n, p) => n + p.cards.length, 0);
+  el.pageNo.textContent = `Sheet ${pageIndex + 1} of ${plan.pages.length} · ${cards} cards`;
   el.prev.disabled = pageIndex === 0;
   el.next.disabled = pageIndex >= plan.pages.length - 1;
   el.wordsBox.hidden = !own();
@@ -71,6 +72,7 @@ el.list.addEventListener("change", (e) => {
   show();
 });
 for (const c of [el.sheet, el.trace]) c.addEventListener("change", (e) => { if (e.isTrusted) px("cardstouched"); pageIndex = 0; show(); });
+el.pairs.addEventListener("change", (e) => { if (e.isTrusted) px(el.pairs.checked ? "cardspairs" : "cardstouched"); pageIndex = 0; show(); });
 el.words.addEventListener("input", (e) => { if (e.isTrusted) px("cardstouched"); show(); });
 el.prev.addEventListener("click", () => { pageIndex--; show(); });
 el.next.addEventListener("click", () => { pageIndex++; show(); });
@@ -112,11 +114,11 @@ el.download.addEventListener("click", async () => {
     const url = URL.createObjectURL(new Blob([bytes], { type: "application/pdf" }));
     const a = document.createElement("a");
     a.href = url;
-    a.download = `sight-word-flash-cards-${own() ? (o.licensed ? "my-words" : "pre-primer") : el.list.value}-${el.sheet.value}${o.trace ? "-trace" : ""}.pdf`;
+    a.download = `sight-word-flash-cards-${own() ? (o.licensed ? "my-words" : "pre-primer") : el.list.value}-${el.sheet.value}${o.pairs ? "-pairs" : ""}${o.trace ? "-trace" : ""}.pdf`;
     document.body.append(a); a.click(); a.remove();
     setTimeout(() => URL.revokeObjectURL(url), 60000);
     px("cardsmade");
-    el.status.textContent = `Downloaded: ${o.words.length} cards. Print at 100% ("Actual size"), not "Fit to page", so the cards come out at their size.`
+    el.status.textContent = `Downloaded: ${o.words.length * (o.pairs ? 2 : 1)} cards. Print at 100% ("Actual size"), not "Fit to page", so the cards come out at their size.`
       + (o.licensed ? "" : ` Your own words, up to ${WORDS_MAX}, come with the ${PRICE_LABEL} licence: pick "Your own words" in the list.`);
   } catch (err) {
     px("failed");
@@ -127,6 +129,9 @@ el.download.addEventListener("click", async () => {
 });
 
 px("cards");
-const start = new URLSearchParams(location.search).get("list");
+const q = new URLSearchParams(location.search);
+const start = q.get("list");
 if (start in LISTS) el.list.value = start;
+if (q.get("sheet") in SHEETS) el.sheet.value = q.get("sheet");
+if (q.get("pairs") === "1") el.pairs.checked = true;
 show();

@@ -10,10 +10,16 @@ import { PT } from "./kdp.js";
 import { pageInk, GREY, BASE } from "./ink.js";
 import { LABEL_PT, LINE_W, LETTER_GAP } from "./page.js";
 
-// Dolch's lists, as on /sight-word-tracing-workbook.
+// Dolch's lists, as on /sight-word-tracing-workbook, then a dozen CVC words
+// for each short vowel, the sets a teacher sorts a matching game by.
 export const LISTS = {
   "pre-primer": { label: "Dolch pre-primer", words: "a and away big blue can come down find for funny go help here I in is it jump little look make me my not one play red run said see the three to two up we where yellow you".split(" ") },
   primer: { label: "Dolch primer", words: "all am are at ate be black brown but came did do eat four get good have he into like must new no now on our out please pretty ran ride saw say she so soon that there they this too under want was well went what white who will with yes".split(" ") },
+  "short-a": { label: "Short a", words: "cat bat hat map cap can fan van bag jam ram pan".split(" ") },
+  "short-e": { label: "Short e", words: "bed red pen hen ten net jet wet leg peg web vet".split(" ") },
+  "short-i": { label: "Short i", words: "pig dig wig pin fin bin tip lip sit hit kit lid".split(" ") },
+  "short-o": { label: "Short o", words: "dog log hog pot hot dot mop top box fox cot rod".split(" ") },
+  "short-u": { label: "Short u", words: "bug rug mug hug cup pup sun run bun nut hut tub".split(" ") },
 };
 
 // Page and card sizes in points. The cards on a sheet touch, so each cut line
@@ -22,6 +28,8 @@ export const SHEETS = {
   "letter-3x5": { label: '3" × 5" cards, 4 on a US Letter sheet', page: [11 * PT, 8.5 * PT], card: [5 * PT, 3 * PT], cols: 2, rows: 2 },
   "a4-3x5": { label: '3" × 5" cards, 4 on an A4 sheet', page: [841.89, 595.28], card: [5 * PT, 3 * PT], cols: 2, rows: 2 },
   "letter-4x6": { label: '4" × 6" cards, 2 on a US Letter sheet', page: [8.5 * PT, 11 * PT], card: [6 * PT, 4 * PT], cols: 1, rows: 2 },
+  "letter-game": { label: '2.5" game cards, 12 on a US Letter sheet', page: [8.5 * PT, 11 * PT], card: [2.5 * PT, 2.5 * PT], cols: 3, rows: 4 },
+  "a4-game": { label: '2.5" game cards, 12 on an A4 sheet', page: [595.28, 841.89], card: [2.5 * PT, 2.5 * PT], cols: 3, rows: 4 },
   "card-3x5": { label: 'One 3" × 5" card a page, for index cards', page: [5 * PT, 3 * PT], card: [5 * PT, 3 * PT], cols: 1, rows: 1 },
 };
 
@@ -60,14 +68,18 @@ function lineUp(word, cx, unit, gap) {
 }
 
 // `words`: the cards, in order. `trace`: add the dotted copy. `tag`: a small
-// grey label in each card's corner (the list's name), or none.
-export function planCards({ sheet = "letter-3x5", words = LISTS["pre-primer"].words, trace = false, tag = "" } = {}) {
+// grey label in each card's corner (the list's name), or none. `pairs`: each
+// word twice, for a matching game, with every sheet holding whole pairs so
+// one sheet is one game.
+export function planCards({ sheet = "letter-3x5", words = LISTS["pre-primer"].words, trace = false, tag = "", pairs = false } = {}) {
   const s = SHEETS[sheet] ?? SHEETS["letter-3x5"];
   const [W, H] = s.page, [cw, ch] = s.card;
   const geom = { width: W, height: H };
   const x0 = (W - s.cols * cw) / 2, y0 = (H - s.rows * ch) / 2; // the grid's bottom left
   const inW = cw - 2 * PAD, inH = ch - 2 * PAD;
-  const list = words.length ? words : LISTS["pre-primer"].words;
+  const given = words.length ? words : LISTS["pre-primer"].words;
+  const half = Math.max(1, Math.floor((s.cols * s.rows) / 2));
+  const list = !pairs ? given : given.flatMap((w, i) => (i % half ? [] : [...given.slice(i, i + half), ...given.slice(i, i + half)]));
 
   // One letter size for the whole set, so "a" and "yellow" match as printed
   // cards do: as big as the widest word allows, and no taller than its share

@@ -82,6 +82,7 @@ const RUNGS = [
   ["classpay", "typed a class list (shown the price)"],
   ["cards", "ran /sight-word-flash-cards"],
   ["cardstouched", "changed a flash card control"],
+  ["cardspairs", "ticked Matching game (each word twice)"],
   ["cardspay", "picked Your own words (shown the price)"],
   ["cardsdownload", "pressed Download flash cards"],
   ["cardsmade", "got flash cards"],

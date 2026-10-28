@@ -508,3 +508,5 @@ What it showed, 2026-10-02 ~04:20Z:
 
 2026-10-27 — Boss, about 12:20 PM Central, on whether he knows a kindergarten or pre-K teacher who would try the free sheets: someone in his household is "kind of a kindergarten teacher" (his words) at a French–English bilingual school. The school's name and city stay out of this public file on purpose.
 Asked whether her class works in French or English: "She's the English teacher". So the English sheets (Dolch sight words, CVC words) fit her class.
+
+2026-10-28 — Boss, about 3:30 AM Central, sent two photos of word cards that the teacher in his household made that evening. They were laminated sheets of twelve cards, each word twice: short a, e, i, o and u sets, an H-words set and two sight-word sets, with each card labelled with its set. In his words: "I had to cut them out, which sucked. Vowel sounds as matching games".

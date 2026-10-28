@@ -94,7 +94,7 @@
 
 <div class="hero">
   <h1 class="t">Free sight word flash cards to print</h1>
-  <p>Pick a Dolch list and get a PDF of flash cards, one word to a card, drawn large in the same school print letters as the tracing sheets. Print 3" × 5" cards four to a sheet and cut along the dashed lines, or print straight onto index cards one at a time. Tick a box and each card also gets the word in dots, on writing lines, to trace. It's free, with no sign-up, and it's made in your browser.</p>
+  <p>Pick a Dolch list and get a PDF of flash cards, one word to a card, drawn large in the same school print letters as the tracing sheets. Print 3" × 5" cards four to a sheet and cut along the dashed lines, or print straight onto index cards one at a time. Tick a box and each card also gets the word in dots, on writing lines, to trace. For a matching game, pick a short vowel set (short a, e, i, o or u) and tick "print each word twice". It's free, with no sign-up, and it's made in your browser.</p>
 </div>
 
 <main id="tool">
@@ -116,8 +116,10 @@
     </div>
     <label for="sheet">Card size</label>
     <select id="sheet"></select>
-    <p class="hint">Four 3" × 5" cards fit a sheet turned sideways. For index cards, pick one card a page and feed them one at a time.</p>
+    <p class="hint">Four 3" × 5" cards fit a sheet turned sideways. For index cards, pick one card a page and feed them one at a time. The 2.5" game cards come twelve to a sheet, touching, so each dashed line is one straight cut: nine cuts on a paper trimmer make twelve cards.</p>
     <label class="check"><input id="trace" type="checkbox"> Add a copy to trace under each word</label>
+    <label class="check"><input id="pairs" type="checkbox"> Matching game: print each word twice</label>
+    <p class="hint">Each sheet then holds whole pairs, so one sheet is one game. Every card is labelled with its set (Short a, Dolch primer…) for sorting after play.</p>
     <button class="primary" id="download" type="button">Download the PDF</button>
     <p id="status" role="status"></p>
     <p id="tier"></p>

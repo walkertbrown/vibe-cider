@@ -70,3 +70,27 @@ test("a licensed name sheet has no footer; a free one has it", () => {
   assert.equal(nameInk(page).filter((s) => s.text === NAME_FOOTER).length, 1);
   assert.equal(nameInk(page, { licensed: true }).filter((s) => s.text === NAME_FOOTER).length, 0);
 });
+
+test("a matching game prints each word twice, whole pairs on every sheet", () => {
+  for (const sheet of Object.keys(SHEETS)) {
+    const words = LISTS["short-a"].words;
+    const plan = planCards({ sheet, words, pairs: true });
+    const all = plan.pages.flatMap((p) => p.cards.map((c) => c.word));
+    assert.equal(all.length, words.length * 2, sheet);
+    for (const w of words) assert.equal(all.filter((x) => x === w).length, 2, `${sheet} ${w}`);
+    if (SHEETS[sheet].cols * SHEETS[sheet].rows > 1) for (const p of plan.pages) {
+      const ws = p.cards.map((c) => c.word);
+      for (const w of ws) assert.equal(ws.filter((x) => x === w).length, 2, `${sheet}: ${w} split across sheets`);
+    }
+  }
+  assert.equal(planCards({ sheet: "letter-game", words: LISTS["short-a"].words, pairs: true }).pages.length, 2);
+});
+
+test("each short vowel set is twelve three-letter words with that vowel in the middle", () => {
+  for (const v of "aeiou") {
+    const { words } = LISTS[`short-${v}`];
+    assert.equal(words.length, 12, v);
+    assert.equal(new Set(words).size, 12, v);
+    for (const w of words) { assert.match(w, new RegExp(`^[b-df-hj-np-tv-z]${v}[b-df-hj-np-tv-z]$`), w); assert.deepEqual(cleanWords(w), [w]); }
+  }
+});
