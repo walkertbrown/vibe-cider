@@ -135,7 +135,15 @@ test("free and paid books carry the recipe only in the file's properties, and th
   }
   // Since 2026-10-20 the interior is the same book whether or not anybody
   // paid: no footer line, no recipe on the copyright page. Only the cover differs.
-  const paid = await renderBook(book, { title: "T", trim: "6x9", licensed: true, fonts, recipe });
-  const free = await renderBook(book, { title: "T", trim: "6x9", licensed: false, fonts, recipe });
+  // The file records the second it was saved, inside a compressed stream, so
+  // two renders a second apart can differ by a byte. Pin both dates first.
+  const undated = async (bytes) => {
+    const doc = await PDFDocument.load(bytes, { updateMetadata: false });
+    doc.setCreationDate(new Date(0));
+    doc.setModificationDate(new Date(0));
+    return doc.save();
+  };
+  const paid = await undated(await renderBook(book, { title: "T", trim: "6x9", licensed: true, fonts, recipe }));
+  const free = await undated(await renderBook(book, { title: "T", trim: "6x9", licensed: false, fonts, recipe }));
   assert.equal(free.length, paid.length, "the free interior should carry exactly the ink of the paid one");
 });
