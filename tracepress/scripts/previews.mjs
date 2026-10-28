@@ -39,6 +39,7 @@ const PREVIEWS = [
   ["color-words-tracing-worksheets.pdf", 3, "color-words-tracing-worksheet-yellow"],
   ["number-words-tracing-worksheets.pdf", 13, "number-words-tracing-worksheet-thirteen"],
   ["cursive-handwriting-workbook-sample-8.5x11.pdf", 47, "cursive-handwriting-workbook-word"],
+  ["short-vowel-matching-cards.pdf", 1, "short-vowel-matching-cards"],
 ];
 const pub = new URL("../public/", import.meta.url).pathname;
 mkdirSync(`${pub}img`, { recursive: true });

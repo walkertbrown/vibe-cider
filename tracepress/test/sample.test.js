@@ -146,6 +146,27 @@ for (const [file, title, pages, footer] of [
   });
 }
 
+// The matching game sample: five sets, each two sheets of fronts (footer
+// linked) and each front followed by its back, which carries no text but the
+// set name, so a face-down card gives nothing away.
+test("short-vowel-matching-cards.pdf: 20 pages, fronts linked, backs plain", async () => {
+  const file = "short-vowel-matching-cards.pdf";
+  const doc = await PDFDocument.load(readFileSync(path(file)));
+  assert.ok(doc.getTitle().length <= 70 && /Short Vowel Matching Cards/.test(doc.getTitle()), doc.getTitle());
+  assert.equal(doc.getPageCount(), 20);
+  for (let i = 0; i < 20; i++) {
+    const text = execFileSync("pdftotext", ["-f", String(i + 1), "-l", String(i + 1), path(file), "-"], { encoding: "utf8" });
+    const set = `Short ${"aeiou"[Math.floor(i / 4)]}`;
+    if (i % 2 === 0) {
+      assert.ok(links(doc, doc.getPage(i)).some((x) => x.uri === SITE), `page ${i + 1} has no link to the site`);
+      assert.match(text, /Free sight word cards from tracepress/);
+    } else {
+      assert.equal(links(doc, doc.getPage(i)).length, 0, `back page ${i + 1} has a link`);
+      assert.deepEqual([...new Set(text.split(/\s*\n\s*/).filter(Boolean))], [set], `back page ${i + 1}`);
+    }
+  }
+});
+
 // A key used twice in SAMPLES keeps only the second, and the first file is
 // silently never written again: `numbers` was both the 0–9 worksheets and the
 // number words from 10-05 to 10-27. Read from the source, since importing
