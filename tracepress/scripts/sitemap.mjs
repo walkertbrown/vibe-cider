@@ -49,8 +49,10 @@ for (const [block] of entries) {
   // Run from this folder with a path relative to it, so it gives the same
   // answer here and in the public trace-press repository, where this folder
   // is the root. A file with no commits yet returns empty and is left alone.
-  // The commit's UTC date, as the build log keeps days.
-  const now = execFileSync("git", ["-C", APP, "log", "-1", "--format=%cd", "--date=format-local:%Y-%m-%d", "--", path.relative(APP, file)], { encoding: "utf8", env: { ...process.env, TZ: "UTC" } }).trim();
+  // The commit's UTC date, as the build log keeps days. A commit with the
+  // trailer "Sitemap-Lastmod: skip" changed no words a reader sees, so it
+  // doesn't move the date.
+  const now = execFileSync("git", ["-C", APP, "log", "-1", "--format=%cd", "--date=format-local:%Y-%m-%d", "--invert-grep", "--grep=^Sitemap-Lastmod: skip", "--", path.relative(APP, file)], { encoding: "utf8", env: { ...process.env, TZ: "UTC" } }).trim();
   if (!now || now === was) continue;
   out = out.replace(block, block.replace(/<lastmod>.*?<\/lastmod>/, `<lastmod>${now}</lastmod>`));
   changed.push({ loc: new URL(loc).pathname, was, now });

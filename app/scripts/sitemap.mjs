@@ -72,7 +72,9 @@ for (const [block] of entries) {
   if (!file) { unmapped.push(loc); continue; }
   // %cs is the committer date as YYYY-MM-DD, which is the format sitemaps.org
   // asks for. A file with no commits yet returns empty and is left alone.
-  const now = execFileSync("git", ["-C", REPO, "log", "-1", "--format=%cs", "--", path.relative(REPO, file)], {
+  // A commit with the trailer "Sitemap-Lastmod: skip" changed no words a
+  // reader sees (a tag in the head, say), so it doesn't move the date.
+  const now = execFileSync("git", ["-C", REPO, "log", "-1", "--format=%cs", "--invert-grep", "--grep=^Sitemap-Lastmod: skip", "--", path.relative(REPO, file)], {
     encoding: "utf8",
   }).trim();
   if (!now || now === was) continue;
