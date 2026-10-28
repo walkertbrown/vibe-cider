@@ -2,7 +2,8 @@
 // work, a free download is a 26-page PDF with the footer line, the unlock
 // dialog unlocks against a stubbed /api/verify, a licensed download has no
 // footer, a free cover says PREVIEW and a licensed one doesn't, and ?paid=1
-// opens the dialog. Stripe is never called: /api/verify
+// opens the dialog, and on a phone each teacher page shows its sheet on the
+// first screen and a tap downloads it. Stripe is never called: /api/verify
 // is answered by page.route, because the Trace Press Payment Link is live.
 //
 // Run: node test/browser.mjs [baseUrl] [chromium|firefox|webkit]
@@ -413,6 +414,32 @@ try {
   check(phW <= 390, `home with the listing box: no sideways scroll on a phone (${phW}px)`);
   const swW = await phone.goto(`${base}${sw}`).then(() => phone.evaluate(() => document.documentElement.scrollWidth));
   check(swW <= 390, `sight words: no sideways scroll on a phone (${swW}px)`);
+
+  // The teacher pages, as somebody arriving from a clip on a phone meets them:
+  // the sheet is on the first screen, and a tap on Download gives the PDF.
+  const teacher = [
+    ["/sight-word-flash-cards", "cards", 10, /Free sight word cards from tracepress/],
+    ["/cvc-worksheets", "cvc", 3, /Free worksheet from tracepress/],
+    ["/count-and-trace-worksheets", "count", 2, /Free worksheet from tracepress/],
+  ];
+  for (const [path, kind, pages, footer] of teacher) {
+    const tp = await (await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, acceptDownloads: true, userAgent: "trace-press-test/browser" })).newPage();
+    tp.on("pageerror", (e) => errors.push(`${kind}: ${e.message}`));
+    const beacons = [];
+    tp.on("request", (r) => { const m = r.url().match(/\/px\/(\w+)\.gif/); if (m) beacons.push(m[1]); });
+    await tp.goto(`${base}${path}`);
+    await tp.waitForSelector("#preview svg");
+    const sheet = await tp.locator("#preview svg").boundingBox();
+    check(sheet.y < 844 && sheet.x >= 0 && sheet.x + sheet.width <= 390, `${kind}: on a phone the sheet starts on the first screen, at ${Math.round(sheet.y)}px`);
+    const w = await tp.evaluate(() => document.documentElement.scrollWidth);
+    check(w <= 390, `${kind}: no sideways scroll on a phone (${w}px)`);
+    const [d] = await Promise.all([tp.waitForEvent("download"), tp.tap("#download")]);
+    const pdf = pdfText(await (await d.createReadStream()).toArray().then(Buffer.concat));
+    check(pdf.pages === pages && (pdf.text.match(new RegExp(footer.source, "g")) || []).length === pages, `${kind}: a tap on Download gives ${pages} pages, each with the footer (${pdf.pages}, ${d.suggestedFilename()})`);
+    await tp.waitForFunction(() => /^Downloaded/.test(document.getElementById("status").textContent));
+    for (const b of [kind, `${kind}download`, `${kind}made`]) check(beacons.includes(b), `${kind}: the ${b} beacon fired`);
+    await tp.context().close();
+  }
 
   check(errors.length === 0, `no page errors ${errors.join("; ")}`);
 } finally {
