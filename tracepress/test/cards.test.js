@@ -94,3 +94,22 @@ test("each short vowel set is twelve three-letter words with that vowel in the m
     for (const w of words) { assert.match(w, new RegExp(`^[b-df-hj-np-tv-z]${v}[b-df-hj-np-tv-z]$`), w); assert.deepEqual(cleanWords(w), [w]); }
   }
 });
+
+test("coloured backs follow each sheet, cover every card past its cut lines, and are centred on the page", () => {
+  for (const [key, s] of Object.entries(SHEETS)) {
+    const plan = planCards({ sheet: key, words: LISTS["short-i"].words, pairs: true, tag: "Short i", back: LISTS["short-i"].back });
+    assert.deepEqual(plan.pages.map((p) => !!p.back), plan.pages.map((_, i) => i % 2 === 1), key);
+    for (const page of plan.pages.filter((p) => p.back)) {
+      const ink = cardsInk(plan, page);
+      assert.equal(cuts(ink).length, 0, `${key}: no cut lines on a back`);
+      assert.ok(!ink.some((x) => x.text === CARDS_FOOTER), key);
+      const [r] = ink.filter((x) => x.kind === "rect");
+      assert.ok(Math.abs(r.x + r.w / 2 - plan.geom.width / 2) < 0.01 && Math.abs(r.y + r.h / 2 - plan.geom.height / 2) < 0.01, `${key}: centred, so either flip lines up`);
+      const need = s.cols * s.rows === 1 ? 0 : 0.125 * PT; // at least an eighth of an inch of slack past the cuts
+      for (const c of page.cards) assert.ok(r.x <= c.x - need && r.y <= c.y - need && r.x + r.w >= c.x + c.w + need && r.y + r.h >= c.y + c.h + need, `${key}: ${c.word}`);
+      assert.ok(r.x >= 0 && r.y >= 0 && r.x + r.w <= plan.geom.width && r.y + r.h <= plan.geom.height, key);
+    }
+  }
+  assert.equal(planCards({ sheet: "letter-game", words: LISTS["short-a"].words, pairs: true }).pages.length, 2, "no backs unless asked");
+  for (const l of Object.values(LISTS)) assert.equal(l.back.length, 3);
+});

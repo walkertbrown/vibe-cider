@@ -12,14 +12,15 @@ import { LABEL_PT, LINE_W, LETTER_GAP } from "./page.js";
 
 // Dolch's lists, as on /sight-word-tracing-workbook, then a dozen CVC words
 // for each short vowel, the sets a teacher sorts a matching game by.
+// `back`: the colour of the set's card backs, so a mixed pile sorts by set.
 export const LISTS = {
-  "pre-primer": { label: "Dolch pre-primer", words: "a and away big blue can come down find for funny go help here I in is it jump little look make me my not one play red run said see the three to two up we where yellow you".split(" ") },
-  primer: { label: "Dolch primer", words: "all am are at ate be black brown but came did do eat four get good have he into like must new no now on our out please pretty ran ride saw say she so soon that there they this too under want was well went what white who will with yes".split(" ") },
-  "short-a": { label: "Short a", words: "cat bat hat map cap can fan van bag jam ram pan".split(" ") },
-  "short-e": { label: "Short e", words: "bed red pen hen ten net jet wet leg peg web vet".split(" ") },
-  "short-i": { label: "Short i", words: "pig dig wig pin fin bin tip lip sit hit kit lid".split(" ") },
-  "short-o": { label: "Short o", words: "dog log hog pot hot dot mop top box fox cot rod".split(" ") },
-  "short-u": { label: "Short u", words: "bug rug mug hug cup pup sun run bun nut hut tub".split(" ") },
+  "pre-primer": { label: "Dolch pre-primer", back: [0.16, 0.42, 0.72], words: "a and away big blue can come down find for funny go help here I in is it jump little look make me my not one play red run said see the three to two up we where yellow you".split(" ") },
+  primer: { label: "Dolch primer", back: [0.45, 0.3, 0.65], words: "all am are at ate be black brown but came did do eat four get good have he into like must new no now on our out please pretty ran ride saw say she so soon that there they this too under want was well went what white who will with yes".split(" ") },
+  "short-a": { label: "Short a", back: [0.18, 0.55, 0.35], words: "cat bat hat map cap can fan van bag jam ram pan".split(" ") },
+  "short-e": { label: "Short e", back: [0.6, 0.3, 0.2], words: "bed red pen hen ten net jet wet leg peg web vet".split(" ") },
+  "short-i": { label: "Short i", back: [0.78, 0.22, 0.3], words: "pig dig wig pin fin bin tip lip sit hit kit lid".split(" ") },
+  "short-o": { label: "Short o", back: [0.1, 0.5, 0.55], words: "dog log hog pot hot dot mop top box fox cot rod".split(" ") },
+  "short-u": { label: "Short u", back: [0.85, 0.5, 0.12], words: "bug rug mug hug cup pup sun run bun nut hut tub".split(" ") },
 };
 
 // Page and card sizes in points. The cards on a sheet touch, so each cut line
@@ -32,6 +33,8 @@ export const SHEETS = {
   "a4-game": { label: '2.5" game cards, 12 on an A4 sheet', page: [595.28, 841.89], card: [2.5 * PT, 2.5 * PT], cols: 3, rows: 4 },
   "card-3x5": { label: 'One 3" × 5" card a page, for index cards', page: [5 * PT, 3 * PT], card: [5 * PT, 3 * PT], cols: 1, rows: 1 },
 };
+
+export const OWN_BACK = [0.25, 0.25, 0.45]; // your own words' backs
 
 export const WORD_MAX = 12; // characters on one card
 export const WORDS_MAX = 240; // 60 sheets of four
@@ -70,8 +73,9 @@ function lineUp(word, cx, unit, gap) {
 // `words`: the cards, in order. `trace`: add the dotted copy. `tag`: a small
 // grey label in each card's corner (the list's name), or none. `pairs`: each
 // word twice, for a matching game, with every sheet holding whole pairs so
-// one sheet is one game.
-export function planCards({ sheet = "letter-3x5", words = LISTS["pre-primer"].words, trace = false, tag = "", pairs = false } = {}) {
+// one sheet is one game. `back`: a colour to print on the back of every card,
+// as a page after each sheet, for printing double-sided.
+export function planCards({ sheet = "letter-3x5", words = LISTS["pre-primer"].words, trace = false, tag = "", pairs = false, back = null } = {}) {
   const s = SHEETS[sheet] ?? SHEETS["letter-3x5"];
   const [W, H] = s.page, [cw, ch] = s.card;
   const geom = { width: W, height: H };
@@ -99,6 +103,7 @@ export function planCards({ sheet = "letter-3x5", words = LISTS["pre-primer"].wo
       return { word, x, y, w: cw, h: ch };
     });
     pages.push({ cards });
+    if (back) pages.push({ cards, back });
   }
   return { geom, sheet: s, unit, tUnit, trace, tag, pages, grid: { x0, y0, x1: x0 + s.cols * cw, y1: y0 + s.rows * ch } };
 }
@@ -107,7 +112,23 @@ export function planCards({ sheet = "letter-3x5", words = LISTS["pre-primer"].wo
 // card printed alone.
 export const CARDS_FOOTER = "Free sight word cards from tracepress.bananafest-destiny.com";
 
+// A back is one block of colour over the whole grid and BLEED past it, so a
+// printer that shifts the second side by a few millimetres still covers every
+// card. Every card's back is the same and the grid is centred, so the back
+// lines up whichever edge the printer flips on.
+export const BLEED = 0.25 * PT;
+function backInk({ geom, sheet, grid, tag }, page) {
+  const alone = sheet.cols * sheet.rows === 1;
+  const b = alone ? 0 : Math.max(0, Math.min(BLEED, grid.x0 - 0.125 * PT, grid.y0 - 0.125 * PT));
+  const out = alone
+    ? [{ kind: "rect", x: 0, y: 0, w: geom.width, h: geom.height, color: page.back }]
+    : [{ kind: "rect", x: grid.x0 - b, y: grid.y0 - b, w: grid.x1 - grid.x0 + 2 * b, h: grid.y1 - grid.y0 + 2 * b, color: page.back }];
+  if (tag) for (const c of page.cards) out.push({ kind: "text", text: tag, x: c.x + c.w / 2, y: c.y + c.h / 2 - 5, size: 14, font: "bold", color: [1, 1, 1] });
+  return out;
+}
+
 export function cardsInk(plan, page, { licensed = false } = {}) {
+  if (page.back) return backInk(plan, page);
   const { geom, sheet, unit, tUnit, trace, tag, grid } = plan;
   const out = [];
   const alone = sheet.cols * sheet.rows === 1;

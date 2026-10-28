@@ -47,7 +47,9 @@ export function drawLetterPage(page, layout, fonts, { licensed = false, cursive 
 
 export function drawShapes(page, shapes, fonts) {
   for (const s of shapes) {
-    if (s.kind === "line") {
+    if (s.kind === "rect") {
+      page.drawRectangle({ x: s.x, y: s.y, width: s.w, height: s.h, color: colour(s.color) });
+    } else if (s.kind === "line") {
       page.drawLine({ start: { x: s.x1, y: s.y1 }, end: { x: s.x2, y: s.y2 }, thickness: s.width, color: colour(s.color), dashArray: s.dash });
     } else if (s.kind === "dot") {
       drawDot(page, s);
