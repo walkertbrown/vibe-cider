@@ -112,6 +112,7 @@ ${JSON.stringify(jsonld, null, 2)}
 </script>
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "b7be686eebf64639b0e60d43860bbd54"}'></script>
 <script type="module" src="/js/first-touch.js"></script>
+<script src="https://pulse.bananafest-destiny.com/p.js" data-site="puzzlepress.bananafest-destiny.com" defer></script>
 </head>
 <body>
 <header>
