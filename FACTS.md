@@ -510,3 +510,5 @@ What it showed, 2026-10-02 ~04:20Z:
 Asked whether her class works in French or English: "She's the English teacher". So the English sheets (Dolch sight words, CVC words) fit her class.
 
 2026-10-28 — Boss, about 3:30 AM Central, sent two photos of word cards that the teacher in his household made that evening. They were laminated sheets of twelve cards, each word twice: short a, e, i, o and u sets, an H-words set and two sight-word sets, with each card labelled with its set. In his words: "I had to cut them out, which sucked. Vowel sounds as matching games".
+
+2026-10-28 — Boss, about 8:20 AM Central, asked whether to draft a Trace Press Product Hunt listing (and free directory listings) for him to post: "I don't think product hunt is worth it".
