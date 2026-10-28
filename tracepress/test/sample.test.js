@@ -167,6 +167,21 @@ test("short-vowel-matching-cards.pdf: 20 pages, fronts linked, backs plain", asy
   }
 });
 
+// The sight word game: the 40 pre-primer words, six pairs a sheet, so seven
+// sheets, the last with four pairs; each front linked, each back plain.
+test("sight-word-matching-game-pre-primer.pdf: 14 pages, fronts linked, backs plain", async () => {
+  const file = "sight-word-matching-game-pre-primer.pdf";
+  const doc = await PDFDocument.load(readFileSync(path(file)));
+  assert.ok(doc.getTitle().length <= 70 && /Sight Word Matching Game/.test(doc.getTitle()), doc.getTitle());
+  assert.equal(doc.getPageCount(), 14);
+  for (let i = 0; i < 14; i++) {
+    const text = execFileSync("pdftotext", ["-f", String(i + 1), "-l", String(i + 1), path(file), "-"], { encoding: "utf8" });
+    const front = i % 2 === 0;
+    assert.equal(links(doc, doc.getPage(i)).some((x) => x.uri === SITE), front, `page ${i + 1}`);
+    assert.equal(/Free sight word cards from tracepress/.test(text), front, `page ${i + 1}`);
+  }
+});
+
 // A key used twice in SAMPLES keeps only the second, and the first file is
 // silently never written again: `numbers` was both the 0–9 worksheets and the
 // number words from 10-05 to 10-27. Read from the source, since importing

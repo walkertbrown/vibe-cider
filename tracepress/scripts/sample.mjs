@@ -445,21 +445,15 @@ async function sheets(sample, render, plans, ink) {
     subject: "The 40 Dolch pre-primer sight words as printable flash cards, one word to a card in large school print letters, four 3 x 5 inch cards to a US Letter sheet with dashed lines to cut along. 10 sheets. Free from Trace Press.",
   }, () => renderCards(opts, fonts), plan.pages, (p) => cardsInk(plan, p));
 }
-// The matching game, every short vowel set: each word twice, 2.5" cards
-// twelve to a sheet, each sheet followed by its coloured back. Fronts carry
-// the footer link; backs are plain colour, so a face-down card gives nothing
-// away. Ten sheets, twenty pages.
-{
+// The matching games: each word twice, 2.5" cards twelve to a sheet, each
+// sheet followed by its set's coloured back. Fronts carry the footer link;
+// backs are plain colour, so a face-down card gives nothing away.
+async function matching(sample, keys) {
   const doc = await PDFDocument.create();
   doc.registerFontkit(fontkit);
-  const sample = {
-    file: "short-vowel-matching-cards.pdf",
-    title: "Free Short Vowel Matching Cards, CVC Memory Game (PDF) · Trace Press",
-    subject: "A short vowel matching game: short a, e, i, o and u, twelve CVC words each (cat, bed, pig, dog, bug and more), every word on two 2.5 inch cards, twelve cards to a US Letter sheet. Each sheet is followed by a coloured back for double-sided printing. Free from Trace Press.",
-  };
   meta(doc, sample);
   const regular = await doc.embedFont(fonts.regular, { subset: true });
-  for (const key of ["short-a", "short-e", "short-i", "short-o", "short-u"]) {
+  for (const key of keys) {
     const l = LISTS[key];
     const opts = { sheet: "letter-game", words: l.words, trace: false, tag: l.label, pairs: true, back: l.back };
     const plan = planCards(opts);
@@ -477,3 +471,16 @@ async function sheets(sample, render, plans, ink) {
   writeFileSync(new URL(sample.file, out), bytes);
   console.log(`wrote public/samples/${sample.file}: ${doc.getPageCount()} pages, ${bytes.length} bytes`);
 }
+// Every short vowel set: ten sheets, twenty pages.
+await matching({
+  file: "short-vowel-matching-cards.pdf",
+  title: "Free Short Vowel Matching Cards, CVC Memory Game (PDF) · Trace Press",
+  subject: "A short vowel matching game: short a, e, i, o and u, twelve CVC words each (cat, bed, pig, dog, bug and more), every word on two 2.5 inch cards, twelve cards to a US Letter sheet. Each sheet is followed by a coloured back for double-sided printing. Free from Trace Press.",
+}, ["short-a", "short-e", "short-i", "short-o", "short-u"]);
+// The 40 pre-primer words, six pairs a sheet: seven sheets, fourteen pages.
+// A teacher's own sight word sets were games of this shape (2026-10-28).
+await matching({
+  file: "sight-word-matching-game-pre-primer.pdf",
+  title: "Free Sight Word Matching Game, Dolch Pre-Primer (PDF) · Trace Press",
+  subject: "A sight word matching game: the 40 Dolch pre-primer words (a, and, the, see, said and more), every word on two 2.5 inch cards, twelve cards to a US Letter sheet. Each sheet is followed by a coloured back for double-sided printing. Free from Trace Press.",
+}, ["pre-primer"]);
