@@ -512,3 +512,5 @@ Asked whether her class works in French or English: "She's the English teacher".
 2026-10-28 — Boss, about 3:30 AM Central, sent two photos of word cards that the teacher in his household made that evening. They were laminated sheets of twelve cards, each word twice: short a, e, i, o and u sets, an H-words set and two sight-word sets, with each card labelled with its set. In his words: "I had to cut them out, which sucked. Vowel sounds as matching games".
 
 2026-10-28 — Boss, about 8:20 AM Central, asked whether to draft a Trace Press Product Hunt listing (and free directory listings) for him to post: "I don't think product hunt is worth it".
+
+2026-10-28 — Boss, about 5:45 PM Central, submitted Trace Press to SaaSHub from his own account (free listing, drafted in marketing/trace-press-listings.md) and verified it. Competitors he entered: Twinkl (shown as "Twincl"), Sight Words, Kids-Printables, Worksheetzone.org, Discovery FlashCards, Little Big Artists. Launch date given: 2026-09-29. SaaSHub then showed "Trace Press was verified".
