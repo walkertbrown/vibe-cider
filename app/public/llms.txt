@@ -6,7 +6,7 @@
 > book's own page count) formatted to KDP's trim, bleed, and gutter rules.
 > Runs entirely in the browser: nothing typed leaves the page except an
 > email address at checkout. Free to use — free books have unmarked pages and a cover marked PREVIEW; $19 one-time
-> removes both. No account required. Not affiliated with Amazon; KDP is a
+> removes the cover mark. No account required. Not affiliated with Amazon; KDP is a
 > trademark of Amazon.com, Inc.
 
 ## Generators
@@ -25,7 +25,7 @@
 - [Spine width calculator](https://puzzlepress.bananafest-destiny.com/spine-calculator): Amazon's own paperback formula — page count times paper thickness, with no hardcover markup added. Includes groundwood paper (0.00235" a page), which KDP's help pages don't state; the figure is read from KDP's own cover calculator.
 - [Royalty calculator](https://puzzlepress.bananafest-destiny.com/royalty-calculator): KDP printing cost and royalty for any trim, page count, and price, on black ink (white, cream or groundwood paper), premium colour or standard colour.
 - [Margin calculator](https://puzzlepress.bananafest-destiny.com/margin-calculator): inside, outside, top and bottom margins for any trim, page count and bleed setting, plus the PDF page size with bleed for every trim (0.125" wider and 0.25" taller than the trim, not 0.25" both ways) in inches, millimetres and 300-DPI pixels.
-- [Compared to free generators](https://puzzlepress.bananafest-destiny.com/compare): free puzzle generators, subscription suites, a direct competitor that also builds interior and cover (PuzzleBindery), and doing it by hand — including when each is the better choice.
+- [KDP puzzle book makers compared: 8 tools tested, Oct 2026](https://puzzlepress.bananafest-destiny.com/compare): PuzzleForge, kdpbook.io, Univers Studio, KDPage, PuzzlePage, Book Bolt, Puzzle Maker Pro and Puzzle Generator (puzzlegenerator.org), each tried in a browser with no account, email or payment: which make a whole KDP book, a cover with spine from the page count, an inside margin by page count, and what marks the free file, with each price. Also PuzzleBindery, a direct competitor that builds interior and cover, and when a subscription, a free generator or doing it by hand is the better choice.
 
 ## About
 
