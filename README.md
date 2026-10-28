@@ -123,7 +123,9 @@ For a kindergarten class, also free and on US Letter or A4:
 (a ten frame to count, then the number to trace) and
 [sight word flash cards](https://tracepress.bananafest-destiny.com/sight-word-flash-cards)
 (the Dolch pre-primer and primer words on 3" × 5" cards, four to a sheet with
-cut lines). All of them, with name tracing for a whole class, are on one
+cut lines), and a
+[sight word matching game](https://tracepress.bananafest-destiny.com/sight-word-matching-game)
+children play on screen, each card read aloud as it turns. All of them, with name tracing for a whole class, are on one
 [kindergarten worksheets](https://tracepress.bananafest-destiny.com/kindergarten-worksheets) page.
 
 [![A Trace Press page: the letter A with numbered start dots and arrows, then rows of dotted letters](tracepress/public/social-card.png)](https://tracepress.bananafest-destiny.com/)

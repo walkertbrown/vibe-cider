@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sight Word Matching Game to Play Online, Free — Trace Press</title>
+<meta name="description" content="A free memory game for children to play on screen: turn two cards, find the pairs. Dolch sight words or short a, e, i, o, u words, read aloud. No sign-up.">
+<link rel="canonical" href="https://tracepress.bananafest-destiny.com/sight-word-matching-game">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Trace Press">
+<meta property="og:url" content="https://tracepress.bananafest-destiny.com/sight-word-matching-game">
+<meta property="og:title" content="Free sight word matching game to play online">
+<meta property="og:description" content="Turn two cards and find the pairs: Dolch sight words or short vowel words, read aloud as each card turns. For a tablet, a phone or the classroom board.">
+<meta property="og:image" content="https://tracepress.bananafest-destiny.com/img/card-sight-word-flash-cards.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<style>
+  h1.t { font-size: 1.5em; margin: 0.83em 0; }
+  header .brand { font-weight: 700; color: inherit; }
+  :root { --ink: #1a1a1a; --muted: #5c6470; --line: #d9dde3; --bg: #f6f7f9; --card: #fff; --accent: #234e3a; --accent-ink: #fff; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  a { color: var(--accent); }
+  header { padding: 18px 24px; border-bottom: 1px solid var(--line); background: var(--card); display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+  header .brand { margin: 0; font-size: 20px; }
+  header p { margin: 0; color: var(--muted); }
+  .hero { max-width: 1100px; margin: 0 auto; padding: 20px 24px 4px; }
+  .hero h1.t { font-size: clamp(22px, 4vw, 32px); line-height: 1.15; margin: 0 0 6px; letter-spacing: -0.01em; }
+  .hero p { margin: 0; color: var(--muted); max-width: 70ch; font-size: 16px; }
+  #game { max-width: 1100px; margin: 0 auto; padding: 14px 16px 24px; }
+  .controls { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; margin: 0 0 12px; }
+  #sets { display: flex; flex-wrap: wrap; gap: 6px; }
+  #sets button { font: 600 15px system-ui, sans-serif; padding: 8px 12px; border-radius: 999px; border: 2px solid var(--chip); background: #fff; color: var(--ink); cursor: pointer; }
+  #sets button[aria-pressed="true"] { background: var(--chip); color: #fff; }
+  .controls label { display: flex; gap: 6px; align-items: center; font-size: 15px; }
+  .controls select { font: inherit; padding: 6px 8px; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+  #score { color: var(--muted); font-size: 15px; margin: 0 0 8px; text-align: center; }
+  #board { --cols: 4; --rows: 3; display: grid; grid-template-columns: repeat(var(--cols), 1fr); gap: clamp(6px, 1.5vw, 14px); margin: 0 auto;
+    width: min(100%, calc((100svh - 70px) * var(--cols) / var(--rows)), 820px); scroll-margin-top: 40px; }
+  .card { aspect-ratio: 1; padding: 0; border: 0; background: none; cursor: pointer; perspective: 800px; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+  .card:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 12px; }
+  .inner { position: relative; display: block; width: 100%; height: 100%; transition: transform 0.35s ease; transform-style: preserve-3d; }
+  .card.up .inner { transform: rotateY(180deg); }
+  .back, .face { position: absolute; inset: 0; border-radius: 12px; backface-visibility: hidden; -webkit-backface-visibility: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
+  .back { background: var(--back) radial-gradient(circle, rgba(255,255,255,0.28) 18%, transparent 20%) 0 0 / 22% 22%; border: 4px solid #fff; }
+  .face { background: #fff; transform: rotateY(180deg); display: flex; align-items: center; justify-content: center; border: 3px solid var(--line); }
+  .face img { width: 100%; height: 100%; display: block; pointer-events: none; user-select: none; }
+  .card.got .face { border-color: var(--back); box-shadow: 0 0 0 3px var(--back); }
+  .card:disabled { cursor: default; }
+  @media (prefers-reduced-motion: reduce) { .inner { transition: none; } }
+  #won { text-align: center; margin: 16px auto 0; padding: 16px; background: var(--card); border: 1px solid var(--line); border-radius: 12px; max-width: 520px; }
+  #won p { margin: 0 0 10px; font-size: 22px; font-weight: 700; }
+  #again { font: 600 18px system-ui, sans-serif; padding: 12px 28px; border: 0; border-radius: 10px; background: var(--accent); color: var(--accent-ink); cursor: pointer; }
+  .printline { text-align: center; color: var(--muted); font-size: 14px; margin: 14px 0 0; }
+  section.info { max-width: 1100px; margin: 0 auto; padding: 8px 24px 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+  section.info h2 { margin: 0 0 6px; font-size: 17px; }
+  section.info p, section.info li { color: var(--muted); }
+  section.info ul { padding-left: 18px; margin: 0; }
+  footer { text-align: center; color: var(--muted); font-size: 13px; padding: 24px; border-top: 1px solid var(--line); }
+</style>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "b7be686eebf64639b0e60d43860bbd54"}'></script>
+<script type="module" src="/js/first-touch.js"></script>
+<script src="https://pulse.bananafest-destiny.com/p.js" data-site="tracepress.bananafest-destiny.com" defer></script>
+</head>
+<body>
+<header>
+  <p class="brand"><a href="/" style="color:inherit;text-decoration:none">Trace Press</a></p>
+  <p>Tracing worksheets and workbooks · <a href="/sight-word-flash-cards">Sight word flash cards</a> · Matching game</p>
+</header>
+
+<div class="hero">
+  <h1 class="t">Sight word matching game</h1>
+  <p>Turn over two cards. If the words match, they stay up. If not, they turn back. Find every pair. Each card reads its word aloud as it turns. It's free, with no sign-up, and works on a tablet, a phone or the classroom board.</p>
+</div>
+
+<main id="game">
+  <div class="controls">
+    <div id="sets" role="group" aria-label="Words"></div>
+    <label>Cards <select id="size"><option value="4">8 (4 pairs)</option><option value="6" selected>12 (6 pairs)</option><option value="8">16 (8 pairs)</option></select></label>
+    <label id="speakRow"><input id="speak" type="checkbox" checked> Read the words aloud</label>
+  </div>
+  <p id="score" role="status"></p>
+  <div id="board"></div>
+  <div id="won" hidden><p id="wonText"></p><button id="again" type="button">Play again</button></div>
+  <p class="printline">Every game picks new words from the set. To play on the table instead, <a id="print" href="/sight-word-flash-cards">print the same game</a>: twelve 2.5" cards to a sheet, with coloured backs.</p>
+</main>
+
+<section class="info">
+  <div>
+    <h2>How to play</h2>
+    <ul>
+      <li>Tap a card to turn it over and hear the word.</li>
+      <li>Tap a second card. Two of the same word stay face up, in the set's colour.</li>
+      <li>Two different words turn back after a moment. Remember where they were.</li>
+      <li>Find all the pairs. The counter shows how many turns it took, so a child can try to beat their last game.</li>
+    </ul>
+    <p>For a younger child, start with 8 cards. Saying the word out loud before turning the card is good practice too.</p>
+  </div>
+  <div>
+    <h2>The word sets</h2>
+    <p><strong>Short a, e, i, o and u</strong>: twelve consonant-vowel-consonant words each, like cat, bed, pig, dog and bug. <strong>Dolch pre-primer</strong> (40 words) and <strong>Dolch primer</strong> (52 words): the first sight words children learn to read on sight, like the, and, see and said. The full lists are on the <a href="/sight-word-flash-cards">sight word flash cards</a> page.</p>
+    <p>The letters are the same school print letters as the printed cards and the <a href="/sight-word-tracing-workbook">sight word tracing workbook</a>, with a single-storey a and g, the way children are taught to write them.</p>
+  </div>
+  <div>
+    <h2>For the classroom</h2>
+    <p>On a board, the class can take turns, or play in two teams. The words are read by the voice built into the browser, so the sound depends on the device. Turn it off with the switch above. The same game also prints from the <a href="/sight-word-flash-cards">flash cards page</a>, with matching coloured backs for double-sided printing, and the <a href="/kindergarten-worksheets">kindergarten worksheets</a> page has the rest of the free sheets.</p>
+  </div>
+</section>
+
+<footer>Trace Press · questions: <a href="mailto:support@bananafest-destiny.com">support@bananafest-destiny.com</a> · <a href="/privacy">privacy</a> · <a href="/letter-tracing">free letter tracing worksheets</a> · <a href="/how-to-make-a-handwriting-workbook">how to make a tracing book for KDP</a> · <a href="/tracing-font-for-kdp">tracing fonts and KDP</a> · <a href="/tracing-book-cover-size">tracing book cover size for KDP</a> · <a href="/handwriting-paper">free handwriting paper</a> · <a href="/sight-word-tracing-workbook">sight word tracing workbook</a> · <a href="/name-tracing">free name tracing worksheets</a> · <a href="/number-tracing">free number tracing worksheets</a> · <a href="/tracing-lines">free tracing lines worksheets</a> · <a href="/preschool-tracing-worksheets">free preschool tracing worksheets</a> · <a href="/christmas-tracing-worksheets">free Christmas tracing worksheets</a> · <a href="/halloween-tracing-worksheets">free Halloween tracing worksheets</a> · <a href="/thanksgiving-tracing-worksheets">free Thanksgiving tracing worksheets</a> · <a href="/uppercase-letter-tracing">free uppercase letter tracing</a> · <a href="/lowercase-letter-tracing">free lowercase letter tracing</a> · <a href="/cursive-letter-tracing">free cursive letter tracing</a> · <a href="/alphabet-chart">free alphabet chart</a> · <a href="/cursive-alphabet-chart">free cursive alphabet chart</a> · <a href="/cursive-practice-sheets-for-adults">free cursive practice sheets for adults</a> · <a href="/handwriting-practice-sheets-for-adults">free handwriting practice sheets for adults</a> · <a href="/cursive-handwriting-workbook">cursive handwriting workbook</a> · <a href="/cursive-name-tracing">free cursive name tracing</a> · <a href="/this-book-belongs-to-page">free “this book belongs to” page</a> · <a href="/tracing-worksheet-generator">free tracing worksheet generator</a> · <a href="/picture-word-tracing-worksheets">free word tracing worksheets with pictures</a> · <a href="/transportation-tracing-worksheets">free transportation tracing worksheets</a> · <a href="/animal-tracing-worksheets">free animal tracing worksheets</a> · <a href="/food-tracing-worksheets">free food tracing worksheets</a> · <a href="/days-of-the-week-tracing-worksheets">free days of the week tracing worksheets</a> · <a href="/number-words-tracing-worksheets">free number words tracing worksheets</a> · <a href="/color-words-tracing-worksheets">free color words tracing worksheets</a> · <a href="/alphabet-tracing-worksheets-with-pictures">free alphabet tracing worksheets with pictures</a> · <a href="/number-tracing-worksheets-with-pictures">free number tracing worksheets with pictures</a> · <a href="/shape-tracing-worksheets">free shape tracing worksheets</a> · <a href="/sight-word-flash-cards">free sight word flash cards</a> · <a href="/kindergarten-worksheets">free kindergarten worksheets</a> · <a href="/cvc-worksheets">free CVC word worksheets</a> · <a href="/count-and-trace-worksheets">free count and trace worksheets</a> · from the maker of <a href="https://puzzlepress.bananafest-destiny.com/">Puzzle Press</a><br>Not affiliated with Amazon. KDP is a trademark of Amazon.com, Inc.<br>Built by an AI bot. Want one for your own idea? <a href="https://vibecider.bananafest-destiny.com/?from=tracepress">$50 →</a></footer>
+
+<script type="module" src="/js/game-page.js"></script>
+</body>
+</html>
