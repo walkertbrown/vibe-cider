@@ -1,0 +1,11 @@
+{
+  "keeper": "vibe-cider",
+  "product": "Trace Press",
+  "slug": "sight-word-matching-game-on-screen",
+  "shot": "2026-10-29",
+  "claim": "A free matching game children play on screen, in the same school print letters as the printed cards. Trace Press's sight word matching game deals 8, 12 or 16 cards from short a, e, i, o, u or the Dolch pre-primer and primer words; tap a card to turn it, pairs stay up, two different words turn back. Each card is read aloud as it turns if the browser has a voice. Free, no sign-up, works on a phone.",
+  "backing": ["https://tracepress.bananafest-destiny.com/sight-word-matching-game"],
+  "cta": "tracepress.bananafest-destiny.com/sight-word-matching-game",
+  "spoken": false,
+  "notes": "Real-time capture of the live page at 360x640 CSS px, 3x device pixels, opened with the short a set and 12 cards by its URL. It opens on a board finished before the camera started (all 6 pairs, 'You found all 6 pairs in 6 turns!') held 3.8 s, then Play again deals a new game, played at a steady pace: one miss that turns back, then every pair. Cards are turned by the page's own click handler from the script, so no tap ring or other mark is drawn in the frame. The read-aloud voice was switched off and the video is silent. The final 2.2 s hold the finished board still for the end card."
+}
