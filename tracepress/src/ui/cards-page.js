@@ -136,7 +136,8 @@ el.download.addEventListener("click", async () => {
 px("cards");
 const q = new URLSearchParams(location.search);
 const start = q.get("list");
-if (start in LISTS) el.list.value = start;
+if (start in LISTS || start === "own") el.list.value = start;
+if (q.get("words")) el.words.value = cleanWords(q.get("words")).join("\n");
 if (q.get("sheet") in SHEETS) el.sheet.value = q.get("sheet");
 if (q.get("pairs") === "1") el.pairs.checked = true;
 if (q.get("backs") === "1") el.backs.checked = true;

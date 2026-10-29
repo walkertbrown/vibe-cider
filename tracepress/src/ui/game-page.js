@@ -3,11 +3,12 @@
 // a mouse. Turn two cards; a pair stays up, two different words turn back.
 // Each card is read aloud as it turns, if the browser has a voice. Free, no
 // licence: nothing here is printed.
-import { planCards, cardsInk, LISTS } from "../pdf/cards.js";
+import { planCards, cardsInk, cleanWords, LISTS, OWN_BACK } from "../pdf/cards.js";
 import { px } from "./px.js";
+import { PRICE_LABEL } from "./license.js";
 
 const $ = (id) => document.getElementById(id);
-const el = { sets: $("sets"), size: $("size"), speak: $("speak"), speakRow: $("speakRow"), board: $("board"), score: $("score"), won: $("won"), wonText: $("wonText"), again: $("again"), print: $("print"), full: $("full"), game: $("game") };
+const el = { sets: $("sets"), size: $("size"), speak: $("speak"), speakRow: $("speakRow"), board: $("board"), score: $("score"), won: $("won"), wonText: $("wonText"), again: $("again"), print: $("print"), full: $("full"), game: $("game"), ownRow: $("ownRow"), own: $("own"), copy: $("copy"), ownNote: $("ownNote") };
 const css = ([r, g, b]) => `rgb(${Math.round(r * 255)},${Math.round(g * 255)},${Math.round(b * 255)})`;
 const BOLD = 1.6;
 const CROP = 6; // points off each edge of the printed card: the screen card is all card, no margin to cut in
@@ -64,28 +65,58 @@ function say(word) {
 
 const shuffle = (a) => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 
-let set = "short-a", pairs = 6;
-let deck = [], up = [], found = 0, turns = 0, busy = false, nodes = [];
+// "Your words": a teacher's own list, up to the biggest game, played free on
+// screen (printing them is the licence). The words ride in the address, so
+// the game can be sent home or to the class as a link.
+const OWN = "own", OWN_MAX = 8;
+let set = "short-a", pairs = 6, ownWords = [];
+let deck = [], up = [], found = 0, turns = 0, busy = false, nodes = [], inPlay = 6;
 
 function layout() {
-  const n = pairs * 2;
+  const n = inPlay * 2;
   const narrow = innerWidth < 560;
-  const cols = n === 12 ? (narrow ? 3 : 4) : 4;
+  const cols = n <= 4 ? 2 : n === 6 || (n === 12 && narrow) ? 3 : 4;
   el.board.style.setProperty("--cols", cols);
-  el.board.style.setProperty("--rows", n / cols);
+  el.board.style.setProperty("--rows", Math.ceil(n / cols));
 }
 
 function score() {
-  el.score.textContent = `Pairs found: ${found} of ${pairs} · Turns: ${turns}`;
+  el.score.textContent = `Pairs found: ${found} of ${inPlay} · Turns: ${turns}`;
+}
+
+function readOwn() {
+  const seen = new Set();
+  ownWords = cleanWords(el.own.value).filter((w) => !seen.has(w.toLowerCase()) && seen.add(w.toLowerCase())).slice(0, OWN_MAX);
+}
+
+// The address says what's on the board, so a copied link opens the same game.
+function remember() {
+  const q = new URLSearchParams();
+  if (set === OWN) { if (ownWords.length) q.set("words", ownWords.join(",")); } else q.set("set", set);
+  q.set("pairs", pairs);
+  history.replaceState(null, "", `${location.pathname}?${q}`);
 }
 
 function deal() {
-  const words = shuffle([...LISTS[set].words]).slice(0, pairs);
+  const own = set === OWN;
+  el.ownRow.hidden = !own;
+  remember();
+  el.print.href = own ? `/sight-word-flash-cards?list=own&sheet=letter-game&pairs=1&backs=1${ownWords.length ? `&words=${encodeURIComponent(ownWords.join(","))}` : ""}` : `/sight-word-flash-cards?list=${set}&sheet=letter-game&pairs=1&backs=1`;
+  for (const b of el.sets.querySelectorAll("button")) b.setAttribute("aria-pressed", String(b.dataset.set === set));
+  if (own && ownWords.length < 2) {
+    el.ownNote.textContent = "Type at least two words to make a game.";
+    el.board.replaceChildren(); el.won.hidden = true; el.score.textContent = "";
+    deck = []; nodes = [];
+    return;
+  }
+  inPlay = Math.min(pairs, own ? ownWords.length : pairs);
+  if (own) el.ownNote.textContent = `${ownWords.length > inPlay ? `Your ${ownWords.length} words: ${ownWords.join(", ")}. Each game picks ${inPlay} of them.` : `${inPlay} pairs: ${ownWords.join(", ")}.`} Playing them here is free; printing your own words as cards comes with the ${PRICE_LABEL} Trace Press licence.`;
+  const words = shuffle([...(own ? ownWords : LISTS[set].words)]).slice(0, inPlay);
   const img = wordImages(words);
   deck = shuffle(words.flatMap((w) => [w, w]));
   up = []; found = 0; turns = 0; busy = false;
   el.won.hidden = true;
-  el.board.style.setProperty("--back", css(LISTS[set].back));
+  el.board.style.setProperty("--back", css(own ? OWN_BACK : LISTS[set].back));
   nodes = deck.map((word, i) => {
     const b = document.createElement("button");
     b.type = "button";
@@ -99,8 +130,6 @@ function deal() {
   el.board.replaceChildren(...nodes);
   layout();
   score();
-  el.print.href = `/sight-word-flash-cards?list=${set}&sheet=letter-game&pairs=1&backs=1`;
-  for (const b of el.sets.querySelectorAll("button")) b.setAttribute("aria-pressed", String(b.dataset.set === set));
 }
 
 function show(i, on) {
@@ -125,7 +154,7 @@ function turn(i, e) {
     found++;
     for (const k of [a, c]) { nodes[k].classList.add("got"); nodes[k].disabled = true; }
     score();
-    if (found === pairs) setTimeout(win, reduced ? 0 : 700);
+    if (found === inPlay) setTimeout(win, reduced ? 0 : 700);
     return;
   }
   score();
@@ -135,9 +164,9 @@ function turn(i, e) {
 
 function win() {
   px("gamewon");
-  el.wonText.textContent = `You found all ${pairs} pairs in ${turns} turns!`;
+  el.wonText.textContent = `You found all ${inPlay} pairs in ${turns} turns!`;
   el.won.hidden = false;
-  say(`Well done! ${pairs} pairs.`);
+  say(`Well done! ${inPlay} pairs.`);
   el.won.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "nearest" });
   el.again.focus({ preventScroll: true });
 }
@@ -151,6 +180,27 @@ for (const [key, l] of Object.entries(LISTS)) {
   b.addEventListener("click", () => { set = key; deal(); });
   el.sets.append(b);
 }
+{
+  const b = document.createElement("button");
+  b.type = "button";
+  b.dataset.set = OWN;
+  b.textContent = "Your words";
+  b.style.setProperty("--chip", css(OWN_BACK));
+  b.addEventListener("click", () => { set = OWN; deal(); if (!ownWords.length) el.own.focus(); });
+  el.sets.append(b);
+}
+// A new game on each finished word, not on each letter.
+el.own.addEventListener("change", (e) => {
+  readOwn();
+  if (e.isTrusted && ownWords.length >= 2) px("gameown");
+  deal();
+});
+el.copy.addEventListener("click", async (e) => {
+  if (e.isTrusted) px("gamelink");
+  try { await navigator.clipboard.writeText(location.href); el.copy.textContent = "Link copied"; }
+  catch { prompt("Copy this link:", location.href); }
+  setTimeout(() => { el.copy.textContent = "Copy link"; }, 2500);
+});
 el.size.addEventListener("change", () => { pairs = Number(el.size.value); deal(); });
 el.again.addEventListener("click", deal);
 addEventListener("resize", layout);
@@ -172,5 +222,10 @@ if (document.fullscreenEnabled && el.game.requestFullscreen) {
 px("game");
 const q = new URLSearchParams(location.search);
 if (q.get("set") in LISTS) set = q.get("set");
+if (q.get("words")) {
+  el.own.value = q.get("words").split(",").join(", ");
+  readOwn();
+  if (ownWords.length) { set = OWN; px("gameshared"); }
+}
 if (["4", "6", "8"].includes(q.get("pairs"))) { pairs = Number(q.get("pairs")); el.size.value = q.get("pairs"); }
 deal();

@@ -34,6 +34,14 @@
   #sets button { font: 600 15px system-ui, sans-serif; padding: 8px 12px; border-radius: 999px; border: 2px solid var(--chip); background: #fff; color: var(--ink); cursor: pointer; }
   #sets button[aria-pressed="true"] { background: var(--chip); color: #fff; }
   .controls label { display: flex; gap: 6px; align-items: center; font-size: 15px; }
+  #ownRow { margin: 0 0 12px; font-size: 15px; }
+  #ownRow label { display: block; font-weight: 600; margin: 0 0 4px; }
+  #ownRow .opt { font-weight: 400; color: var(--muted); }
+  .ownline { display: flex; gap: 8px; }
+  #own { flex: 1; min-width: 0; font: 17px system-ui, sans-serif; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; }
+  #copy { font: 600 15px system-ui, sans-serif; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--line); background: #fff; cursor: pointer; white-space: nowrap; }
+  #ownNote { margin: 6px 0 0; font-size: 14px; color: var(--muted); }
+  #game:fullscreen #ownRow { display: none; }
   .controls select { font: inherit; padding: 6px 8px; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
   #score { color: var(--muted); font-size: 15px; margin: 0 0 8px; text-align: center; }
   #board { --cols: 4; --rows: 3; display: grid; grid-template-columns: repeat(var(--cols), 1fr); gap: clamp(6px, 1.5vw, 14px); margin: 0 auto;
@@ -89,6 +97,11 @@
     <label id="speakRow"><input id="speak" type="checkbox" checked> Read the words aloud</label>
     <button id="full" type="button" hidden>Full screen</button>
   </div>
+  <div id="ownRow" hidden>
+    <label for="own">Your words <span class="opt">up to 8, split by commas</span></label>
+    <div class="ownline"><input id="own" type="text" spellcheck="false" autocomplete="off" enterkeyhint="go" placeholder="mom, dad, cat, the"><button id="copy" type="button">Copy link</button></div>
+    <p id="ownNote"></p>
+  </div>
   <p id="score" role="status"></p>
   <div id="board"></div>
   <div id="won" hidden><p id="wonText"></p><button id="again" type="button">Play again</button></div>
@@ -110,6 +123,7 @@
   <div>
     <h2>The word sets</h2>
     <p><strong>Short a, e, i, o and u</strong>: twelve consonant-vowel-consonant words each, like cat, bed, pig, dog and bug. <strong>Dolch pre-primer</strong> (40 words) and <strong>Dolch primer</strong> (52 words): the first sight words children learn to read on sight, like the, and, see and said. The full lists are on the <a href="/sight-word-flash-cards">sight word flash cards</a> page.</p>
+    <p><strong>Your words</strong>: type up to 8 words of your own, like this week's spelling or sight words. Copy link gives an address that opens a game with those words, to send home or put on a class page. Playing them here is free.</p>
     <p>The letters are the same school print letters as the printed cards and the <a href="/sight-word-tracing-workbook">sight word tracing workbook</a>, with a single-storey a and g, the way children are taught to write them.</p>
   </div>
   <div>
