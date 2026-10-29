@@ -35,6 +35,23 @@ try {
   await page.screenshot({ path: new URL("../public/social-card.png", import.meta.url).pathname });
   console.log("wrote public/social-card.png");
 
+  // The on-screen game has no printed page to show: a finished board from the
+  // live page stands in, played by its own click handler (untrusted clicks,
+  // so no gameflip; the load beacon is answered here and never reaches the log).
+  const game = await browser.newPage({ viewport: { width: 420, height: 900 }, deviceScaleFactor: 2, userAgent: "trace-press-test/card" });
+  await game.route("**/px/**", (r) => r.fulfill({ status: 204, body: "" }));
+  await game.route("https://static.cloudflareinsights.com/**", (r) => r.abort());
+  await game.goto(`${base}/sight-word-matching-game?set=short-a&pairs=6`, { waitUntil: "networkidle" });
+  await game.evaluate(() => {
+    const cards = [...document.querySelectorAll("#board .card")];
+    const by = new Map();
+    cards.forEach((b) => { const k = b.querySelector("img").src; by.set(k, [...(by.get(k) ?? []), b]); });
+    for (const [a, b] of by.values()) { a.click(); b.click(); }
+  });
+  await game.waitForTimeout(1200);
+  await game.locator("#board").screenshot({ path: new URL("../public/img/sight-word-matching-game-board.png", import.meta.url).pathname });
+  await game.close();
+
   const CARDS = [
     ["letter-tracing", "letter-tracing-worksheet-a", "Free letter tracing worksheets, A to Z", "26 pages, capital and lowercase, with start dots and stroke arrows."],
     ["number-tracing", "number-tracing-worksheet-3", "Free number tracing worksheets, 0 to 9", "A page per digit, with start dots and stroke arrows."],
@@ -57,6 +74,7 @@ try {
     ["thanksgiving-tracing-worksheets", "thanksgiving-tracing-worksheet-pumpkin", "Free Thanksgiving tracing worksheets", "Twenty Thanksgiving words to trace, each with a picture to colour."],
     ["picture-word-tracing-worksheets", "picture-word-tracing-worksheet-fish", "Word tracing worksheets with pictures", "Twenty first words to trace, each with a picture to colour."],
     ["transportation-tracing-worksheets", "transportation-tracing-worksheet-tractor", "Transportation tracing worksheets", "Twenty vehicle words to trace, car to helicopter, each with a picture to colour."],
+    ["sight-word-matching-game", "sight-word-matching-game-board", "Free sight word matching game", "Children tap two cards to find a pair: short vowel and Dolch sight words.", "Plays on screen · no sign-up"],
     ["animal-tracing-worksheets", "animal-tracing-worksheet-rabbit", "Animal tracing worksheets", "Twenty animal words to trace, cat to butterfly, each with a picture to colour."],
     ["food-tracing-worksheets", "food-tracing-worksheet-banana", "Food tracing worksheets", "Twenty food words to trace, egg to broccoli, each with a picture to colour."],
     ["days-of-the-week-tracing-worksheets", "days-of-the-week-tracing-worksheet-wednesday", "Days of the week and months tracing worksheets", "Sunday to Saturday and January to December, a page each, to trace."],
