@@ -14,7 +14,7 @@ const $ = (id) => document.getElementById(id);
 const el = {
   list: $("list"), words: $("words"), wordsBox: $("wordsBox"), sheet: $("sheet"), trace: $("trace"), pairs: $("pairs"), backs: $("backs"), preview: $("preview"),
   prev: $("prev"), next: $("next"), pageNo: $("pageNo"), download: $("download"), status: $("status"),
-  unlock: $("unlock"), buyLine: $("buyLine"), email: $("email"), verify: $("verify"), unlockErr: $("unlockErr"), tier: $("tier"),
+  unlock: $("unlock"), ownPlay: $("ownPlay"), buyLine: $("buyLine"), email: $("email"), verify: $("verify"), unlockErr: $("unlockErr"), tier: $("tier"),
 };
 
 let sessionLicense = null;
@@ -51,6 +51,9 @@ function show() {
   el.next.disabled = pageIndex >= plan.pages.length - 1;
   el.wordsBox.hidden = !own();
   el.unlock.hidden = !own() || !!getLicense();
+  // The words typed so far, played free on screen: the game takes up to 8.
+  const typed = cleanWords(el.words.value).slice(0, 8);
+  el.ownPlay.href = `/sight-word-matching-game${typed.length >= 2 ? `?words=${encodeURIComponent(typed.join(","))}` : ""}`;
   el.tier.textContent = getLicense()
     ? `Unlocked for ${getLicense().email}: your own words, and no footer line.`
     : `Free: Dolch's two lists, with one footer line on each sheet. ${PRICE_LABEL} (the same Trace Press licence as the workbooks) adds your own words, up to ${WORDS_MAX}, and takes the footer off.`;
