@@ -6,9 +6,10 @@
 import { planCards, cardsInk, cleanWords, LISTS, OWN_BACK } from "../pdf/cards.js";
 import { px } from "./px.js";
 import { PRICE_LABEL } from "./license.js";
+import qrcode from "qrcode-generator";
 
 const $ = (id) => document.getElementById(id);
-const el = { sets: $("sets"), size: $("size"), speak: $("speak"), speakRow: $("speakRow"), board: $("board"), score: $("score"), won: $("won"), wonText: $("wonText"), again: $("again"), print: $("print"), full: $("full"), game: $("game"), ownRow: $("ownRow"), own: $("own"), copy: $("copy"), ownNote: $("ownNote") };
+const el = { sets: $("sets"), size: $("size"), speak: $("speak"), speakRow: $("speakRow"), board: $("board"), score: $("score"), won: $("won"), wonText: $("wonText"), again: $("again"), print: $("print"), full: $("full"), game: $("game"), ownRow: $("ownRow"), own: $("own"), copy: $("copy"), ownNote: $("ownNote"), home: $("home"), notes: $("notes") };
 const css = ([r, g, b]) => `rgb(${Math.round(r * 255)},${Math.round(g * 255)},${Math.round(b * 255)})`;
 const BOLD = 1.6;
 const CROP = 6; // points off each edge of the printed card: the screen card is all card, no margin to cut in
@@ -92,9 +93,11 @@ function readOwn() {
 // The address says what's on the board, so a copied link opens the same game.
 function remember() {
   const q = new URLSearchParams();
-  if (set === OWN) { if (ownWords.length) q.set("words", ownWords.join(",")); } else q.set("set", set);
+  if (set !== OWN) q.set("set", set);
   q.set("pairs", pairs);
-  history.replaceState(null, "", `${location.pathname}?${q}`);
+  // Commas left bare: a shorter address makes a smaller code on the note home.
+  const words = set === OWN && ownWords.length ? `words=${ownWords.map(encodeURIComponent).join(",")}&` : "";
+  history.replaceState(null, "", `${location.pathname}?${words}${q}`);
 }
 
 function deal() {
@@ -194,6 +197,22 @@ el.own.addEventListener("change", (e) => {
   readOwn();
   if (e.isTrusted && ownWords.length >= 2) px("gameown");
   deal();
+});
+// A note to send home: the words, and a code a phone camera opens this game
+// from. Four to a sheet, cut in quarters; the screen never shows them.
+el.home.addEventListener("click", (e) => {
+  if (ownWords.length < 2) return void el.own.focus();
+  if (e.isTrusted) px("gamenote");
+  const qr = qrcode(0, "M");
+  qr.addData(location.href);
+  qr.make();
+  const svg = qr.createSvgTag({ cellSize: 4, margin: 4, scalable: true });
+  const esc = (s) => s.replace(/[&<>"]/g, (c) => `&#${c.charCodeAt(0)};`);
+  const note = `<div class="homenote"><h2>This week's words</h2><div class="w">${ownWords.map(esc).join(" &middot; ")}</div>${svg}<p>Point a phone camera at the square to play a matching game with these words. Free, no sign-up.</p><p class="u">${esc(location.href)}</p></div>`;
+  el.notes.innerHTML = note.repeat(4);
+  document.body.classList.add("printing");
+  addEventListener("afterprint", () => document.body.classList.remove("printing"), { once: true });
+  print();
 });
 el.copy.addEventListener("click", async (e) => {
   if (e.isTrusted) px("gamelink");

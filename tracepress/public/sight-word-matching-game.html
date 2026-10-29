@@ -42,6 +42,21 @@
   #copy { font: 600 15px system-ui, sans-serif; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--line); background: #fff; cursor: pointer; white-space: nowrap; }
   #ownNote { margin: 6px 0 0; font-size: 14px; color: var(--muted); }
   #game:fullscreen #ownRow { display: none; }
+  .ownline2 { margin: 8px 0 0; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  #home { font: 600 15px system-ui, sans-serif; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--line); background: #fff; cursor: pointer; }
+  #notes { display: none; }
+  @media print {
+    @page { margin: 0.5in; }
+    body.printing > *:not(#notes) { display: none !important; }
+    body.printing { background: #fff; }
+    body.printing #notes { display: grid; grid-template-columns: 1fr 1fr; }
+    .homenote { height: 4.9in; box-sizing: border-box; padding: 0.3in; border: 1px dashed #999; display: flex; flex-direction: column; align-items: center; text-align: center; font-family: system-ui, sans-serif; color: #000; break-inside: avoid; }
+    .homenote h2 { font-size: 15pt; margin: 0 0 6pt; }
+    .homenote .w { font-size: 17pt; font-weight: 600; line-height: 1.3; margin: 0 0 8pt; }
+    .homenote svg { width: 1.6in; height: 1.6in; }
+    .homenote p { font-size: 10pt; margin: 6pt 0 0; }
+    .homenote .u { font-size: 7.5pt; word-break: break-all; color: #333; }
+  }
   .controls select { font: inherit; padding: 6px 8px; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
   #score { color: var(--muted); font-size: 15px; margin: 0 0 8px; text-align: center; }
   #board { --cols: 4; --rows: 3; display: grid; grid-template-columns: repeat(var(--cols), 1fr); gap: clamp(6px, 1.5vw, 14px); margin: 0 auto;
@@ -100,6 +115,7 @@
   <div id="ownRow" hidden>
     <label for="own">Your words <span class="opt">up to 8, split by commas</span></label>
     <div class="ownline"><input id="own" type="text" spellcheck="false" autocomplete="off" enterkeyhint="go" placeholder="mom, dad, cat, the"><button id="copy" type="button">Copy link</button></div>
+    <p class="ownline2"><button id="home" type="button">Print for home</button> <span class="opt">four notes to a sheet, each with the words and a code a parent's phone camera opens the game from</span></p>
     <p id="ownNote"></p>
   </div>
   <p id="score" role="status"></p>
@@ -123,7 +139,7 @@
   <div>
     <h2>The word sets</h2>
     <p><strong>Short a, e, i, o and u</strong>: twelve consonant-vowel-consonant words each, like cat, bed, pig, dog and bug. <strong>Dolch pre-primer</strong> (40 words) and <strong>Dolch primer</strong> (52 words): the first sight words children learn to read on sight, like the, and, see and said. The full lists are on the <a href="/sight-word-flash-cards">sight word flash cards</a> page.</p>
-    <p><strong>Your words</strong>: type up to 8 words of your own, like this week's spelling or sight words. Copy link gives an address that opens a game with those words, to send home or put on a class page. Playing them here is free.</p>
+    <p><strong>Your words</strong>: type up to 8 words of your own, like this week's spelling or sight words. Copy link gives an address that opens a game with those words, to send home or put on a class page. Print for home makes four notes to a sheet, each with the words and a code that a parent's phone camera opens the game from. Playing them here is free. The code is drawn with <a href="/licenses/qrcode-generator.txt">qrcode-generator</a> (MIT licence).</p>
     <p>The letters are the same school print letters as the printed cards and the <a href="/sight-word-tracing-workbook">sight word tracing workbook</a>, with a single-storey a and g, the way children are taught to write them.</p>
   </div>
   <div>
@@ -134,6 +150,7 @@
 
 <footer>Trace Press · questions: <a href="mailto:support@bananafest-destiny.com">support@bananafest-destiny.com</a> · <a href="/privacy">privacy</a> · <a href="/letter-tracing">free letter tracing worksheets</a> · <a href="/how-to-make-a-handwriting-workbook">how to make a tracing book for KDP</a> · <a href="/tracing-font-for-kdp">tracing fonts and KDP</a> · <a href="/tracing-book-cover-size">tracing book cover size for KDP</a> · <a href="/handwriting-paper">free handwriting paper</a> · <a href="/sight-word-tracing-workbook">sight word tracing workbook</a> · <a href="/name-tracing">free name tracing worksheets</a> · <a href="/number-tracing">free number tracing worksheets</a> · <a href="/tracing-lines">free tracing lines worksheets</a> · <a href="/preschool-tracing-worksheets">free preschool tracing worksheets</a> · <a href="/christmas-tracing-worksheets">free Christmas tracing worksheets</a> · <a href="/halloween-tracing-worksheets">free Halloween tracing worksheets</a> · <a href="/thanksgiving-tracing-worksheets">free Thanksgiving tracing worksheets</a> · <a href="/uppercase-letter-tracing">free uppercase letter tracing</a> · <a href="/lowercase-letter-tracing">free lowercase letter tracing</a> · <a href="/cursive-letter-tracing">free cursive letter tracing</a> · <a href="/alphabet-chart">free alphabet chart</a> · <a href="/cursive-alphabet-chart">free cursive alphabet chart</a> · <a href="/cursive-practice-sheets-for-adults">free cursive practice sheets for adults</a> · <a href="/handwriting-practice-sheets-for-adults">free handwriting practice sheets for adults</a> · <a href="/cursive-handwriting-workbook">cursive handwriting workbook</a> · <a href="/cursive-name-tracing">free cursive name tracing</a> · <a href="/this-book-belongs-to-page">free “this book belongs to” page</a> · <a href="/tracing-worksheet-generator">free tracing worksheet generator</a> · <a href="/picture-word-tracing-worksheets">free word tracing worksheets with pictures</a> · <a href="/transportation-tracing-worksheets">free transportation tracing worksheets</a> · <a href="/animal-tracing-worksheets">free animal tracing worksheets</a> · <a href="/food-tracing-worksheets">free food tracing worksheets</a> · <a href="/days-of-the-week-tracing-worksheets">free days of the week tracing worksheets</a> · <a href="/number-words-tracing-worksheets">free number words tracing worksheets</a> · <a href="/color-words-tracing-worksheets">free color words tracing worksheets</a> · <a href="/alphabet-tracing-worksheets-with-pictures">free alphabet tracing worksheets with pictures</a> · <a href="/number-tracing-worksheets-with-pictures">free number tracing worksheets with pictures</a> · <a href="/shape-tracing-worksheets">free shape tracing worksheets</a> · <a href="/sight-word-flash-cards">free sight word flash cards</a> · <a href="/kindergarten-worksheets">free kindergarten worksheets</a> · <a href="/cvc-worksheets">free CVC word worksheets</a> · <a href="/count-and-trace-worksheets">free count and trace worksheets</a> · from the maker of <a href="https://puzzlepress.bananafest-destiny.com/">Puzzle Press</a><br>Not affiliated with Amazon. KDP is a trademark of Amazon.com, Inc.<br>Built by an AI bot. Want one for your own idea? <a href="https://vibecider.bananafest-destiny.com/?from=tracepress">$50 →</a></footer>
 
+<div id="notes" aria-hidden="true"></div>
 <script type="module" src="/js/game-page.js"></script>
 </body>
 </html>
