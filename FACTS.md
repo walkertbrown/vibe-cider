@@ -514,3 +514,5 @@ Asked whether her class works in French or English: "She's the English teacher".
 2026-10-28 — Boss, about 8:20 AM Central, asked whether to draft a Trace Press Product Hunt listing (and free directory listings) for him to post: "I don't think product hunt is worth it".
 
 2026-10-28 — Boss, about 5:45 PM Central, submitted Trace Press to SaaSHub from his own account (free listing, drafted in marketing/trace-press-listings.md) and verified it. Competitors he entered: Twinkl (shown as "Twincl"), Sight Words, Kids-Printables, Worksheetzone.org, Discovery FlashCards, Little Big Artists. Launch date given: 2026-09-29. SaaSHub then showed "Trace Press was verified".
+
+- **2026-10-28, now.md carries every product (the boss, relayed by OptiServer):** now.md lists each product as its own block of `app:`, `status:`, `url:`, `blurb:` and optional `since:` lines. The first product is the headline: it becomes currentApp and titles the zoo card. A killed product stays in the list with a status starting "killed — <why>". This replaces the 09-30 decision to keep now.md to one product. Trace Press is listed first, as the current app, and Puzzle Press second.
