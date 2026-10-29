@@ -90,6 +90,7 @@ const RUNGS = [
   ["game", "ran /sight-word-matching-game"],
   ["gameflip", "turned a card in the game"],
   ["gamewon", "finished a game"],
+  ["gamefull", "put the game full screen"],
   ["cvc", "ran /cvc-worksheets"],
   ["cvctouched", "changed the CVC line size"],
   ["cvcdownload", "pressed Download CVC sheets"],

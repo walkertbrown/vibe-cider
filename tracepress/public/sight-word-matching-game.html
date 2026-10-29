@@ -52,6 +52,11 @@
   #won { text-align: center; margin: 16px auto 0; padding: 16px; background: var(--card); border: 1px solid var(--line); border-radius: 12px; max-width: 520px; }
   #won p { margin: 0 0 10px; font-size: 22px; font-weight: 700; }
   #again { font: 600 18px system-ui, sans-serif; padding: 12px 28px; border: 0; border-radius: 10px; background: var(--accent); color: var(--accent-ink); cursor: pointer; }
+  #full { font: 600 15px system-ui, sans-serif; padding: 7px 12px; border: 1px solid var(--line); border-radius: 8px; background: #fff; color: var(--ink); cursor: pointer; }
+  /* On the classroom board: the game alone, as big as the screen allows. */
+  #game:fullscreen { background: var(--bg); padding: 16px 24px; overflow: auto; }
+  #game:fullscreen #board { width: min(100%, calc((100vh - 150px) * var(--cols) / var(--rows))); }
+  #game:fullscreen .printline { display: none; }
   .printline { text-align: center; color: var(--muted); font-size: 14px; margin: 14px 0 0; }
   section.info { max-width: 1100px; margin: 0 auto; padding: 8px 24px 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
   section.info h2 { margin: 0 0 6px; font-size: 17px; }
@@ -74,7 +79,7 @@
 
 <div class="hero">
   <h1 class="t">Sight word matching game</h1>
-  <p>Turn over two cards. If the words match, they stay up. If not, they turn back. Find every pair. Each card reads its word aloud as it turns. It's free, with no sign-up, and works on a tablet, a phone or the classroom board.</p>
+  <p>Turn over two cards. If the words match, they stay up. If not, they turn back. Find every pair. Each card reads its word aloud as it turns. It's free, with no sign-up, and works on a tablet, a phone or the classroom board, full screen.</p>
 </div>
 
 <main id="game">
@@ -82,6 +87,7 @@
     <div id="sets" role="group" aria-label="Words"></div>
     <label>Cards <select id="size"><option value="4">8 (4 pairs)</option><option value="6" selected>12 (6 pairs)</option><option value="8">16 (8 pairs)</option></select></label>
     <label id="speakRow"><input id="speak" type="checkbox" checked> Read the words aloud</label>
+    <button id="full" type="button" hidden>Full screen</button>
   </div>
   <p id="score" role="status"></p>
   <div id="board"></div>
@@ -108,7 +114,7 @@
   </div>
   <div>
     <h2>For the classroom</h2>
-    <p>On a board, the class can take turns, or play in two teams. The words are read by the voice built into the browser, so the sound depends on the device. Turn it off with the switch above. The same game also prints from the <a href="/sight-word-flash-cards">flash cards page</a>, with matching coloured backs for double-sided printing, and the <a href="/kindergarten-worksheets">kindergarten worksheets</a> page has the rest of the free sheets.</p>
+    <p>On a classroom board, press Full screen for the game alone, as big as the screen allows. The class can take turns, or play in two teams. The words are read by the voice built into the browser, so the sound depends on the device. Turn it off with the switch above. The same game also prints from the <a href="/sight-word-flash-cards">flash cards page</a>, with matching coloured backs for double-sided printing, and the <a href="/kindergarten-worksheets">kindergarten worksheets</a> page has the rest of the free sheets.</p>
   </div>
 </section>
 

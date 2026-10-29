@@ -7,7 +7,7 @@ import { planCards, cardsInk, LISTS } from "../pdf/cards.js";
 import { px } from "./px.js";
 
 const $ = (id) => document.getElementById(id);
-const el = { sets: $("sets"), size: $("size"), speak: $("speak"), speakRow: $("speakRow"), board: $("board"), score: $("score"), won: $("won"), wonText: $("wonText"), again: $("again"), print: $("print") };
+const el = { sets: $("sets"), size: $("size"), speak: $("speak"), speakRow: $("speakRow"), board: $("board"), score: $("score"), won: $("won"), wonText: $("wonText"), again: $("again"), print: $("print"), full: $("full"), game: $("game") };
 const css = ([r, g, b]) => `rgb(${Math.round(r * 255)},${Math.round(g * 255)},${Math.round(b * 255)})`;
 const BOLD = 1.6;
 const CROP = 6; // points off each edge of the printed card: the screen card is all card, no margin to cut in
@@ -154,6 +154,20 @@ for (const [key, l] of Object.entries(LISTS)) {
 el.size.addEventListener("change", () => { pairs = Number(el.size.value); deal(); });
 el.again.addEventListener("click", deal);
 addEventListener("resize", layout);
+
+// Full screen, for the board at the front of the room. Phones that can't put
+// a part of the page full screen (iPhone Safari) don't get the button.
+if (document.fullscreenEnabled && el.game.requestFullscreen) {
+  el.full.hidden = false;
+  el.full.addEventListener("click", (e) => {
+    if (document.fullscreenElement) return void document.exitFullscreen();
+    if (e.isTrusted) px("gamefull");
+    el.game.requestFullscreen().catch(() => {});
+  });
+  document.addEventListener("fullscreenchange", () => {
+    el.full.textContent = document.fullscreenElement ? "Exit full screen" : "Full screen";
+  });
+}
 
 px("game");
 const q = new URLSearchParams(location.search);
