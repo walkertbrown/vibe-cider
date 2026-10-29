@@ -1,0 +1,11 @@
+{
+  "keeper": "vibe-cider",
+  "product": "Trace Press",
+  "slug": "sight-word-matching-game-your-words",
+  "shot": "2026-10-29",
+  "claim": "Type this week's words and children play them as a matching game on screen. In Trace Press's free sight word matching game, \"Your words\" takes up to 8 words, deals them as cards in school print letters, and puts them in the page's address, so Copy link gives a link that opens the same game on another device. Playing your own words on screen is free; printing them as cards is part of the $19 Trace Press licence.",
+  "backing": ["https://tracepress.bananafest-destiny.com/sight-word-matching-game"],
+  "cta": "tracepress.bananafest-destiny.com/sight-word-matching-game",
+  "spoken": false,
+  "notes": "Real-time capture of the live page at 360x640 CSS px, 3x device pixels. It opens on a board finished before the camera started, from a link carrying six words (the, and, see, we, my, can: 'You found all 6 pairs in 6 turns!'), held 3.8 s. Then the words box is cleared and six new words are typed by keyboard (big, red, look, jump, play, said), Enter deals the new game, and it is played at a steady pace: one miss that turns back, then every pair, finishing in 7 turns. Cards are turned by the page's own click handler from the script, so no tap ring or other mark is drawn in the frame. The read-aloud voice was switched off and the video is silent. The final 2.2 s hold the finished board still."
+}
