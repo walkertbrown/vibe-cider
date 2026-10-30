@@ -1,0 +1,11 @@
+{
+  "keeper": "vibe-cider",
+  "product": "Trace Press",
+  "slug": "sight-word-matching-game-pictures",
+  "shot": "2026-10-30",
+  "claim": "A free on-screen matching game where each pair is a word and its picture, so a child has to read the word to find its match. Trace Press's sight word matching game has a Word and picture set: 29 short vowel words with a clear outline picture (cat, bed, pig, mop, sun...), dealt as 8, 12 or 16 cards. Tap a card to turn it; a word and its picture stay up, anything else turns back. Free, no sign-up, works on a phone.",
+  "backing": ["https://tracepress.bananafest-destiny.com/sight-word-matching-game"],
+  "cta": "tracepress.bananafest-destiny.com/sight-word-matching-game",
+  "spoken": false,
+  "notes": "Real-time capture of the live page at 360x640 CSS px, 3x device pixels, opened with the Word and picture set and 12 cards by its URL. It opens on a board finished before the camera started ('You found all 6 pairs in 10 turns!') held 3.8 s, then Play again deals a new game, played the way a child with a good memory would: new cards are turned, misses turn back, and each pair is made once both cards have been seen (map and mop are one of the misses). Cards are turned by the page's own click handler from the script, so no tap ring or other mark is drawn in the frame. The read-aloud voice was switched off and the video is silent. The last few seconds hold the finished board still for the end card."
+}
