@@ -3,7 +3,7 @@
 // a mouse. Turn two cards; a pair stays up, two different words turn back.
 // Each card is read aloud as it turns, if the browser has a voice. Free, no
 // licence: nothing here is printed.
-import { planCards, cardsInk, cleanWords, LISTS, OWN_BACK } from "../pdf/cards.js";
+import { planCards, cardsInk, cleanWords, LISTS, PICTURE_SET, OWN_BACK } from "../pdf/cards.js";
 import { pictureFor } from "../pdf/pictures.js";
 import { px } from "./px.js";
 import { PRICE_LABEL } from "./license.js";
@@ -69,8 +69,8 @@ function say(word) {
 // other, so a child reads the word to find it. Short vowel words with a clear
 // outline picture (pdf/pictures.js); the picture is drawn in the word's ink.
 const PICS = "pictures";
-const PIC_WORDS = "cat bat map van bag rat bed pen egg tent bell pig pin fish gift ship milk dog box mop sock clock lock bug cup sun bus truck mug".split(" ");
-const PIC_BACK = [0.55, 0.2, 0.5];
+const PIC_WORDS = PICTURE_SET.words;
+const PIC_BACK = PICTURE_SET.back;
 const picImage = (word) => `data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="-5 -5 34 34" fill="none" stroke="#222" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${pictureFor(word).map((d) => `<path d="${d}"/>`).join("")}</svg>`)}`;
 
 const shuffle = (a) => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };

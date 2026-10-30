@@ -7,7 +7,8 @@ import { GLYPHS } from "../glyphs/lines.js";
 import { sample } from "../glyphs/print.js";
 import { LETTERS } from "../glyphs/accents.js";
 import { PT } from "./kdp.js";
-import { pageInk, GREY, BASE } from "./ink.js";
+import { pageInk, GREY, BASE, PICTURE_W } from "./ink.js";
+import { pictureFor } from "./pictures.js";
 import { LABEL_PT, LINE_W, LETTER_GAP } from "./page.js";
 
 // Dolch's lists, as on /sight-word-tracing-workbook, then a dozen CVC words
@@ -22,6 +23,13 @@ export const LISTS = {
   "short-o": { label: "Short o", back: [0.1, 0.5, 0.55], words: "dog log hog pot hot dot mop top box fox cot rod".split(" ") },
   "short-u": { label: "Short u", back: [0.85, 0.5, 0.12], words: "bug rug mug hug cup pup sun run bun nut hut tub".split(" ") },
 };
+
+// Short vowel words with a clear outline picture, for matching a word to its
+// picture: on screen in the game, and printed as cards. As pairs, each word's
+// second card is its picture; as single cards, the picture sits above the word.
+export const PICTURE_SET = { label: "Word and picture", back: [0.55, 0.2, 0.5], words: "cat bat map van bag rat bed pen egg tent bell pig pin fish gift ship milk dog box mop sock clock lock bug cup sun bus truck mug".split(" ") };
+// The share of a card the picture takes above its word.
+const PIC_SHARE = 0.55;
 
 // Page and card sizes in points. The cards on a sheet touch, so each cut line
 // runs straight across the sheet, the way a paper trimmer cuts.
@@ -75,7 +83,8 @@ function lineUp(word, cx, unit, gap) {
 // word twice, for a matching game, with every sheet holding whole pairs so
 // one sheet is one game. `back`: a colour to print on the back of every card,
 // as a page after each sheet, for printing double-sided.
-export function planCards({ sheet = "letter-3x5", words = LISTS["pre-primer"].words, trace = false, tag = "", pairs = false, back = null } = {}) {
+// `pictures`: draw each word's picture too (see PICTURE_SET).
+export function planCards({ sheet = "letter-3x5", words = LISTS["pre-primer"].words, trace = false, tag = "", pairs = false, back = null, pictures = false } = {}) {
   const s = SHEETS[sheet] ?? SHEETS["letter-3x5"];
   const [W, H] = s.page, [cw, ch] = s.card;
   const geom = { width: W, height: H };
@@ -84,23 +93,29 @@ export function planCards({ sheet = "letter-3x5", words = LISTS["pre-primer"].wo
   const given = words.length ? words : LISTS["pre-primer"].words;
   const half = Math.max(1, Math.floor((s.cols * s.rows) / 2));
   const list = !pairs ? given : given.flatMap((w, i) => (i % half ? [] : [...given.slice(i, i + half), ...given.slice(i, i + half)]));
+  // Which cards are a word's second copy: the picture card, in a picture pair.
+  const second = !pairs ? [] : given.flatMap((w, i) => (i % half ? [] : [...given.slice(i, i + half).map(() => false), ...given.slice(i, i + half).map(() => true)]));
 
   // One letter size for the whole set, so "a" and "yellow" match as printed
   // cards do: as big as the widest word allows, and no taller than its share
   // of the card. The trace copy gets the rest of the card under it.
-  const solidH = trace ? inH * 0.55 : inH;
+  const wordH = pictures && !pairs ? inH * (1 - PIC_SHARE) : inH;
+  const solidH = trace ? wordH * 0.55 : wordH;
   let unit = solidH / 3.2;
   for (const w of list) unit = Math.min(unit, inW / (span(w, GAP + SOLID) + SOLID));
-  let tUnit = (inH - solidH) / 3.4;
+  let tUnit = (wordH - solidH) / 3.4;
   for (const w of list) tUnit = Math.min(tUnit, inW / (span(w, LETTER_GAP) + 1));
 
   const pages = [];
   const per = s.cols * s.rows;
   for (let i = 0; i < list.length; i += per) {
     const cards = list.slice(i, i + per).map((word, k) => {
+      const j = i + k;
       const col = k % s.cols, row = Math.floor(k / s.cols);
       const x = x0 + col * cw, y = y0 + (s.rows - 1 - row) * ch; // reading order: across, then down
-      return { word, x, y, w: cw, h: ch };
+      // In a pair, the second of each word's two cards is its picture.
+      const pic = !pictures ? null : !pairs ? "above" : second[j] ? "only" : null;
+      return { word, x, y, w: cw, h: ch, pic };
     });
     pages.push({ cards });
     if (back) pages.push({ cards, back });
@@ -145,7 +160,21 @@ export function cardsInk(plan, page, { licensed = false } = {}) {
   const sw = Math.max(1.5, unit * SOLID);
   for (const card of page.cards) {
     const cx = card.x + card.w / 2;
-    const inTop = card.y + card.h - PAD, inBottom = card.y + PAD;
+    let inTop = card.y + card.h - PAD;
+    const inBottom = card.y + PAD;
+    if (card.pic) {
+      // The picture: the whole card on its own, or the top of the card above its word.
+      const boxH = card.pic === "only" ? inTop - inBottom : (inTop - inBottom) * PIC_SHARE;
+      const size = Math.min(card.w - 2 * PAD, boxH) * (card.pic === "only" ? 0.8 : 0.9);
+      const midY = inTop - boxH / 2;
+      out.push({ kind: "outline", paths: pictureFor(card.word), x: cx - size / 2, y: midY + size / 2, scale: size / 24, width: Math.max(PICTURE_W, size / 16), color: BASE });
+      if (card.pic === "only") {
+        if (tag) out.push({ kind: "text", text: tag, x: card.x + PAD + tag.length * 1.9, y: card.y + card.h - PAD / 2 - LABEL_PT / 2, size: LABEL_PT, font: "regular", color: GREY });
+        if (!licensed && alone) out.push({ kind: "text", text: CARDS_FOOTER, x: cx, y: card.y + 5, size: LABEL_PT, font: "regular", color: GREY });
+        continue;
+      }
+      inTop -= boxH;
+    }
     const solidBottom = trace ? inBottom + (inTop - inBottom) * 0.45 : inBottom;
     // The solid word, its ink centred in its share of the card.
     const ext = [...card.word].map(extent);

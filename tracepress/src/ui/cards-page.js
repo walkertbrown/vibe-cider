@@ -2,7 +2,7 @@
 // licensed), a card size, and whether each card has a copy to trace; see the
 // sheets as they print, download the PDF. Dolch's two lists are free with a
 // footer line; your own words and no footer come with the $19 licence.
-import { planCards, cardsInk, cleanWords, LISTS, SHEETS, WORDS_MAX, OWN_BACK } from "../pdf/cards.js";
+import { planCards, cardsInk, cleanWords, LISTS, PICTURE_SET, SHEETS, WORDS_MAX, OWN_BACK } from "../pdf/cards.js";
 import { getLicense as storedLicense, setLicense, verifyEmail, PRICE_LABEL } from "./license.js";
 import { pageSvg } from "./preview.js";
 import { px } from "./px.js";
@@ -21,6 +21,7 @@ let sessionLicense = null;
 const getLicense = () => storedLicense() ?? sessionLicense;
 
 for (const [key, l] of Object.entries(LISTS)) el.list.add(new Option(`${l.label} (${l.words.length} words)`, key));
+el.list.add(new Option(`${PICTURE_SET.label} (${PICTURE_SET.words.length} words)`, "pictures"));
 el.list.add(new Option(`Your own words (${PRICE_LABEL})`, "own"));
 for (const [key, s] of Object.entries(SHEETS)) el.sheet.add(new Option(s.label, key));
 
@@ -30,8 +31,9 @@ const opts = () => {
     const words = cleanWords(el.words.value);
     return { sheet: el.sheet.value, trace: el.trace.checked, pairs: el.pairs.checked, back: el.backs.checked ? OWN_BACK : null, words: words.length ? words : LISTS["pre-primer"].words, tag: "", licensed: true };
   }
-  const l = LISTS[own() ? "pre-primer" : el.list.value];
-  return { sheet: el.sheet.value, trace: el.trace.checked, pairs: el.pairs.checked, back: el.backs.checked ? l.back : null, words: l.words, tag: l.label, licensed: !!getLicense() };
+  const pictures = el.list.value === "pictures";
+  const l = pictures ? PICTURE_SET : LISTS[own() ? "pre-primer" : el.list.value];
+  return { sheet: el.sheet.value, trace: el.trace.checked, pairs: el.pairs.checked, back: el.backs.checked ? l.back : null, words: l.words, tag: l.label, pictures, licensed: !!getLicense() };
 };
 
 let pageIndex = 0;
@@ -139,7 +141,7 @@ el.download.addEventListener("click", async () => {
 px("cards");
 const q = new URLSearchParams(location.search);
 const start = q.get("list");
-if (start in LISTS || start === "own") el.list.value = start;
+if (start in LISTS || start === "own" || start === "pictures") el.list.value = start;
 if (q.get("words")) el.words.value = cleanWords(q.get("words")).join("\n");
 if (q.get("sheet") in SHEETS) el.sheet.value = q.get("sheet");
 if (q.get("pairs") === "1") el.pairs.checked = true;
