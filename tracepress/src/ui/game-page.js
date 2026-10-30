@@ -112,8 +112,6 @@ function remember() {
 function deal() {
   const own = set === OWN;
   el.ownRow.hidden = !own;
-  // The printed cards are words only, so the picture game has nothing to print.
-  el.print.parentElement.hidden = set === PICS;
   remember();
   el.print.href = own ? `/sight-word-flash-cards?list=own&sheet=letter-game&pairs=1&backs=1${ownWords.length ? `&words=${encodeURIComponent(ownWords.join(","))}` : ""}` : `/sight-word-flash-cards?list=${set}&sheet=letter-game&pairs=1&backs=1`;
   for (const b of el.sets.querySelectorAll("button")) b.setAttribute("aria-pressed", String(b.dataset.set === set));
