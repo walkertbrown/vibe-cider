@@ -20,7 +20,7 @@ import { PDFDocument, PDFName, PDFString, rgb } from "pdf-lib";
 import fontkit from "@pdf-lib/fontkit";
 import { renderBook, planBook, renderName, renderSheets, renderCards } from "../src/pdf/book.js";
 import { planCvc, planCount, sheetInk } from "../src/pdf/sheets.js";
-import { planCards, cardsInk, LISTS } from "../src/pdf/cards.js";
+import { planCards, cardsInk, LISTS, PICTURE_SET } from "../src/pdf/cards.js";
 import { renderCover } from "../src/pdf/cover.js";
 import { pageInk } from "../src/pdf/ink.js";
 import { TRIMS } from "../src/pdf/kdp.js";
@@ -454,8 +454,9 @@ async function matching(sample, keys) {
   meta(doc, sample);
   const regular = await doc.embedFont(fonts.regular, { subset: true });
   for (const key of keys) {
-    const l = LISTS[key];
-    const opts = { sheet: "letter-game", words: l.words, trace: false, tag: l.label, pairs: true, back: l.back };
+    const pictures = key === "pictures";
+    const l = pictures ? PICTURE_SET : LISTS[key];
+    const opts = { sheet: "letter-game", words: l.words, trace: false, tag: l.label, pairs: true, back: l.back, pictures };
     const plan = planCards(opts);
     const src = await PDFDocument.load(await renderCards(opts, fonts));
     for (const [i, p] of (await doc.copyPages(src, src.getPageIndices())).entries()) {
@@ -484,3 +485,9 @@ await matching({
   title: "Free Sight Word Matching Game, Dolch Pre-Primer (PDF) · Trace Press",
   subject: "A sight word matching game: the 40 Dolch pre-primer words (a, and, the, see, said and more), every word on two 2.5 inch cards, twelve cards to a US Letter sheet. Each sheet is followed by a coloured back for double-sided printing. Free from Trace Press.",
 }, ["pre-primer"]);
+// Word and picture: each word's pair is its picture. 29 words, five sheets.
+await matching({
+  file: "word-picture-matching-cards.pdf",
+  title: "Free Word and Picture Matching Cards, CVC (PDF) · Trace Press",
+  subject: "A word to picture matching game: 29 short vowel words (cat, bed, pig, dog, sun and more), each on one 2.5 inch card with its outline picture on another, twelve cards to a US Letter sheet. Each sheet is followed by a coloured back for double-sided printing. Free from Trace Press.",
+}, ["pictures"]);
