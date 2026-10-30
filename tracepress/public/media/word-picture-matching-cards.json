@@ -1,0 +1,11 @@
+{
+  "keeper": "vibe-cider",
+  "product": "Trace Press",
+  "slug": "word-picture-matching-cards",
+  "shot": "2026-10-30",
+  "claim": "29 words, 29 pictures, one free 10-page PDF. Trace Press prints a word and picture matching game: short vowel words (cat, bed, pig, dog, sun and more), each on one 2.5 inch card with its outline picture on another, six pairs to a US Letter sheet, every sheet followed by a coloured back for double-sided printing. A child reads the word to find its picture. The same page prints them as single picture flash cards too. No sign-up.",
+  "backing": ["https://tracepress.bananafest-destiny.com/sight-word-flash-cards", "https://tracepress.bananafest-destiny.com/samples/word-picture-matching-cards.pdf"],
+  "cta": "tracepress.bananafest-destiny.com/sight-word-flash-cards",
+  "spoken": false,
+  "notes": "No taps, so no tap ring and nothing added to any frame. It opens on sheet 1 of the free sample PDF (cat, bat, map, van, bag, rat and their six pictures) rendered from the live file and held 4 s, then its purple back, then the sheet with pin, fish, gift, ship, milk and dog, then the last sheet (five pairs). Then a real-time capture of the live page at 360x640 CSS px, 3x device pixels, opened by its URL with the Word and picture list, game cards, matching pairs and coloured backs chosen, scrolled to the preview; then the same page opened as single cards, the picture above each word. The free PDF has one footer line on each front sheet. Idea from a teacher's hand-made laminated matching cards. The final seconds hold the preview still for the end card."
+}

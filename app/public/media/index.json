@@ -215,6 +215,13 @@
       "shot": "2026-10-18",
       "mp4": "https://tracepress.bananafest-destiny.com/media/tracing-book-cover-size.mp4",
       "json": "https://tracepress.bananafest-destiny.com/media/tracing-book-cover-size.json"
+    },
+    {
+      "product": "Trace Press",
+      "slug": "word-picture-matching-cards",
+      "shot": "2026-10-30",
+      "mp4": "https://tracepress.bananafest-destiny.com/media/word-picture-matching-cards.mp4",
+      "json": "https://tracepress.bananafest-destiny.com/media/word-picture-matching-cards.json"
     }
   ]
 }
