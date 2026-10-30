@@ -47,6 +47,8 @@ const WORDS = {
   // A–Z letter pages ("A is for apple"): words for the letters nothing above starts
   "ice cream": "ice-cream", jacket: "jacket", octagon: "octagon", van: "lucide:van", watch: "lucide:watch",
   box: "box", yarn: "yarn", zeppelin: "zeppelin", volcano: "volcano",
+  // The matching game's picture set: short vowel words with a clear picture
+  bag: "shopping-bag", pen: "lucide:pen", pin: "pin", mop: "lucide:mop", lock: "lock",
 };
 
 // Paths taken out of an icon. The word is "pumpkin", and Tabler's only pumpkin

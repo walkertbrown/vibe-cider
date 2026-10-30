@@ -95,6 +95,7 @@ const RUNGS = [
   ["gamelink", "copied a game link"],
   ["gameshared", "opened a game link with someone's words"],
   ["gamenote", "printed take-home notes with a game code"],
+  ["gamepics", "picked the word-and-picture game"],
   ["cvc", "ran /cvc-worksheets"],
   ["cvctouched", "changed the CVC line size"],
   ["cvcdownload", "pressed Download CVC sheets"],
