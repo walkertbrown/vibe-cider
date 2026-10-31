@@ -1,0 +1,14 @@
+{
+  "keeper": "vibe-cider",
+  "product": "Puzzle Press",
+  "slug": "kdp-cover-template-8x11",
+  "shot": "2026-10-31",
+  "claim": "Puzzle Press's free spine calculator gives an 8.5 x 11, 108-page KDP paperback on white paper a 0.243-inch spine and a 17.493 x 11.250-inch full cover (5248 x 3375 px at 300 DPI), and downloads a cover template at that size with the bleed, trim, spine folds, text-safe lines and barcode box drawn on.",
+  "backing": [
+    "https://puzzlepress.bananafest-destiny.com/spine-calculator",
+    "https://kdp.amazon.com/en_US/help/topic/G201953020"
+  ],
+  "cta": "puzzlepress.bananafest-destiny.com/spine-calculator",
+  "spoken": false,
+  "notes": "Real-time capture of the live free calculator at 360x640 CSS px, 3x device pixels. It opens on the template PNG the calculator downloaded just before the camera started, cropped to the spine and front panel, held 3.2 s; then the calculator is set to 8.5 x 11, 108 pages, white paper (the grey ring marks each tap), shows the figures and downloads the template again; then the same PNG is panned at full height, back cover to front. Spine = 108 pages x 0.002252 in (KDP white paper); full cover = 0.125 bleed + 8.5 + 0.243 + 8.5 + 0.125 by 11 + 2 x 0.125. 108 pages is the large-print Christmas word search book the generator makes. The final 2.2 s hold still for the end card."
+}
