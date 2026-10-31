@@ -68,9 +68,15 @@ function say(word) {
 // Word and picture: each pair is the word on one card and its picture on the
 // other, so a child reads the word to find it. Short vowel words with a clear
 // outline picture (pdf/pictures.js); the picture is drawn in the word's ink.
-const PICS = "pictures";
-const PIC_WORDS = PICTURE_SET.words;
-const PIC_BACK = PICTURE_SET.back;
+// Thanksgiving is the same game on the 20 words of the Thanksgiving tracing
+// page, offered until the day itself (Central time).
+const PIC_SETS = {
+  pictures: { label: "Word and picture", words: PICTURE_SET.words, back: PICTURE_SET.back, px: "gamepics" },
+  thanksgiving: { label: "Thanksgiving", words: "mug cake bowl home bread wheat maple glass apple acorn carrot cherry candle teapot pepper cookie feather pumpkin seedling mushroom".split(" "), back: [0.8, 0.4, 0.1], px: "gameholiday", until: "2026-11-26" },
+};
+const today = new Date().toLocaleDateString("en-CA", { timeZone: "America/Chicago" });
+for (const [k, p] of Object.entries(PIC_SETS)) if (p.until && today > p.until) delete PIC_SETS[k];
+const isPics = (s) => s in PIC_SETS;
 const picImage = (word) => `data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="-5 -5 34 34" fill="none" stroke="#222" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${pictureFor(word).map((d) => `<path d="${d}"/>`).join("")}</svg>`)}`;
 
 const shuffle = (a) => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
@@ -113,6 +119,8 @@ function deal() {
   const own = set === OWN;
   el.ownRow.hidden = !own;
   remember();
+  // The card maker has no Thanksgiving list, so that game has nothing to print.
+  el.print.parentElement.hidden = set === "thanksgiving";
   el.print.href = own ? `/sight-word-flash-cards?list=own&sheet=letter-game&pairs=1&backs=1${ownWords.length ? `&words=${encodeURIComponent(ownWords.join(","))}` : ""}` : `/sight-word-flash-cards?list=${set}&sheet=letter-game&pairs=1&backs=1`;
   for (const b of el.sets.querySelectorAll("button")) b.setAttribute("aria-pressed", String(b.dataset.set === set));
   if (own && ownWords.length < 2) {
@@ -123,14 +131,14 @@ function deal() {
   }
   inPlay = Math.min(pairs, own ? ownWords.length : pairs);
   if (own) el.ownNote.textContent = `${ownWords.length > inPlay ? `Your ${ownWords.length} words: ${ownWords.join(", ")}. Each game picks ${inPlay} of them.` : `${inPlay} pairs: ${ownWords.join(", ")}.`} Playing them here is free; printing your own words as cards comes with the ${PRICE_LABEL} Trace Press licence.`;
-  const words = shuffle([...(own ? ownWords : set === PICS ? PIC_WORDS : LISTS[set].words)]).slice(0, inPlay);
+  const words = shuffle([...(own ? ownWords : isPics(set) ? PIC_SETS[set].words : LISTS[set].words)]).slice(0, inPlay);
   const img = wordImages(words);
-  const cards = shuffle(words.flatMap((w) => [[w, false], [w, set === PICS]]));
+  const cards = shuffle(words.flatMap((w) => [[w, false], [w, isPics(set)]]));
   deck = cards.map((c) => c[0]);
   pic = cards.map((c) => c[1]);
   up = []; found = 0; turns = 0; busy = false;
   el.won.hidden = true;
-  el.board.style.setProperty("--back", css(own ? OWN_BACK : set === PICS ? PIC_BACK : LISTS[set].back));
+  el.board.style.setProperty("--back", css(own ? OWN_BACK : isPics(set) ? PIC_SETS[set].back : LISTS[set].back));
   nodes = deck.map((word, i) => {
     const b = document.createElement("button");
     b.type = "button";
@@ -148,7 +156,7 @@ function deal() {
 
 function show(i, on) {
   nodes[i].classList.toggle("up", on);
-  nodes[i].setAttribute("aria-label", on ? `Card ${i + 1}: ${pic[i] ? `picture of a ${deck[i]}` : deck[i]}` : `Card ${i + 1}, face down`);
+  nodes[i].setAttribute("aria-label", on ? `Card ${i + 1}: ${pic[i] ? `picture of ${/^[aeiou]/i.test(deck[i]) ? "an" : "a"} ${deck[i]}` : deck[i]}` : `Card ${i + 1}, face down`);
 }
 
 function turn(i, e) {
@@ -194,13 +202,13 @@ for (const [key, l] of Object.entries(LISTS)) {
   b.addEventListener("click", () => { set = key; deal(); });
   el.sets.append(b);
 }
-{
+for (const [key, p] of Object.entries(PIC_SETS)) {
   const b = document.createElement("button");
   b.type = "button";
-  b.dataset.set = PICS;
-  b.textContent = "Word and picture";
-  b.style.setProperty("--chip", css(PIC_BACK));
-  b.addEventListener("click", (e) => { if (e.isTrusted) px("gamepics"); set = PICS; deal(); });
+  b.dataset.set = key;
+  b.textContent = p.label;
+  b.style.setProperty("--chip", css(p.back));
+  b.addEventListener("click", (e) => { if (e.isTrusted) px(p.px); set = key; deal(); });
   el.sets.append(b);
 }
 {
@@ -260,7 +268,7 @@ if (document.fullscreenEnabled && el.game.requestFullscreen) {
 
 px("game");
 const q = new URLSearchParams(location.search);
-if (q.get("set") in LISTS || q.get("set") === PICS) set = q.get("set");
+if (q.get("set") in LISTS || isPics(q.get("set"))) set = q.get("set");
 if (q.get("words")) {
   el.own.value = q.get("words").split(",").join(", ");
   readOwn();
